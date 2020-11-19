@@ -28,6 +28,31 @@ const AuthorizationComponent = () => {
   	
    	<IonPage >
       <IonContent>
+
+      	<div className="logo-position">
+	      	<div className="MainLogo">
+	      	  		<div className="b_letter">
+	      	  			B
+	      	  		</div>
+
+	      	  		<div className="hub_letter">
+	      	  			hub
+	      	  		</div>
+	      	  </div>
+
+	      	  <div className="MainLogo_shadow">
+	      	  		<div className="b_letter_shadow">
+	      	  			
+	      	  		</div>
+
+	      	  		<div className="hub_letter_shadow">
+	      	  			
+	      	  		</div>
+	      	  </div>
+      	</div>
+      	  
+
+
       	  <div className="mainCentralDiv">
       	  		{LocalizeComponent.login}
       	  </div>	
