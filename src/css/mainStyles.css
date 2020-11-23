@@ -1,7 +1,7 @@
 
-ion-content{
+body{
 
-    --ion-background-color:#161730;
+    background-color:#161730;
 }
 
 .logo-position{
@@ -11,9 +11,9 @@ ion-content{
 
 .MainLogo{
 
-	width:50%;
-	height:100px;
-	
+  width: 20ch;
+  height: 19ch;
+
 }
 
 .b_letter{
@@ -24,7 +24,7 @@ ion-content{
     /*background-size: 100%;*/
     -webkit-background-clip: text;
     -moz-background-clip: text;
-    -webkit-text-fill-color: transparent; 
+    -webkit-text-fill-color: transparent;
     -moz-text-fill-color: transparent;
     background-repeat: repeat;
 	/*color:linear-gradient(to right, #8936f4, #0083ff);*/
@@ -32,64 +32,22 @@ ion-content{
 	float:left;
 	font-weight:bold;
 	animation: rainbow-text-simple-animation-rev 0.75s ease forwards;
-	
-	
-	
-}
-
-.b_letter:hover{
-    animation: rainbow-text-simple-animation 0.5s ease-in forwards;
-}
-
-.hub_letter{
-	width: 60%;
-	height: 100%;
-	font-size:30px;
-	font-weight:bold;
-	float:left;
-	background-image: linear-gradient( #0a85fe, #1d4ffc);
-	padding-top:35px;
-	/*background-color:#7a86c2;*/
-    background-size: 100%;
-    -webkit-background-clip: text;
-    -moz-background-clip: text;
-    -webkit-text-fill-color: transparent; 
-    -moz-text-fill-color: transparent;
-}
 
 
-.MainLogo_shadow{
-	margin-top:-110px;
-	width:50%;
-	height:100px;
-	
-}
 
-.b_letter_shadow{
-	/*opacity: 0.5;*/
-	width: 40%;
-	height: 100%;
-	-webkit-box-shadow: 10px 7px 17px 3px rgba(137,54,244,0.68); 
-	box-shadow: 10px 7px 17px 3px rgba(137,54,244,0.68);
 }
 
 
 
-.hub_letter_shadow{
-	width: 60%;
-	height: 100%;
-	float:left;
-	padding-top:35px;
-	/*background-color:#7a86c2;*/
-    
+.fullSize{
+  width:100%;
 }
-
 
 .mainCentralDiv{
 	color:white;
 	width: 100%;
 	height: 20px;
-	margin-top:20%;
+
 	text-align:center;
 	font-size:20px;
 	font-family:"Times New Roman", Times, serif;
@@ -103,15 +61,24 @@ ion-content{
 	width:100%;
 	height: 45px;
 	margin-top:5%;
-	
+
 }
+
+.secondMargin{
+  margin-top:10px !important;
+  width:100%;
+}
+
+
 
 .buttonStyle{
 	width:50%;
 	height: 100%;
 	background:linear-gradient(to right, #8936f4, #0083ff);
 	border-radius:15px;
-	margin-left:25%;
+  color:white;
+  border:0px;
+  font-family:"Times New Roman", Times, serif;
 }
 
 .buttonText{
@@ -124,12 +91,19 @@ ion-content{
 	font-size:16px;
 }
 
+.errorBox{
+  margin-top:5px;
+  padding: 5px;
+  border: 2px solid red;
+  border-radius: 5px;
+}
+
 
 ion-item {
-  
+
         --highlight-color-focused:linear-gradient(to right, #8936f4, #0083ff) !important;
-        --highlight-color-invalid: red !important; 
-        --highlight-color-valid: green !important; 
+        --highlight-color-invalid: red !important;
+        --highlight-color-valid: green !important;
 	        /*--border-color: var(--ion-color-danger, #f1453d);*/
       color:white;
 
@@ -143,6 +117,11 @@ ion-item {
 	background-position:left bottom;
 }
 
+/* material UI colors */
+.MuiFormHelperText-root{
+  color: red !important;
+}
 
-  
-  
+.MuiInputBase-input{
+  color:white !important;
+}
