@@ -1,14 +1,12 @@
 import React,{useState, useEffect} from 'react';
 import { Observable, of,interval, Subject } from 'rxjs';
 import socket from '../config/socket.js';
+import config from '../config/config.js';
+import cryptLibrary from '../helpers/CryptLibrary';
 
+const observ_subject = new Subject();
 
 const authService = {
-
-      initialConnect:() => {
-
-
-      },
 
       getDataAds:() => {
 
@@ -23,36 +21,48 @@ const authService = {
 
       },
 
-      sendData_subject: data => {
+      sendAuthData: senddata => {
+          //console.log(senddata);
+          var datas = {
+            "deviceid":config.getdeviceid(),
+            "email":senddata.email,
+            "password":senddata.password
+          }
+          var encryptedData = cryptLibrary.encrypt(datas);
 
-        // var datas = {
-        //   "deviceid":this.homeservice.deviceid,
-        //   "email":data.email,
-        //   "name":data.name,
-        //   "password":data.password
-        // }
-        //
-        //
-        // this.socket.emit("setRegistration",datas);
-        //
-        // var data = {
-        //   "deviceid":this.homeservice.deviceid,
-        //   "email":datas.email,
-        //   "password":datas.password
-        // }
-        //
-        // this.socket.emit("setLogin",data);
+          socket.emit("setRegistration",encryptedData);
 
-        return observ_subject.next(data);
       },
 
-      getData_subject:() => {
+      getAuthData:() => {
+
+        socket.on("setRegistration",(data) => {
+            //console.log(data);
+            observ_subject.next(cryptLibrary.decrypt(data));
+        });
+
         return observ_subject;
       },
 
-      test:(test => {
-        return "test";
-      }),
+      sendRestorePassword:(data) => {
+        var datas = {
+          "deviceid":config.getdeviceid(),
+          "email":data.email
+        }
+
+        var encryptedData = cryptLibrary.encrypt(datas);
+
+        socket.emit("setRestorePassword",encryptedData);
+      },
+
+      getRestorePassword:() => {
+        socket.on("setRestorePassword",(data) => {
+            //console.log(data);
+            observ_subject.next(cryptLibrary.decrypt(data));
+        });
+
+        return observ_subject;
+      },
 
       async_function: async function(){ //a function that returns a promise
 

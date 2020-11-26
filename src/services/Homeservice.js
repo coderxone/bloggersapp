@@ -2,6 +2,7 @@ import React,{useState, useEffect} from 'react';
 import { Observable, of,interval, Subject } from 'rxjs';
 import socket from '../config/socket.js';
 import config from '../config/config.js';
+import cryptLibrary from '../helpers/CryptLibrary';
 
 
 const observ_subject = new Subject();
@@ -19,12 +20,10 @@ function initSocket(){
           console.log('disconnected from server');
         });
 
-        // useEffect(() => {
-        //   // Update the document title using the browser API
-        //   useState([{ io: socket }])
-        // });
-
       }
+
+
+
 
 
  function reConnect(){
@@ -40,7 +39,7 @@ const homeservice = {
 
       },
 
-      getDataAds:() => {
+      sendFirstRequest:() => {
 
         socket.on('homeStart', (data) => {
            observ_subject.next(data);
@@ -58,6 +57,52 @@ const homeservice = {
       },
 
       getData_subject:() => {
+        return observ_subject;
+      },
+
+      joinUser:() => {
+
+        var email = config.getUserEmail();
+
+        if(email == false){
+          return false;
+        }else{
+          var datas = {
+            "deviceid":config.getdeviceid(),
+            "email":config.getUserEmail()
+          }
+
+          console.log(datas);
+
+          var encryptedData = cryptLibrary.encrypt(datas);
+
+          socket.emit("onlineUsers",encryptedData);
+
+        }
+
+      },
+
+      listenOnlineUsers:() => {
+
+        socket.on("onlineUsers",data => {
+            observ_subject.next(data);
+        })
+
+        return observ_subject;
+      },
+
+      checkAutomaticMessages:(data) => {
+
+          socket.emit("checkAutomaticMessages",data);
+
+      },
+
+      listencheckAutomaticMessages:() => {
+
+        socket.on("checkAutomaticMessages",data => {
+                     observ_subject.next(data);
+        })
+
         return observ_subject;
       },
 

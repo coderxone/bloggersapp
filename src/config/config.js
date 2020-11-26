@@ -1,8 +1,9 @@
 import generateModule from '../helpers/GenerateNumber';
 import React from 'react';
 
-const phoneid = 123;
+const cryptKey = "cryptoGraph2020";
 const routeUrl = "https://kazpoisk.kz";
+const userRole = "1";
 
 const newmodule = {
 
@@ -45,8 +46,25 @@ const newmodule = {
         return localStorage.getItem("deviceid");
       },
 
+      getUserEmail:() => {
+        var email = localStorage.getItem("email");
+        if(email){
+          return email;
+        }else{
+          return false;
+        }
+      },
+
+      getUserRole:() => {
+          return userRole;
+      },
+
       getBaseUrl:() => {
         return routeUrl + "/assets/entry/uploads/";
+      },
+
+      getCryptKey:() => {
+        return cryptKey;
       }
 
 }

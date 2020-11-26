@@ -20,14 +20,11 @@ import Box from '@material-ui/core/Box';
 import { connect } from 'react-redux';
 import AuthService from '../services/AuthService';
 
+
 import { increment, decrement,save_email } from '../actions/actions';
 import {
   Link,
 } from "react-router-dom";
-
-
-
-
 
 
 
@@ -97,9 +94,6 @@ const CssTextField = withStyles({
 
 const schema = yup.object().shape({
   email: yup.string().required("Required").email(),
-  password: yup.string().required('No password provided.')
-  .min(6, LocalizeComponent.password_length)
-  .matches(/^[A-Za-z0-9_]{6,}$/, 'Password should contain only letters and numbers.'),
 });
 
 
@@ -130,64 +124,47 @@ const ErrorDiv = (props) => {
 
 
 
-const AuthorizationComponent = (props) => {
+const RestorepasswordComponent = (props) => {
 
   const classes = useStyles();
   const { register, handleSubmit, errors,setError } = useForm({
     resolver: yupResolver(schema)
   });
   var obj = {
-    count: 0,
-    email:"",
-    password:""
+    email:""
   };
 
-  const [count,setCount] = useState(0);
   const [storageData,setStorageData] = useState(obj);
 
 
   const onSubmit = ((data) => {
     //console.log(data);
     setStorageData({
-      count: 0,
-      email:data.email,
-      password:data.password
+      email:data.email
     });
 
-    AuthService.sendAuthData(data);
+    AuthService.sendRestorePassword(data);
   });
 
-  AuthService.getAuthData().subscribe(data => {
+  AuthService.getRestorePassword().subscribe(data => {
     console.log(data);
-    if((data.status == "olduser") && (data.password == true)){
-      props.dispatch(save_email(storageData));
 
-    }else{
-
-      setError("password", {
+    if(data.status == "usernotfound"){
+      setError("email", {
             type: "manual",
-            message: "incorrect password for user " + storageData.email
+            message: LocalizeComponent.user_not_found
           });
-
-
     }
+
+      // props.dispatch(save_email(storageData));
+
+
+
     //props.dispatch({type:"save_email",email:"test@gmail.com"});
 
 
 
   });
-
-
-  const increment = () => {
-    props.dispatch(increment()); // << use it here
-  };
-
-  //console.log(props);
-
-  const decrement = () => {
-    props.dispatch(decrement());
-  };
-
 
 
 
@@ -213,19 +190,12 @@ const AuthorizationComponent = (props) => {
           </Grid>
 
 
-          <Grid item xs={12} >
-            <Paper  className={classes.paper}>
 
-              <Box mt={1} className="mainCentralDiv">
-                  {LocalizeComponent.login}
-              </Box>
-
-            </Paper>
-          </Grid>
 
           <Grid item xs={12}>
             <Paper className={classes.paper}>
 
+              <Box mt={6}>
               <form onSubmit={handleSubmit(onSubmit)}   className={classes.margin}>
 
                 <CssTextField
@@ -239,24 +209,17 @@ const AuthorizationComponent = (props) => {
                   variant="outlined"
                   label="Email" />
 
-                  <CssTextField
-                    name="password"
-                    id="password"
-                    label="Password"
-                    type="password"
-                    className="secondMargin"
-                    variant="outlined"
-                    autoComplete="current-password"
-                    helperText={errors.password?.message}
-                    inputRef={register}
 
-                  />
+
+
 
 
                 <div className="buttonDiv">
-                      <input  className="buttonStyle" type="submit" value={LocalizeComponent.login_button}/>
+                      <input  className="buttonStyle" type="submit" value={LocalizeComponent.restore_button}/>
                 </div>
             </form>
+
+          </Box>
 
             </Paper>
           </Grid>
@@ -265,11 +228,7 @@ const AuthorizationComponent = (props) => {
             <Paper  className={classes.paper}>
 
               <Box mt={1} className="forgot-password">
-
-                  <Link className="colorWhite" to="/restore">{LocalizeComponent.restore_password}</Link>
-
-
-
+                <Link className="colorWhite" to="/login">{LocalizeComponent.login}</Link>
               </Box>
 
             </Paper>
@@ -283,4 +242,4 @@ const AuthorizationComponent = (props) => {
 };
 
 
- export default connect(mapStateToProps,mapDispatchToProps)(AuthorizationComponent);
+ export default connect(mapStateToProps,mapDispatchToProps)(RestorepasswordComponent);
