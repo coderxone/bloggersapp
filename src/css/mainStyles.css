@@ -139,3 +139,7 @@ ion-item {
 .MuiInputBase-input{
   color:white !important;
 }
+
+.center-text{
+  text-align: center;
+}

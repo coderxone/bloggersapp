@@ -8,6 +8,8 @@ let strings = new LocalizedStrings({
    restore_password:"Forgot password",
    restore_button:"Restore",
    user_not_found:"User with this email not found please try another email or may be you are not registered",
+   system_notification:"Notification",
+   password_mail_notification:"The password has been sent to your email",
 
  },
  it: {
@@ -17,6 +19,8 @@ let strings = new LocalizedStrings({
    restore_password:"Forgot password",
    restore_button:"Restore",
    user_not_found:"User with this email not found please try another email or may be you are not registered",
+   system_notification:"Notification",
+   password_mail_notification:"The password has been sent to your email",
 
  }
 });

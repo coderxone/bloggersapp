@@ -85,7 +85,7 @@ const homeservice = {
       listenOnlineUsers:() => {
 
         socket.on("onlineUsers",data => {
-            observ_subject.next(data);
+            observ_subject.next(cryptLibrary.decrypt(data));
         })
 
         return observ_subject;
@@ -93,14 +93,31 @@ const homeservice = {
 
       checkAutomaticMessages:(data) => {
 
-          socket.emit("checkAutomaticMessages",data);
+          socket.emit("checkAutomaticMessages",cryptLibrary.encrypt(data));
 
       },
 
       listencheckAutomaticMessages:() => {
 
         socket.on("checkAutomaticMessages",data => {
-                     observ_subject.next(data);
+                     observ_subject.next(cryptLibrary.decrypt(data));
+        })
+
+        return observ_subject;
+      },
+
+      sendNodeMail:(data) => {
+        var datas = {
+          "deviceid":config.getdeviceid(),
+          "sendemail":data.email
+        }
+
+        socket.emit("sendmail",cryptLibrary.encrypt(datas));
+      },
+
+      listenSendMail:() => {
+        socket.on("sendmail",data => {
+            observ_subject.next(cryptLibrary.decrypt(data));
         })
 
         return observ_subject;

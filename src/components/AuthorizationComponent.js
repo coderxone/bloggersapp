@@ -103,32 +103,6 @@ const schema = yup.object().shape({
 });
 
 
-const MessageComponent = (props) => {
-  return (
-    <div className="errorBox">
-        {props.message}
-    </div>
-  )
-}
-
-
-
-const ErrorDiv = (props) => {
-  console.log(props);
-  const errorMessage = props.message;
-
-  if(errorMessage != undefined){
-    return <MessageComponent message={errorMessage}/>
-  }else{
-    return <div></div>
-  }
-
-}
-
-
-
-
-
 
 const AuthorizationComponent = (props) => {
 
@@ -157,36 +131,6 @@ const AuthorizationComponent = (props) => {
     AuthService.sendAuthData(data);
   });
 
-  AuthService.getAuthData().subscribe(data => {
-    console.log(data);
-    if((data.status == "olduser") && (data.password == true)){
-      props.dispatch(save_email(storageData));
-
-    }else{
-
-      setError("password", {
-            type: "manual",
-            message: "incorrect password for user " + storageData.email
-          });
-
-
-    }
-    //props.dispatch({type:"save_email",email:"test@gmail.com"});
-
-
-
-  });
-
-
-  const increment = () => {
-    props.dispatch(increment()); // << use it here
-  };
-
-  //console.log(props);
-
-  const decrement = () => {
-    props.dispatch(decrement());
-  };
 
 
 
@@ -194,7 +138,31 @@ const AuthorizationComponent = (props) => {
 
   useEffect(() => {
 
-    });
+        const authSubscribe = AuthService.getAuthData().subscribe(data => {
+          console.log(data);
+          if((data.status == "olduser") && (data.password == true)){
+            props.dispatch(save_email(storageData));
+
+          }else{
+
+            setError("password", {
+                  type: "manual",
+                  message: "incorrect password for user " + storageData.email
+                });
+
+
+          }
+          //props.dispatch({type:"save_email",email:"test@gmail.com"});
+
+        });
+
+        //unsibscribe
+        return () => {
+          authSubscribe.unsubscribe();
+        }
+        //unsibscribe
+
+    },[]);
 
 
   return (

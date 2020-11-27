@@ -1,4 +1,4 @@
-import React, {useState,useEffect} from 'react';
+import React, {useState,useEffect,useConstructor} from 'react';
 // import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonInput, IonItem, IonLabel, IonList, IonItemDivider } from '@ionic/react';
 import '../css/mainStyles.css';
 import LocalizeComponent from '../localize/LocalizeComponent';
@@ -12,14 +12,14 @@ import {
 import TextField from '@material-ui/core/TextField';
 import Input from '@material-ui/core/Input';
 
-
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Logo from '../icons/logo_circle_new_circle.png';
 import Box from '@material-ui/core/Box';
 import { connect } from 'react-redux';
 import AuthService from '../services/AuthService';
-
+import HomeService from '../services/Homeservice';
+import DialogComponent from '../components/DialogComponent';
 
 import { increment, decrement,save_email } from '../actions/actions';
 import {
@@ -124,7 +124,10 @@ const ErrorDiv = (props) => {
 
 
 
+
 const RestorepasswordComponent = (props) => {
+
+
 
   const classes = useStyles();
   const { register, handleSubmit, errors,setError } = useForm({
@@ -134,44 +137,62 @@ const RestorepasswordComponent = (props) => {
     email:""
   };
 
+
   const [storageData,setStorageData] = useState(obj);
 
+  const [cancelDoubleEvent,setCancelDoubleEvent] = useState(0);
+
+  const [closeDialog,setCloseDialog] = useState(false);
 
   const onSubmit = ((data) => {
-    //console.log(data);
-    setStorageData({
-      email:data.email
-    });
-
-    AuthService.sendRestorePassword(data);
-  });
-
-  AuthService.getRestorePassword().subscribe(data => {
-    console.log(data);
-
-    if(data.status == "usernotfound"){
-      setError("email", {
-            type: "manual",
-            message: LocalizeComponent.user_not_found
-          });
-    }
-
-      // props.dispatch(save_email(storageData));
 
 
+      setStorageData(prevState => {
+          return obj.email = data.email;
+      });
 
-    //props.dispatch({type:"save_email",email:"test@gmail.com"});
 
-
+    AuthService.sendRestorePassword(data);//find user
 
   });
-
 
 
 
   useEffect(() => {
 
+    const sendedEmailService = HomeService.listenSendMail().subscribe(data => {
+
+      if(data.status == "sended"){
+        setCloseDialog(true);
+      }
     });
+
+    const restoredPassword = AuthService.getRestorePassword().subscribe(data => {
+
+      if(data.status == "usernotfound"){
+        setError("email", {
+              type: "manual",
+              message: LocalizeComponent.user_not_found
+            });
+      }else{
+          //user found send email to him with login and password
+          var sendObject = {
+            email:storageData.email
+          }
+          HomeService.sendNodeMail(sendObject);
+
+      }
+    });
+    //unsubscribe
+
+    return () => {
+      sendedEmailService.unsubscribe();
+      restoredPassword.unsubscribe();
+    }
+
+    //unsubscribe
+
+  }, []);
 
 
   return (
@@ -229,6 +250,16 @@ const RestorepasswordComponent = (props) => {
 
               <Box mt={1} className="forgot-password">
                 <Link className="colorWhite" to="/login">{LocalizeComponent.login}</Link>
+              </Box>
+
+            </Paper>
+          </Grid>
+
+          <Grid item xs={12} >
+            <Paper  className={classes.paper}>
+
+              <Box mt={1} className="forgot-password">
+                <DialogComponent closeValue={closeDialog}/>
               </Box>
 
             </Paper>
