@@ -8,21 +8,21 @@ const TemplateComponent = () => {
   const [address,setAddress] = useState("");
 
   const handleChange = ((address) => {
-    
+
   });
 
   useEffect(() => {
-          
-    
-    });
+
+
+  },[]);
 
   const handleSelect = ((address) => {
-      
+
   });
 
   return (
    	<div>
-   			<h1>TemplateComponent</h1>	
+   			<h1>TemplateComponent</h1>
    	</div>
   )
 };

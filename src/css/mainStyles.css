@@ -82,6 +82,31 @@ body{
   margin-top:10px !important;
   width:100%;
 }
+.datepickerColor{
+  margin-top:10px !important;
+  width:100%;
+  color:#8936f4;
+
+}
+
+.MuiIconButton-root{
+  color:#8936f4 !important;
+}
+
+.location-search-input{
+  margin-top:10px !important;
+  width:100%;
+  color:#8936f4;
+}
+
+.textArea{
+  margin-top:10px !important;
+  width:100%;
+}
+
+.MuiFormLabel-root{
+  color:#8936f4 !important;
+}
 
 
 

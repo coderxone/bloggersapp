@@ -19,11 +19,13 @@ const reduceexport = function reducer(state = initialState, action) {
       return {
         count: state.count + 1
       };
+
     case 'DECREMENT':
     console.log("DECREMENT");
       return {
         count: state.count - 1
       };
+
     case 'SAVE_EMAIL':
 
         localStorage.setItem("email",action.email);
@@ -34,6 +36,12 @@ const reduceexport = function reducer(state = initialState, action) {
         email:action.email,
         password:action.password
       };
+
+    case 'SAVE_COORD':
+
+    localStorage.setItem("coord",JSON.stringify(action.coord));
+    return action.coord;
+
     default:
       return state;
   }

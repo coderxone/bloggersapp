@@ -14,6 +14,9 @@ import Home from './pages/Home';
 import MapComponent from './components/MapComponent';
 import AuthorizationComponent from './components/AuthorizationComponent';
 import RestorepasswordComponent from './components/RestorepasswordComponent';
+import ApplyComponent from './components/ApplyComponent';
+import ReactMapComponent from './components/MaterialMapComponent';
+import ReactGeoCodeComponent from './components/GeocodeComponent';
 
 
 
@@ -56,9 +59,9 @@ const App = () => (
     //     <IonRouterOutlet>
             <Router>
               <Route path="/home" component={Home} exact={true} />
-              <Route path="/map" component={MapComponent} exact={true} />
               <Route path="/login" component={AuthorizationComponent} exact={true} />
               <Route path="/restore" component={RestorepasswordComponent} exact={true} />
+              <Route path="/apply" component={ApplyComponent} exact={true} />
               <Route exact path="/" render={() => <Redirect to="/home" />} />
             </Router>
     //     </IonRouterOutlet>

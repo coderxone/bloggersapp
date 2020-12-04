@@ -28,6 +28,7 @@ HomeService.listenOnlineUsers().subscribe(data => {
 HomeService.listencheckAutomaticMessages().subscribe(data => {
   console.log(data);
 });
+
 var us_email = config.getUserEmail();
 
 if(us_email){

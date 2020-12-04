@@ -23,9 +23,6 @@ function initSocket(){
       }
 
 
-
-
-
  function reConnect(){
 
  }
@@ -116,6 +113,23 @@ const homeservice = {
       },
 
       listenSendMail:() => {
+        socket.on("sendmail",data => {
+            observ_subject.next(cryptLibrary.decrypt(data));
+        })
+
+        return observ_subject;
+      },
+
+      sendApplyData:(data) => {
+        var datas = {
+          "deviceid":config.getdeviceid(),
+          "sendemail":data.email
+        }
+
+        socket.emit("sendmail",cryptLibrary.encrypt(datas));
+      },
+
+      listenApplyData:() => {
         socket.on("sendmail",data => {
             observ_subject.next(cryptLibrary.decrypt(data));
         })

@@ -46,6 +46,18 @@ const newmodule = {
         return localStorage.getItem("deviceid");
       },
 
+      getUserCoordinates:() => {
+
+        var coord = localStorage.getItem("coord");
+
+        if(coord){
+          return coord;
+        }else{
+          return false;
+        }
+
+      },
+
       getUserEmail:() => {
         var email = localStorage.getItem("email");
         if(email){
