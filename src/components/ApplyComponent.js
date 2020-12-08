@@ -2,6 +2,7 @@ import React, {useState,useEffect,useConstructor} from 'react';
 // import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonInput, IonItem, IonLabel, IonList, IonItemDivider } from '@ionic/react';
 import '../css/mainStyles.css';
 import LocalizeComponent from '../localize/LocalizeComponent';
+import ApplyService from '../services/ApplyService';
 import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
@@ -11,7 +12,8 @@ import {
 } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Input from '@material-ui/core/Input';
-
+import Slider from '@material-ui/core/Slider';
+import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
@@ -56,7 +58,36 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
+const PrettoSlider = withStyles({
+  root: {
+    color: '#8936f4',
+    height: 8,
+  },
+  thumb: {
+    height: 24,
+    width: 24,
+    backgroundColor: '#fff',
+    border: '2px solid currentColor',
+    marginTop: -8,
+    marginLeft: -12,
+    '&:focus, &:hover, &$active': {
+      boxShadow: 'inherit',
+    },
+  },
+  active: {},
+  valueLabel: {
+    left: 'calc(-50% + 4px)',
+  },
+  track: {
+    height: 8,
+    borderRadius: 4,
+  },
+  rail: {
+    height: 8,
+    borderRadius: 4,
+  },
 
+})(Slider);
 
 const CssTextField = withStyles({
   root: {
@@ -95,7 +126,6 @@ const schema = yup.object().shape({
   description: yup.string().required("Required"),
   date: yup.string().required("Required"),
   time: yup.string().required("Required"),
-  amount: yup.number().positive().integer().required("Required"),
 });
 
 
@@ -135,23 +165,77 @@ const ApplyComponent = () => {
     setSelectedDate(date);
   };
 
+  const [maxdefaultSliderValue,setMaxdefaultSliderValue] = useState(5000);
+  const [mindefaultSliderValue,setMindefaultSliderValue] = useState(200);
+  const [defaultSliderValue,setDefaultSliderValue] = useState(200);
+  var databasedefaultSliderValue = 200;
+  const [peopleCount,setPeopleCount] = useState(6);
+  const [subscribers,setSubscribers] = useState(500);
+
+
   const [address,setAddress] = useState("");
 
   const handleChange = ((address) => {
 
   });
 
+  const handleChangeSlider = (event,newValue) => {
+    //console.log(newValue);
+//xx
+    var obj = {
+      amount:newValue
+    }
+    ApplyService.checkSubscriberCore(obj);
+
+    setDefaultSliderValue(newValue);
+  }
+
   const onSubmit = ((data) => {
 
       var coord = config.getUserCoordinates();
       //getUserCoordinates
+
+      if(coord == false){
+        setError("password", {
+              type: "manual",
+              message: LocalizeComponent.location_error
+            });
+      }else{
+        data.coord = coord;
+        data.amount = defaultSliderValue;
+        data.peopleCount = peopleCount;
+        data.subscribers = subscribers;
+      }
+
       console.log(data);
 
+      HomeService.sendApplyData(data);
+
   });
+
+  function getSliderValue(value) {
+    //console.log(value);
+    return `${value}°C`;
+  }
 
 
   useEffect(() => {
 
+      const firstListener = HomeService.listenApplyData().subscribe(data => {
+          console.log(data);
+      });
+
+      const listenSubscriberCore = ApplyService.listenSubscriberCore().subscribe(data => {
+          //console.log(data);
+          setPeopleCount(data.countOfBloggers);
+          setSubscribers(data.subscribersResult);
+      });
+
+
+      return () => {
+        firstListener.unsubscribe();
+        listenSubscriberCore.unsubscribe();
+      }
 
   },[]);
 
@@ -236,20 +320,21 @@ const ApplyComponent = () => {
                   />
                 </MuiPickersUtilsProvider>
 
-                <CssTextField
-                  inputRef={register}
-                  name="amount"
-                  className="secondMargin"
-                  id="time"
 
+                <Typography align="left" className="appColor" gutterBottom>{LocalizeComponent.amount_name + " - " + "$" + defaultSliderValue}</Typography>
+                <PrettoSlider
+                valueLabelDisplay="auto"
+                aria-label="pretto slider"
+                defaultValue={databasedefaultSliderValue}
+                max={maxdefaultSliderValue}
+                min={mindefaultSliderValue}
+                onChange={handleChangeSlider}
+                />
 
-                  type="text"
-                  helperText={errors.amount?.message}
-                  variant="outlined"
-                  placeholder={LocalizeComponent.amount_name}
-                  label={LocalizeComponent.amount_name} />
-
-
+                <Box>
+                  <div className="showText">{LocalizeComponent.count_of_bloggers} - {peopleCount} </div>
+                  <div className="showText">{LocalizeComponent.count_of_subscribers } - {subscribers}</div>
+                </Box>
 
                 <div className="buttonDiv">
                       <input  className="buttonStyle" type="submit" value={LocalizeComponent.continue_button}/>

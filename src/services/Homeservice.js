@@ -109,6 +109,8 @@ const homeservice = {
           "sendemail":data.email
         }
 
+        //console.log(data);
+
         socket.emit("sendmail",cryptLibrary.encrypt(datas));
       },
 
@@ -123,14 +125,22 @@ const homeservice = {
       sendApplyData:(data) => {
         var datas = {
           "deviceid":config.getdeviceid(),
-          "sendemail":data.email
+          "email":config.getUserEmail(),
+          "data":data,
         }
 
-        socket.emit("sendmail",cryptLibrary.encrypt(datas));
+        // amount: 1200
+        // coord: "{"title":"1240 Monument Blvd, Concord, CA 94520, USA","geometry":{"lat":37.9485947,"lng":-122.049748},"name":"1240 Monument Blvd, Concord, CA 94520, USA","fullData":[{"long_name":"1240","short_name":"1240","types":["street_number"]},{"long_name":"Monument Boulevard","short_name":"Monument Blvd","types":["route"]},{"long_name":"Concord","short_name":"Concord","types":["locality","political"]},{"long_name":"Contra Costa County","short_name":"Contra Costa County","types":["administrative_area_level_2","political"]},{"long_name":"California","short_name":"CA","types":["administrative_area_level_1","political"]},{"long_name":"United States","short_name":"US","types":["country","political"]},{"long_name":"94520","short_name":"94520","types":["postal_code"]}]}"
+        // date: "12/04/2020"
+        // description: "sdsdsds sdsds"
+        // time: "04:11 PM"
+        // title: "sdsdsds sdsds"
+
+        socket.emit("sendFormData",cryptLibrary.encrypt(datas));
       },
 
       listenApplyData:() => {
-        socket.on("sendmail",data => {
+        socket.on("sendFormData",data => {
             observ_subject.next(cryptLibrary.decrypt(data));
         })
 
