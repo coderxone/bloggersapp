@@ -222,7 +222,10 @@ const ApplyComponent = () => {
   useEffect(() => {
 
       const firstListener = HomeService.listenApplyData().subscribe(data => {
-          console.log(data);
+          if(data.status == "ok"){
+              //data.insertId
+              localStorage.setItem("insertId",data.insertId);
+          }
       });
 
       const listenSubscriberCore = ApplyService.listenSubscriberCore().subscribe(data => {
@@ -310,6 +313,8 @@ const ApplyComponent = () => {
                     name="time"
                     label={LocalizeComponent.time_name}
                     value={selectedDate}
+
+                    format="HH:mm:ss"
                     className="secondMargin"
                     helperText={errors.time?.message}
                     onChange={handleDateChange}

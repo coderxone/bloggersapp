@@ -1,10 +1,11 @@
-import React,{ useState } from 'react';
+import React,{ useState,useEffect } from 'react';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import Geocode from "react-geocode";
 import { save_coord } from '../actions/actions';
 import { connect } from 'react-redux';
 import LocalizeComponent from '../localize/LocalizeComponent';
+import config from "../config/config";
 
 const mapDispatchToProps = dispatch => ({
   save_coord
@@ -25,8 +26,6 @@ const Combo = function ComboBox(props) {
   const [address, SetAddress] = useState({});
 
   const searchAddress = ((searchString) => {
-
-
 
     if(searchString.length > 4){
 
@@ -50,6 +49,8 @@ const Combo = function ComboBox(props) {
                 fullData:string.address_components
               }
 
+              localStorage.setItem("saved_title",string.formatted_address);
+
               //console.log(findAddresses);
               const newArray = findAddresses.concat(newObj);
               setFindAddresses(newArray);
@@ -68,6 +69,8 @@ const Combo = function ComboBox(props) {
 
 
   });
+
+
 
   return (
     <Autocomplete

@@ -22,6 +22,7 @@ let strings = new LocalizedStrings({
    continue_button:"Continue",
    count_of_bloggers:"Involved bloggers count",
    count_of_subscribers:"Approximate coverage",
+   choose_payment:"Please make a payment",
  },
  it: {
    login:"Login/Registration",

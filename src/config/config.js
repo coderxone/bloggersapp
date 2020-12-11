@@ -42,6 +42,15 @@ const newmodule = {
 
       },
 
+      getSavedTitle:() => {
+        var savedTitle = localStorage.getItem("saved_title");
+        if(savedTitle){
+          return savedTitle;
+        }else{
+          return "";
+        }
+      },
+
       getdeviceid:() => {
         return localStorage.getItem("deviceid");
       },

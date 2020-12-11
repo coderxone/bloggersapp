@@ -17,6 +17,7 @@ import RestorepasswordComponent from './components/RestorepasswordComponent';
 import ApplyComponent from './components/ApplyComponent';
 import ReactMapComponent from './components/MaterialMapComponent';
 import ReactGeoCodeComponent from './components/GeocodeComponent';
+import PaymentComponent from './components/PaymentComponent';
 
 
 
@@ -62,6 +63,7 @@ const App = () => (
               <Route path="/login" component={AuthorizationComponent} exact={true} />
               <Route path="/restore" component={RestorepasswordComponent} exact={true} />
               <Route path="/apply" component={ApplyComponent} exact={true} />
+              <Route path="/payment" component={PaymentComponent} exact={true} />
               <Route exact path="/" render={() => <Redirect to="/home" />} />
             </Router>
     //     </IonRouterOutlet>
