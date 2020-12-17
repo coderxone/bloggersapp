@@ -121,12 +121,16 @@ const AuthorizationComponent = (props) => {
 
 
   const onSubmit = ((data) => {
-    //console.log(data);
-    setStorageData({
-      count: 0,
-      email:data.email,
-      password:data.password
+
+
+    setStorageData(prevState => {
+
+      prevState.email = data.email;
+      prevState.password = data.password;
+
     });
+
+
 
     AuthService.sendAuthData(data);
   });
@@ -139,9 +143,14 @@ const AuthorizationComponent = (props) => {
   useEffect(() => {
 
         const authSubscribe = AuthService.getAuthData().subscribe(data => {
-          console.log(data);
+
           if((data.status == "olduser") && (data.password == true)){
+
             props.dispatch(save_email(storageData));
+
+          }else if(data.status == "newuser"){
+
+                props.dispatch(save_email(storageData));
 
           }else{
 
@@ -199,6 +208,7 @@ const AuthorizationComponent = (props) => {
                 <CssTextField
 
                   inputRef={register}
+
                   name="email"
                   className="secondMargin"
                   id="email"
@@ -208,6 +218,7 @@ const AuthorizationComponent = (props) => {
                   label="Email" />
 
                   <CssTextField
+
                     name="password"
                     id="password"
                     label="Password"

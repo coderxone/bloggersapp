@@ -20,6 +20,7 @@ import { connect } from 'react-redux';
 import AuthService from '../services/AuthService';
 import HomeService from '../services/Homeservice';
 import DialogComponent from '../components/DialogComponent';
+import config from '../config/config.js';
 
 import { increment, decrement,save_email } from '../actions/actions';
 import {
@@ -191,6 +192,14 @@ const RestorepasswordComponent = (props) => {
     }
 
     //unsubscribe
+
+  }, []);
+
+
+  useLayoutEffect(() => {
+
+    //initiase functions
+    
 
   }, []);
 

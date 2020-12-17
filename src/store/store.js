@@ -28,6 +28,7 @@ const reduceexport = function reducer(state = initialState, action) {
 
     case 'SAVE_EMAIL':
 
+        console.log(action);
         localStorage.setItem("email",action.email);
         localStorage.setItem("password",action.password);
         //console.log(action.email);

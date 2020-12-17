@@ -1,0 +1,16 @@
+body{
+  background-color:#161730 !important;
+}
+
+.MuiAppBar-colorPrimary{
+  background-color: #161730 !important;
+}
+
+.MuiIconButton-root{
+  color: white !important;
+}
+
+.deleteUrlClass{
+  color: #FFFFFF;
+  text-decoration: none;
+}

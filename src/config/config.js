@@ -3,7 +3,8 @@ import React from 'react';
 
 const cryptKey = "cryptoGraph2020";
 const routeUrl = "https://kazpoisk.kz";
-const userRole = "1";
+//const userRole = "1"; blogger
+const userRole = "2"; //business owner
 
 const newmodule = {
 

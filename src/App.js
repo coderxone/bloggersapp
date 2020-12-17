@@ -18,6 +18,8 @@ import ApplyComponent from './components/ApplyComponent';
 import ReactMapComponent from './components/MaterialMapComponent';
 import ReactGeoCodeComponent from './components/GeocodeComponent';
 import PaymentComponent from './components/PaymentComponent';
+import BusinessDashboard from './components/businessDashboard';
+import DetailComponent from './components/DetailComponent';
 
 
 
@@ -64,6 +66,8 @@ const App = () => (
               <Route path="/restore" component={RestorepasswordComponent} exact={true} />
               <Route path="/apply" component={ApplyComponent} exact={true} />
               <Route path="/payment" component={PaymentComponent} exact={true} />
+              <Route path="/business" component={BusinessDashboard} exact={true} />
+              <Route path="/detail" component={DetailComponent} exact={true} />
               <Route exact path="/" render={() => <Redirect to="/home" />} />
             </Router>
     //     </IonRouterOutlet>

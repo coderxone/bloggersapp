@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect,useLayoutEffect} from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
@@ -61,6 +61,12 @@ export default function CustomizedDialogs(props) {
   };
 
 
+  useLayoutEffect(() => {
+
+    //initiase functions
+
+
+  }, []);
 
   useEffect(() => {
 
