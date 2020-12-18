@@ -39,7 +39,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
-
+import $ from "jquery";
 
 import { increment, decrement,save_email } from '../actions/actions';
 import {
@@ -162,8 +162,6 @@ const ListComponent = (props) => {
 
   var statusArray = new Array(4);
 
-
-
   const [secondary, setSecondary] = React.useState(false);
 
   const items = props.items;
@@ -177,45 +175,35 @@ const ListComponent = (props) => {
     items[item_id].status = true;
     var sendObject = {
       id:item_id,
-      items:items
+      items:items,
+      from:1
     }
     ObservableService.sendData_subject(sendObject);
 
   }
 
 
-//xx
 
   const content = items.map((item,index) =>
 
-    <div key={item.id} onClick={(e) => handleInsideComponent(index,items)}>
+    <div key={item.id} className={'FullList dynamicClass' + item.id} >
 
-        <ListItem>
-          <ListItemText
-            primary={item.url}
-            secondary={secondary ? 'Secondary text' : null}
-          />
-
-
-          <ListItemSecondaryAction>
-            <IconButton edge="end" aria-label="delete">
-              {item.status === false ? (
-                <ExpandLessIcon />
-               ) : (
-                 <ExpandMoreIcon/>
-               )}
-
-            </IconButton>
-          </ListItemSecondaryAction>
-
-        </ListItem>
-        <SubComponent condition={item}/>
+          <div className="centralList">
+              <div className="leftSideList" onClick={(e) => handleInsideComponent(index,items)}>
+                {item.url}
+              </div>
+              <div className="rightSideList">
+                {item.status === false ? (
+                  <ExpandLessIcon />
+                 ) : (
+                   <ExpandMoreIcon/>
+                 )}
+              </div>
+          </div>
+          <SubComponent condition={item}/>
 
     </div>
   );
-
-
-
 
      return (
           <Grid item xs={12} md={6}>
@@ -230,11 +218,96 @@ const ListComponent = (props) => {
 
 }
 
+
+const ApproveListComponent = (props) => {
+
+  const classestree = useStylesthree();
+
+  var statusArray = new Array(4);
+
+  const [secondary, setSecondary] = React.useState(false);
+
+  const items = props.items;
+
+  if(!items){
+    return false;
+  }
+
+  const handleInsideComponent = (item_id,items) => {
+
+    items[item_id].status = true;
+    var sendObject = {
+      id:item_id,
+      items:items,
+      from:2
+    }
+    ObservableService.sendData_subject(sendObject);
+
+  }
+
 //xx
+
+  const content = items.map((item,index) =>
+
+    <div key={item.id} className={'FullList dynamicClass' + item.id} >
+
+          <div className="centralList">
+              <div className="leftSideList" onClick={(e) => handleInsideComponent(index,items)}>
+                {item.url}
+              </div>
+              <div className="rightSideList">
+                {item.status === false ? (
+                  <ExpandLessIcon />
+                 ) : (
+                   <ExpandMoreIcon/>
+                 )}
+              </div>
+          </div>
+          <SubComponentApproved condition={item}/>
+
+    </div>
+  );
+
+     return (
+          <Grid item xs={12} md={6}>
+            <div className={classestree.demo}>
+              <List >
+                  {content}
+              </List>
+            </div>
+          </Grid>
+
+     );
+
+}
+
+
 const SubComponent = (props) => {
 
   var status = props.condition.status;
+  var id = props.condition.id;
   var url = props.condition.url;
+
+  const Approve = (id) => {
+
+    var sendObject = {
+      from:10
+    }
+    ObservableService.sendData_subject(sendObject);
+    DetailService.setApprove(id);
+
+  }
+
+  const View = (url) => {
+    var win = window.open(url, '_blank');
+    win.focus();
+  }
+
+  if(status === true){
+      $(".dynamicClass" + id).css("height","6em");
+  }else if(status === false){
+    $(".dynamicClass" + id).css("height","3.7em");
+  }
 
   return (
     <div>
@@ -246,18 +319,69 @@ const SubComponent = (props) => {
      ) : (
        <div className="subComponentDown">
 
-          <div className="centrDiv">
+          <div className="centrDiv" onClick={(e) => Approve(id)}>
               <DoneOutlineIcon className="leftSide"/>
               <div className="rightSide">
                   Approve
               </div>
           </div>
-          <div className="centrDivCopy">
+          <div className="centrDivCopy" onClick={(e) => View(url)}>
               <VisibilityIcon className="leftSide"/>
               <div className="rightSide">
                   View
               </div>
           </div>
+
+
+       </div>
+     )}
+
+    </div>
+  );
+}
+
+
+const SubComponentApproved = (props) => {
+
+  //var status = props.condition.status;
+  var status = true;
+  var id = props.condition.id;
+  var url = props.condition.url;
+
+  const Approve = (id) => {
+
+    //DetailService.setApprove(id);
+
+  }
+
+  const View = (url) => {
+    var win = window.open(url, '_blank');
+    win.focus();
+  }
+
+  if(status === true){
+      $(".dynamicClass" + id).css("height","6em");
+  }else if(status === false){
+    $(".dynamicClass" + id).css("height","3.7em");
+  }
+//xx
+  return (
+    <div>
+
+    {status === false ? (
+       <div>
+
+       </div>
+     ) : (
+       <div className="subComponentDown">
+
+          <div className="centrDivSecond" onClick={(e) => Approve(id)}>
+              <VisibilityIcon className="leftSideDivSecond"/>
+              <div className="rightSideDivSecond">
+                  Reached Views - 20
+              </div>
+          </div>
+
 
 
        </div>
@@ -276,7 +400,7 @@ function TabPanel(props) {
   var padding = 0;
 
   if(value == 1){
-    padding = 2;
+    padding = 0;
   }else{
     padding = 0;
   }
@@ -328,7 +452,7 @@ const useStylesh = makeStyles((theme) => ({
 const DetailComponent = (props) => {
 
 
-  console.log(props.reduxState.reducerStore);
+  //console.log(props.reduxState.reducerStore);
 
   const locationData = props.location;
 
@@ -342,11 +466,6 @@ const DetailComponent = (props) => {
     checkDetailId = localStorage.getItem("savedId");
   }
 
-
-
-
-
-  console.log(locationData);
 
   const classes = useStyles();
   const { register, handleSubmit, errors,setError } = useForm({
@@ -371,6 +490,7 @@ const DetailComponent = (props) => {
     }
 
     DetailService.getDetailData(senddata);
+    DetailService.getDetailApprovedData(senddata);
 
   }
 
@@ -389,12 +509,13 @@ const DetailComponent = (props) => {
   });
 
   const [ listArray, setListArray ] = useState([]);
+  const [ listArrayApprove, setListApproveArray ] = useState([]);
 
   useEffect(() => {
 
     const listenDetailService = DetailService.listenDetailData().subscribe(data => {
 
-      console.log(data);
+      //console.log(data);
 
       var modifiedArray = data.data;
 
@@ -408,22 +529,72 @@ const DetailComponent = (props) => {
 
     });
 
+    const listenDetailApprovedData = DetailService.listenDetailApprovedData().subscribe(data => {
+
+      //console.log(data);
+      var modifiedArray = data.data;
+
+      for(var i = 0;i < modifiedArray.length;i++){
+        modifiedArray[i].status = false;
+      }
+
+      const list = listArrayApprove.concat(modifiedArray);
+
+      setListApproveArray(list);
+
+
+    });
+
+    const listenApprove = DetailService.listenApprove().subscribe(data => {
+
+      console.log(data);
+
+    });
+
+
+
     const observable = ObservableService.getData_subject().subscribe(data => {
 
+      var from = data.from;
       var modify = data.items;
       var modifyId = data.id;
 
-      for(var i = 0;i < modify.length;i++){
-        if(i != modifyId){
-          modify[i].status = false;
-        }else{
-          modify[i].status = true;
+      if(from == 1){
+        for(var i = 0;i < modify.length;i++){
+          if(i != modifyId){
+            modify[i].status = false;
+          }else{
+            modify[i].status = true;
+          }
         }
+
+        const ModifArray = listArray.concat(modify);
+        setListArray(ModifArray);
+      }else if(from == 2){
+        for(var i = 0;i < modify.length;i++){
+          if(i != modifyId){
+            modify[i].status = false;
+          }else{
+            modify[i].status = true;
+          }
+        }
+
+        const ModifArray = listArrayApprove.concat(modify);
+        setListApproveArray(ModifArray);
+      }else if(from == 10){
+
+        setInterval(function(){
+          getDetailData();
+        },1000)
+
       }
 
-      const ModifArray = listArray.concat(modify);
-      setListArray(ModifArray);
 
+
+    });
+
+    const intervalObservable = ObservableService.subscribeByTimer_10_second().subscribe(data => {
+      getDetailData();
     });
 
 
@@ -431,7 +602,10 @@ const DetailComponent = (props) => {
 
     return () => {
       listenDetailService.unsubscribe();
+      listenApprove.unsubscribe();
+      listenDetailApprovedData.unsubscribe();
       observable.unsubscribe();
+      intervalObservable.unsubscribe();
     }
 
     //unsubscribe
@@ -476,7 +650,7 @@ const DetailComponent = (props) => {
           <ListComponent items={listArray}/>
         </TabPanel>
         <TabPanel value={value} index={1}>
-            odobreno
+            <ApproveListComponent items={listArrayApprove}/>
         </TabPanel>
 
     </div>

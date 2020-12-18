@@ -27,6 +27,7 @@
     "crypto-js": "^4.0.0",
     "date-fns": "^2.16.1",
     "ionicons": "^5.0.0",
+    "jquery": "^3.5.1",
     "react": "^16.13.0",
     "react-devtools": "^4.10.0",
     "react-dom": "^16.13.0",

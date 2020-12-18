@@ -16,6 +16,13 @@ const observ_f = {
         return observ_subject;
       },
 
+      subscribeByTimer_10_second:() => {
+
+        const timer10second = interval(10000);
+
+        return timer10second;
+      },
+
       test:(test => {
         return "test";
       }),

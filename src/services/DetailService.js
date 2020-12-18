@@ -5,6 +5,8 @@ import config from '../config/config.js';
 import cryptLibrary from '../helpers/CryptLibrary';
 
 const observ_subject = new Subject();
+const observ_subjecttwo = new Subject();
+const observ_subjectthree = new Subject();
 
 const detailservice = {
 
@@ -28,6 +30,51 @@ const detailservice = {
         });
 
         return observ_subject;
+      },
+
+
+      getDetailApprovedData:(data) => {
+        var datas = {
+          "deviceid":config.getdeviceid(),
+          "email":config.getUserEmail(),
+          "role":config.getUserRole(),
+          "data":data
+        }
+
+        var encryptedData = cryptLibrary.encrypt(datas);
+
+        socket.emit("checkvideoApproved",encryptedData);
+      },
+
+      listenDetailApprovedData:() => {
+        socket.on("checkvideoApproved",(data) => {
+            //console.log(data);
+            observ_subjectthree.next(cryptLibrary.decrypt(data));
+        });
+        return observ_subjectthree;
+      },
+
+      setApprove:(id) => {
+        var datas = {
+          "deviceid":config.getdeviceid(),
+          "email":config.getUserEmail(),
+          "role":config.getUserRole(),
+          "id":id
+        }
+
+        var encryptedData = cryptLibrary.encrypt(datas);
+        console.log(datas);
+
+        socket.emit("setApprove",encryptedData);
+      },
+
+      listenApprove:() => {
+        socket.on("setApprove",(data) => {
+            //console.log(data);
+            observ_subjecttwo.next(cryptLibrary.decrypt(data));
+        });
+
+        return observ_subjecttwo;
       },
 
       async_function: async function(){ //a function that returns a promise
