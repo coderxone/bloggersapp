@@ -7,6 +7,7 @@ import cryptLibrary from '../helpers/CryptLibrary';
 const observ_subject = new Subject();
 const observ_subjecttwo = new Subject();
 const observ_subjectthree = new Subject();
+const observ_subjectfour = new Subject();
 
 const detailservice = {
 
@@ -63,7 +64,7 @@ const detailservice = {
         }
 
         var encryptedData = cryptLibrary.encrypt(datas);
-        console.log(datas);
+
 
         socket.emit("setApprove",encryptedData);
       },
@@ -75,6 +76,28 @@ const detailservice = {
         });
 
         return observ_subjecttwo;
+      },
+
+      getviews:(data) => {
+        var datas = {
+          "deviceid":config.getdeviceid(),
+          "email":config.getUserEmail(),
+          "role":config.getUserRole(),
+          "project_id":data.project_id
+        }
+
+        var encryptedData = cryptLibrary.encrypt(datas);
+
+        socket.emit("checkviews",encryptedData);
+      },
+
+      listenViews:() => {
+        socket.on("checkviews",(data) => {
+            //console.log(data);
+            observ_subjectfour.next(cryptLibrary.decrypt(data));
+        });
+
+        return observ_subjectfour;
       },
 
       async_function: async function(){ //a function that returns a promise

@@ -263,7 +263,7 @@ const ApproveListComponent = (props) => {
                  )}
               </div>
           </div>
-          <SubComponentApproved condition={item}/>
+          <SubComponentApproved condition={item} count={props.count}/>
 
     </div>
   );
@@ -343,10 +343,11 @@ const SubComponent = (props) => {
 
 const SubComponentApproved = (props) => {
 
-  //var status = props.condition.status;
-  var status = true;
+  var status = props.condition.status;
+  //var status = true;
   var id = props.condition.id;
   var url = props.condition.url;
+  var count = props.count;
 
   const Approve = (id) => {
 
@@ -378,7 +379,7 @@ const SubComponentApproved = (props) => {
           <div className="centrDivSecond" onClick={(e) => Approve(id)}>
               <VisibilityIcon className="leftSideDivSecond"/>
               <div className="rightSideDivSecond">
-                  Reached Views - 20
+                  Reached Views - {count}
               </div>
           </div>
 
@@ -491,6 +492,7 @@ const DetailComponent = (props) => {
 
     DetailService.getDetailData(senddata);
     DetailService.getDetailApprovedData(senddata);
+    DetailService.getviews(senddata);
 
   }
 
@@ -510,6 +512,7 @@ const DetailComponent = (props) => {
 
   const [ listArray, setListArray ] = useState([]);
   const [ listArrayApprove, setListApproveArray ] = useState([]);
+  const [ viewsCount,setViewsCount ] = useState(0);
 
   useEffect(() => {
 
@@ -597,6 +600,11 @@ const DetailComponent = (props) => {
       getDetailData();
     });
 
+    const listenViews = DetailService.listenViews().subscribe(data => {
+      console.log(data);
+      setViewsCount(data.count);
+    });
+
 
     //unsubscribe
 
@@ -650,7 +658,7 @@ const DetailComponent = (props) => {
           <ListComponent items={listArray}/>
         </TabPanel>
         <TabPanel value={value} index={1}>
-            <ApproveListComponent items={listArrayApprove}/>
+            <ApproveListComponent items={listArrayApprove} count={viewsCount}/>
         </TabPanel>
 
     </div>
