@@ -1,3 +1,49 @@
 .MuiBox-root-19{
   padding:0px !important;
 }
+
+.subComponentDown{
+  width:100%;
+  height: 20%;
+
+}
+
+.centrDiv{
+  padding:0px;
+  margin:0px;
+  width:35%;
+  height: 2em;
+  border-radius: 15px;
+  float: left;
+  background:linear-gradient(to right, #8936f4, #0083ff);
+  margin-left:12%;
+}
+
+.leftSide{
+  width:10%;
+  float: left;
+  color:#0083ff !important;
+  margin-left:10px;
+  margin-top:2px;
+}
+
+.rightSide{
+  width:40%;
+  float: left;
+  margin-left:8px;
+  margin-top:4px;
+  text-align: center;
+  font-family:"Times New Roman", Times, serif;
+  font-size: 16px;
+}
+
+.centrDivCopy{
+  padding:0px;
+  margin:0px;
+  width:35%;
+  height: 2em;
+  border-radius: 15px;
+  background:linear-gradient(to right, #8936f4, #0083ff);
+  float: left;
+  margin-left:7%;
+}

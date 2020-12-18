@@ -19,6 +19,7 @@ import Box from '@material-ui/core/Box';
 import { connect } from 'react-redux';
 import AuthService from '../services/AuthService';
 import HomeService from '../services/Homeservice';
+import ObservableService from '../services/Observable';
 import DialogComponent from '../components/DialogComponent';
 import DetailService from '../services/DetailService';
 import config from '../config/config.js';
@@ -26,7 +27,10 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import IconButton from '@material-ui/core/IconButton';
-import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
+import ExpandLessIcon from '@material-ui/icons/ExpandLess';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import DoneOutlineIcon from '@material-ui/icons/DoneOutline';
+import VisibilityIcon from '@material-ui/icons/Visibility';
 import List from '@material-ui/core/List';
 
 import PropTypes from 'prop-types';
@@ -46,9 +50,7 @@ import {
 
 function mapStateToProps(state,ownProps) {
   return {
-    count: state.count,
-    email:state.email,
-    password:state.password
+    reduxState: state,
   }
 }
 
@@ -157,7 +159,11 @@ const useStylesthree = makeStyles((theme) => ({
 const ListComponent = (props) => {
 
   const classestree = useStylesthree();
-  const [open, setOpen] = React.useState(false);
+
+  var statusArray = new Array(4);
+
+
+
   const [secondary, setSecondary] = React.useState(false);
 
   const items = props.items;
@@ -166,24 +172,23 @@ const ListComponent = (props) => {
     return false;
   }
 
-  const handleInsideComponent = () => {
-      //setOpen(true);
-      //console.log(1);
-  }
+  const handleInsideComponent = (item_id,items) => {
 
-  var additionalComponent;
-
-  if(open == true){
-     additionalComponent = <SubComponent/>;
-  }else{
+    items[item_id].status = true;
+    var sendObject = {
+      id:item_id,
+      items:items
+    }
+    ObservableService.sendData_subject(sendObject);
 
   }
 
 
+//xx
 
-  const content = items.map((item) =>
+  const content = items.map((item,index) =>
 
-    <div key={item.id} onClick={(e) => handleInsideComponent()}>
+    <div key={item.id} onClick={(e) => handleInsideComponent(index,items)}>
 
         <ListItem>
           <ListItemText
@@ -194,13 +199,17 @@ const ListComponent = (props) => {
 
           <ListItemSecondaryAction>
             <IconButton edge="end" aria-label="delete">
-              <ArrowForwardIosIcon />
+              {item.status === false ? (
+                <ExpandLessIcon />
+               ) : (
+                 <ExpandMoreIcon/>
+               )}
+
             </IconButton>
           </ListItemSecondaryAction>
+
         </ListItem>
-        {additionalComponent}
-
-
+        <SubComponent condition={item}/>
 
     </div>
   );
@@ -221,11 +230,40 @@ const ListComponent = (props) => {
 
 }
 
-const SubComponent = () => {
+//xx
+const SubComponent = (props) => {
+
+  var status = props.condition.status;
+  var url = props.condition.url;
+
   return (
     <div>
-      hello subcomponent
-</div>
+
+    {status === false ? (
+       <div>
+
+       </div>
+     ) : (
+       <div className="subComponentDown">
+
+          <div className="centrDiv">
+              <DoneOutlineIcon className="leftSide"/>
+              <div className="rightSide">
+                  Approve
+              </div>
+          </div>
+          <div className="centrDivCopy">
+              <VisibilityIcon className="leftSide"/>
+              <div className="rightSide">
+                  View
+              </div>
+          </div>
+
+
+       </div>
+     )}
+
+    </div>
   );
 }
 
@@ -288,6 +326,9 @@ const useStylesh = makeStyles((theme) => ({
 
 
 const DetailComponent = (props) => {
+
+
+  console.log(props.reduxState.reducerStore);
 
   const locationData = props.location;
 
@@ -355,9 +396,33 @@ const DetailComponent = (props) => {
 
       console.log(data);
 
-      const list = listArray.concat(data.data);
+      var modifiedArray = data.data;
+
+      for(var i = 0;i < modifiedArray.length;i++){
+        modifiedArray[i].status = false;
+      }
+
+      const list = listArray.concat(modifiedArray);
 
       setListArray(list);
+
+    });
+
+    const observable = ObservableService.getData_subject().subscribe(data => {
+
+      var modify = data.items;
+      var modifyId = data.id;
+
+      for(var i = 0;i < modify.length;i++){
+        if(i != modifyId){
+          modify[i].status = false;
+        }else{
+          modify[i].status = true;
+        }
+      }
+
+      const ModifArray = listArray.concat(modify);
+      setListArray(ModifArray);
 
     });
 
@@ -366,6 +431,7 @@ const DetailComponent = (props) => {
 
     return () => {
       listenDetailService.unsubscribe();
+      observable.unsubscribe();
     }
 
     //unsubscribe
@@ -377,6 +443,9 @@ const DetailComponent = (props) => {
 
     //initiase functions
     getDetailData();
+
+
+
 
   }, []);
 

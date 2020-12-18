@@ -3,7 +3,8 @@ import React, {useState} from 'react';
 const initialState = {
   count: 0,
   email:"",
-  password:""
+  password:"",
+  array:[]
 };
 
 
