@@ -8,6 +8,7 @@ const observ_subject = new Subject();
 const observ_subjecttwo = new Subject();
 const observ_subjectthree = new Subject();
 const observ_subjectfour = new Subject();
+const observ_subjectfive = new Subject();
 
 const detailservice = {
 
@@ -34,6 +35,29 @@ const detailservice = {
       },
 
 
+      getCheckvideosByUser:(data) => {
+        var datas = {
+          "deviceid":config.getdeviceid(),
+          "email":config.getUserEmail(),
+          "role":config.getUserRole(),
+          "data":data
+        }
+
+        var encryptedData = cryptLibrary.encrypt(datas);
+
+        socket.emit("checkvideosByUser",encryptedData);
+      },
+
+      listenCheckvideosByUser:() => {
+        socket.on("checkvideosByUser",(data) => {
+            //console.log(data);
+            observ_subjectfive.next(cryptLibrary.decrypt(data));
+        });
+
+        return observ_subjectfive;
+      },
+
+
       getDetailApprovedData:(data) => {
         var datas = {
           "deviceid":config.getdeviceid(),
@@ -55,7 +79,7 @@ const detailservice = {
         return observ_subjectthree;
       },
 
-      setApprove:(id) => {
+      setBan:(id) => {
         var datas = {
           "deviceid":config.getdeviceid(),
           "email":config.getUserEmail(),
@@ -66,10 +90,10 @@ const detailservice = {
         var encryptedData = cryptLibrary.encrypt(datas);
 
 
-        socket.emit("setApprove",encryptedData);
+        socket.emit("setBan",encryptedData);
       },
 
-      listenApprove:() => {
+      listenBan:() => {
         socket.on("setApprove",(data) => {
             //console.log(data);
             observ_subjecttwo.next(cryptLibrary.decrypt(data));

@@ -5,7 +5,39 @@
 
 .FullList{
   width:100%;
-  height: 3.7em;
+  height: 5em;
+  border:1px solid white;
+  border-radius: 7px;
+}
+
+.ItemMainBlock{
+  width:100%;
+  height: 20px;
+  margin-left: 10px;
+  margin-top:5px;
+  margin-bottom: 7px;
+  font-size: 18px;
+  font-family:"Times New Roman", Times, serif;
+}
+
+.item_url_name{
+  width:50%;
+  height: 100%;
+  float: left;
+  text-align: center;
+}
+
+.itemType{
+  width:50%;
+  height: 100%;
+  float: left;
+  text-align: center;
+}
+
+.itemButtons{
+  margin-top:10px;
+  width: 100%;
+  height: 42px;
 }
 
 .centralList{
@@ -35,7 +67,10 @@
   height: 2em;
   margin-top:2px;
   margin-bottom:4px;
-
+}
+.subComponentDownC{
+  width:100%;
+  height: 2em;
 }
 
 
@@ -48,6 +83,17 @@
   float: left;
   background:linear-gradient(to right, #8936f4, #0083ff);
   margin-left:12%;
+}
+
+.centrDivone{
+  padding:0px;
+  margin:0px;
+  width:25%;
+  height: 2em;
+  border-radius: 15px;
+  float: left;
+  background:linear-gradient(to right, #8936f4, #0083ff);
+  margin-left:7%;
 }
 
 .leftSide{
@@ -78,6 +124,27 @@
   float: left;
   margin-left:7%;
 }
+.centrDivCopyC{
+  padding:0px;
+  margin:0px;
+  width:30%;
+  height: 2em;
+  border-radius: 15px;
+  background:linear-gradient(to right, #8936f4, #0083ff);
+  float: left;
+  margin-left:3%;
+}
+
+.centrDivCopyCtree{
+  padding:0px;
+  margin:0px;
+  width:25%;
+  height: 2em;
+  border-radius: 15px;
+  background:linear-gradient(to right, #8936f4, #0083ff);
+  float: left;
+  margin-left:3%;
+}
 
 .centrDivSecond{
   padding:0px;
@@ -106,4 +173,201 @@
   text-align: center;
   font-family:"Times New Roman", Times, serif;
   font-size: 16px;
+}
+
+.project_title{
+  width:100%;
+  height: 30px;
+  text-align:center;
+  font-family:"Times New Roman", Times, serif;
+  font-size: 1.5em;
+}
+.project_description{
+  width:100%;
+
+  font-family:"Times New Roman", Times, serif;
+  font-size: 1em;
+  height:140px;
+  padding-left:4%;
+  padding-right:4%;
+  padding-top:4%;
+  padding-bottom: 4%;
+  margin:5px;
+  margin-bottom: 20px;
+  border:2px solid white;
+  border-radius: 10px;
+}
+
+.project_double{
+  width:100%;
+  font-family:"Times New Roman", Times, serif;
+  height: 30px;
+
+}
+.project_double_l{
+  width:100%;
+  font-family:"Times New Roman", Times, serif;
+  height: 90px;
+
+}
+
+.line1{
+  float:left;
+  width:45%;
+  padding-left:5%;
+}
+.line2{
+  float:left;
+  width:35%;
+  padding-left:15%;
+}
+.line3{
+  float:left;
+  width:45%;
+  padding-left:5%;
+}
+.line4{
+  float:left;
+  width:35%;
+  padding-left:12%;
+  margin:2px;
+
+}
+
+.list_of_bloggers{
+  font-family:"Times New Roman", Times, serif;
+  width:100%;
+  text-align: center;
+
+}
+
+.blogger_block_margin{
+  margin-top:8px;
+}
+
+.blogger_block{
+  width:100%;
+  font-family:"Times New Roman", Times, serif;
+  height: 50px;
+  margin-left: 15px;
+  margin-top: 10px;
+}
+
+.circle_image{
+    width:50px;
+    height: 50px;
+    background-color: white;
+    border-radius: 40px;
+    float:left;
+}
+
+.bl_name_center{
+  float:left;
+  width:250px;
+  height: 100%;
+}
+
+.bl_email_text{
+  width: 100%;
+  height: 40%;
+  text-align: center;
+}
+.buttons_block{
+  width:100%;
+  height:60%;
+  /* background-color: white; */
+}
+
+.left_button_one{
+  width:25%;
+  height: 22px;
+  background:linear-gradient(to right, #8936f4, #0083ff);
+  border-radius: 5px;
+  float: left;
+  margin-left: 18px;
+  margin-top:4px;
+}
+
+.left_button_one_name{
+  text-align: center;
+
+}
+
+.left_button_two{
+  width:25%;
+  height: 22px;
+  background:linear-gradient(to right, #8936f4, #0083ff);
+  border-radius: 5px;
+  float: left;
+  margin-left: 8px;
+  margin-top:4px;
+}
+
+.left_button_three{
+  width:25%;
+  height: 22px;
+  background:linear-gradient(to right, #8936f4, #0083ff);
+  border-radius: 5px;
+  float: left;
+  margin-left: 8px;
+  margin-top:4px;
+}
+
+.completitionBlock{
+  width: 100%;
+  height: 30px;
+  font-family:"Times New Roman", Times, serif;
+  margin-left: 2px;
+  margin-top:10px;
+  margin-bottom: 10px;
+}
+
+.left_childCompletitionBlock{
+  width:65%;
+  float:left;
+  text-align: center;
+  padding-top:4px;
+}
+.right_childCompletitionBlock{
+  width:30%;
+  float:left;
+
+}
+
+.progressButton{
+  width:100%;
+  height:30px;
+  background-color: white;
+  border-radius: 5px;
+
+}
+.leftprogressButton{
+
+  height: 30px;
+  background-color: #0083ff;
+  float: left;
+}
+.rightprogressButton{
+
+  height: 30px;
+  float: left;
+}
+.completition_percent{
+  position: relative;
+  top:-30px;
+  width:100%;
+  height: 30px;
+
+}
+.completition_percent_text{
+  text-align: center;
+  width: 100%;
+  padding-top:4px;
+  color:black;
+  font-weight: bold;
+}
+
+.removeUrlStyles{
+  text-decoration: none;
+  color:white;
 }

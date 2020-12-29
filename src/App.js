@@ -20,6 +20,7 @@ import ReactGeoCodeComponent from './components/GeocodeComponent';
 import PaymentComponent from './components/PaymentComponent';
 import BusinessDashboard from './components/businessDashboard';
 import DetailComponent from './components/DetailComponent';
+import SubDetailComponent from './components/SubDetailComponent';
 
 
 
@@ -68,6 +69,7 @@ const App = () => (
               <Route path="/payment" component={PaymentComponent} exact={true} />
               <Route path="/business" component={BusinessDashboard} exact={true} />
               <Route path="/detail" component={DetailComponent} exact={true} />
+              <Route path="/subdetail" component={SubDetailComponent} exact={true} />
               <Route exact path="/" render={() => <Redirect to="/home" />} />
             </Router>
     //     </IonRouterOutlet>

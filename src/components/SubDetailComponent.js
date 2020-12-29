@@ -171,39 +171,21 @@ const ListComponent = (props) => {
   }
 
 
-  const handleInsideComponent = (item_id,items) => {
-
-
-    // items[item_id].status = true;
-    // historyId = items[item_id].id;
-    // var sendObject = {
-    //   id:item_id,
-    //   items:items,
-    //   from:1
-    // }
-    // ObservableService.sendData_subject(sendObject);
-
-  }
-
-
-
+//xx
   const content = items.map((item,index) =>
 
-    <div key={item.id} className={'FullList dynamicClass' + item.id} >
+    <div key={item.id} className={'FullList ' + item.id} >
 
-          <div className="centralList">
-              <div className="leftSideList" onClick={(e) => handleInsideComponent(index,items)}>
-                {item.user_email}
-              </div>
-              <div className="rightSideList">
-                {item.status === false ? (
-                  <ExpandLessIcon />
-                 ) : (
-                   <ExpandMoreIcon/>
-                 )}
-              </div>
+          <div className="ItemMainBlock">
+            <div className="item_url_name">
+              {item.user_email}
+            </div>
+            <div className="itemType">
+              {item.type}
+            </div>
           </div>
-          <SubComponent condition={item}/>
+
+          <SubComponent condition={item} />
 
     </div>
   );
@@ -223,13 +205,7 @@ const ListComponent = (props) => {
 
 
 
-
-
-const View = (url) => {
-  var win = window.open(url, '_blank');
-  win.focus();
-}
-
+//xx
 const SubComponent = (props) => {
 
   var status = props.condition.status;
@@ -237,41 +213,40 @@ const SubComponent = (props) => {
 
   var url = props.condition.url;
 
-  const Approve = (id) => {
+  const setBan = (id) => {
 
     var sendObject = {
       from:10
     }
     ObservableService.sendData_subject(sendObject);
-    DetailService.setApprove(id);
+    DetailService.setBan(id);
 
   }
 
-
-
-  if(status === true){
-      $(".dynamicClass" + id).css("height","6em");
-  }else if(status === false){
-    $(".dynamicClass" + id).css("height","3.7em");
+  const View = (url) => {
+    var win = window.open(url, '_blank');
+    win.focus();
   }
+
 
   return (
-    <div>
+    <div className="itemButtons">
 
-    {status === false ? (
-       <div>
+       <div className="subComponentDownC">
 
-       </div>
-     ) : (
-       <div className="subComponentDown">
-
-          <div className="centrDiv" onClick={(e) => Approve(id)}>
+          <div className="centrDivone" onClick={(e) => setBan(id)}>
               <DoneOutlineIcon className="leftSide"/>
               <div className="rightSide">
-                  Approve
+                  Ban
               </div>
           </div>
-          <div className="centrDivCopy" onClick={(e) => View(url)}>
+          <div className="centrDivCopyC" onClick={(e) => View(url)}>
+              <VisibilityIcon className="leftSide"/>
+              <div className="rightSide">
+                  Suggest
+              </div>
+          </div>
+          <div className="centrDivCopyCtree" onClick={(e) => View(url)}>
               <VisibilityIcon className="leftSide"/>
               <div className="rightSide">
                   View
@@ -280,11 +255,13 @@ const SubComponent = (props) => {
 
 
        </div>
-     )}
 
     </div>
   );
 }
+
+
+
 
 
 
@@ -336,66 +313,11 @@ const useStylesh = makeStyles((theme) => ({
   },
 }));
 
-//BlogList Component
+//initialize function
 
-const navigateToDetail = (item,e) => {
 
-}
 
-const SubDetail = (item,e) => {
-
-}
-//xx
-const BlogListComponent = (props) => {
-
-  const items = props.items;
-
-  const content = items.map((item) =>
-
-          <div key={item.id} onClick={(e) => navigateToDetail(item, e)} className="blogger_block">
-                <div className="circle_image">
-                </div>
-                <div className="bl_name_center">
-                    <div className="bl_email_text">{item.user_email}</div>
-                    <div className="buttons_block">
-                      <div className="left_button">
-                        <div className="left_button_one">
-                          <div className="left_button_one_name">
-                             10%
-                          </div>
-                        </div>
-                        <div className="left_button_two">
-                          <div onClick={(e) => View(item.url)} className="left_button_one_name">
-                             {LocalizeComponent.view}
-                          </div>
-                        </div>
-                        <div className="left_button_three">
-                          <div className="left_button_one_name">
-                            <Link className="removeUrlStyles"
-                              to={{
-                                pathname: "/subdetail",
-                                data: item // your data array of objects
-                              }}
-                            >
-                             {LocalizeComponent.detail}
-                           </Link>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                </div>
-            </div>
-  );
-
-  return (
-
-    <div className="blogger_block_margin">
-      {content}
-    </div>
-
-  );
-}
-//BlogList Component
+//initialize function
 
 
 const DetailComponent = (props) => {
@@ -404,23 +326,29 @@ const DetailComponent = (props) => {
   //console.log(props.reduxState.reducerStore);
 
   const locationData = props.location;
+  var Project_id = 9999;
+
+  console.log(locationData);
+
+  var blogger_email = "";
   var ItemData = null;
 
-  var checkDetailId = 0;
 
   if(locationData.data){
-    checkDetailId = locationData.data.id;
+    blogger_email = locationData.data.user_email;
+    Project_id = locationData.data.project_id;
     ItemData = locationData.data;
-    localStorage.setItem("savedId",checkDetailId);
-    localStorage.setItem("savedItemID",JSON.stringify(ItemData));
+    localStorage.setItem("blogger_email",blogger_email);
+    localStorage.setItem("project_id",Project_id);
+    localStorage.setItem("savedItemDataD",JSON.stringify(ItemData));
 
   }else{
-    checkDetailId = localStorage.getItem("savedId");
-    ItemData = JSON.parse(localStorage.getItem("savedItemID"));
+    blogger_email = localStorage.getItem("blogger_email");
+    Project_id = localStorage.getItem("project_id");
+    ItemData = JSON.stringify(localStorage.getItem("savedItemDataD"));
   }
 
-  //console.log(ItemData);
-
+  console.log(ItemData);
 
 
   const classes = useStyles();
@@ -441,22 +369,27 @@ const DetailComponent = (props) => {
   const getDetailData = () => {
 
     var senddata = {
-      "project_id":checkDetailId,
-      "email":config.getUserEmail()
+      "project_id":Project_id,
+      "blogger_email":blogger_email
     }
 
-    DetailService.getDetailData(senddata);
-    DetailService.getDetailApprovedData(senddata);
-    DetailService.getviews(senddata);
+    //console.log(senddata);
+
+    DetailService.getCheckvideosByUser(senddata);
 
   }
 
 
+
+
+
   const onSubmit = ((data) => {
+
 
       setStorageData(prevState => {
           return obj.email = data.email;
       });
+
 
   });
 
@@ -466,32 +399,35 @@ const DetailComponent = (props) => {
 
   useEffect(() => {
 
-    const listenDetailService = DetailService.listenDetailData().subscribe(data => {
-
-      var modifiedArray = data.data;
-      console.log(modifiedArray);
-
-      for(var i = 0;i < modifiedArray.length;i++){
-        if(modifiedArray[i].id == historyId){
-          modifiedArray[i].status = true;
-        }else{
-          modifiedArray[i].status = false;
-        }
-
-      }
-
-      const list = listArray.concat(modifiedArray);
-
-      setListArray(list);
-      //console.log(listArray);
-    });
-
-
-
-    const listenApprove = DetailService.listenApprove().subscribe(data => {
+    const listenDetailService = DetailService.listenCheckvideosByUser().subscribe(data => {
 
       console.log(data);
+      //console.log(historyId);
+//xx
+      if(data.status == "ok"){
+        var modifiedArray = data.data;
 
+        for(var i = 0;i < modifiedArray.length;i++){
+          if(modifiedArray[i].id == historyId){
+            modifiedArray[i].status = true;
+          }else{
+            modifiedArray[i].status = false;
+          }
+        }
+
+        const list = listArray.concat(modifiedArray);
+
+        setListArray(list);
+
+        // console.log(listArray);
+      }
+
+
+
+    });
+
+    const listenBan = DetailService.listenBan().subscribe(data => {
+      console.log(data);
     });
 
 
@@ -514,7 +450,16 @@ const DetailComponent = (props) => {
         const ModifArray = listArray.concat(modify);
         setListArray(ModifArray);
       }else if(from == 2){
+        for(var i = 0;i < modify.length;i++){
+          if(i != modifyId){
+            modify[i].status = false;
+          }else{
+            modify[i].status = true;
+          }
+        }
 
+        const ModifArray = listArrayApprove.concat(modify);
+        setListApproveArray(ModifArray);
       }else if(from == 10){
 
         setInterval(function(){
@@ -531,17 +476,14 @@ const DetailComponent = (props) => {
       getDetailData();
     });
 
-    const listenViews = DetailService.listenViews().subscribe(data => {
-      console.log(data);
-      setViewsCount(data.count);
-    });
+
 
 
     //unsubscribe
 
     return () => {
       listenDetailService.unsubscribe();
-      listenApprove.unsubscribe();
+      listenBan.unsubscribe();
       observable.unsubscribe();
       intervalObservable.unsubscribe();
     }
@@ -552,8 +494,12 @@ const DetailComponent = (props) => {
 
 
   useLayoutEffect(() => {
+
     //initiase functions
     getDetailData();
+
+
+
 
   }, []);
 
@@ -565,98 +511,12 @@ const DetailComponent = (props) => {
     setValue(newValue);
   };
 
- var widthValueFirst = 30 + "%";
- var widthValueSecond = 70 + "%";
-
-
 
   return (
 
     <div className={classes.root}>
         <Grid container >
-
-          <div className="project_title">
-              {LocalizeComponent.request}{ItemData.id}
-          </div>
-
-          <div className="project_description">
-
-              {ItemData.description}
-
-          </div>
-
-          <div className="project_double">
-              <div className="line1">
-                {LocalizeComponent.paid}
-              </div>
-              <div className="line2">
-                {ItemData.sum}
-              </div>
-          </div>
-
-          <div className="project_double">
-              <div className="line3">
-                {LocalizeComponent.approximate_reach}
-              </div>
-              <div className="line2">
-                {ItemData.subscribers}
-              </div>
-          </div>
-
-          <div className="project_double">
-              <div className="line3">
-                {LocalizeComponent.involved_bloggers}
-              </div>
-              <div className="line2">
-                {ItemData.peoplecount}
-              </div>
-          </div>
-
-          <div className="project_double_l">
-              <div className="line3">
-                {LocalizeComponent.platforms_in_use}
-              </div>
-              <div className="line4">
-                <div>
-                  &middot; {LocalizeComponent.tiktok}
-                </div>
-                <div>
-                  &middot; {LocalizeComponent.instagramm}
-                </div>
-                <div>
-                  &middot; {LocalizeComponent.facebook}
-                </div>
-                <div>
-                  &middot; {LocalizeComponent.twitter}
-                </div>
-              </div>
-          </div>
-
-          <div className="list_of_bloggers">
-                {LocalizeComponent.list_of_bloggers}
-          </div>
-
-          <BlogListComponent items={listArray}/>
-
-          <div className="completitionBlock">
-              <div className="left_childCompletitionBlock">
-                {LocalizeComponent.completition}
-              </div>
-              <div className="right_childCompletitionBlock">
-                  <div className="progressButton">
-                      <div style={{width : widthValueFirst}} className="leftprogressButton"></div>
-                      <div style={{width : widthValueSecond}} className="rightprogressButton"></div>
-                  </div>
-
-                  <div className="completition_percent">
-                      <div className="completition_percent_text">
-                        {widthValueFirst}
-                      </div>
-                  </div>
-
-              </div>
-          </div>
-
+          <ListComponent items={listArray}/>
         </Grid>
     </div>
 
