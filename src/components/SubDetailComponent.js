@@ -237,7 +237,7 @@ const SubComponent = (props) => {
           <div className="centrDivone" onClick={(e) => setBan(id)}>
               <DoneOutlineIcon className="leftSide"/>
               <div className="rightSide">
-                  Ban
+                  Ban {LocalizeComponent.ban}
               </div>
           </div>
           <div className="centrDivCopyC" onClick={(e) => View(url)}>

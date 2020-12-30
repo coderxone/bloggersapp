@@ -34,8 +34,10 @@ let strings = new LocalizedStrings({
    twitter:"Twitter ",
    list_of_bloggers:"List of Bloggers ",
    view:"View",
+   profile:"Profile",
    detail:"Detail",
    completition:"Details about completition",
+   profileInformation:"Profile Information",
  },
  it: {
    login:"Login/Registration",

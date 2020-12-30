@@ -1,6 +1,7 @@
 import React, {useState,useEffect,useConstructor,useLayoutEffect} from 'react';
 // import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonInput, IonItem, IonLabel, IonList, IonItemDivider } from '@ionic/react';
 import '../css/mainStyles.css';
+import '../css/profileComponent.css';
 import LocalizeComponent from '../localize/LocalizeComponent';
 import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -155,6 +156,8 @@ const ProfileComponent = (props) => {
 
   const [closeDialog,setCloseDialog] = useState(false);
 
+  var backgroundImageUrl = "https://www.daily-sun.com/assets/news_images/2017/08/14/thumbnails/Daily-Sun-38-01-14-08-2017.jpg";
+
   const onSubmit = ((data) => {
 
 
@@ -218,6 +221,27 @@ const ProfileComponent = (props) => {
 
    	<div className={classes.root}>
         <Grid container >
+          <div className="profileBlock">
+              <div className="profileInformation">
+                  {LocalizeComponent.profileInformation}
+              </div>
+          </div>
+
+          <div className="BloggerMainBlock">
+            <div className="leftSideMainBlock">
+                <div className="AvatarCircle" style ={ { backgroundPosition: "center",backgroundRepeat:"no-repeat",backgroundSize:"cover",background: "url("+backgroundImageUrl+") no-repeat center/cover" }  }  >
+
+                </div>
+
+            </div>
+
+            <div className="rightSideMainBlock">
+                <div className="NameBlock">
+                    Test User
+                </div>
+            </div>
+
+          </div>
 
 
           </Grid>

@@ -230,6 +230,8 @@ const View = (url) => {
   win.focus();
 }
 
+
+
 const SubComponent = (props) => {
 
   var status = props.condition.status;
@@ -365,9 +367,17 @@ const BlogListComponent = (props) => {
                           </div>
                         </div>
                         <div className="left_button_two">
-                          <div onClick={(e) => View(item.url)} className="left_button_one_name">
-                             {LocalizeComponent.view}
-                          </div>
+                          <Link
+                            className="removeUrlStyles"
+                            to={{
+                              pathname: "/profile",
+                              data: item // your data array of objects
+                            }}
+                          >
+                            <div  className="left_button_one_name">
+                               {LocalizeComponent.profile}
+                            </div>
+                        </Link>
                         </div>
                         <div className="left_button_three">
                           <div className="left_button_one_name">
@@ -488,11 +498,11 @@ const DetailComponent = (props) => {
 
 
 
-    const listenApprove = DetailService.listenApprove().subscribe(data => {
-
-      console.log(data);
-
-    });
+    // const listenApprove = DetailService.listenApprove().subscribe(data => {
+    //
+    //   console.log(data);
+    //
+    // });
 
 
 
@@ -541,7 +551,7 @@ const DetailComponent = (props) => {
 
     return () => {
       listenDetailService.unsubscribe();
-      listenApprove.unsubscribe();
+      // listenApprove.unsubscribe();
       observable.unsubscribe();
       intervalObservable.unsubscribe();
     }
