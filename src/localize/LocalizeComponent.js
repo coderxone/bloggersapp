@@ -38,6 +38,10 @@ let strings = new LocalizedStrings({
    detail:"Detail",
    completition:"Details about completition",
    profileInformation:"Profile Information",
+   number_of_c_tasks:"Number of Completed Tasks",
+   rating:"Rating",
+   subscribers_p:"Subscribers",
+   rate:"Rate",
  },
  it: {
    login:"Login/Registration",

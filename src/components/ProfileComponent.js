@@ -243,6 +243,48 @@ const ProfileComponent = (props) => {
 
           </div>
 
+          <div className="TasksBox">
+              <div className="STasksBox">
+                <div className="lTasksBox">
+                  {LocalizeComponent.number_of_c_tasks}
+                </div>
+                <div className="rTasksBox">
+                  1000
+                </div>
+              </div>
+
+              <div className="STasksBox">
+                <div className="lTasksBox">
+                  {LocalizeComponent.rating}
+                </div>
+                <div className="rTasksBox">
+                  4.5 / 5
+                </div>
+              </div>
+
+              <div className="STasksBox">
+                <div className="lTasksBox">
+                  {LocalizeComponent.subscribers_p}
+                </div>
+                <div className="rTasksBox">
+                  25000
+                </div>
+              </div>
+
+              <div className="SbuttonDiv">
+                <div className="RbuttonStyle">
+                  <div className="RbuttonText">
+                      {LocalizeComponent.rate}
+                  </div>
+                </div>
+                <div></div>
+
+              </div>
+
+
+
+          </div>
+
 
           </Grid>
       </div>
