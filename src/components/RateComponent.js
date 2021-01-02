@@ -1,7 +1,6 @@
 import React, {useState,useEffect,useConstructor,useLayoutEffect} from 'react';
 // import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonInput, IonItem, IonLabel, IonList, IonItemDivider } from '@ionic/react';
 import '../css/mainStyles.css';
-import '../css/profileComponent.css';
 import LocalizeComponent from '../localize/LocalizeComponent';
 import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -21,8 +20,8 @@ import { connect } from 'react-redux';
 import AuthService from '../services/AuthService';
 import HomeService from '../services/Homeservice';
 import DialogComponent from '../components/DialogComponent';
-import ProfileService from '../services/ProfileService.js'
 import config from '../config/config.js';
+
 import { increment, decrement,save_email } from '../actions/actions';
 import {
   Link,
@@ -127,24 +126,19 @@ const ErrorDiv = (props) => {
 
 
 
-const ProfileComponent = (props) => {
+const RateComponent = (props) => {
 
-  var checkingEmail = "";
+  var raitingId = 0;
   const locationData = props.location;
+  console.log(locationData.data);
   if(locationData.data){
-    checkingEmail = props.location.data.user_email;
-    localStorage.setItem("checkingEmail",checkingEmail);
-    // localStorage.setItem("checkingItemData",JSON.stringify(ItemData));
+    raitingId = props.location.data;
+    localStorage.setItem("raitingId",raitingId);
   }else{
-    checkingEmail = localStorage.getItem("checkingEmail");
+    raitingId = localStorage.getItem("raitingId");
   }
 
-  //console.log(checkingEmail);
-
-
-
-
-
+  console.log(raitingId);
 
   const classes = useStyles();
   const { register, handleSubmit, errors,setError } = useForm({
@@ -161,8 +155,6 @@ const ProfileComponent = (props) => {
 
   const [closeDialog,setCloseDialog] = useState(false);
 
-  var backgroundImageUrl = "https://www.daily-sun.com/assets/news_images/2017/08/14/thumbnails/Daily-Sun-38-01-14-08-2017.jpg";
-
   const onSubmit = ((data) => {
 
 
@@ -174,18 +166,6 @@ const ProfileComponent = (props) => {
     AuthService.sendRestorePassword(data);//find user
 
   });
-
-  const object = {
-    id:0,
-    email:"",
-    image_url:"",
-    name:"",
-    raiting_stars:5,
-    subscribers_count:300,
-    number_of_task:0
-  }
-
-  const [dataObject,setDataObject] = useState(object);
 
 
 
@@ -214,32 +194,11 @@ const ProfileComponent = (props) => {
 
       }
     });
-
-    const listenUserData = ProfileService.listenUserDataG().subscribe(data => {
-        console.log(data);
-
-        const newEmail = {
-          id:data.result.id,
-          email:data.result.email,
-          image_url:data.result.image_url,
-          name:data.result.name,
-          raiting_stars:data.result.raiting_stars,
-          subscribers_count:data.result.subscribers_count,
-          number_of_task:data.result.number_of_task
-        }
-
-        setDataObject(newEmail);
-
-        // setDataObject(prevState => {
-        //   prevState.email = data.result.email;
-        // })
-    });
     //unsubscribe
 
     return () => {
       sendedEmailService.unsubscribe();
       restoredPassword.unsubscribe();
-      listenUserData.unsubscribe();
     }
 
     //unsubscribe
@@ -247,14 +206,9 @@ const ProfileComponent = (props) => {
   }, []);
 
 
-
-
   useLayoutEffect(() => {
 
     //initiase functions
-
-    ProfileService.getUserData(checkingEmail);
-
 
 
   }, []);
@@ -264,77 +218,6 @@ const ProfileComponent = (props) => {
 
    	<div className={classes.root}>
         <Grid container >
-          <div className="profileBlock">
-              <div className="profileInformation">
-                  {LocalizeComponent.profileInformation}
-              </div>
-          </div>
-
-          <div className="BloggerMainBlock">
-            <div className="leftSideMainBlock">
-                <div className="AvatarCircle" style ={ { backgroundPosition: "center",backgroundRepeat:"no-repeat",backgroundSize:"cover",background: "url("+backgroundImageUrl+") no-repeat center/cover" }  }  >
-
-                </div>
-
-            </div>
-
-            <div className="rightSideMainBlock">
-                <div className="NameBlock">
-                  {dataObject.email}
-                </div>
-            </div>
-
-          </div>
-
-          <div className="TasksBox">
-              <div className="STasksBox">
-                <div className="lTasksBox">
-                  {LocalizeComponent.number_of_c_tasks}
-                </div>
-                <div className="rTasksBox">
-                  {dataObject.number_of_task}
-                </div>
-              </div>
-
-              <div className="STasksBox">
-                <div className="lTasksBox">
-                  {LocalizeComponent.rating}
-                </div>
-                <div className="rTasksBox">
-                  {dataObject.raiting_stars} / 5
-                </div>
-              </div>
-
-              <div className="STasksBox">
-                <div className="lTasksBox">
-                  {LocalizeComponent.subscribers_p}
-                </div>
-                <div className="rTasksBox">
-                  {dataObject.subscribers_count}
-                </div>
-              </div>
-
-              <div className="SbuttonDiv">
-                <div className="RbuttonStyle">
-                  <div className="RbuttonText">
-                    <Link
-                      className="removeUrlStyles"
-                      to={{
-                        pathname: "/rate",
-                        data: dataObject.id// your data array of objects
-                      }}
-                    >
-                      {LocalizeComponent.rate}
-                    </Link>
-                  </div>
-                </div>
-                <div></div>
-
-              </div>
-
-
-
-          </div>
 
 
           </Grid>
@@ -345,4 +228,4 @@ const ProfileComponent = (props) => {
 };
 
 
- export default connect(mapStateToProps,mapDispatchToProps)(ProfileComponent);
+ export default connect(mapStateToProps,mapDispatchToProps)(RateComponent);

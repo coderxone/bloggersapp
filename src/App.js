@@ -22,6 +22,7 @@ import BusinessDashboard from './components/businessDashboard';
 import DetailComponent from './components/DetailComponent';
 import SubDetailComponent from './components/SubDetailComponent';
 import ProfileComponent from './components/ProfileComponent';
+import RateComponent from './components/RateComponent';
 
 
 
@@ -72,6 +73,7 @@ const App = () => (
               <Route path="/detail" component={DetailComponent} exact={true} />
               <Route path="/subdetail" component={SubDetailComponent} exact={true} />
               <Route path="/profile" component={ProfileComponent} exact={true} />
+              <Route path="/rate" component={RateComponent} exact={true} />
               <Route exact path="/" render={() => <Redirect to="/home" />} />
             </Router>
     //     </IonRouterOutlet>
