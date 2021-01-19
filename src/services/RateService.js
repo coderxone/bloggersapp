@@ -15,7 +15,7 @@ const rateService = {
             var data = {
               "deviceid":config.getdeviceid(),
               "email":config.getUserEmail(),
-              "checkEmail": comingData,
+              "data": comingData,
             }
 
             console.log(data);

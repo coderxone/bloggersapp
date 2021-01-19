@@ -42,6 +42,7 @@ let strings = new LocalizedStrings({
    rating:"Rating",
    subscribers_p:"Subscribers",
    rate:"Rate",
+   rateDescribe:"please leave detail review",
  },
  it: {
    login:"Login/Registration",

@@ -122,6 +122,14 @@ body{
   font-family:"Times New Roman", Times, serif;
 }
 
+.center-button{
+  margin-left:25%;
+}
+
+.buttonMargin{
+  margin-top:25px;
+}
+
 .buttonText{
 	color:white;
 	font-family:"Times New Roman", Times, serif;
@@ -178,4 +186,53 @@ ion-item {
   font-size: 1rem;
   padding-left:2px;
   padding-top:4px;
+}
+
+.back-icon-div{
+  width: 70px;
+  height: 70px;
+}
+
+.back-icon{
+  margin-top:10px;
+  margin-left:10px;
+}
+
+.StarDiv{
+  width:100%;
+  height: 35px;
+  margin-top:15%;
+}
+
+.firstStar{
+  width:15%;
+  float: left;
+  font-size: 35px !important;
+  margin-left:20%;
+
+  text-align: center;
+}
+
+.secondStar{
+  width:15%;
+  font-size: 35px !important;
+  float: left;
+  margin-left:3%;
+
+  text-align: center;
+}
+
+.commentBox{
+  width:100%;
+  height: 100px;
+  /* background-color: white; */
+  margin-top:20px;
+}
+
+.usualColorStatus{
+  color:white;
+}
+
+.yellowColorStatus{
+  color:yellow;
 }

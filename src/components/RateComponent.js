@@ -20,7 +20,10 @@ import { connect } from 'react-redux';
 import AuthService from '../services/AuthService';
 import HomeService from '../services/Homeservice';
 import DialogComponent from '../components/DialogComponent';
+import RateService from '../services/RateService';
 import config from '../config/config.js';
+import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
+import StarIcon from '@material-ui/icons/Star';
 
 import { increment, decrement,save_email } from '../actions/actions';
 import {
@@ -74,7 +77,7 @@ const CssTextField = withStyles({
     },
     '& .MuiOutlinedInput-root': {
       '& fieldset': {
-        borderColor: 'red',
+        borderColor: '#8936f4',
       },
       '&:hover fieldset': {
         borderColor: 'yellow',
@@ -94,7 +97,7 @@ const CssTextField = withStyles({
 })(TextField);
 
 const schema = yup.object().shape({
-  email: yup.string().required("Required").email(),
+  rate: yup.string().required("Required"),
 });
 
 
@@ -121,16 +124,10 @@ const ErrorDiv = (props) => {
 }
 
 
-
-
-
-
-
 const RateComponent = (props) => {
 
   var raitingId = 0;
   const locationData = props.location;
-  console.log(locationData.data);
   if(locationData.data){
     raitingId = props.location.data;
     localStorage.setItem("raitingId",raitingId);
@@ -155,15 +152,54 @@ const RateComponent = (props) => {
 
   const [closeDialog,setCloseDialog] = useState(false);
 
+  const [rateindex,setRateIndex] = useState(0);
+
+  var rateObject = {
+    status:0,
+    class:"usualColorStatus"
+  }
+
+  var rateArray = new Array();
+
+  for(var i = 0;i < 5;i++){
+    rateArray.push(rateObject);
+  }
+
+  const [rateArrayStatus,setRateArrayStatus] = useState(rateArray);
+
   const onSubmit = ((data) => {
 
+      var raiteMessage = data.rate;
+      console.log(data);
 
-      setStorageData(prevState => {
-          return obj.email = data.email;
-      });
+    //AuthService.sendRestorePassword(data);//find user
 
+  });
 
-    AuthService.sendRestorePassword(data);//find user
+  const rateEvent = ((rate) => {
+
+    console.log(rate);
+    var newRate = rateArray;
+    var newratecount = rate - 1;
+
+    for(var i = 0;i < 5;i++){
+      if(i < newratecount){
+        console.log(1);
+        newRate[i].class = "yellowColorStatus";
+        console.log(newRate[i].class);
+      }else{
+        console.log(2);
+        newRate[i].class = "usualColorStatus";
+        console.log(newRate[i].class);
+      }
+
+    }
+
+    rateArray = newRate;
+    console.log(newRate);
+
+    const list = rateArrayStatus.concat(newRate);
+    setRateArrayStatus(list);
 
   });
 
@@ -171,34 +207,15 @@ const RateComponent = (props) => {
 
   useEffect(() => {
 
-    const sendedEmailService = HomeService.listenSendMail().subscribe(data => {
 
-      if(data.status == "sended"){
-        setCloseDialog(true);
-      }
+    const listenRateService = RateService.listenRate().subscribe(data => {
+      console.log(data);
     });
 
-    const restoredPassword = AuthService.getRestorePassword().subscribe(data => {
-
-      if(data.status == "usernotfound"){
-        setError("email", {
-              type: "manual",
-              message: LocalizeComponent.user_not_found
-            });
-      }else{
-          //user found send email to him with login and password
-          var sendObject = {
-            email:storageData.email
-          }
-          HomeService.sendNodeMail(sendObject);
-
-      }
-    });
     //unsubscribe
 
     return () => {
-      sendedEmailService.unsubscribe();
-      restoredPassword.unsubscribe();
+
     }
 
     //unsubscribe
@@ -207,9 +224,12 @@ const RateComponent = (props) => {
 
 
   useLayoutEffect(() => {
-
     //initiase functions
-
+    var sendData = {
+      rate:5,
+      userId:raitingId
+    }
+    RateService.setRate(sendData);
 
   }, []);
 
@@ -218,6 +238,43 @@ const RateComponent = (props) => {
 
    	<div className={classes.root}>
         <Grid container >
+
+          <div className="back-icon-div">
+              <ArrowBackIosIcon className="back-icon"/>
+          </div>
+
+          <div className="StarDiv">
+
+              <div  onClick={(event) => rateEvent(1)} ><StarIcon className={"firstStar " + rateArrayStatus[0].class} /></div>
+              <div  onClick={(event) => rateEvent(2)} ><StarIcon  className={"secondStar " + rateArrayStatus[1].class} /></div>
+              <div  onClick={(event) => rateEvent(3)} ><StarIcon  className={"secondStar " + rateArrayStatus[2].class} /></div>
+              <div  onClick={(event) => rateEvent(4)} ><StarIcon  className={"secondStar " + rateArrayStatus[3].class} /></div>
+              <div  onClick={(event) => rateEvent(5)} ><StarIcon  className={"secondStar " + rateArrayStatus[4].class} /></div>
+          </div>
+
+          <div className="commentBox">
+
+            <form onSubmit={handleSubmit(onSubmit)}   className={classes.margin}>
+
+            <CssTextField
+              inputRef={register}
+              name="rate"
+              className="textArea"
+              id="rate"
+              type="text"
+              multiline
+              helperText={errors.rate?.message}
+              variant="outlined"
+              placeholder={LocalizeComponent.rateDescribe}
+              label={LocalizeComponent.rate} />
+
+            <div className="buttonDiv buttonMargin">
+                    <input  className="buttonStyle center-button" type="submit" value={LocalizeComponent.continue_button}/>
+              </div>
+
+            </form>
+
+          </div>
 
 
           </Grid>
