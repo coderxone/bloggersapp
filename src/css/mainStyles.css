@@ -236,3 +236,10 @@ ion-item {
 .yellowColorStatus{
   color:yellow;
 }
+
+.alertPosition{
+  width:70%;
+  position:absolute !important;
+  left:15%;
+  top:80%;
+}
