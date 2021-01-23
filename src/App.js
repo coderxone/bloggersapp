@@ -23,6 +23,7 @@ import DetailComponent from './components/DetailComponent';
 import SubDetailComponent from './components/SubDetailComponent';
 import ProfileComponent from './components/ProfileComponent';
 import RateComponent from './components/RateComponent';
+import SelectRoleComponent from './components/SelectRoleComponent';
 
 
 
@@ -74,6 +75,7 @@ const App = () => (
               <Route path="/subdetail" component={SubDetailComponent} exact={true} />
               <Route path="/profile" component={ProfileComponent} exact={true} />
               <Route path="/rate" component={RateComponent} exact={true} />
+              <Route path="/role" component={SelectRoleComponent} exact={true} />
               <Route exact path="/" render={() => <Redirect to="/home" />} />
             </Router>
     //     </IonRouterOutlet>

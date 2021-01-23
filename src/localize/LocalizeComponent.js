@@ -43,6 +43,16 @@ let strings = new LocalizedStrings({
    subscribers_p:"Subscribers",
    rate:"Rate",
    rateDescribe:"please leave detail review",
+   successAction:"Success action Thanks!",
+   rateAction:"Please click star to rate!",
+   cantRate:"You already rate..",
+   selectRole:"Select Role",
+   blogger:"Blogger",
+   business:"Business",
+   continue:"Continue?",
+   no:"no",
+   yes:"yes",
+
  },
  it: {
    login:"Login/Registration",

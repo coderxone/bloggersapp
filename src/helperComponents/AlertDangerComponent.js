@@ -22,7 +22,7 @@ export default function SimpleAlerts(props) {
     {state === true ? (
       <div className="alertPosition">
           <div className={classes.root}>
-            <Alert severity="success">{text}</Alert>
+            <Alert severity="error">{text}</Alert>
           </div>
        </div>
      ) : (

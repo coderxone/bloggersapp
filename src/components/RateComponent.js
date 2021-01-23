@@ -21,6 +21,7 @@ import AuthService from '../services/AuthService';
 import HomeService from '../services/Homeservice';
 import DialogComponent from '../components/DialogComponent';
 import AlertSuccessComponent from '../helperComponents/AlertSuccessComponent';
+import AlertDangerComponent from '../helperComponents/AlertDangerComponent';
 import GoBack from '../helperComponents/goBackComponent';
 import RateService from '../services/RateService';
 import config from '../config/config.js';
@@ -160,6 +161,11 @@ const RateComponent = (props) => {
   const [rateindex,setRateIndex] = useState(0);
 
   const [sucessState,setSucessState] = useState(false);
+  const [dangerState,setDangerState] = useState(false);
+
+  const [ratetext,setRateText] = useState('');
+
+  const [alertText,setAlertText] = useState("Success action Thanks!");
 
   var rateObject = {
     status:0,
@@ -200,21 +206,31 @@ const RateComponent = (props) => {
   ]);
 
 
+
+
   const onSubmit = ((data) => {
 
       var raiteMessage = data.rate;
       console.log(data);
       //rateindex
+      console.log(rateindex);
 
-      if((rateindex == 0) && (raiteMessage.length < 1)){
-        return false;
+      if((rateindex == 0) || (raiteMessage.length < 1)){
+
+        setAlertText(LocalizeComponent.rateAction);
+        setDangerState(true);
+        hideAlert();
+
+      }else{
+        var sendData = {
+          rate:rateindex,
+          userId:raitingId,
+          text:raiteMessage
+        }
+        RateService.setRate(sendData);
       }
-      var sendData = {
-        rate:rateindex,
-        userId:raitingId,
-        text:raiteMessage
-      }
-      RateService.setRate(sendData);
+
+
 
 
   });
@@ -222,6 +238,8 @@ const RateComponent = (props) => {
   const rateEvent = ((rate) => {
 
     var newratecount = rate;
+
+    setSucessState(false);
 
     const newrateArrayStatus = [...rateArrayStatus];
 
@@ -237,6 +255,22 @@ const RateComponent = (props) => {
 
   });
 
+  const setRateInputValue = ((event) => {
+    var value = event.target.value;
+
+    setRateText(value);
+    //setRateText
+
+  });
+
+  const hideAlert = () => {
+
+    setTimeout(function(){
+      setSucessState(false);
+      setDangerState(false);
+    },3000);
+  }
+
 
 
   useEffect(() => {
@@ -245,11 +279,16 @@ const RateComponent = (props) => {
     const listenRateService = RateService.listenRate().subscribe(data => {
       console.log(data);
       if(data.status == "ok"){
-        setSucessState(true);
+        setRateText("");//clean input
+        setAlertText(LocalizeComponent.successAction);//setText in Alert
+        setSucessState(true);//show alert
+        hideAlert();//hide alert through 2 sec
+      }else if(data.status = "exist_user"){
 
-        setTimeout(function(){
-          setSucessState(false);
-        },3000);
+        setAlertText(LocalizeComponent.cantRate);
+        setDangerState(true);
+        hideAlert();
+
       }
     });
 
@@ -302,16 +341,18 @@ const RateComponent = (props) => {
               inputRef={register}
               name="rate"
               className="textArea"
+              onChange={setRateInputValue}
               id="rate"
               type="text"
               multiline
+              value={ratetext}
               helperText={errors.rate?.message}
               variant="outlined"
               placeholder={LocalizeComponent.rateDescribe}
               label={LocalizeComponent.rate} />
 
             <div className="buttonDiv buttonMargin">
-                    <input  className="buttonStyle center-button" type="submit" value={LocalizeComponent.continue_button}/>
+                    <input  className="buttonStyle center-button" type="submit" value={LocalizeComponent.rate}/>
               </div>
 
             </form>
@@ -319,13 +360,8 @@ const RateComponent = (props) => {
           </div>
 
 
-          <AlertSuccessComponent state={sucessState}/>
-
-
-
-
-
-
+          <AlertSuccessComponent state={sucessState} text={alertText}/>
+          <AlertDangerComponent state={dangerState} text={alertText}/>
 
           </Grid>
 
