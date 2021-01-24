@@ -24,6 +24,7 @@ import SubDetailComponent from './components/SubDetailComponent';
 import ProfileComponent from './components/ProfileComponent';
 import RateComponent from './components/RateComponent';
 import SelectRoleComponent from './components/SelectRoleComponent';
+import BloggerDashboardComponent from './components/BloggerDashboardComponent';
 
 
 
@@ -76,6 +77,7 @@ const App = () => (
               <Route path="/profile" component={ProfileComponent} exact={true} />
               <Route path="/rate" component={RateComponent} exact={true} />
               <Route path="/role" component={SelectRoleComponent} exact={true} />
+              <Route path="/blogger" component={BloggerDashboardComponent} exact={true} />
               <Route exact path="/" render={() => <Redirect to="/home" />} />
             </Router>
     //     </IonRouterOutlet>

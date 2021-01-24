@@ -1,6 +1,7 @@
 import React, {useState,useEffect,useConstructor,useLayoutEffect} from 'react';
 // import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonInput, IonItem, IonLabel, IonList, IonItemDivider } from '@ionic/react';
 import '../css/mainStyles.css';
+import '../css/bloggerdashboard.css';
 import LocalizeComponent from '../localize/LocalizeComponent';
 import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -109,7 +110,7 @@ const MessageComponent = (props) => {
 
 
 
-const ProfileComponent = (props) => {
+const BloggerDashboardComponent = (props) => {
 
   var checkingEmail = "";
   const locationData = props.location;
@@ -172,10 +173,29 @@ const ProfileComponent = (props) => {
   return (
 
    	<div className={classes.root}>
-        <Grid container >
+        <Grid container>
+
+              <div className="MainBlock">
+
+                  <div className="firstLevel">
+                      <div className="firstLevelText">
+                          Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lodsdsdsdsrem Lorem Losdsdsdsdsrem Lorem Lorem Lorsdsdsdsem Lorem Lorem Lorem Lorem
+                          Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem
+                          Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem
+                          Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem
+                          Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem
+                      </div>
+                  </div>
+
+                  <div className="secondLevel">
 
 
-          </Grid>
+                  </div>
+
+
+              </div>
+
+        </Grid>
       </div>
 
 
@@ -183,4 +203,4 @@ const ProfileComponent = (props) => {
 };
 
 
- export default connect(mapStateToProps,mapDispatchToProps)(ProfileComponent);
+ export default connect(mapStateToProps,mapDispatchToProps)(BloggerDashboardComponent);
