@@ -171,6 +171,7 @@ const ApplyComponent = () => {
   var databasedefaultSliderValue = 200;
   const [peopleCount,setPeopleCount] = useState(6);
   const [subscribers,setSubscribers] = useState(500);
+  const [subscribersor,setSubscribersor] = useState(500);
 
 
   const [address,setAddress] = useState("");
@@ -204,7 +205,7 @@ const ApplyComponent = () => {
         data.coord = coord;
         data.amount = defaultSliderValue;
         data.peopleCount = peopleCount;
-        data.subscribers = subscribers;
+        data.subscribers = subscribersor;
       }
 
       console.log(data);
@@ -232,6 +233,8 @@ const ApplyComponent = () => {
           //console.log(data);
           setPeopleCount(data.countOfBloggers);
           setSubscribers(data.subscribersResult);
+          setSubscribersor(data.originalNumber);
+          //originalNumber
       });
 
 

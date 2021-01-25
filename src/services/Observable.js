@@ -23,6 +23,20 @@ const observ_f = {
         return timer10second;
       },
 
+      subscribeByTimer_2_second:() => {
+
+        const timer2000second = interval(2000);
+
+        return timer2000second;
+      },
+
+      subscribeByTimer_4_second:() => {
+
+        const timer4000second = interval(4000);
+
+        return timer4000second;
+      },
+
       test:(test => {
         return "test";
       }),

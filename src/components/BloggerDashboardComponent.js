@@ -22,7 +22,10 @@ import AuthService from '../services/AuthService';
 import HomeService from '../services/Homeservice';
 import DialogComponent from '../components/DialogComponent';
 import config from '../config/config.js';
-
+import { Plugins} from "@capacitor/core";
+import Observable from '../services/Observable';
+import BloggerService from '../services/BloggersService';
+import SkeletonComponent from '../helperComponents/SkeletonComponent';
 import { increment, decrement,save_email } from '../actions/actions';
 import {
   Link,
@@ -108,6 +111,70 @@ const MessageComponent = (props) => {
 }
 
 
+const BlockComponent = (props) => {
+
+  const items = props.items;
+  const dist = props.distance;
+
+  const content = items.map((item,index) =>
+
+    <div key={item.id} className="MainBlock withoutScroll">
+      <div  className="firstLevel">
+          <div className="firstLevelText">
+              {item.url} - {item.description}
+            <br />distance less than {dist} miles
+          </div>
+      </div>
+      <div className="secondLevel">
+        <div className="secondLevelShare">
+          <div className="secondLevelOne">
+            <div className="shouldButton">
+                <div className="shouldButtonText">
+                      limit: {item.peoplecount} infl.
+                </div>
+            </div>
+          </div>
+          <div className="secondLevelTwo">
+            <div className="shareButton">
+                <div className="shareButtonText">
+                      share
+                </div>
+            </div>
+          </div>
+        </div>
+        <div className="secondLevelShareThree">
+          <div className="secondLevelThree">
+            <div className="shouldButtonThree">
+                <div className="shouldButtonText">
+                      {item.date} - {item.time}
+                </div>
+            </div>
+          </div>
+          <div className="secondLevelThreeTwo">
+            <div className="shareButtonThree">
+                <div className="shareButtonText">
+                      {item.sum} $
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  );
+
+
+
+  return (
+    <div className="fullWidth withoutScroll" >
+      {content}
+    </div>
+  );
+
+
+}
+
+
 
 
 const BloggerDashboardComponent = (props) => {
@@ -122,7 +189,7 @@ const BloggerDashboardComponent = (props) => {
     checkingEmail = localStorage.getItem("checkingEmail");
   }
 
-  console.log(checkingEmail);
+  //console.log(checkingEmail);
 
   const classes = useStyles();
   const { register, handleSubmit, errors,setError } = useForm({
@@ -139,6 +206,12 @@ const BloggerDashboardComponent = (props) => {
 
   const [closeDialog,setCloseDialog] = useState(false);
 
+  const [items,SetItems] = useState([]);
+
+  const [status,SetStatus] = useState(false);
+
+  const [distance,setDistance] = useState(20);
+
   const onSubmit = ((data) => {
 
 
@@ -146,9 +219,87 @@ const BloggerDashboardComponent = (props) => {
 
   });
 
+  const { Geolocation} = Plugins;
+
+  const [latitude, setLatitude] = useState(0);
+  const [longitude, setLongitude] = useState(0);
+
+  const checkData = (() => {
+
+        if((latitude != 0) && (longitude != 0)){
+
+          BloggerService.setAllData(latitude,longitude);
+
+        }
+
+  });
+
 
 
   useEffect(() => {
+
+    const BloggerListen = BloggerService.listenUserDataG().subscribe((data) => {
+
+        if(data.sdata.length > 0){
+          const insertArray = [...items];
+          for(var i = 0;i < data.sdata.length;i++){
+            insertArray[i] = data.sdata[i];
+          }
+
+          SetItems(insertArray);
+          setDistance(data.distance);
+          SetStatus(true);
+        }else{
+          SetStatus(false);
+        }
+
+    });
+
+    Observable.subscribeByTimer_10_second().subscribe(data => {
+        checkData();
+    });
+
+
+    async function WatchPosition(){
+
+      try{
+        const wait = Geolocation.watchPosition({}, (position, err) => {
+
+          if(err){
+            return false;
+          }
+          if(position){
+            setLatitude(position.coords.latitude);
+            setLongitude(position.coords.longitude);
+          }
+
+
+        });
+      }catch(e){
+        //console.log(e);
+      }
+
+
+    };
+
+    Observable.subscribeByTimer_4_second().subscribe((data) => {
+
+      WatchPosition();
+
+      setTimeout(function(){
+        checkData();
+      },2000);
+
+      if((latitude != 0) && (longitude != 0)){
+        //console.log(latitude);
+        //console.log(longitude);
+      }
+
+    });
+
+
+
+    WatchPosition();
 
 
     //unsubscribe
@@ -159,7 +310,7 @@ const BloggerDashboardComponent = (props) => {
 
     //unsubscribe
 
-  }, []);
+  }, [latitude,longitude,status]);
 
 
   useLayoutEffect(() => {
@@ -173,29 +324,17 @@ const BloggerDashboardComponent = (props) => {
   return (
 
    	<div className={classes.root}>
-        <Grid container>
 
-              <div className="MainBlock">
-
-                  <div className="firstLevel">
-                      <div className="firstLevelText">
-                          Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lodsdsdsdsrem Lorem Losdsdsdsdsrem Lorem Lorem Lorsdsdsdsem Lorem Lorem Lorem Lorem
-                          Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem
-                          Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem
-                          Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem
-                          Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem
-                      </div>
-                  </div>
-
-                  <div className="secondLevel">
-
-
-                  </div>
-
-
-              </div>
-
+      {status === false ? (
+        <Grid container className="withoutScroll">
+           <SkeletonComponent/>
         </Grid>
+       ) : (
+         <Grid container className="withoutScroll">
+            <BlockComponent items={items} distance={distance}/>
+         </Grid>
+       )}
+
       </div>
 
 

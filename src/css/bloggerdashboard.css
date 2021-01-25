@@ -1,20 +1,40 @@
-.MainBlock{
+
+.fullWidth{
+  width: 97.5%;
+  ::-webkit-scrollbar {
+        display: none !important;
+    }
+}
+
+.SkeletonMainBlock{
   width:100%;
   height: 150px;
-  background-color: white;
+  background-color: #e6e4df;
   margin-left: 5px;
   margin-right: 5px;
   border-radius: 7px;
+  margin-top:5px;
+}
+
+.MainBlock{
+  width:100%;
+  height: 150px;
+
+  margin-left: 5px;
+  margin-right: 5px;
+  border-radius: 7px;
+  background:linear-gradient(to right, #8936f4, #0083ff);
+  margin-top:5px;
 }
 
 .firstLevel{
   width:96.5%;
-  height: 46%;
+  height: 44%;
   /* background-color: blue; */
   margin-top:5px;
   margin-left:5px;
   border-radius: 7px;
-  border:1px solid black;
+  border:1px solid white;
 }
 
 .firstLevelText{
@@ -25,6 +45,122 @@
   height: 80%;
   width: 100%;
   font-family:"Times New Roman", Times, serif;
+  color:white;
 
   /* white-space: nowrap; */
+}
+
+.secondLevel{
+  width:96.5%;
+  height: 43%;
+  margin-top:5px;
+  margin-left:5px;
+  border-radius: 7px;
+  border:1px solid white;
+
+}
+
+.secondLevelShare{
+  width: 100%;
+  height: 50%;
+}
+
+.secondLevelOne{
+  width:50%;
+  height: 100%;
+  /* background-color: blue; */
+  float: left;
+
+}
+.secondLevelTwo{
+  width:50%;
+  height: 100%;
+  /* background-color: red; */
+  float: left;
+}
+
+.shouldButton{
+  width:80%;
+  height: 80%;
+  /* background-color: white; */
+  margin-left:10%;
+  margin-top:2px;
+  border-radius: 5px;
+  border:1px solid white;
+}
+
+.shouldButtonText{
+  width: 100%;
+  height: 100%;
+  font-family:"Times New Roman", Times, serif;
+  color:white;
+  text-align: center;
+  font-size: 18px;
+  padding-top:1px;
+}
+
+.shareButton{
+  width:80%;
+  height: 80%;
+  border:1px solid white;
+  /* background-color: white; */
+  margin-left:10%;
+  margin-top:2px;
+  border-radius: 50px;
+}
+
+.shareButtonText{
+  width: 100%;
+  height: 100%;
+  font-family:"Times New Roman", Times, serif;
+  color:white;
+  text-align: center;
+  font-size: 18px;
+  padding-top:1px;
+}
+
+.thirstLevel{
+  width:96.5%;
+  height: 43%;
+  margin-left:5px;
+  border-radius: 7px;
+  border:1px solid #161730;
+}
+
+.secondLevelShareThree{
+  width: 100%;
+  height: 50%;
+}
+
+.secondLevelThree{
+  width:65%;
+  height: 100%;
+  /* background-color: blue; */
+  float: left;
+}
+.secondLevelThreeTwo{
+  width:35%;
+  height: 100%;
+  /* background-color: red; */
+  float: left;
+}
+
+.shouldButtonThree{
+  width:80%;
+  height: 80%;
+  border:1px solid white;
+  /* background-color: white; */
+  margin-left:10%;
+  margin-top:2px;
+  border-radius: 5px;
+}
+
+.shareButtonThree{
+  border:1px solid white;
+  width:80%;
+  height: 80%;
+  /* background-color: white; */
+  margin-left:10%;
+  margin-top:2px;
+  border-radius: 5px;
 }
