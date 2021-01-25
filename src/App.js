@@ -25,6 +25,7 @@ import ProfileComponent from './components/ProfileComponent';
 import RateComponent from './components/RateComponent';
 import SelectRoleComponent from './components/SelectRoleComponent';
 import BloggerDashboardComponent from './components/BloggerDashboardComponent';
+import DetailTaskComponent from './components/DetailTaskComponent';
 
 
 
@@ -78,6 +79,7 @@ const App = () => (
               <Route path="/rate" component={RateComponent} exact={true} />
               <Route path="/role" component={SelectRoleComponent} exact={true} />
               <Route path="/blogger" component={BloggerDashboardComponent} exact={true} />
+              <Route path="/detailtask" component={DetailTaskComponent} exact={true} />
               <Route exact path="/" render={() => <Redirect to="/home" />} />
             </Router>
     //     </IonRouterOutlet>

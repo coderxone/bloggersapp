@@ -1,0 +1,121 @@
+.descriptBox{
+  width:100%;
+  height: 250px;
+  border-radius: 7px;
+  /* background-color: white; */
+  margin-left:5px;
+  margin-right:5px;
+  margin-top:5px;
+  border:1px solid white;
+}
+
+.descriptionText{
+  /* color:#161730; */
+  padding:10px;
+  font-size: 18px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.buttonBox{
+  width: 100%;
+  height: 35px;
+  /* background-color: white; */
+  margin-top:15px;
+
+}
+
+.generateButton{
+  width: 70%;
+  height: 100%;
+  margin-left: 15%;
+  background:linear-gradient(to right, #8936f4, #0083ff);
+  border-radius: 10px;
+}
+
+.generateButtonText{
+  color:white;
+  font-family:"Times New Roman", Times, serif;
+  font-size: 18px;
+  text-align: center;
+  padding-top:3px;
+}
+
+.buttonShare{
+  width: 100%;
+  height: 50px;
+  /* background-color: white; */
+  margin-top:15px;
+
+}
+
+.generateButton{
+  width: 70%;
+  height: 100%;
+  margin-left: 15%;
+  background:linear-gradient(to right, #8936f4, #0083ff);
+  border-radius: 10px;
+}
+
+.generateButtonText{
+  color:white;
+  font-family:"Times New Roman", Times, serif;
+  font-size: 18px;
+  text-align: center;
+  padding-top:3px;
+}
+
+.ShareNameBox{
+  width: 100%;
+  height: 25px;
+  margin-top:5px;
+  /* background-color: white; */
+}
+
+.ShareNameText{
+  text-align: center;
+  font-size: 18px;
+}
+
+.setBox{
+  border:1px solid white;
+  width: 100%;
+  height: 130px;
+  /* background-color: white; */
+  border-radius: 7px;
+  margin-top:15px;
+}
+
+.setInputStyle{
+  width: 80%;
+  height: 30px;
+  border-radius: 7px;
+  margin-left:9%;
+  margin-top:5px;
+  font-size: 16px;
+
+}
+
+.buttonBoxSet{
+  width: 100%;
+  height: 30px;
+  /* background-color: white; */
+  margin-top:15px;
+
+}
+
+.generateButtonSet{
+  width: 70%;
+  height: 100%;
+  margin-left: 15%;
+  background:linear-gradient(to right, #8936f4, #0083ff);
+  border-radius: 10px;
+}
+
+.generateButtonTextSet{
+  color:white;
+  font-family:"Times New Roman", Times, serif;
+  font-size: 18px;
+  text-align: center;
+  padding-top:3px;
+}

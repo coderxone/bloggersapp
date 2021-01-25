@@ -1,7 +1,7 @@
 import React, {useState,useEffect,useConstructor,useLayoutEffect} from 'react';
 // import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonInput, IonItem, IonLabel, IonList, IonItemDivider } from '@ionic/react';
 import '../css/mainStyles.css';
-import '../css/bloggerdashboard.css';
+import '../css/DetailDescriptionComponent.css';
 import LocalizeComponent from '../localize/LocalizeComponent';
 import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -118,48 +118,55 @@ const BlockComponent = (props) => {
 
   const content = items.map((item,index) =>
 
-    <div key={item.id} className="MainBlock withoutScroll">
-      <div  className="firstLevel">
-          <div className="firstLevelText">
-              {item.url} - {item.description}
-            <br />distance less than {dist} miles
+  <Link key={item.id} className="deleteUrlClass"
+      to={{
+        pathname: "/detailtask",
+        data: item // your data array of objects
+      }}
+      >
+        <div  className="MainBlock withoutScroll">
+          <div  className="firstLevel">
+              <div className="firstLevelText">
+                  {item.url} - {item.description}
+                <br />distance less than {dist} miles
+              </div>
           </div>
-      </div>
-      <div className="secondLevel">
-        <div className="secondLevelShare">
-          <div className="secondLevelOne">
-            <div className="shouldButton">
-                <div className="shouldButtonText">
-                      limit: {item.peoplecount} infl.
+          <div className="secondLevel">
+            <div className="secondLevelShare">
+              <div className="secondLevelOne">
+                <div className="shouldButton">
+                    <div className="shouldButtonText">
+                          limit: {item.peoplecount} infl.
+                    </div>
                 </div>
+              </div>
+              <div className="secondLevelTwo">
+                <div className="shareButton">
+                    <div className="shareButtonText">
+                          share
+                    </div>
+                </div>
+              </div>
             </div>
-          </div>
-          <div className="secondLevelTwo">
-            <div className="shareButton">
-                <div className="shareButtonText">
-                      share
+            <div className="secondLevelShareThree">
+              <div className="secondLevelThree">
+                <div className="shouldButtonThree">
+                    <div className="shouldButtonText">
+                          {item.date} - {item.time}
+                    </div>
                 </div>
+              </div>
+              <div className="secondLevelThreeTwo">
+                <div className="shareButtonThree">
+                    <div className="shareButtonText">
+                          {item.sum} $
+                    </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-        <div className="secondLevelShareThree">
-          <div className="secondLevelThree">
-            <div className="shouldButtonThree">
-                <div className="shouldButtonText">
-                      {item.date} - {item.time}
-                </div>
-            </div>
-          </div>
-          <div className="secondLevelThreeTwo">
-            <div className="shareButtonThree">
-                <div className="shareButtonText">
-                      {item.sum} $
-                </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    </Link>
 
   );
 
