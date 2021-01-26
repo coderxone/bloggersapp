@@ -9,6 +9,11 @@
   border:1px solid white;
 }
 
+.fullWidth{
+  width: 95% !important;
+  margin-left: 2.5%;
+}
+
 .descriptionText{
   /* color:#161730; */
   padding:10px;
@@ -67,7 +72,7 @@
 
 .ShareNameBox{
   width: 100%;
-  height: 25px;
+  height: 95px;
   margin-top:5px;
   /* background-color: white; */
 }
@@ -77,10 +82,14 @@
   font-size: 18px;
 }
 
+.socialColor{
+  color:red;
+}
+
 .setBox{
   border:1px solid white;
   width: 100%;
-  height: 130px;
+  height: 220px;
   /* background-color: white; */
   border-radius: 7px;
   margin-top:15px;

@@ -35,16 +35,18 @@ const DetailTaskService = {
           },
 
 
-          setUrl:(id) => {
+          setUrl:(obj) => {
 
             var data = {
               deviceid:config.getdeviceid(),
               email:config.getUserEmail(),
-              id: id,
-              status:"set" //check
+              id: obj.id,
+              videotype:obj.videotype,
+              url:obj.url,
+              status:obj.set //check
             }
 
-            console.log(data);
+            //console.log(data);
 
             var encryptedData = cryptLibrary.encrypt(data);
 
@@ -53,6 +55,32 @@ const DetailTaskService = {
 
           listenSetUrl:() => {
             socket.on("setvideo",(data) => {
+                //console.log(data);
+                observ_subject2.next(cryptLibrary.decrypt(data));
+            });
+
+            return observ_subject2;
+          },
+
+
+          checkUrl:(obj) => {
+
+            var data = {
+              deviceid:config.getdeviceid(),
+              email:config.getUserEmail(),
+              id: obj.id,
+              status:obj.set //check
+            }
+
+            //console.log(data);
+
+            var encryptedData = cryptLibrary.encrypt(data);
+
+            socket.emit("checkvideo",encryptedData);
+          },
+
+          listenCheckUrl:() => {
+            socket.on("checkvideo",(data) => {
                 //console.log(data);
                 observ_subject2.next(cryptLibrary.decrypt(data));
             });

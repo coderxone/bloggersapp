@@ -1,6 +1,7 @@
 import React, {useState,useEffect,useConstructor,useLayoutEffect} from 'react';
 // import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonInput, IonItem, IonLabel, IonList, IonItemDivider } from '@ionic/react';
 import '../css/mainStyles.css';
+import '../css/DetailDescriptionComponent.css';
 import LocalizeComponent from '../localize/LocalizeComponent';
 import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -23,6 +24,8 @@ import DialogComponent from '../components/DialogComponent';
 import config from '../config/config.js';
 import DetailTaskService from '../services/DetailTaskService';
 import AlertSuccessComponent from '../helperComponents/AlertSuccessComponent';
+import StepperComponent from '../helperComponents/StepperComponent';
+
 
 import { increment, decrement,save_email } from '../actions/actions';
 import {
@@ -113,7 +116,7 @@ const MessageComponent = (props) => {
 
 const DetailTaskComponent = (props) => {
 
-  var detailData = "";
+  var detailData = {};
   const locationData = props.location;
   if(locationData.data){
     detailData = JSON.stringify(props.location.data);
@@ -189,13 +192,53 @@ const DetailTaskComponent = (props) => {
       SetInputText(string);
   });
 
+  var netWorkArray = ["Instagram","Facebook","Youtube","Twitter"];
+
+  const [currentNetWork,SetCurrentNetwork] = useState(netWorkArray[0]);
+
+  const [stepper,SetStep] = useState(0);
+
   const Share = (() => {
 
+
+      if(inputtext.length > 0){
+        var obj = {
+          id:detailData.id,
+          videotype:netWorkArray[stepper],
+          url:inputtext,
+          set:"set"
+        }
+
+        DetailTaskService.setUrl(obj);
+      }
+
+      //inputtext
+      //videotype
+  });
+
+
+  const CheckVideos = (() => {
+
+    var checkObj = {
+      status:"check",
+      id:detailData.id,
+    }
+    DetailTaskService.checkUrl(checkObj);
   });
 
 
 
+
   useEffect(() => {
+
+    const ListenlistenSetUrl = DetailTaskService.listenSetUrl().subscribe(data => {
+      console.log(data);
+      SetStep(stepper => stepper + 1);
+    });
+    const ListenlistenCheckUrl = DetailTaskService.listenCheckUrl().subscribe(data => {
+      console.log(data);
+      //SetStep(stepper => stepper + 1);
+    });
 
     const unsub = DetailTaskService.listenGenerateUrl().subscribe(data => {
         console.log(data);
@@ -221,7 +264,7 @@ const DetailTaskComponent = (props) => {
   useLayoutEffect(() => {
 
     //initiase functions
-
+    CheckVideos();
 
   }, []);
 
@@ -262,16 +305,22 @@ const DetailTaskComponent = (props) => {
                <div className="setBox">
                  <div className="ShareNameBox">
                     <div className="ShareNameText">
-                        Share to All your networks (automatically)
+                        {LocalizeComponent.currentStep} <div className="socialColor">{currentNetWork} {LocalizeComponent.socialNetwork}</div>
+                        {LocalizeComponent.currentStepAfter}
                     </div>
                  </div>
+
+                 <div className="fullWidth">
+                    <StepperComponent step={stepper}/>
+                 </div>
+
 
                  <input type="text" value={inputtext}  onChange={event => setText(event.target.value)} className="setInputStyle" name="setUrl"></input>
 
                    <div className="buttonBoxSet">
                        <div className="generateButtonSet" onClick={Share}>
                            <div className="generateButtonTextSet"  >
-                               share
+                               next
                            </div>
                        </div>
                    </div>
@@ -282,7 +331,7 @@ const DetailTaskComponent = (props) => {
                <div className="buttonShare">
                    <div className="generateButton" >
                        <div className="generateButtonText"  >
-                           Complete this task with a friend influencer
+                           Complete this task with a friend creator
                        </div>
                    </div>
                </div>
