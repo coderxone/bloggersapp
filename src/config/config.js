@@ -4,8 +4,9 @@ import React from 'react';
 const cryptKey = "cryptoGraph2020";
 const routeUrl = "https://kazpoisk.kz";
 //const userRole = "1"; blogger
-//const userRole = "2"; //business owner
-const userRole = "1"; //blogger
+const userRole = "2"; //business owner
+//const userRole = "1"; //blogger
+//localStorage.setItem("role",action.email);
 
 const newmodule = {
 
@@ -79,7 +80,7 @@ const newmodule = {
       },
 
       getUserRole:() => {
-          return userRole;
+          return localStorage.getItem("role");;
       },
 
       getBaseUrl:() => {

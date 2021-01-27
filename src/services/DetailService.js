@@ -9,6 +9,7 @@ const observ_subjecttwo = new Subject();
 const observ_subjectthree = new Subject();
 const observ_subjectfour = new Subject();
 const observ_subjectfive = new Subject();
+const observ_subjectfive44 = new Subject();
 
 const detailservice = {
 
@@ -28,10 +29,10 @@ const detailservice = {
       listenDetailData:() => {
         socket.on("checkvideo",(data) => {
             //console.log(data);
-            observ_subject.next(cryptLibrary.decrypt(data));
+            observ_subjectfive44.next(cryptLibrary.decrypt(data));
         });
 
-        return observ_subject;
+        return observ_subjectfive44;
       },
 
 

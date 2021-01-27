@@ -22,7 +22,7 @@ import AuthService from '../services/AuthService';
 
 import { increment, decrement,save_email } from '../actions/actions';
 import {
-  Link,
+  Link, Redirect
 } from "react-router-dom";
 
 
@@ -106,6 +106,8 @@ const schema = yup.object().shape({
 
 const AuthorizationComponent = (props) => {
 
+  const [redirect,Setredirect] = useState(false);
+  const [route,SetRoute] = useState("");
   const classes = useStyles();
   const { register, handleSubmit, errors,setError } = useForm({
     resolver: yupResolver(schema)
@@ -146,11 +148,26 @@ const AuthorizationComponent = (props) => {
 
           if((data.status == "olduser") && (data.password == true)){
 
+
+            //console.log(data);
             props.dispatch(save_email(storageData));
+
+            if(data.role == 2){
+                SetRoute("/business");
+                Setredirect(true);
+            }else if(data.role == 1){
+              SetRoute("/blogger");
+              Setredirect(true);
+            }
+
 
           }else if(data.status == "newuser"){
 
                 props.dispatch(save_email(storageData));
+
+                  SetRoute("/role");
+                  Setredirect(true);
+
 
           }else{
 
@@ -250,6 +267,16 @@ const AuthorizationComponent = (props) => {
 
 
               </Box>
+
+
+               {redirect === false ? (
+                 <Box>
+
+                 </Box>
+                ) : (
+                  <Redirect to={route} />
+                )}
+
 
             </Paper>
           </Grid>

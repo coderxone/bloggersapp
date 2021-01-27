@@ -55,6 +55,8 @@ let strings = new LocalizedStrings({
    currentStep:"create video about business and upload here: ",
    socialNetwork:" (social network) ",
    currentStepAfter:" copy link and insert below inside form, then click button 'next': ",
+   doneTask:"Task Submitted",
+   waitingApprove:"under consideration by business",
 
  },
  it: {

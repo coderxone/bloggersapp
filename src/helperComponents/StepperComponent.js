@@ -17,6 +17,8 @@ const StyledMobileStepper = withStyles({
 const ProgressMobileStepper = (props) => {
 
   const currentState = props.step;
+  const count = props.count;
+
 
   const handleNext = () => {
 
@@ -29,7 +31,7 @@ const ProgressMobileStepper = (props) => {
   return(
     <StyledMobileStepper
       variant="progress"
-      steps={6}
+      steps={count}
       position="static"
       activeStep={currentState}
 

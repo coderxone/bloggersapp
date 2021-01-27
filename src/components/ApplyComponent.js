@@ -32,7 +32,7 @@ import AlarmIcon from '@material-ui/icons/Alarm';
 import ReactGeoCodeComponent from './GeocodeComponent';
 import config from '../config/config.js';
 import {
-  Link,
+  Link, Redirect
 } from "react-router-dom";
 
 
@@ -173,6 +173,8 @@ const ApplyComponent = () => {
   const [subscribers,setSubscribers] = useState(500);
   const [subscribersor,setSubscribersor] = useState(500);
 
+  const [redirect,Setredirect] = useState(false);
+  const [route,SetRoute] = useState("");
 
   const [address,setAddress] = useState("");
 
@@ -226,6 +228,11 @@ const ApplyComponent = () => {
           if(data.status == "ok"){
               //data.insertId
               localStorage.setItem("insertId",data.insertId);
+
+              SetRoute("/payment");
+              Setredirect(true);
+
+              //console.log(data);
           }
       });
 
@@ -352,6 +359,15 @@ const ApplyComponent = () => {
           </Box>
 
             </Paper>
+
+            {redirect === false ? (
+              <Box>
+
+              </Box>
+             ) : (
+               <Redirect to={route} />
+             )}
+
           </Grid>
 
 

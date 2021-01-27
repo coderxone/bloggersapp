@@ -1,16 +1,18 @@
 
 .fullWidth{
-  width: 97.5%;
+  margin-left: 1%;
+  width: 98%;
   ::-webkit-scrollbar {
         display: none !important;
     }
+
 }
 
 .SkeletonMainBlock{
   width:100%;
   height: 150px;
   background-color: #e6e4df;
-  margin-left: 5px;
+  margin-left: 0px;
   margin-right: 5px;
   border-radius: 7px;
   margin-top:5px;
@@ -20,7 +22,7 @@
   width:100%;
   height: 150px;
 
-  margin-left: 5px;
+  margin-left: 0px;
   margin-right: 5px;
   border-radius: 7px;
   background:linear-gradient(to right, #8936f4, #0083ff);

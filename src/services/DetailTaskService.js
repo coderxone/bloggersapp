@@ -5,6 +5,8 @@ import config from '../config/config.js';
 import cryptLibrary from '../helpers/CryptLibrary';
 const observ_subject = new Subject();
 const observ_subject2 = new Subject();
+const observ_subject3 = new Subject();
+const observ_subject4 = new Subject();
 const timer10s = new Subject();
 
 const DetailTaskService = {
@@ -82,10 +84,36 @@ const DetailTaskService = {
           listenCheckUrl:() => {
             socket.on("checkvideo",(data) => {
                 //console.log(data);
-                observ_subject2.next(cryptLibrary.decrypt(data));
+                observ_subject3.next(cryptLibrary.decrypt(data));
             });
 
-            return observ_subject2;
+            return observ_subject3;
+          },
+
+
+          submitOrder:(obj) => {
+
+            var data = {
+              deviceid:config.getdeviceid(),
+              email:config.getUserEmail(),
+              id: obj.id,
+              approvetask:obj.approvetask
+            }
+
+            //console.log(data);
+
+            var encryptedData = cryptLibrary.encrypt(data);
+            //emit("closeorders",data);
+            socket.emit("closeorders",encryptedData);
+          },
+
+          listenSubmittedOrder:() => {
+            socket.on("closeorders",(data) => {
+                //console.log(data);
+                observ_subject4.next(cryptLibrary.decrypt(data));
+            });
+
+            return observ_subject4;
           },
 
 

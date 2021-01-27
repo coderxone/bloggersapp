@@ -80,7 +80,7 @@ const App = () => (
               <Route path="/role" component={SelectRoleComponent} exact={true} />
               <Route path="/blogger" component={BloggerDashboardComponent} exact={true} />
               <Route path="/detailtask" component={DetailTaskComponent} exact={true} />
-              <Route exact path="/" render={() => <Redirect to="/home" />} />
+              <Route exact path="/" render={() => <Redirect to="/login" />} />
             </Router>
     //     </IonRouterOutlet>
     //   </IonReactRouter>

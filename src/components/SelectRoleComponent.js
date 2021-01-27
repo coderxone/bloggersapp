@@ -29,7 +29,7 @@ import Observable from '../services/Observable';
 
 import { increment, decrement,save_email } from '../actions/actions';
 import {
-  Link,
+  Link, Redirect
 } from "react-router-dom";
 
 
@@ -134,7 +134,8 @@ const ErrorDiv = (props) => {
 const SelectRoleComponent = (props) => {
 
   var checkingEmail = "";
-
+  const [redirect,Setredirect] = useState(false);
+  const [route,SetRoute] = useState("");
 
   const classes = useStyles();
   const { register, handleSubmit, errors,setError } = useForm({
@@ -190,7 +191,15 @@ const SelectRoleComponent = (props) => {
     });
 
     const listenRole = SelectRoleService.listenRole().subscribe((data) => {
-      console.log(data);
+      //console.log(data);
+      localStorage.setItem("role",data.role);
+      if(data.role == 1){
+        SetRoute("/blogger");
+        Setredirect(true);
+      }else if(data.role == 2){
+        SetRoute("/apply");
+        Setredirect(true);
+      }
 
       //continue to next page
     });
@@ -246,6 +255,14 @@ const SelectRoleComponent = (props) => {
         <div>
 
         </div>
+
+        {redirect === false ? (
+          <Box>
+
+          </Box>
+         ) : (
+           <Redirect to={route} />
+         )}
 
 
 

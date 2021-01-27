@@ -478,21 +478,26 @@ const DetailComponent = (props) => {
 
     const listenDetailService = DetailService.listenDetailData().subscribe(data => {
 
-      var modifiedArray = data.data;
-      console.log(modifiedArray);
+      if(data.status != "false"){
 
-      for(var i = 0;i < modifiedArray.length;i++){
-        if(modifiedArray[i].id == historyId){
-          modifiedArray[i].status = true;
-        }else{
-          modifiedArray[i].status = false;
+        var modifiedArray = data.data;
+        
+        for(var i = 0;i < modifiedArray.length;i++){
+          if(modifiedArray[i].id == historyId){
+            modifiedArray[i].status = true;
+          }else{
+            modifiedArray[i].status = false;
+          }
+
         }
 
+        const list = listArray.concat(modifiedArray);
+
+        setListArray(list);
       }
 
-      const list = listArray.concat(modifiedArray);
 
-      setListArray(list);
+
       //console.log(listArray);
     });
 

@@ -22,7 +22,7 @@ import AuthService from '../services/AuthService';
 import PaymentService from '../services/PaymentService';
 import { increment, decrement,save_email } from '../actions/actions';
 import {
-  Link,
+  Link, Redirect
 } from "react-router-dom";
 
 
@@ -103,10 +103,12 @@ const schema = yup.object().shape({
 
 
 
-const AuthorizationComponent = (props) => {
+const PaymentComponent = (props) => {
 
 
 
+  const [redirect,Setredirect] = useState(false);
+  const [route,SetRoute] = useState("");
 
   const classes = useStyles();
   const { register, handleSubmit, errors,setError } = useForm({
@@ -137,6 +139,10 @@ const AuthorizationComponent = (props) => {
 
         const PaymentServiceSubscribe = PaymentService.listenSendPayment().subscribe(data => {
           console.log(data);
+          if(data.status == "ok"){
+            SetRoute("/business");
+            Setredirect(true);
+          }
         });
 
         const subscribeByTimer_10_second = PaymentService.subscribeByTimer_10_second().subscribe(data => {
@@ -151,9 +157,19 @@ const AuthorizationComponent = (props) => {
 
         const listenCheckPayment = PaymentService.listenCheckPayment().subscribe(data => {
           console.log(data);
-          if(data.data[0].dateVerified == true){
-            console.log("date verified");
+
+          if(data.status == "false"){
+
+          }else if(data.status == "ok"){
+            SetRoute("/business");
+            Setredirect(true);
           }
+
+          // SetRoute("/business");
+          // Setredirect(true);
+          // if(data.data[0].dateVerified == true){
+          //   console.log("date verified");
+          // }
         });
 
         //unsibscribe
@@ -252,7 +268,13 @@ const AuthorizationComponent = (props) => {
             </Paper>
           </Grid>
 
+          {redirect === false ? (
+            <Box>
 
+            </Box>
+           ) : (
+             <Redirect to={route} />
+           )}
 
           </Grid>
       </div>
@@ -262,4 +284,4 @@ const AuthorizationComponent = (props) => {
 };
 
 
- export default connect(mapStateToProps,mapDispatchToProps)(AuthorizationComponent);
+ export default connect(mapStateToProps,mapDispatchToProps)(PaymentComponent);
