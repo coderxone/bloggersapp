@@ -10,9 +10,6 @@ import {
   makeStyles,
 } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
-import Input from '@material-ui/core/Input';
-
-
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Logo from '../icons/logo_circle_new_circle.png';
@@ -118,7 +115,7 @@ const AuthorizationComponent = (props) => {
     password:""
   };
 
-  const [count,setCount] = useState(0);
+
   const [storageData,setStorageData] = useState(obj);
 
 
@@ -146,7 +143,7 @@ const AuthorizationComponent = (props) => {
 
         const authSubscribe = AuthService.getAuthData().subscribe(data => {
 
-          if((data.status == "olduser") && (data.password == true)){
+          if((data.status === "olduser") && (data.password == true)){
 
 
             //console.log(data);

@@ -20,6 +20,7 @@
   font-size: 18px;
   text-overflow: ellipsis;
   overflow: hidden;
+  color:white;
 }
 
 .buttonBox{
@@ -87,6 +88,7 @@
 .ShareNameText{
   text-align: center;
   font-size: 18px;
+  color:white;
 }
 
 .socialColor{

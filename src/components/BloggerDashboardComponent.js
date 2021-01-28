@@ -1,4 +1,4 @@
-import React, {useState,useEffect,useConstructor,useLayoutEffect} from 'react';
+import React, {useState,useMemo,useEffect,useConstructor,useLayoutEffect} from 'react';
 // import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonInput, IonItem, IonLabel, IonList, IonItemDivider } from '@ionic/react';
 import '../css/mainStyles.css';
 import '../css/bloggerdashboard.css';
@@ -116,59 +116,63 @@ const BlockComponent = (props) => {
   const items = props.items;
   const dist = props.distance;
 
-  const content = items.map((item,index) =>
+  const content = useMemo(() => {
 
-  <Link key={item.id} className="deleteUrlClass"
-      to={{
-        pathname: "/detailtask",
-        data: item // your data array of objects
-      }}
-      >
-        <div  className="MainBlock withoutScroll">
-          <div  className="firstLevel">
-              <div className="firstLevelText">
-                  {item.url} - {item.description}
-                <br />distance less than {dist} miles
+    return items.map((item,index) =>
+
+      <Link key={item.id} className="deleteUrlClass"
+          to={{
+            pathname: "/detailtask",
+            data: item // your data array of objects
+          }}
+          >
+            <div  className="MainBlock withoutScroll">
+              <div  className="firstLevel">
+                  <div className="firstLevelText">
+                      {item.url} - {item.description}
+                    <br />distance less than {dist} miles
+                  </div>
               </div>
-          </div>
-          <div className="secondLevel">
-            <div className="secondLevelShare">
-              <div className="secondLevelOne">
-                <div className="shouldButton">
-                    <div className="shouldButtonText">
-                          limit: {item.peoplecount} infl.
+              <div className="secondLevel">
+                <div className="secondLevelShare">
+                  <div className="secondLevelOne">
+                    <div className="shouldButton">
+                        <div className="shouldButtonText">
+                              limit: {item.peoplecount} infl.
+                        </div>
                     </div>
+                  </div>
+                  <div className="secondLevelTwo">
+                    <div className="shareButton">
+                        <div className="shareButtonText">
+                              share
+                        </div>
+                    </div>
+                  </div>
                 </div>
-              </div>
-              <div className="secondLevelTwo">
-                <div className="shareButton">
-                    <div className="shareButtonText">
-                          share
+                <div className="secondLevelShareThree">
+                  <div className="secondLevelThree">
+                    <div className="shouldButtonThree">
+                        <div className="shouldButtonText">
+                              {item.date} - {item.time}
+                        </div>
                     </div>
+                  </div>
+                  <div className="secondLevelThreeTwo">
+                    <div className="shareButtonThree">
+                        <div className="shareButtonText">
+                              {item.sum} $
+                        </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
-            <div className="secondLevelShareThree">
-              <div className="secondLevelThree">
-                <div className="shouldButtonThree">
-                    <div className="shouldButtonText">
-                          {item.date} - {item.time}
-                    </div>
-                </div>
-              </div>
-              <div className="secondLevelThreeTwo">
-                <div className="shareButtonThree">
-                    <div className="shareButtonText">
-                          {item.sum} $
-                    </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-    </Link>
+        </Link>
 
-  );
+      );
+
+  },[props.items]);
 
 
 
@@ -178,7 +182,6 @@ const BlockComponent = (props) => {
     </div>
   );
 
-
 }
 
 
@@ -186,15 +189,16 @@ const BlockComponent = (props) => {
 
 const BloggerDashboardComponent = (props) => {
 
-  var checkingEmail = "";
-  const locationData = props.location;
-  if(locationData.data){
-    checkingEmail = props.location.data.user_email;
-    localStorage.setItem("checkingEmail",checkingEmail);
-    // localStorage.setItem("checkingItemData",JSON.stringify(ItemData));
-  }else{
-    checkingEmail = localStorage.getItem("checkingEmail");
-  }
+  const checkingEmail = useMemo(() => {
+    const locationData = props.location;
+    if(locationData.data){
+      localStorage.setItem("checkingEmail",checkingEmail);
+      return props.location.data.user_email;
+
+    }else{
+      return localStorage.getItem("checkingEmail");
+    }
+  },[]);
 
   //console.log(checkingEmail);
 
@@ -218,13 +222,6 @@ const BloggerDashboardComponent = (props) => {
   const [status,SetStatus] = useState(false);
 
   const [distance,setDistance] = useState(20);
-
-  const onSubmit = ((data) => {
-
-
-
-
-  });
 
   const { Geolocation} = Plugins;
 
@@ -262,12 +259,12 @@ const BloggerDashboardComponent = (props) => {
 
     });
 
-    Observable.subscribeByTimer_10_second().subscribe(data => {
+    const b = Observable.subscribeByTimer_10_second().subscribe(data => {
         checkData();
     });
 
 
-    async function WatchPosition(){
+    const WatchPosition = async function WatchPosition(){
 
       try{
         const wait = Geolocation.watchPosition({}, (position, err) => {
@@ -289,7 +286,7 @@ const BloggerDashboardComponent = (props) => {
 
     };
 
-    Observable.subscribeByTimer_4_second().subscribe((data) => {
+    const d = Observable.subscribeByTimer_4_second().subscribe((data) => {
 
       WatchPosition();
 
@@ -297,22 +294,22 @@ const BloggerDashboardComponent = (props) => {
         checkData();
       },2000);
 
-      if((latitude != 0) && (longitude != 0)){
-        //console.log(latitude);
-        //console.log(longitude);
-      }
+      // if((latitude != 0) && (longitude != 0)){
+      //   //console.log(latitude);
+      //   //console.log(longitude);
+      // }
 
     });
 
-
-
     WatchPosition();
-
 
     //unsubscribe
 
     return () => {
+        BloggerListen.unsubscribe();
+        b.unsubscribe();
 
+        d.unsubscribe();
     }
 
     //unsubscribe
@@ -320,12 +317,7 @@ const BloggerDashboardComponent = (props) => {
   }, [latitude,longitude,status]);
 
 
-  useLayoutEffect(() => {
 
-    //initiase functions
-
-
-  }, []);
 
 
   return (

@@ -26,6 +26,7 @@ import RateComponent from './components/RateComponent';
 import SelectRoleComponent from './components/SelectRoleComponent';
 import BloggerDashboardComponent from './components/BloggerDashboardComponent';
 import DetailTaskComponent from './components/DetailTaskComponent';
+import LifeCycleComponent from './components/LifeCycleComponent';
 
 
 

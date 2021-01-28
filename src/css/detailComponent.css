@@ -182,6 +182,7 @@
   text-align:center;
   font-family:"Times New Roman", Times, serif;
   font-size: 1.5em;
+  color:white;
 }
 .project_description{
   width:100%;
@@ -203,12 +204,14 @@
   width:100%;
   font-family:"Times New Roman", Times, serif;
   height: 30px;
+  color:white;
 
 }
 .project_double_l{
   width:100%;
   font-family:"Times New Roman", Times, serif;
   height: 90px;
+  color:white;
 
 }
 
@@ -239,7 +242,7 @@
   font-family:"Times New Roman", Times, serif;
   width:100%;
   text-align: center;
-
+  color:white;
 }
 
 .blogger_block_margin{
@@ -321,6 +324,7 @@
   margin-left: 2px;
   margin-top:10px;
   margin-bottom: 10px;
+  color:white;
 }
 
 .left_childCompletitionBlock{

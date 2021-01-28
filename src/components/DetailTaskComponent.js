@@ -1,4 +1,4 @@
-import React, {useState,useEffect,useConstructor,useLayoutEffect} from 'react';
+import React, {useState,useMemo,useEffect,useConstructor,useLayoutEffect} from 'react';
 // import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonInput, IonItem, IonLabel, IonList, IonItemDivider } from '@ionic/react';
 import '../css/mainStyles.css';
 import '../css/DetailDescriptionComponent.css';
@@ -118,31 +118,31 @@ const MessageComponent = (props) => {
 
 const DetailTaskComponent = (props) => {
 
-  const [detailData,setDetailData] = useState({});
-  var detailDataCopy = {};
+  //const [detailData,setDetailData] = useState({});
+  const detailData = useMemo(() => {
+      const locationData = props.location;
+      //console.log(locationData);
+      if(locationData.data){
+        //convert to Json for Save in browser memory
+        var insertData = JSON.stringify(props.location.data);
+        //save in memory
+        localStorage.setItem("detailItem",insertData);
 
-  const InitialiseFunc = () => {
-    const locationData = props.location;
-    if(locationData.data){
-      var insertData = JSON.stringify(props.location.data);
-      setDetailData(props.location.data);
-      detailDataCopy = props.location.data;
-      localStorage.setItem("detailItem",insertData);
-      // localStorage.setItem("checkingItemData",JSON.stringify(ItemData));
-    }else{
+        return props.location.data;
 
-      var gettingData = JSON.parse(localStorage.getItem("detailItem"));
-      if(localStorage.getItem("detailItem")){
-        setDetailData(gettingData);
-        detailDataCopy = gettingData;
+        // localStorage.setItem("checkingItemData",JSON.stringify(ItemData));
+      }else{
+        //get Data from browser memmory
+        var gettingData = JSON.parse(localStorage.getItem("detailItem"));
+        //check availability
+        if(localStorage.getItem("detailItem")){
+          //setDetailData();
+          return gettingData;
+        }
       }
-
-    }
-  }
+  },[]);
 
 
-
-  //console.log(detailData);
 
   const classes = useStyles();
   const { register, handleSubmit, errors,setError } = useForm({
@@ -165,16 +165,13 @@ const DetailTaskComponent = (props) => {
 
   const onSubmit = ((data) => {
 
-
-
-
   });
 
   const [swithbutton,SetSwithButton] = useState(false);
   const [url,SetUrl] = useState("");
 
   const GenerateUrl = (() => {
-      DetailTaskService.generateUrl(detailDataCopy.id);
+      DetailTaskService.generateUrl(detailData.id);
   });
 
   const [sucessState,SetSucessState] = useState(false);
@@ -189,6 +186,7 @@ const DetailTaskComponent = (props) => {
   }
 
   const CopyUrl = (() => {
+
     let selBox = document.createElement('textarea');
     selBox.style.position = 'fixed';
     selBox.style.left = '0';
@@ -214,7 +212,10 @@ const DetailTaskComponent = (props) => {
       SetInputText(string);
   });
 
-  var netWorkArray = ["Instagram","Facebook","Youtube","Twitter"];
+  const netWorkArray = ["Instagram","Facebook","Youtube","Twitter"];
+
+  const [originalNetWorkArrayState,setOriginalNetWorkArrayState] = useState(["Instagram","Facebook","Youtube","Twitter"]);
+  const [netWorkArrayState,setnetWorkArrayState] = useState(["Instagram","Facebook","Youtube","Twitter"]);
 
   const [findArrayState,SetFindArrayState] = useState([]);
   //var permitControlArray = new Array();
@@ -224,17 +225,15 @@ const DetailTaskComponent = (props) => {
 
   const [stepper,SetStep] = useState(0);
 
-  var checkLinksValidationsArray = ["instagram.com","facebook.com","youtube.com","twitter.com"];
+  const [checkLinksValidationsArray,SetcheckLinksValidationsArray] = useState(["instagram.com","facebook.com","youtube.com","twitter.com"]);
+
   const Share = (() => {
-//https://www.facebook.com/bboyworld/videos/1112624789198329
-//https://www.youtube.com/watch?v=dRcIZwKX3-k
 
       if(inputtext.length > 0){
           var find = inputtext;
           var validate = 0;
 
           for(var i = 0;i < checkLinksValidationsArray.length;i++){
-            //console.log(find.indexOf("instagram.com"));
             if(find.indexOf(checkLinksValidationsArray[i]) >= 0){
                 validate = 1;
             }
@@ -251,17 +250,12 @@ const DetailTaskComponent = (props) => {
           }
 
           for(var j = 0;j < permitControlArray.length;j++){
-            console.log(permitControlArray[j].url);
+            //console.log(permitControlArray[j].url);
             if(inputtext == permitControlArray[j].url){
               uploadedNotice = 2;
               findUploadSocialNetworksText = permitControlArray[j].type;
             }
           }
-
-          console.log(uploadedNotice);
-          console.log(permitControlArray);
-
-          //return false;
 
           if(uploadedNotice == 1){
             SetdangerText("video for " + findUploadSocialNetworksText + " already uploaded ");
@@ -279,114 +273,113 @@ const DetailTaskComponent = (props) => {
                   url:inputtext,
                   set:"set"
                 }
-                console.log(obj);
+              //  console.log(obj);
                 DetailTaskService.setUrl(obj);
               }
           }
 
-//https://www.instagram.com/stories/zhibek_in_cali/2494901091968542110/
-
-
-
-
-
       }
 
-      //inputtext
-      //videotype
   });
 
   const [currentStatus,SetCurrentStatus] = useState(LocalizeComponent.doneTask);
 
-  const CheckVideos = (() => {
+  const CheckVideos = ((id) => {
 
     var checkObj = {
       status:"check",
-      id:detailData.id,
+      id:id,
     }
 
-    console.log(checkObj);
     DetailTaskService.checkUrl(checkObj);
   });
 
-  const SubmittedTask = () => {
+  const SubmittedTask = (id) => {
       var submitObj = {
         approvetask:0,
-        id:detailData.id
+        id:id
       }
-
-      console.log(submitObj);
 
       DetailTaskService.submitOrder(submitObj);
   }
 
 
 
-  useEffect(() => {
+useEffect(() => {
+  const ListenlistenCheckUrl = DetailTaskService.listenCheckUrl().subscribe(data => {
 
+    if(data.status == "false"){
+
+    }else if(data.status == "ok"){
+
+      var findArray = new Array();
+
+
+      var count = data.data.length;
+      var countOfTask = originalNetWorkArrayState.length;
+      var replaceArray = netWorkArrayState;
+
+          for(var i = 0;i < count;i++){
+              var platform = data.data[i].type;
+              findArray.push(platform);
+          }
+
+          SetpermitControlArray(data.data);
+          SetFindArrayState(findArray);
+          //SetCurrentNetwork()
+          for(var j = 0;j < netWorkArrayState.length;j++){
+              for(var k = 0;k < findArray.length;k++){
+                  var searchString = netWorkArrayState[j];
+                  //console.log(searchString);
+                  if(searchString.indexOf(findArray[k]) >= 0){
+                    replaceArray.splice(j, 1);
+                  }
+              }
+          }
+
+      //console.log(replaceArray);
+      //netWorkArray = replaceArray;
+      setnetWorkArrayState(replaceArray);
+      SetCurrentNetwork(replaceArray[0]);
+
+      SetStep(count);
+
+      if(countOfTask == count){
+        SetcompletedTask(true);
+        SubmittedTask(detailData.id);
+      }
+      //SetCurrentNetwork
+    }
+
+    return () => {
+      ListenlistenCheckUrl.unsubscribe();
+    }
+    //SetStep(stepper => stepper + 1);
+  });
+},[]);
+
+
+
+  // useEffect(() => {
+  //
+  //
+  //
+  //   return () => {
+  //
+  //   }
+  //
+  // },[data]);
+
+  useEffect(() => {
+//xx
     const ListenlistenSetUrl = DetailTaskService.listenSetUrl().subscribe(data => {
       //console.log(data);
       if(data.status == "inserted"){
-        CheckVideos();
+        CheckVideos(detailData.id);
+        SetInputText("");
         //SetStep(stepper => stepper + 1);
       }
 
-    });
-    const ListenlistenCheckUrl = DetailTaskService.listenCheckUrl().subscribe(data => {
-      if(data.status == "false"){
-
-      }else if(data.status == "ok"){
-
-        console.log(data);
-
-        var findArray = new Array();
-
-        var count = data.data.length;
-        var countOfTask = netWorkArray.length;
-
-
-        var replaceArray = netWorkArray;
-        for(var i = 0;i < count;i++){
-            var platform = data.data[i].type;
-            findArray.push(platform);
-        }
-
-        //
-        //console.log(data.data);
-      //  permitControlArray = data.data;
-        SetpermitControlArray(data.data);
-        SetFindArrayState(findArray);
-        //https://www.instagram.com/stories/zhibek_in_cali/2494901091968542110/
-        //SetCurrentNetwork()
-        for(var j = 0;j < netWorkArray.length;j++){
-            for(var k = 0;k < findArray.length;k++){
-                var searchString = netWorkArray[j];
-                //console.log(searchString);
-                if(searchString.indexOf(findArray[k]) >= 0){
-                  replaceArray.splice(j, 1);
-                }
-            }
-        }
-
-        //console.log(replaceArray);
-        netWorkArray = replaceArray;
-        SetCurrentNetwork(replaceArray[0]);
-
-        //console.log(replaceArray);
-
-        //count
-        //console.log(count);
-
-        SetStep(count);
-
-        if(countOfTask == count){
-          SetcompletedTask(true);
-          SubmittedTask();
-        }
-        //SetCurrentNetwork
-      }
-      //console.log(data);
-      //SetStep(stepper => stepper + 1);
     });
 
     const listenSubmittedOrder = DetailTaskService.listenSubmittedOrder().subscribe(data => {
@@ -396,47 +389,47 @@ const DetailTaskComponent = (props) => {
       }
     });
 
+    const obs = Observable.subscribeByTimer_10_second().subscribe(data => {
+        SubmittedTask(detailData.id);
+    });
+
+
     const unsub = DetailTaskService.listenGenerateUrl().subscribe(data => {
-        console.log(data);
+        //console.log(data);
 
         if(data.status == "ok"){
           var generatedUrl = data.url;
           SetUrl(generatedUrl);
           SetSwithButton(true);
         }
-        console.log(generatedUrl);
+        //console.log(generatedUrl);
     });
 
-    const obs = Observable.subscribeByTimer_10_second().subscribe(data => {
-        SubmittedTask();
-    });
     //unsubscribe
 
-
-
     return () => {
-        unsub.unsubscribe();
-        ListenlistenCheckUrl.unsubscribe();
         ListenlistenSetUrl.unsubscribe();
         listenSubmittedOrder.unsubscribe();
         obs.unsubscribe();
+        unsub.unsubscribe();
     }
 
     //unsubscribe
 
-  }, [permitControlArray,findArrayState]);
-
-
-  useLayoutEffect(() => {
-
-    //initiase functions
-    InitialiseFunc();
-
-    SethowManySteps(netWorkArray.length + 1);
-    CheckVideos();
-
-
   }, []);
+  //}, [netWorkArrayState,CheckVideos,SetCurrentStatus,SubmittedTask,permitControlArray,findArrayState,detailData,SethowManySteps]);
+
+
+
+
+//run 1 time
+useEffect(() => {
+
+  SethowManySteps(netWorkArrayState.length + 1);
+  CheckVideos(detailData.id);
+
+
+}, []);
 
 
   return (
@@ -526,10 +519,6 @@ const DetailTaskComponent = (props) => {
 
                <AlertSuccessComponent state={sucessState} text={alertText}/>
                <AlertDangerComponent state={dangerState} text={dangerText}/>
-
-
-
-
 
 
           </Grid>
