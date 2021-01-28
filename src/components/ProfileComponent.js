@@ -1,4 +1,4 @@
-import React, {useState,useEffect,useConstructor,useLayoutEffect} from 'react';
+import React, {useState,useEffect,useLayoutEffect} from 'react';
 // import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonInput, IonItem, IonLabel, IonList, IonItemDivider } from '@ionic/react';
 import '../css/mainStyles.css';
 import '../css/profileComponent.css';
@@ -11,22 +11,14 @@ import {
   makeStyles,
 } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
-import Input from '@material-ui/core/Input';
-
-import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
-import Logo from '../icons/logo_circle_new_circle.png';
-import Box from '@material-ui/core/Box';
 import { connect } from 'react-redux';
 import AuthService from '../services/AuthService';
 import HomeService from '../services/Homeservice';
-import DialogComponent from '../components/DialogComponent';
 import ProfileService from '../services/ProfileService.js'
-import config from '../config/config.js';
 import { increment, decrement,save_email } from '../actions/actions';
 import {
   Link,
-  useHistory,
 } from "react-router-dom";
 
 

@@ -1,11 +1,10 @@
-import React,{ useState,useEffect } from 'react';
+import React,{ useState } from 'react';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import Geocode from "react-geocode";
 import { save_coord } from '../actions/actions';
 import { connect } from 'react-redux';
 import LocalizeComponent from '../localize/LocalizeComponent';
-import config from "../config/config";
 
 const mapDispatchToProps = dispatch => ({
   save_coord
@@ -56,8 +55,6 @@ const Combo = function ComboBox(props) {
               setFindAddresses(newArray);
             })
 
-
-            const { lat, lng } = response.results[0].geometry.location;
 
           },
           error => {

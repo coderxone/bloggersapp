@@ -143,22 +143,22 @@ const AuthorizationComponent = (props) => {
 
         const authSubscribe = AuthService.getAuthData().subscribe(data => {
 
-          if((data.status === "olduser") && (data.password == true)){
+          if((data.status === "olduser") && (data.password === true)){
 
 
             //console.log(data);
             props.dispatch(save_email(storageData));
 
-            if(data.role == 2){
+            if(data.role === 2){
                 SetRoute("/business");
                 Setredirect(true);
-            }else if(data.role == 1){
+            }else if(data.role === 1){
               SetRoute("/blogger");
               Setredirect(true);
             }
 
 
-          }else if(data.status == "newuser"){
+          }else if(data.status === "newuser"){
 
                 props.dispatch(save_email(storageData));
 
@@ -185,7 +185,7 @@ const AuthorizationComponent = (props) => {
         }
         //unsibscribe
 
-    },[]);
+    },[props,setError,storageData]);
 
 
   return (

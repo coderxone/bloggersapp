@@ -26,42 +26,12 @@ import RateComponent from './components/RateComponent';
 import SelectRoleComponent from './components/SelectRoleComponent';
 import BloggerDashboardComponent from './components/BloggerDashboardComponent';
 import DetailTaskComponent from './components/DetailTaskComponent';
-import LifeCycleComponent from './components/LifeCycleComponent';
+import MainComponent from './components/MainComponent';
 
 
 
 
-/* Core CSS required for Ionic components to work properly */
-// import '@ionic/react/css/core.css';
 
-/* Basic CSS for apps built with Ionic */
-// import '@ionic/react/css/normalize.css';
-// import '@ionic/react/css/structure.css';
-// import '@ionic/react/css/typography.css';
-
-/* Optional CSS utils that can be commented out */
-// import '@ionic/react/css/padding.css';
-// import '@ionic/react/css/float-elements.css';
-// import '@ionic/react/css/text-alignment.css';
-// import '@ionic/react/css/text-transformation.css';
-// import '@ionic/react/css/flex-utils.css';
-// import '@ionic/react/css/display.css';
-
-/* Theme variables */
-// import './theme/variables.css';
-
-// const App: React.FC = () => (
-//   <IonApp>
-//     <IonReactRouter>
-//       <IonRouterOutlet>
-//         <Route path="/home" component={Home} exact={true} />
-//         <Route path="/map" component={MapComponent} exact={true} />
-//         <Route path="/login" component={AuthorizationComponent} exact={true} />
-//         <Route exact path="/" render={() => <Redirect to="/home" />} />
-//       </IonRouterOutlet>
-//     </IonReactRouter>
-//   </IonApp>
-// );
 
 const App = () => (
     // <IonApp>
@@ -81,6 +51,7 @@ const App = () => (
               <Route path="/role" component={SelectRoleComponent} exact={true} />
               <Route path="/blogger" component={BloggerDashboardComponent} exact={true} />
               <Route path="/detailtask" component={DetailTaskComponent} exact={true} />
+              <Route path="/main" component={MainComponent} exact={true} />
               <Route exact path="/" render={() => <Redirect to="/login" />} />
             </Router>
     //     </IonRouterOutlet>

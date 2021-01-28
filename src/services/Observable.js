@@ -1,10 +1,6 @@
-import React,{Component} from 'react';
-import { Observable, of,interval, Subject } from 'rxjs';
+import { interval, Subject } from 'rxjs';
 
 const observ_subject = new Subject();
-// const timer10s$ = new Subject<any>();
-// const timer60s = new Subject<any>();
-// const timer300000s$ = new Subject<any>();
 
 const observ_f = {
 

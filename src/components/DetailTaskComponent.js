@@ -1,4 +1,4 @@
-import React, {useState,useMemo,useEffect,useConstructor,useLayoutEffect} from 'react';
+import React, {useState,useMemo,useEffect} from 'react';
 // import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonInput, IonItem, IonLabel, IonList, IonItemDivider } from '@ionic/react';
 import '../css/mainStyles.css';
 import '../css/DetailDescriptionComponent.css';
@@ -7,21 +7,10 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
 import {
-  withStyles,
   makeStyles,
 } from '@material-ui/core/styles';
-import TextField from '@material-ui/core/TextField';
-import Input from '@material-ui/core/Input';
-
-import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
-import Logo from '../icons/logo_circle_new_circle.png';
-import Box from '@material-ui/core/Box';
 import { connect } from 'react-redux';
-import AuthService from '../services/AuthService';
-import HomeService from '../services/Homeservice';
-import DialogComponent from '../components/DialogComponent';
-import config from '../config/config.js';
 import DetailTaskService from '../services/DetailTaskService';
 import AlertSuccessComponent from '../helperComponents/AlertSuccessComponent';
 import AlertDangerComponent from '../helperComponents/AlertDangerComponent';
@@ -30,10 +19,6 @@ import Observable from '../services/Observable';
 
 
 import { increment, decrement,save_email } from '../actions/actions';
-import {
-  Link,
-} from "react-router-dom";
-
 
 
 function mapStateToProps(state,ownProps) {
@@ -68,51 +53,9 @@ const useStyles = makeStyles((theme) => ({
 
 
 
-const CssTextField = withStyles({
-  root: {
-    '& label.Mui-focused': {
-      color: '#8936f4',
-    },
-    '& label': {
-      color: '#8936f4',
-    },
-    '& .MuiInput-underline:after': {
-      borderBottomColor: '#8936f4',
-    },
-    '& .MuiOutlinedInput-root': {
-      '& fieldset': {
-        borderColor: 'red',
-      },
-      '&:hover fieldset': {
-        borderColor: 'yellow',
-      },
-      '&.Mui-focused fieldset': {
-        borderColor: '#8936f4',
-      },
-      '& input:valid + fieldset': {
-        borderColor: '#8936f4',
-      },
-      '& input:invalid + fieldset': {
-        borderColor: 'red',
-      },
-
-    },
-  },
-})(TextField);
-
 const schema = yup.object().shape({
   email: yup.string().required("Required").email(),
 });
-
-
-const MessageComponent = (props) => {
-  return (
-    <div className="errorBox">
-        {props.message}
-    </div>
-  )
-}
-
 
 
 

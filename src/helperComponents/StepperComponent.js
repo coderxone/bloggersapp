@@ -1,5 +1,4 @@
-import React, {useState} from "react";
-import PropTypes from "prop-types";
+import React from "react";
 import { withStyles } from "@material-ui/core/styles";
 import MobileStepper from "@material-ui/core/MobileStepper";
 
@@ -20,13 +19,6 @@ const ProgressMobileStepper = (props) => {
   const count = props.count;
 
 
-  const handleNext = () => {
-
-  };
-
-  const handleBack = () => {
-
-  };
 
   return(
     <StyledMobileStepper

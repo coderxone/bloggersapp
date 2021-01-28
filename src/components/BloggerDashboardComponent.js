@@ -1,4 +1,4 @@
-import React, {useState,useMemo,useEffect,useConstructor,useLayoutEffect} from 'react';
+import React, {useState,useMemo,useEffect} from 'react';
 // import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonInput, IonItem, IonLabel, IonList, IonItemDivider } from '@ionic/react';
 import '../css/mainStyles.css';
 import '../css/bloggerdashboard.css';
@@ -11,8 +11,6 @@ import {
   makeStyles,
 } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
-import Input from '@material-ui/core/Input';
-
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Logo from '../icons/logo_circle_new_circle.png';

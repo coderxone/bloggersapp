@@ -1,4 +1,4 @@
-import React, {useState,useEffect,useConstructor,useLayoutEffect} from 'react';
+import React, {useState,useEffect,useLayoutEffect} from 'react';
 // import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonInput, IonItem, IonLabel, IonList, IonItemDivider } from '@ionic/react';
 import '../css/detailComponent.css';
 import LocalizeComponent from '../localize/LocalizeComponent';
@@ -10,34 +10,18 @@ import {
   makeStyles,
 } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
-import Input from '@material-ui/core/Input';
-
-import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
-import Logo from '../icons/logo_circle_new_circle.png';
 import Box from '@material-ui/core/Box';
 import { connect } from 'react-redux';
-import AuthService from '../services/AuthService';
-import HomeService from '../services/Homeservice';
 import ObservableService from '../services/Observable';
-import DialogComponent from '../components/DialogComponent';
 import DetailService from '../services/DetailService';
 import config from '../config/config.js';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
-import IconButton from '@material-ui/core/IconButton';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import DoneOutlineIcon from '@material-ui/icons/DoneOutline';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import List from '@material-ui/core/List';
-
 import PropTypes from 'prop-types';
-
-import AppBar from '@material-ui/core/AppBar';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import $ from "jquery";
 
@@ -481,7 +465,7 @@ const DetailComponent = (props) => {
       if(data.status != "false"){
 
         var modifiedArray = data.data;
-        
+
         for(var i = 0;i < modifiedArray.length;i++){
           if(modifiedArray[i].id == historyId){
             modifiedArray[i].status = true;

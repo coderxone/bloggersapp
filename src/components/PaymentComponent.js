@@ -7,25 +7,17 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
 import {
-  withStyles,
   makeStyles,
 } from '@material-ui/core/styles';
-import TextField from '@material-ui/core/TextField';
-import Input from '@material-ui/core/Input';
-
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
-import Logo from '../icons/logo_circle_new_circle.png';
 import Box from '@material-ui/core/Box';
 import { connect } from 'react-redux';
-import AuthService from '../services/AuthService';
 import PaymentService from '../services/PaymentService';
 import { increment, decrement,save_email } from '../actions/actions';
 import {
-  Link, Redirect
+  Redirect
 } from "react-router-dom";
-
-
 
 
 function mapStateToProps(state,ownProps) {
@@ -60,38 +52,6 @@ const useStyles = makeStyles((theme) => ({
 
 
 
-const CssTextField = withStyles({
-  root: {
-    '& label.Mui-focused': {
-      color: '#8936f4',
-    },
-    '& label': {
-      color: '#8936f4',
-    },
-    '& .MuiInput-underline:after': {
-      borderBottomColor: '#8936f4',
-    },
-    '& .MuiOutlinedInput-root': {
-      '& fieldset': {
-        borderColor: 'red',
-      },
-      '&:hover fieldset': {
-        borderColor: 'yellow',
-      },
-      '&.Mui-focused fieldset': {
-        borderColor: '#8936f4',
-      },
-      '& input:valid + fieldset': {
-        borderColor: '#8936f4',
-      },
-      '& input:invalid + fieldset': {
-        borderColor: 'red',
-      },
-
-    },
-  },
-})(TextField);
-
 const schema = yup.object().shape({
   email: yup.string().required("Required").email(),
   password: yup.string().required('No password provided.')
@@ -104,8 +64,6 @@ const schema = yup.object().shape({
 
 
 const PaymentComponent = (props) => {
-
-
 
   const [redirect,Setredirect] = useState(false);
   const [route,SetRoute] = useState("");
@@ -129,9 +87,6 @@ const PaymentComponent = (props) => {
     //console.log(data);
 
   });
-
-
-
 
 
 

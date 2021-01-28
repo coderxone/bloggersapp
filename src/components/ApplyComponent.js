@@ -1,4 +1,4 @@
-import React, {useState,useEffect,useConstructor} from 'react';
+import React, {useState,useEffect} from 'react';
 // import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonInput, IonItem, IonLabel, IonList, IonItemDivider } from '@ionic/react';
 import '../css/mainStyles.css';
 import LocalizeComponent from '../localize/LocalizeComponent';
@@ -11,7 +11,6 @@ import {
   makeStyles,
 } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
-import Input from '@material-ui/core/Input';
 import Slider from '@material-ui/core/Slider';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
@@ -23,7 +22,6 @@ import {
   KeyboardTimePicker,
   KeyboardDatePicker,
 } from '@material-ui/pickers';
-import TextareaAutosize from '@material-ui/core/TextareaAutosize';
 import { connect } from 'react-redux';
 import HomeService from '../services/Homeservice';
 
@@ -32,7 +30,7 @@ import AlarmIcon from '@material-ui/icons/Alarm';
 import ReactGeoCodeComponent from './GeocodeComponent';
 import config from '../config/config.js';
 import {
-  Link, Redirect
+  Redirect
 } from "react-router-dom";
 
 
@@ -129,29 +127,6 @@ const schema = yup.object().shape({
 });
 
 
-const MessageComponent = (props) => {
-  return (
-    <div className="errorBox">
-        {props.message}
-    </div>
-  )
-}
-
-
-
-const ErrorDiv = (props) => {
-  console.log(props);
-  const errorMessage = props.message;
-
-  if(errorMessage != undefined){
-    return <MessageComponent message={errorMessage}/>
-  }else{
-    return <div></div>
-  }
-
-}
-
-
 const ApplyComponent = () => {
 
   const classes = useStyles();
@@ -165,8 +140,8 @@ const ApplyComponent = () => {
     setSelectedDate(date);
   };
 
-  const [maxdefaultSliderValue,setMaxdefaultSliderValue] = useState(5000);
-  const [mindefaultSliderValue,setMindefaultSliderValue] = useState(200);
+  const [maxdefaultSliderValue] = useState(5000);
+  const [mindefaultSliderValue] = useState(200);
   const [defaultSliderValue,setDefaultSliderValue] = useState(200);
   var databasedefaultSliderValue = 200;
   const [peopleCount,setPeopleCount] = useState(6);
@@ -175,12 +150,6 @@ const ApplyComponent = () => {
 
   const [redirect,Setredirect] = useState(false);
   const [route,SetRoute] = useState("");
-
-  const [address,setAddress] = useState("");
-
-  const handleChange = ((address) => {
-
-  });
 
   const handleChangeSlider = (event,newValue) => {
     //console.log(newValue);
@@ -198,7 +167,7 @@ const ApplyComponent = () => {
       var coord = config.getUserCoordinates();
       //getUserCoordinates
 
-      if(coord == false){
+      if(coord === false){
         setError("password", {
               type: "manual",
               message: LocalizeComponent.location_error
@@ -216,16 +185,12 @@ const ApplyComponent = () => {
 
   });
 
-  function getSliderValue(value) {
-    //console.log(value);
-    return `${value}°C`;
-  }
 
 
   useEffect(() => {
 
       const firstListener = HomeService.listenApplyData().subscribe(data => {
-          if(data.status == "ok"){
+          if(data.status === "ok"){
               //data.insertId
               localStorage.setItem("insertId",data.insertId);
 
@@ -252,9 +217,6 @@ const ApplyComponent = () => {
 
   },[]);
 
-  const handleSelect = ((address) => {
-
-  });
 
   return (
 
@@ -305,7 +267,6 @@ const ApplyComponent = () => {
                     label={LocalizeComponent.date_name}
                     className="datepickerColor"
                     name="date"
-                    inputRef={register}
                     helperText={errors.date?.message}
                     format="MM/dd/yyyy"
                     value={selectedDate}
@@ -336,7 +297,7 @@ const ApplyComponent = () => {
                 </MuiPickersUtilsProvider>
 
 
-                <Typography align="left" className="appColor" gutterBottom>{LocalizeComponent.amount_name + " - " + "$" + defaultSliderValue}</Typography>
+                <Typography align="left" className="appColor" gutterBottom>{LocalizeComponent.amount_name + " - $" + defaultSliderValue}</Typography>
                 <PrettoSlider
                 valueLabelDisplay="auto"
                 aria-label="pretto slider"

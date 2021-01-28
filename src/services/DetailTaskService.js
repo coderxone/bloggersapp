@@ -1,5 +1,4 @@
-import React,{useState, useEffect} from 'react';
-import { Observable, of,interval, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import socket from '../config/socket.js';
 import config from '../config/config.js';
 import cryptLibrary from '../helpers/CryptLibrary';
@@ -7,7 +6,6 @@ const observ_subject = new Subject();
 const observ_subject2 = new Subject();
 const observ_subject3 = new Subject();
 const observ_subject4 = new Subject();
-const timer10s = new Subject();
 
 const DetailTaskService = {
 
