@@ -14,6 +14,8 @@ const business = {
           "role":config.getUserRole(),
         }
 
+        console.log(datas);
+
         var encryptedData = cryptLibrary.encrypt(datas);
 
         socket.emit("getAllData",encryptedData);

@@ -1,4 +1,4 @@
-import React, {useState,useEffect,useLayoutEffect} from 'react';
+import React, {useState,useEffect,useMemo} from 'react';
 // import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonInput, IonItem, IonLabel, IonList, IonItemDivider } from '@ionic/react';
 import '../css/detailComponent.css';
 import LocalizeComponent from '../localize/LocalizeComponent';
@@ -51,6 +51,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
     backgroundColor:'#161730',
+    color:'#ffffff',
   },
   paper: {
     padding: theme.spacing(1),
@@ -134,8 +135,6 @@ const useStylesthree = makeStyles((theme) => ({
     margin: theme.spacing(2, 0, 2),
   },
 }));
-
-
 
 
 var historyId = 9900;
@@ -339,7 +338,7 @@ const BlogListComponent = (props) => {
   const content = items.map((item) =>
 
           <div key={item.id} onClick={(e) => navigateToDetail(item, e)} className="blogger_block">
-                <div className="circle_image">
+                <div className="circle_image" style ={ { backgroundPosition: "center",backgroundRepeat:"no-repeat",backgroundSize:"cover",background: "url("+item.image_url+") no-repeat center/cover" }  }>
                 </div>
                 <div className="bl_name_center">
                     <div className="bl_email_text">{item.user_email}</div>
@@ -347,7 +346,7 @@ const BlogListComponent = (props) => {
                       <div className="left_button">
                         <div className="left_button_one">
                           <div className="left_button_one_name">
-                             10%
+                             {item.raiting_stars} / 5
                           </div>
                         </div>
                         <div className="left_button_two">
@@ -398,20 +397,30 @@ const DetailComponent = (props) => {
   //console.log(props.reduxState.reducerStore);
 
   const locationData = props.location;
-  var ItemData = null;
 
-  var checkDetailId = 0;
+  const checkDetailId = useMemo(function(){
+    if(locationData.data){
 
-  if(locationData.data){
-    checkDetailId = locationData.data.id;
-    ItemData = locationData.data;
-    localStorage.setItem("savedId",checkDetailId);
-    localStorage.setItem("savedItemID",JSON.stringify(ItemData));
+      localStorage.setItem("savedId",locationData.data.id);
+      return locationData.data.id;
 
-  }else{
-    checkDetailId = localStorage.getItem("savedId");
-    ItemData = JSON.parse(localStorage.getItem("savedItemID"));
-  }
+    }else{
+      return localStorage.getItem("savedId");
+    }
+  },[]);
+
+
+  const ItemData = useMemo(function(){
+    if(locationData.data){
+      localStorage.setItem("savedItemID",JSON.stringify(locationData.data));
+      return locationData.data;
+
+    }else{
+      return JSON.parse(localStorage.getItem("savedItemID"));
+    }
+  },[]);
+
+//xx
 
   //console.log(ItemData);
 
@@ -434,10 +443,13 @@ const DetailComponent = (props) => {
 
   const getDetailData = () => {
 
+
+
     var senddata = {
       "project_id":checkDetailId,
       "email":config.getUserEmail()
     }
+
 
     DetailService.getDetailData(senddata);
     DetailService.getDetailApprovedData(senddata);
@@ -462,6 +474,7 @@ const DetailComponent = (props) => {
 
     const listenDetailService = DetailService.listenDetailData().subscribe(data => {
 
+      console.log(data);
       if(data.status != "false"){
 
         var modifiedArray = data.data;
@@ -480,9 +493,6 @@ const DetailComponent = (props) => {
         setListArray(list);
       }
 
-
-
-      //console.log(listArray);
     });
 
 
@@ -522,8 +532,6 @@ const DetailComponent = (props) => {
 
       }
 
-
-
     });
 
     const intervalObservable = ObservableService.subscribeByTimer_10_second().subscribe(data => {
@@ -531,7 +539,7 @@ const DetailComponent = (props) => {
     });
 
     const listenViews = DetailService.listenViews().subscribe(data => {
-      console.log(data);
+      //console.log(data);
       setViewsCount(data.count);
     });
 
@@ -540,21 +548,21 @@ const DetailComponent = (props) => {
 
     return () => {
       listenDetailService.unsubscribe();
-      // listenApprove.unsubscribe();
       observable.unsubscribe();
       intervalObservable.unsubscribe();
+      intervalObservable.unsubscribe();
+      listenViews.unsubscribe();
     }
 
     //unsubscribe
 
   }, []);
 
+//init functionns
+useEffect(() => {
+  getDetailData();
+},[])
 
-  useLayoutEffect(() => {
-    //initiase functions
-    getDetailData();
-
-  }, []);
 
 
   const classesh = useStylesh();
@@ -566,8 +574,6 @@ const DetailComponent = (props) => {
 
  var widthValueFirst = 30 + "%";
  var widthValueSecond = 70 + "%";
-
-
 
   return (
 

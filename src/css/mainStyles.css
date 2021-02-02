@@ -198,6 +198,12 @@ ion-item {
 .back-icon-div{
   width: 70px;
   height: 70px;
+  float: left;
+}
+
+.back-button-with-center{
+  width:100%;
+  height: 70px;
 }
 
 .back-icon{
@@ -249,4 +255,22 @@ ion-item {
   position:absolute !important;
   left:15%;
   top:80%;
+}
+
+.profileBlock{
+  width: 60%;
+  height: 40px;
+  border:1px solid white;
+  margin-left:22%;
+}
+.profileInformation{
+  font-size: 20px;
+  font-family:"Times New Roman", Times, serif;
+  text-align: center;
+  margin-top:8px;
+}
+
+.deleteUrlClass{
+  color: #FFFFFF;
+  text-decoration: none;
 }

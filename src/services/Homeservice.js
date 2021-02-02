@@ -32,7 +32,6 @@ const homeservice = {
         initSocket();
         reConnect();
         config.setDeviceid();
-
       },
 
       sendFirstRequest:() => {

@@ -339,30 +339,20 @@ const BusinessDashboard = (props) => {
 
   const [closeDialog,setCloseDialog] = useState(false);
 
-  function generate(element) {
-    return [0, 1, 2].map((value) =>
-      React.cloneElement(element, {
-        key: value,
-      }),
-    );
-  }
-
 
 
   const onSubmit = ((data) => {
 
-
-      setStorageData(prevState => {
-          return obj.email = data.email;
-      });
-
+      const newValue = {...storageData};
+      newValue.email = data.email;
+      setStorageData(newValue);
 
     AuthService.sendRestorePassword(data);//find user
 
   });
 
 
-  BusinesService.getBusinessData();
+
 //xx
   const [ listArray, setListArray ] = useState([]);
 
@@ -370,7 +360,7 @@ const BusinessDashboard = (props) => {
 
     const businessConst = BusinesService.listenBusinessCore().subscribe(data => {
 
-      //console.log(data.sdata);
+      console.log(data.sdata);
       const list = listArray.concat(data.sdata);
 
       setListArray(list);
@@ -386,6 +376,10 @@ const BusinessDashboard = (props) => {
     //unsubscribe
 
   }, []);
+
+  useEffect(() => {
+    BusinesService.getBusinessData();
+  },[])
 
   var w = window.innerWidth / 2;
   var h = window.innerHeight / 3;

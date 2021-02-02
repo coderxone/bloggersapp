@@ -57,6 +57,7 @@ let strings = new LocalizedStrings({
    currentStepAfter:" copy link and insert below inside form, then click button 'next': ",
    doneTask:"Task Submitted",
    waitingApprove:"under consideration by business",
+   Offers:"Offers",
 
  },
  it: {

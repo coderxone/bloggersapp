@@ -1,4 +1,4 @@
-import React, {useState,useEffect,useLayoutEffect} from 'react';
+import React, {useState,useEffect,useMemo} from 'react';
 // import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonInput, IonItem, IonLabel, IonList, IonItemDivider } from '@ionic/react';
 import '../css/mainStyles.css';
 import '../css/profileComponent.css';
@@ -6,6 +6,7 @@ import LocalizeComponent from '../localize/LocalizeComponent';
 import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
+import GoBackWithCenterComponent from '../helperComponents/goBackWithCenterComponent';
 import {
   withStyles,
   makeStyles,
@@ -44,6 +45,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
     backgroundColor:'#161730',
+    color:'#ffffff',
   },
   paper: {
     padding: theme.spacing(2),
@@ -116,23 +118,20 @@ const ErrorDiv = (props) => {
 
 
 
-
-
-
-
 const ProfileComponent = (props) => {
 
-  var checkingEmail = "";
-  const locationData = props.location;
-  if(locationData.data){
-    checkingEmail = props.location.data.user_email;
-    localStorage.setItem("checkingEmail",checkingEmail);
-    // localStorage.setItem("checkingItemData",JSON.stringify(ItemData));
-  }else{
-    checkingEmail = localStorage.getItem("checkingEmail");
-  }
+  var checkingEmail = useMemo(() => {
+    const locationData = props.location;
+    if(locationData.data){
+      localStorage.setItem("checkingEmail",props.location.data.user_email);
+      return props.location.data.user_email;
+    }else{
+      return localStorage.getItem("checkingEmail");
+    }
+  },[]);
 
-  //console.log(checkingEmail);
+
+//  console.log(checkingEmail);
 
 
 
@@ -158,11 +157,9 @@ const ProfileComponent = (props) => {
 
   const onSubmit = ((data) => {
 
-
-      setStorageData(prevState => {
-          return obj.email = data.email;
-      });
-
+    const newValue = {...storageData};
+    newValue.email = data.email;
+    setStorageData(newValue);
 
     AuthService.sendRestorePassword(data);//find user
 
@@ -209,19 +206,22 @@ const ProfileComponent = (props) => {
     });
 
     const listenUserData = ProfileService.listenUserDataG().subscribe(data => {
-        console.log(data);
+        //console.log(data);
+        if(data.result){
+          const newEmail = {
+            id:data.result.id,
+            email:data.result.email,
+            image_url:data.result.image_url,
+            name:data.result.name,
+            raiting_stars:data.result.raiting_stars,
+            subscribers_count:data.result.subscribers_count,
+            number_of_task:data.result.number_of_task
+          }
 
-        const newEmail = {
-          id:data.result.id,
-          email:data.result.email,
-          image_url:data.result.image_url,
-          name:data.result.name,
-          raiting_stars:data.result.raiting_stars,
-          subscribers_count:data.result.subscribers_count,
-          number_of_task:data.result.number_of_task
+          setDataObject(newEmail);
         }
 
-        setDataObject(newEmail);
+
 
         // setDataObject(prevState => {
         //   prevState.email = data.result.email;
@@ -242,7 +242,7 @@ const ProfileComponent = (props) => {
 
 
 
-  useLayoutEffect(() => {
+  useEffect(() => {
 
     //initiase functions
 
@@ -257,11 +257,8 @@ const ProfileComponent = (props) => {
 
    	<div className={classes.root}>
         <Grid container >
-          <div className="profileBlock">
-              <div className="profileInformation">
-                  {LocalizeComponent.profileInformation}
-              </div>
-          </div>
+          <GoBackWithCenterComponent center={LocalizeComponent.profileInformation}/>
+
 
           <div className="BloggerMainBlock">
             <div className="leftSideMainBlock">
@@ -308,19 +305,21 @@ const ProfileComponent = (props) => {
               </div>
 
               <div className="SbuttonDiv">
+                <Link
+                  className="removeUrlStyles"
+                  to={{
+                    pathname: "/rate",
+                    data: dataObject.id// your data array of objects
+                  }}
+                >
                 <div className="RbuttonStyle">
                   <div className="RbuttonText">
-                    <Link
-                      className="removeUrlStyles"
-                      to={{
-                        pathname: "/rate",
-                        data: dataObject.id// your data array of objects
-                      }}
-                    >
+
                       {LocalizeComponent.rate}
-                    </Link>
+
                   </div>
                 </div>
+                </Link>
                 <div></div>
 
               </div>

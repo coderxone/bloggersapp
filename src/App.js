@@ -27,6 +27,7 @@ import SelectRoleComponent from './components/SelectRoleComponent';
 import BloggerDashboardComponent from './components/BloggerDashboardComponent';
 import DetailTaskComponent from './components/DetailTaskComponent';
 import MainComponent from './components/MainComponent';
+import SuggestComponent from './components/SuggestComponent';
 
 
 
@@ -52,6 +53,7 @@ const App = () => (
               <Route path="/blogger" component={BloggerDashboardComponent} exact={true} />
               <Route path="/detailtask" component={DetailTaskComponent} exact={true} />
               <Route path="/main" component={MainComponent} exact={true} />
+              <Route path="/suggest" component={SuggestComponent} exact={true} />
               <Route exact path="/" render={() => <Redirect to="/login" />} />
             </Router>
     //     </IonRouterOutlet>

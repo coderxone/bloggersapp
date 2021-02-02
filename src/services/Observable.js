@@ -32,6 +32,12 @@ const observ_f = {
 
         return timer4000second;
       },
+      subscribeByTimer_5_second:() => {
+
+        const timer5000second = interval(5000);
+
+        return timer5000second;
+      },
 
       test:(test => {
         return "test";

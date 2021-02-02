@@ -1,4 +1,4 @@
-import React, {useState,useEffect,useLayoutEffect} from 'react';
+import React, {useState,useEffect,useMemo} from 'react';
 // import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonInput, IonItem, IonLabel, IonList, IonItemDivider } from '@ionic/react';
 import '../css/mainStyles.css';
 import '../css/selectRole.css';
@@ -102,6 +102,12 @@ const SelectRoleComponent = (props) => {
   const [dialogLeft,setDialogLeft] = useState("text");
   const [dialogRight,setDialogRight] = useState("text");
 
+
+  const saveRole = ((role) => {
+    localStorage.setItem("role",role);
+  });
+
+
   useEffect(() => {
 
     const observ = Observable.getData_subject().subscribe((data) => {
@@ -113,8 +119,7 @@ const SelectRoleComponent = (props) => {
         var sendobj = {
           role:role
         }
-
-        console.log(role);
+        //console.log(role);
 
         SelectRoleService.setRole(sendobj);
 
@@ -123,7 +128,8 @@ const SelectRoleComponent = (props) => {
 
     const listenRole = SelectRoleService.listenRole().subscribe((data) => {
       //console.log(data);
-      localStorage.setItem("role",data.role);
+      saveRole(data.role);
+
       if(data.role == 1){
         SetRoute("/blogger");
         Setredirect(true);
@@ -144,14 +150,6 @@ const SelectRoleComponent = (props) => {
     //unsubscribe
 
   }, [role]);
-
-
-  useLayoutEffect(() => {
-
-    //initiase functions
-
-
-  }, []);
 
 
   return (

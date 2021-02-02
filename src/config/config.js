@@ -80,7 +80,7 @@ const newmodule = {
       },
 
       getUserRole:() => {
-          return localStorage.getItem("role");;
+          return localStorage.getItem("role");
       },
 
       getBaseUrl:() => {

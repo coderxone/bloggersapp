@@ -1,4 +1,4 @@
-import React, {useState,useEffect,useLayoutEffect} from 'react';
+import React, {useState,useEffect,useMemo} from 'react';
 // import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonInput, IonItem, IonLabel, IonList, IonItemDivider } from '@ionic/react';
 import '../css/mainStyles.css';
 import LocalizeComponent from '../localize/LocalizeComponent';
@@ -107,7 +107,7 @@ const MessageComponent = (props) => {
 
 
 const ErrorDiv = (props) => {
-  console.log(props);
+  //console.log(props);
   const errorMessage = props.message;
 
   if(errorMessage != undefined){
@@ -121,16 +121,18 @@ const ErrorDiv = (props) => {
 
 const RateComponent = (props) => {
 
-  var raitingId = 0;
-  const locationData = props.location;
-  if(locationData.data){
-    raitingId = props.location.data;
-    localStorage.setItem("raitingId",raitingId);
-  }else{
-    raitingId = localStorage.getItem("raitingId");
-  }
+  var raitingId = useMemo(() => {
+    const locationData = props.location;
+    if(locationData.data){
+      localStorage.setItem("raitingId",props.location.data);
+      return props.location.data;
+    }else{
+      return localStorage.getItem("raitingId");
+    }
+  },[]);
 
-  console.log(raitingId);
+
+  //console.log(raitingId);
 
   const classes = useStyles();
   const { register, handleSubmit, errors,setError } = useForm({
@@ -201,9 +203,9 @@ const RateComponent = (props) => {
   const onSubmit = ((data) => {
 
       var raiteMessage = data.rate;
-      console.log(data);
+      //console.log(data);
       //rateindex
-      console.log(rateindex);
+      //console.log(rateindex);
 
       if((rateindex == 0) || (raiteMessage.length < 1)){
 
@@ -267,7 +269,7 @@ const RateComponent = (props) => {
 
 
     const listenRateService = RateService.listenRate().subscribe(data => {
-      console.log(data);
+      //console.log(data);
       if(data.status == "ok"){
         setRateText("");//clean input
         setAlertText(LocalizeComponent.successAction);//setText in Alert
@@ -285,7 +287,7 @@ const RateComponent = (props) => {
     //unsubscribe
 
     return () => {
-
+        listenRateService.unsubscribe();
     }
 
     //unsubscribe
@@ -293,7 +295,7 @@ const RateComponent = (props) => {
   }, []);
 
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     //initiase functions
 
     var sendData = {

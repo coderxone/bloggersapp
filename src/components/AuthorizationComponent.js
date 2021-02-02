@@ -1,4 +1,4 @@
-import React, {useState,useEffect} from 'react';
+import React, {useState,useEffect,useMemo} from 'react';
 // import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonInput, IonItem, IonLabel, IonList, IonItemDivider } from '@ionic/react';
 import '../css/mainStyles.css';
 import LocalizeComponent from '../localize/LocalizeComponent';
@@ -21,9 +21,6 @@ import { increment, decrement,save_email } from '../actions/actions';
 import {
   Link, Redirect
 } from "react-router-dom";
-
-
-
 
 
 
@@ -121,14 +118,12 @@ const AuthorizationComponent = (props) => {
 
   const onSubmit = ((data) => {
 
+    //console.log(data);
 
-    setStorageData(prevState => {
-
-      prevState.email = data.email;
-      prevState.password = data.password;
-
-    });
-
+    const newState = {...storageData};
+    newState.email = data.email;
+    newState.password = data.password;
+    setStorageData(newState);
 
 
     AuthService.sendAuthData(data);
@@ -136,7 +131,9 @@ const AuthorizationComponent = (props) => {
 
 
 
-
+  const saveRole = ((role) => {
+    localStorage.setItem("role",role);
+  });
 
 
   useEffect(() => {
@@ -148,7 +145,7 @@ const AuthorizationComponent = (props) => {
 
             //console.log(data);
             props.dispatch(save_email(storageData));
-
+            saveRole(data.role);
             if(data.role === 2){
                 SetRoute("/business");
                 Setredirect(true);

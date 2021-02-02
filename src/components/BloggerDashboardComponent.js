@@ -244,9 +244,41 @@ const BloggerDashboardComponent = (props) => {
 
         if(data.sdata.length > 0){
           const insertArray = [...items];
-          for(var i = 0;i < data.sdata.length;i++){
-            insertArray[i] = data.sdata[i];
+          var deleteArray = new Array();
+          if(insertArray.length > data.sdata.length){ //delete elements
+            //console.log("array less correct");
+            for(var i = 0;i < insertArray.length;i++){
+              var findInd = 0;
+              for(var b = 0;b < data.sdata.length;b++){
+                if(insertArray[i].id == data.sdata[b].id){
+                  findInd = 1;
+                }
+              }
+              if(findInd == 0){
+                deleteArray.push(i);
+
+              }
+            }
+            for(var l = 0;l < deleteArray.length;l++){
+              insertArray.splice(deleteArray[l],1);
+            }
+            console.log(insertArray.length);
+          }else{//add or update elements in array
+            //console.log("another");
+            for(var i = 0;i < data.sdata.length;i++){
+              var findInd = 0;
+              for(var b = 0;b < insertArray.length;b++){
+                if(insertArray[b].id == data.sdata[i].id){
+                  insertArray[b] = data.sdata[i];
+                  findInd = 1;
+                }
+              }
+              if(findInd == 0){
+                insertArray.push(data.sdata[i]);
+              }
+            }
           }
+
 
           SetItems(insertArray);
           setDistance(data.distance);

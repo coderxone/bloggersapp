@@ -1,4 +1,4 @@
-import React, {useState,useEffect,useLayoutEffect} from 'react';
+import React, {useState,useEffect,useMemo} from 'react';
 // import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonInput, IonItem, IonLabel, IonList, IonItemDivider } from '@ionic/react';
 import '../css/detailComponent.css';
 import LocalizeComponent from '../localize/LocalizeComponent';
@@ -18,8 +18,9 @@ import DetailService from '../services/DetailService';
 import DoneOutlineIcon from '@material-ui/icons/DoneOutline';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import List from '@material-ui/core/List';
-
+import GoBackComponent from '../helperComponents/goBackWithCenterComponent';
 import PropTypes from 'prop-types';
+import ConfirmDialogComponent from '../helperComponents/ConfirmDialogComponent';
 
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
@@ -53,6 +54,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
     backgroundColor:'#161730',
+    color:'#ffffff',
   },
   paper: {
     padding: theme.spacing(1),
@@ -112,7 +114,7 @@ const MessageComponent = (props) => {
 
 
 const ErrorDiv = (props) => {
-  console.log(props);
+  //console.log(props);
   const errorMessage = props.message;
 
   if(errorMessage != undefined){
@@ -144,6 +146,7 @@ var historyId = 9900;
 
 const ListComponent = (props) => {
 
+  const projectId = props.projectId;
   const classestree = useStylesthree();
 
   var statusArray = new Array(4);
@@ -157,7 +160,7 @@ const ListComponent = (props) => {
   }
 
 
-//xx
+
   const content = items.map((item,index) =>
 
     <div key={item.id} className={'FullList ' + item.id} >
@@ -171,7 +174,7 @@ const ListComponent = (props) => {
             </div>
           </div>
 
-          <SubComponent condition={item} />
+          <SubComponent condition={item} projectId={projectId} />
 
     </div>
   );
@@ -196,22 +199,33 @@ const SubComponent = (props) => {
 
   var status = props.condition.status;
   var id = props.condition.id;
+  var projectId = props.projectId;
+  var email = props.condition.user_email;
 
   var url = props.condition.url;
 
   const setBan = (id) => {
 
     var sendObject = {
-      from:10
+      from:10,
+      id:id
     }
     ObservableService.sendData_subject(sendObject);
-    DetailService.setBan(id);
+
+
+
+    //DetailService.setBan(id);
 
   }
 
   const View = (url) => {
     var win = window.open(url, '_blank');
     win.focus();
+  }
+
+  const Suggest = (projectid,email) => {
+    console.log(projectid);
+    console.log(email);
   }
 
 
@@ -226,12 +240,19 @@ const SubComponent = (props) => {
                   Ban {LocalizeComponent.ban}
               </div>
           </div>
-          <div className="centrDivCopyC" onClick={(e) => View(url)}>
-              <VisibilityIcon className="leftSide"/>
-              <div className="rightSide">
-                  Suggest
-              </div>
+          <Link className="centrDivCopyC deleteUrlClass"
+            to={{
+              pathname: "/suggest",
+              projectId: projectId, // your data array of objects
+              email: email, // your data array of objects
+            }}
+          >
+          <VisibilityIcon className="leftSide"/>
+          <div className="rightSide">
+              Suggest
           </div>
+        </Link>
+
           <div className="centrDivCopyCtree" onClick={(e) => View(url)}>
               <VisibilityIcon className="leftSide"/>
               <div className="rightSide">
@@ -312,29 +333,44 @@ const DetailComponent = (props) => {
   //console.log(props.reduxState.reducerStore);
 
   const locationData = props.location;
-  var Project_id = 9999;
 
-  console.log(locationData);
+  var blogger_email = useMemo(() => {
 
-  var blogger_email = "";
-  var ItemData = null;
+    if(locationData.data){
+      localStorage.setItem("blogger_email",locationData.data.user_email);
+      return locationData.data.user_email;
+    }else{
+      return localStorage.getItem("blogger_email");
+    }
 
+  },[]);
 
-  if(locationData.data){
-    blogger_email = locationData.data.user_email;
-    Project_id = locationData.data.project_id;
-    ItemData = locationData.data;
-    localStorage.setItem("blogger_email",blogger_email);
-    localStorage.setItem("project_id",Project_id);
-    localStorage.setItem("savedItemDataD",JSON.stringify(ItemData));
+  var Project_id = useMemo(() => {
 
-  }else{
-    blogger_email = localStorage.getItem("blogger_email");
-    Project_id = localStorage.getItem("project_id");
-    ItemData = JSON.stringify(localStorage.getItem("savedItemDataD"));
-  }
+    if(locationData.data){
+      localStorage.setItem("project_id",locationData.data.project_id);
+      return locationData.data.project_id;
+    }else{
+      return localStorage.getItem("project_id");
+    }
 
-  console.log(ItemData);
+  },[]);
+
+  var ItemData = useMemo(() => {
+
+    if(locationData.data){
+      localStorage.setItem("savedItemDataD",JSON.stringify(locationData.data));
+      return locationData.data;
+    }else{
+      return JSON.stringify(localStorage.getItem("savedItemDataD"));
+    }
+
+  },[]);
+
+  const [dialogStatus,setDialogStatus] = useState(false);
+  const [dialogText,setDialogText] = useState("text");
+  const [dialogLeft,setDialogLeft] = useState("text");
+  const [dialogRight,setDialogRight] = useState("text");
 
 
   const classes = useStyles();
@@ -382,14 +418,17 @@ const DetailComponent = (props) => {
   const [ listArray, setListArray ] = useState([]);
   const [ listArrayApprove, setListApproveArray ] = useState([]);
   const [ viewsCount,setViewsCount ] = useState(0);
+  const [banId,setBanId] = useState(0);
 
   useEffect(() => {
 
+
+
     const listenDetailService = DetailService.listenCheckvideosByUser().subscribe(data => {
 
-      console.log(data);
+      //console.log(data);
       //console.log(historyId);
-//xx
+
       if(data.status == "ok"){
         var modifiedArray = data.data;
 
@@ -413,7 +452,14 @@ const DetailComponent = (props) => {
     });
 
     const listenBan = DetailService.listenBan().subscribe(data => {
-      console.log(data);
+
+      if(data.status == "ok"){
+        setDialogStatus(false);
+      }
+      setInterval(function(){
+        getDetailData();
+      },1500)
+
     });
 
 
@@ -421,36 +467,18 @@ const DetailComponent = (props) => {
     const observable = ObservableService.getData_subject().subscribe(data => {
 
       var from = data.from;
-      var modify = data.items;
-      var modifyId = data.id;
+      var id = data.id;
 
-      if(from == 1){
-        for(var i = 0;i < modify.length;i++){
-          if(i != modifyId){
-            modify[i].status = false;
-          }else{
-            modify[i].status = true;
-          }
-        }
+      if(from == 10){
 
-        const ModifArray = listArray.concat(modify);
-        setListArray(ModifArray);
-      }else if(from == 2){
-        for(var i = 0;i < modify.length;i++){
-          if(i != modifyId){
-            modify[i].status = false;
-          }else{
-            modify[i].status = true;
-          }
-        }
-
-        const ModifArray = listArrayApprove.concat(modify);
-        setListApproveArray(ModifArray);
-      }else if(from == 10){
-
-        setInterval(function(){
-          getDetailData();
-        },1000)
+        setBanId(id);
+        setDialogText(LocalizeComponent.continue);
+        setDialogLeft(LocalizeComponent.no);
+        setDialogRight(LocalizeComponent.yes);
+        setDialogStatus(true);
+        // setInterval(function(){
+        //   getDetailData();
+        // },1000)
 
       }
 
@@ -458,7 +486,7 @@ const DetailComponent = (props) => {
 
     });
 
-    const intervalObservable = ObservableService.subscribeByTimer_10_second().subscribe(data => {
+    const intervalObservable = ObservableService.subscribeByTimer_5_second().subscribe(data => {
       getDetailData();
     });
 
@@ -479,12 +507,32 @@ const DetailComponent = (props) => {
   }, []);
 
 
-  useLayoutEffect(() => {
+  useEffect(() => {
+
+    const observ = ObservableService.getData_subject().subscribe((data) => {
+      if(data == "cancel"){
+        //console.log("cancel");
+        setDialogStatus(false);
+      }else if(data == "confirm"){
+
+          //console.log(banId);
+          DetailService.setBan(banId);
+
+      }
+    });
+
+    return () => {
+      observ.unsubscribe();
+    }
+
+
+  }, [banId]);
+
+
+  useEffect(() => {
 
     //initiase functions
     getDetailData();
-
-
 
 
   }, []);
@@ -502,7 +550,9 @@ const DetailComponent = (props) => {
 
     <div className={classes.root}>
         <Grid container >
-          <ListComponent items={listArray}/>
+          <ConfirmDialogComponent  status={dialogStatus} text={dialogText} left={dialogLeft} right={dialogRight}/>
+          <GoBackComponent center={LocalizeComponent.Offers}/>
+          <ListComponent items={listArray} projectId={Project_id}/>
         </Grid>
     </div>
 

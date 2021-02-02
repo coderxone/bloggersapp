@@ -24,6 +24,7 @@ import {
 } from '@material-ui/pickers';
 import { connect } from 'react-redux';
 import HomeService from '../services/Homeservice';
+import AlertDangerComponent from '../helperComponents/AlertDangerComponent';
 
 import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
 import AlarmIcon from '@material-ui/icons/Alarm';
@@ -162,16 +163,25 @@ const ApplyComponent = () => {
     setDefaultSliderValue(newValue);
   }
 
+  const [alertState,setAlertState] = useState(false);
+  const [alertText,setAlertText] = useState("");
+
+  const hideAlert = () => {
+    setTimeout(function(){
+        setAlertState(false);
+    },3000)
+  }
+
   const onSubmit = ((data) => {
 
       var coord = config.getUserCoordinates();
       //getUserCoordinates
 
       if(coord === false){
-        setError("password", {
-              type: "manual",
-              message: LocalizeComponent.location_error
-            });
+        setAlertText(LocalizeComponent.location_error);
+        setAlertState(true);
+        hideAlert();
+
       }else{
         data.coord = coord;
         data.amount = defaultSliderValue;
@@ -179,7 +189,7 @@ const ApplyComponent = () => {
         data.subscribers = subscribersor;
       }
 
-      console.log(data);
+      //console.log(data);
 
       HomeService.sendApplyData(data);
 
@@ -329,6 +339,7 @@ const ApplyComponent = () => {
                <Redirect to={route} />
              )}
 
+             <AlertDangerComponent state={alertState} text={alertText} />
           </Grid>
 
 

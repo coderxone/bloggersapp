@@ -85,6 +85,8 @@ const DetailTaskComponent = (props) => {
       }
   },[]);
 
+  console.log(detailData);
+
 
 
   const classes = useStyles();

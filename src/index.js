@@ -36,6 +36,8 @@ if(us_email){
           role:config.getUserRole(),
           type:1
         }
+
+
   HomeService.checkAutomaticMessages(s);
 }
 

@@ -22,11 +22,11 @@ const detailservice = {
 
         var encryptedData = cryptLibrary.encrypt(datas);
 
-        socket.emit("checkvideo",encryptedData);
+        socket.emit("checkvideoByProject",encryptedData);
       },
 
       listenDetailData:() => {
-        socket.on("checkvideo",(data) => {
+        socket.on("checkvideoByProject",(data) => {
             //console.log(data);
             observ_subjectfive44.next(cryptLibrary.decrypt(data));
         });
@@ -94,7 +94,7 @@ const detailservice = {
       },
 
       listenBan:() => {
-        socket.on("setApprove",(data) => {
+        socket.on("setBan",(data) => {
             //console.log(data);
             observ_subjecttwo.next(cryptLibrary.decrypt(data));
         });
