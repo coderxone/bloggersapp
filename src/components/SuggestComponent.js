@@ -3,6 +3,7 @@ import React, {useState,useEffect,useMemo} from 'react';
 import '../css/mainStyles.css';
 import LocalizeComponent from '../localize/LocalizeComponent';
 import { useForm } from "react-hook-form";
+import ChatService from '../services/Chatservice';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
 import {
@@ -22,6 +23,7 @@ import HomeService from '../services/Homeservice';
 import DialogComponent from '../components/DialogComponent';
 import config from '../config/config.js';
 import styles from "@chatscope/chat-ui-kit-styles/dist/default/styles.min.css";
+
 import {
   MainContainer,
   ChatContainer,
@@ -124,11 +126,13 @@ const SuggestComponent = (props) => {
 
 
 
-  var currentEmail = useMemo(() => {
+  const currentEmail = useMemo(() => {
 
       const locationData = props.location;
-      if(locationData.data){
+
+      if(locationData.email){
         //save in browser memory
+        console.log(props.location.email);
         localStorage.setItem("currentEmail",props.location.email);
         //return object;
         return props.location.email;
@@ -139,10 +143,10 @@ const SuggestComponent = (props) => {
 
   },[]);
 
-  var projectId = useMemo(() => {
+  const projectId = useMemo(() => {
 
       const locationData = props.location;
-      if(locationData.data){
+      if(locationData.projectId){
         //save in browser memory
         localStorage.setItem("currentProjectId",props.location.projectId);
         //return object;
@@ -153,6 +157,11 @@ const SuggestComponent = (props) => {
       }
 
   },[]);
+
+  const deviceEmail = useMemo(() => {
+    return config.getUserEmail();
+  },[])
+
 
   const windowHeight = window.screen.height + "px";
 
@@ -179,15 +188,87 @@ const SuggestComponent = (props) => {
 
   });
 
+  const [messagesList,setMessagesList] = useState([]);
+
+  const incoming = (message,email,avurl,id) => {
+
+
+    const M = <Message model={{
+        message: message,
+        sentTime: "now",
+        sender: email,
+        direction: "incoming",
+        position: "last"
+      }}>
+          <Avatar src={avurl} name={email} />
+      </Message>;
+
+      var returnObj = {
+        id:id,
+        message:M
+      }
+
+      return returnObj;
+
+  }
+
+
+  const outgoing = (message,email,id) => {
+
+
+    const M = <Message model={{
+        message: message,
+        sentTime: "15 mins ago",
+        sender: email,
+        direction: "outgoing",
+        position: "last"
+        }} />;
+
+      var returnObj = {
+        id:id,
+        message:M
+      }
+
+      return returnObj;
+
+  }
+
+  const demoUrl = "https://www.daily-sun.com/assets/news_images/2017/08/14/thumbnails/Daily-Sun-38-01-14-08-2017.jpg";
+
 
 
   useEffect(() => {
 
 
-    //unsubscribe
+    const listenMessages = ChatService.listenAllMessages().subscribe(data => {
+          console.log(data);
+
+          const newList = [...messagesList];
+
+
+
+          for(var i = 0;i < data.length;i++){
+            if(data[i].fromEmail == currentEmail){
+              //friend
+              var outmessage = outgoing(data[i].message,currentEmail,data[i].id);
+              newList.push(outmessage);
+            }else if(data[i].fromEmail == deviceEmail){
+              //my messages
+              //var messages = incoming(message,email,avurl,data[i].id);
+              var messages = incoming(data[i].message,deviceEmail,demoUrl,data[i].date,data[i].id);
+              newList.push(messages);
+            }
+          }
+
+
+
+          setMessagesList(newList);
+          //
+          //scrollToBottom();
+    });
 
     return () => {
-
+      listenMessages.unsubscribe();
     }
 
     //unsubscribe
@@ -197,7 +278,14 @@ const SuggestComponent = (props) => {
 
   useEffect(() => {
 
+    var checkObj = {
+      currentEmail:currentEmail,
+      projectId:projectId,
+    }
+
+    console.log(checkObj);
     //initiase functions
+    ChatService.checkGetAllMessages(checkObj);
 
 
   }, []);
@@ -396,22 +484,15 @@ const SuggestComponent = (props) => {
                               position: "last"
                             }} />
 
-                                        <Message model={{
+                            <Message model={{
                               message: "Hello my friend",
                               sentTime: "15 mins ago",
                               sender: "Eliot",
                               direction: "incoming",
                               position: "first"
                             }} avatarSpacer={true} />
-                                        <Message model={{
-                              message: "Hello my friend",
-                              sentTime: "15 mins ago",
-                              sender: "Eliot",
-                              direction: "incoming",
-                              position: "last"
-                            }}>
-                          <Avatar src={eliotIco} name="Eliot" />
-                      </Message>
+
+
                     </MessageList>
                   <MessageInput onSend={sendEvent} onChange={event => SetMessage(event)} value={newMessage} placeholder="Type message here" />
                 </ChatContainer>
