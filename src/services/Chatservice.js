@@ -60,10 +60,11 @@ const profileService = {
           sendMessage:(data) => {
 
             var data = {
-              "deviceid":config.getdeviceid(),
-              "email":config.getUserEmail(),
+              deviceid:config.getdeviceid(),
+              email:config.getUserEmail(),
               sendemail:data.currentEmail,
               projectId:data.projectId,
+              message:data.message
             }
 
             var encryptedData = cryptLibrary.encrypt(data);

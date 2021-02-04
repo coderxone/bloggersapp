@@ -20,6 +20,7 @@ import Box from '@material-ui/core/Box';
 import { connect } from 'react-redux';
 import AuthService from '../services/AuthService';
 import HomeService from '../services/Homeservice';
+import Observable from '../services/Observable';
 import DialogComponent from '../components/DialogComponent';
 import config from '../config/config.js';
 import styles from "@chatscope/chat-ui-kit-styles/dist/default/styles.min.css";
@@ -118,7 +119,47 @@ const MessageComponent = (props) => {
     </div>
   )
 }
+//xx
 
+const MessageListComponent = ((props) => {
+    const list = props.list;
+
+    console.log(list);
+    const [typeIndicator,setTypeIndicator] = useState(false);
+
+    const Mtype = 'typingIndicator={<TypingIndicator content="Eliot is typing" />}';
+
+    const returnList = list.map(item =>
+
+        <div key={item.id}>
+          {item.message}
+        </div>
+
+    );
+
+    const [newMessage,setNewMessage] = useState("");
+
+    const SetMessage = (message) => {
+      console.log(message);
+      setNewMessage(message);
+    }
+
+    const sendMessage = (() => {
+        Observable.sendData_subject_M(newMessage);
+        setNewMessage("");
+    });
+
+    return (
+      <ChatContainer>
+      <MessageList >
+          {returnList}
+      </MessageList>
+      <MessageInput onChange={event => SetMessage(event)}  onSend={event => sendMessage()} placeholder="Type message here" />
+      </ChatContainer>
+
+
+    )
+})
 
 
 
@@ -198,7 +239,7 @@ const SuggestComponent = (props) => {
         sentTime: "now",
         sender: email,
         direction: "incoming",
-        position: "last"
+        position: "normal"
       }}>
           <Avatar src={avurl} name={email} />
       </Message>;
@@ -221,7 +262,7 @@ const SuggestComponent = (props) => {
         sentTime: "15 mins ago",
         sender: email,
         direction: "outgoing",
-        position: "last"
+        position: "normal"
         }} />;
 
       var returnObj = {
@@ -241,34 +282,45 @@ const SuggestComponent = (props) => {
 
 
     const listenMessages = ChatService.listenAllMessages().subscribe(data => {
-          console.log(data);
+          console.log(data.data);
 
           const newList = [...messagesList];
 
+          var tAr = new Array();
 
 
-          for(var i = 0;i < data.length;i++){
-            if(data[i].fromEmail == currentEmail){
+
+          for(var i = 0;i < data.data.length;i++){
+            if(data.data[i].fromEmail == currentEmail){
               //friend
-              var outmessage = outgoing(data[i].message,currentEmail,data[i].id);
+              var outmessage = outgoing(data.data[i].message,currentEmail,data.data[i].id);
               newList.push(outmessage);
-            }else if(data[i].fromEmail == deviceEmail){
+              tAr.push(outmessage);
+            }else if(data.data[i].fromEmail == deviceEmail){
               //my messages
               //var messages = incoming(message,email,avurl,data[i].id);
-              var messages = incoming(data[i].message,deviceEmail,demoUrl,data[i].date,data[i].id);
+              var messages = incoming(data.data[i].message,deviceEmail,demoUrl,data.data[i].date,data.data[i].id);
               newList.push(messages);
+              tAr.push(messages);
             }
           }
 
 
 
           setMessagesList(newList);
+          console.log(tAr);
           //
           //scrollToBottom();
     });
 
+
+    const obs = Observable.getData_subject_M().subscribe(data => {
+        console.log(data);
+    });
+
     return () => {
       listenMessages.unsubscribe();
+      obs.unsubscribe();
     }
 
     //unsubscribe
@@ -290,18 +342,7 @@ const SuggestComponent = (props) => {
 
   }, []);
 
-  const [newMessage,setNewMessage] = useState("");
 
-  const SetMessage = (message) => {
-    setNewMessage(message);
-
-    //console.log(message);
-  }
-
-  const sendEvent = () => {
-    console.log("clicked");
-    setNewMessage("");
-  }
 
 
   return (
@@ -309,193 +350,11 @@ const SuggestComponent = (props) => {
         <Grid container >
 
               <MainContainer style ={{height:windowHeight,width:"100%"}}>
-                <ChatContainer>
-                <MessageList typingIndicator={<TypingIndicator content="Eliot is typing" />}>
-
-                  <MessageSeparator content="Saturday, 30 November 2019" />
-
-                          <Message model={{
-                              message: "Hello my friend",
-                              sentTime: "15 mins ago",
-                              sender: "Eliot",
-                              direction: "incoming",
-                              position: "single"
-                            }}>
-                                            <Avatar src={eliotIco} name="Eliot" />
-                                        </Message>
-                                        <Message model={{
-                              message: "Hello my friend",
-                              sentTime: "15 mins ago",
-                              sender: "Zoe",
-                              direction: "outgoing",
-                              position: "single"
-                            }} />
-                                        <Message model={{
-                              message: "Hello my friend",
-                              sentTime: "15 mins ago",
-                              sender: "Eliot",
-                              direction: "incoming",
-                              position: "first"
-                            }} avatarSpacer={true} />
-                                        <Message model={{
-                              message: "Hello my friend",
-                              sentTime: "15 mins ago",
-                              sender: "Eliot",
-                              direction: "incoming",
-                              position: "normal"
-                            }} avatarSpacer={true} />
-                                        <Message model={{
-                              message: "Hello my friend",
-                              sentTime: "15 mins ago",
-                              sender: "Eliot",
-                              direction: "incoming",
-                              position: "normal"
-                            }} avatarSpacer={true} />
-                                        <Message model={{
-                              message: "Hello my friend",
-                              sentTime: "15 mins ago",
-                              sender: "Eliot",
-                              direction: "incoming",
-                              position: "last"
-                            }}>
-                                            <Avatar src={eliotIco} name="Eliot" />
-                                        </Message>
-                                        <Message model={{
-                              message: "Hello my friend",
-                              sentTime: "15 mins ago",
-                              sender: "Zoe",
-                              direction: "outgoing",
-                              position: "first"
-                            }} />
-                                        <Message model={{
-                              message: "Hello my friend",
-                              sentTime: "15 mins ago",
-                              sender: "Zoe",
-                              direction: "outgoing",
-                              position: "normal"
-                            }} />
-                                        <Message model={{
-                              message: "Hello my friend",
-                              sentTime: "15 mins ago",
-                              sender: "Zoe",
-                              direction: "outgoing",
-                              position: "normal"
-                            }} />
-                                        <Message model={{
-                              message: "Hello my friend",
-                              sentTime: "15 mins ago",
-                              sender: "Eliot",
-                              direction: "outgoing",
-                              position: "last"
-                            }} />
-
-                                        <Message model={{
-                              message: "Hello my friend",
-                              sentTime: "15 mins ago",
-                              sender: "Eliot",
-                              direction: "incoming",
-                              position: "first"
-                            }} avatarSpacer={true} />
-                                        <Message model={{
-                              message: "Hello my friend",
-                              sentTime: "15 mins ago",
-                              sender: "Eliot",
-                              direction: "incoming",
-                              position: "last"
-                            }}>
-                                            <Avatar src={eliotIco} name="Eliot" />
-                                        </Message>
-
-                                        <MessageSeparator content="Saturday, 31 November 2019" />
-
-                                        <Message model={{
-                              message: "Hello my friend",
-                              sentTime: "15 mins ago",
-                              sender: "Eliot",
-                              direction: "incoming",
-                              position: "single"
-                            }}>
-                                            <Avatar src={eliotIco} name="Eliot" />
-                                        </Message>
-                                        <Message model={{
-                              message: "Hello my friend",
-                              sentTime: "15 mins ago",
-                              sender: "Zoe",
-                              direction: "outgoing",
-                              position: "single"
-                            }} />
-
-                                        <Message model={{
-                              message: "Hello my friend",
-                              sentTime: "15 mins ago",
-                              sender: "Eliot",
-                              direction: "incoming",
-                              position: "first"
-                            }} avatarSpacer={true} />
-                                        <Message model={{
-                              message: "Hello my friend",
-                              sentTime: "15 mins ago",
-                              sender: "Eliot",
-                              direction: "incoming",
-                              position: "normal"
-                            }} avatarSpacer={true} />
-                                        <Message model={{
-                              message: "Hello my friend",
-                              sentTime: "15 mins ago",
-                              sender: "Eliot",
-                              direction: "incoming",
-                              position: "normal"
-                            }} avatarSpacer={true} />
-                                        <Message model={{
-                              message: "Hello my friend",
-                              sentTime: "15 mins ago",
-                              sender: "Eliot",
-                              direction: "incoming",
-                              position: "last"
-                            }}>
-                                            <Avatar src={eliotIco} name="Eliot" />
-                                        </Message>
-                                        <Message model={{
-                              message: "Hello my friend",
-                              sentTime: "15 mins ago",
-                              sender: "Zoe",
-                              direction: "outgoing",
-                              position: "first"
-                            }} />
-                                        <Message model={{
-                              message: "Hello my friend",
-                              sentTime: "15 mins ago",
-                              sender: "Zoe",
-                              direction: "outgoing",
-                              position: "normal"
-                            }} />
-                                        <Message model={{
-                              message: "Hello my friend",
-                              sentTime: "15 mins ago",
-                              sender: "Zoe",
-                              direction: "outgoing",
-                              position: "normal"
-                            }} />
-                                        <Message model={{
-                              message: "Hello my friend",
-                              sentTime: "15 mins ago",
-                              sender: "Zoe",
-                              direction: "outgoing",
-                              position: "last"
-                            }} />
-
-                            <Message model={{
-                              message: "Hello my friend",
-                              sentTime: "15 mins ago",
-                              sender: "Eliot",
-                              direction: "incoming",
-                              position: "first"
-                            }} avatarSpacer={true} />
 
 
-                    </MessageList>
-                  <MessageInput onSend={sendEvent} onChange={event => SetMessage(event)} value={newMessage} placeholder="Type message here" />
-                </ChatContainer>
+                      <MessageListComponent list={messagesList}/>
+
+
               </MainContainer>
 
 
