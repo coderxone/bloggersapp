@@ -124,7 +124,7 @@ const MessageComponent = (props) => {
 const MessageListComponent = ((props) => {
     const list = props.list;
 
-    console.log(list);
+    //console.log(list);
     const [typeIndicator,setTypeIndicator] = useState(false);
 
     const Mtype = 'typingIndicator={<TypingIndicator content="Eliot is typing" />}';
@@ -140,7 +140,6 @@ const MessageListComponent = ((props) => {
     const [newMessage,setNewMessage] = useState("");
 
     const SetMessage = (message) => {
-      console.log(message);
       setNewMessage(message);
     }
 
@@ -231,7 +230,7 @@ const SuggestComponent = (props) => {
 
   const [messagesList,setMessagesList] = useState([]);
 
-  const incoming = (message,email,avurl,id) => {
+  const outgoing = (message,email,avurl,id) => {
 
 
     const M = <Message model={{
@@ -254,12 +253,12 @@ const SuggestComponent = (props) => {
   }
 
 
-  const outgoing = (message,email,id) => {
+  const incoming = (message,email,id) => {
 
 
     const M = <Message model={{
         message: message,
-        sentTime: "15 mins ago",
+        sentTime: "now",
         sender: email,
         direction: "outgoing",
         position: "normal"
@@ -276,6 +275,7 @@ const SuggestComponent = (props) => {
 
   const demoUrl = "https://www.daily-sun.com/assets/news_images/2017/08/14/thumbnails/Daily-Sun-38-01-14-08-2017.jpg";
 
+  const [lastMessageId,setLastMessageId] = useState(0);
 
 
   useEffect(() => {
@@ -284,60 +284,110 @@ const SuggestComponent = (props) => {
     const listenMessages = ChatService.listenAllMessages().subscribe(data => {
           console.log(data.data);
 
+          var existlist = data.data;
+
+          if(existlist.length < 1){
+            return false;
+          }
           const newList = [...messagesList];
-
-          var tAr = new Array();
-
-
+          var lastMid = 0;
 
           for(var i = 0;i < data.data.length;i++){
             if(data.data[i].fromEmail == currentEmail){
               //friend
-              var outmessage = outgoing(data.data[i].message,currentEmail,data.data[i].id);
+              var outmessage = outgoing(data.data[i].message,currentEmail,demoUrl,data.data[i].date,data.data[i].id);
               newList.push(outmessage);
-              tAr.push(outmessage);
+              lastMid = data.data[i].id;
+
             }else if(data.data[i].fromEmail == deviceEmail){
               //my messages
               //var messages = incoming(message,email,avurl,data[i].id);
-              var messages = incoming(data.data[i].message,deviceEmail,demoUrl,data.data[i].date,data.data[i].id);
+              var messages = incoming(data.data[i].message,deviceEmail,data.data[i].id);
               newList.push(messages);
-              tAr.push(messages);
+              lastMid = data.data[i].id;
             }
           }
 
 
-
+          setLastMessageId(lastMid);//set last message id
           setMessagesList(newList);
-          console.log(tAr);
+
           //
           //scrollToBottom();
     });
 
 
-    const obs = Observable.getData_subject_M().subscribe(data => {
-        console.log(data);
+    const listenSendM = ChatService.listengetMessage().subscribe(data => {
+      console.log(data);
+      ChatService.readMessage(data);
+      HomeService.notificationVoice();
+    });
+
+    const listenReadMessage = ChatService.listenReadMessage().subscribe(data => {
+      console.log(data);
     });
 
     return () => {
       listenMessages.unsubscribe();
-      obs.unsubscribe();
+      listenSendM.unsubscribe();
+      listenReadMessage.unsubscribe();
     }
 
     //unsubscribe
 
   }, []);
 
-
-  useEffect(() => {
-
+  const requestToCheckMessages = (() => {
     var checkObj = {
       currentEmail:currentEmail,
       projectId:projectId,
     }
-
-    console.log(checkObj);
     //initiase functions
     ChatService.checkGetAllMessages(checkObj);
+  });
+
+  const initMessageService = (() => {
+    var sendObj = {
+      message:"init",
+      currentEmail:currentEmail,
+      projectId:projectId,
+    }
+    ChatService.sendMessage(sendObj);
+  });
+
+
+  useEffect(() => {
+    const obs = Observable.getData_subject_M().subscribe(message => {
+
+        if(message.length > 0){
+          const lastMid = lastMessageId + 1;
+          const newList = [...messagesList];
+          var newmessage = incoming(message,deviceEmail,lastMid);
+          newList.push(newmessage);
+          setLastMessageId(lastMid);
+          setMessagesList(newList);
+          var sendObj = {
+            message:message,
+            projectId:projectId,
+            currentEmail:currentEmail,
+          }
+          ChatService.sendMessage(sendObj);
+
+        }
+
+    });
+
+    return () => {
+      obs.unsubscribe();
+    }
+
+  },[messagesList,lastMessageId])
+
+
+  useEffect(() => {
+
+    initMessageService();
+    requestToCheckMessages();
 
 
   }, []);

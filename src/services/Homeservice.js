@@ -2,6 +2,8 @@ import { Subject } from 'rxjs';
 import socket from '../config/socket.js';
 import config from '../config/config.js';
 import cryptLibrary from '../helpers/CryptLibrary';
+import soundfile from '../voice/to-the-point.ogg';
+import soundfiletwo from '../voice/to-the-point.mp3';
 
 
 const observ_subject = new Subject();
@@ -149,6 +151,11 @@ const homeservice = {
         return "test";
       }),
 
+      notificationVoice:() => {
+        const audio = new Audio(soundfile);
+        audio.play();
+      },
+
       async_function: async function(){ //a function that returns a promise
 
           return new Promise(function(resolve,reject){
@@ -157,6 +164,7 @@ const homeservice = {
 
 
         },
+
 
       without_async: function(){ //a function that returns a promise
 
