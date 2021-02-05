@@ -7,7 +7,7 @@ const observ_subject = new Subject();
 const observ_subject2 = new Subject();
 const timer10s = new Subject();
 
-const profileService = {
+const MainService = {
 
           getUserData:(comingData) => {
 
@@ -39,4 +39,4 @@ const profileService = {
       }
 
 
-export default profileService;
+export default MainService;

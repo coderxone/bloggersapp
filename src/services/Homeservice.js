@@ -4,15 +4,17 @@ import config from '../config/config.js';
 import cryptLibrary from '../helpers/CryptLibrary';
 import soundfile from '../voice/to-the-point.ogg';
 import soundfiletwo from '../voice/to-the-point.mp3';
+import Observable from '../services/Observable';
 
 
 const observ_subject = new Subject();
+const observ_subjectTwo = new Subject();
 // const timer10s$ = new Subject<any>();
 // const timer60s = new Subject<any>();
 // const timer300000s$ = new Subject<any>();
 
 
-function initSocket(){
+const initSocket = (() => {
 
         socket.on('connect',function () {
             console.log('connected to server');
@@ -21,12 +23,50 @@ function initSocket(){
           console.log('disconnected from server');
         });
 
-      }
+      });
 
 
  function reConnect(){
 
  }
+
+ const listenServices = (() => {
+
+   //listen online users
+   homeservice.listenOnlineUsers().subscribe(data => {
+     console.log(data);
+   });
+
+   homeservice.listencheckAutomaticMessages().subscribe(data => {
+     console.log(data);
+   });
+
+   homeservice.listenNotificationsMessages().subscribe(data => {//count of new messages
+     console.log(data);
+
+     homeservice.notificationVoice();
+   });
+
+   homeservice.joinUser();//connect as user
+   homeservice.checkNotificationsMessages();//check for new messages
+   homeservice.fiveMinutObserver();
+
+   //check automatic messages
+   var us_email = config.getUserEmail();
+
+   if(us_email){
+     var s = {
+             email:us_email,
+             role:config.getUserRole(),
+             type:1
+           }
+     homeservice.checkAutomaticMessages(s);
+   }
+   //check automatic messages
+
+ });
+
+
 
 const homeservice = {
 
@@ -34,6 +74,7 @@ const homeservice = {
         initSocket();
         reConnect();
         config.setDeviceid();
+        listenServices();
       },
 
       sendFirstRequest:() => {
@@ -103,6 +144,12 @@ const homeservice = {
         return observ_subject;
       },
 
+      fiveMinutObserver:() => {
+        Observable.subscribeByTimer_5_min().subscribe(data => {
+          this.checkNotificationsMessages();//check for new messages
+        });
+      },
+
       sendNodeMail:(data) => {
         var datas = {
           "deviceid":config.getdeviceid(),
@@ -129,13 +176,6 @@ const homeservice = {
           "data":data,
         }
 
-        // amount: 1200
-        // coord: "{"title":"1240 Monument Blvd, Concord, CA 94520, USA","geometry":{"lat":37.9485947,"lng":-122.049748},"name":"1240 Monument Blvd, Concord, CA 94520, USA","fullData":[{"long_name":"1240","short_name":"1240","types":["street_number"]},{"long_name":"Monument Boulevard","short_name":"Monument Blvd","types":["route"]},{"long_name":"Concord","short_name":"Concord","types":["locality","political"]},{"long_name":"Contra Costa County","short_name":"Contra Costa County","types":["administrative_area_level_2","political"]},{"long_name":"California","short_name":"CA","types":["administrative_area_level_1","political"]},{"long_name":"United States","short_name":"US","types":["country","political"]},{"long_name":"94520","short_name":"94520","types":["postal_code"]}]}"
-        // date: "12/04/2020"
-        // description: "sdsdsds sdsds"
-        // time: "04:11 PM"
-        // title: "sdsdsds sdsds"
-
         socket.emit("sendFormData",cryptLibrary.encrypt(datas));
       },
 
@@ -154,6 +194,23 @@ const homeservice = {
       notificationVoice:() => {
         const audio = new Audio(soundfile);
         audio.play();
+      },
+
+      checkNotificationsMessages:() => {
+        var data = {
+          "deviceid":config.getdeviceid(),
+          "email":config.getUserEmail()
+        }
+
+        socket.emit("checkNewMessage",cryptLibrary.encrypt(data));
+
+      },
+      listenNotificationsMessages:() => {
+        socket.on("checkNewMessage",data => {
+            observ_subjectTwo.next(cryptLibrary.decrypt(data));
+        })
+
+        return observ_subjectTwo;
       },
 
       async_function: async function(){ //a function that returns a promise

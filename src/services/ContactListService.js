@@ -7,26 +7,25 @@ const observ_subject = new Subject();
 const observ_subject2 = new Subject();
 const timer10s = new Subject();
 
-const profileService = {
+const ConstactListService = {
 
-          getUserData:(comingData) => {
+          getContactData:(comingData) => {
 
 
             var data = {
               "deviceid":config.getdeviceid(),
-              "email":config.getUserEmail(),
-              "checkEmail": comingData,
+              "email":config.getUserEmail()
             }
 
             console.log(data);
 
             var encryptedData = cryptLibrary.encrypt(data);
 
-            socket.emit("getUserData",encryptedData);
+            socket.emit("getAllContactsMessages",encryptedData);
           },
 
-          listenUserDataG:() => {
-            socket.on("getUserData",(data) => {
+          listenContactData:() => {
+            socket.on("getAllContactsMessages",(data) => {
                 //console.log(data);
                 observ_subject.next(cryptLibrary.decrypt(data));
             });
@@ -39,4 +38,4 @@ const profileService = {
       }
 
 
-export default profileService;
+export default ConstactListService;

@@ -6,6 +6,7 @@ import ApplyService from '../services/ApplyService';
 import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
+import GoBackAbsoluteComponent from '../helperComponents/goBackAbsoluteComponent';
 import {
   withStyles,
   makeStyles,
@@ -233,7 +234,7 @@ const ApplyComponent = () => {
    	<div className={classes.root}>
         <Grid container >
 
-
+          <GoBackAbsoluteComponent/>
 
           <Grid item xs={12}>
             <Paper className={classes.paper}>

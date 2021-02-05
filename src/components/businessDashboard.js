@@ -1,4 +1,4 @@
-import React, {useState,useEffect} from 'react';
+import React, {useState,useEffect,useMemo,useCallback} from 'react';
 import clsx from 'clsx';
 // import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonInput, IonItem, IonLabel, IonList, IonItemDivider } from '@ionic/react';
 import '../css/businessDashboard.css';
@@ -54,7 +54,7 @@ import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 
 import { increment, decrement,save_email } from '../actions/actions';
 import {
-  Link,
+  Link,useHistory,
 } from "react-router-dom";
 
 import Chart from "react-google-charts";
@@ -98,7 +98,7 @@ const drawerWidth = 240;
 const useStylestwo = makeStyles((theme) => ({
   root: {
     display: 'flex',
-
+    height:'100%'
   },
   icon:{
     color:"white"
@@ -143,6 +143,7 @@ const useStylestwo = makeStyles((theme) => ({
     justifyContent: 'flex-end',
 
 
+
   },
   content: {
     flexGrow: 1,
@@ -154,6 +155,7 @@ const useStylestwo = makeStyles((theme) => ({
     marginLeft: -drawerWidth,
     backgroundColor:"#161730",
     color:"white",
+    height:"100%",
   },
   contentShift: {
     transition: theme.transitions.create('margin', {
@@ -161,6 +163,7 @@ const useStylestwo = makeStyles((theme) => ({
       duration: theme.transitions.duration.enteringScreen,
     }),
     marginLeft: 0,
+    height:'100%',
   },
 }));
 
@@ -240,70 +243,73 @@ const useStylesthree = makeStyles((theme) => ({
 
 
 
-//xx
-
-const ListComponent = (props) => {
-
-  const classestree = useStylesthree();
-  const [dense, setDense] = React.useState(false);
-  const [secondary, setSecondary] = React.useState(false);
+const BlockComponent = (props) => {
 
   const items = props.items;
 
-  if(!items){
-    return false;
-  }
+  const content = useMemo(() => {
 
+    return items.map((item,index) =>
 
+      <Link key={item.id} className="deleteUrlClass"
+          to={{
+            pathname: "/detail",
+            data: item // your data array of objects
+          }}
+          >
+            <div  className="MainBlock withoutScroll">
+              <div  className="firstLevel">
+                  <div className="firstLevelText">
+                      {item.url} - {item.description}
+                  </div>
+              </div>
+              <div className="secondLevel">
+                <div className="secondLevelShare">
+                  <div className="secondLevelOne">
+                    <div className="shouldButton">
+                        <div className="shouldButtonText">
+                              limit: {item.peoplecount} infl.
+                        </div>
+                    </div>
+                  </div>
+                  <div className="secondLevelTwo">
 
-  const content = items.map((item) =>
-
-    <div key={item.id}  onClick={(e) => navigateToDetail(item, e)} >
-    <Link className="deleteUrlClass"
-        to={{
-          pathname: "/detail",
-          data: item // your data array of objects
-        }}
-        >
-
-        <ListItem>
-          <ListItemText
-            primary={item.url}
-            secondary={secondary ? 'Secondary text' : null}
-          />
-          <ListItemSecondaryAction>
-            <IconButton edge="end" aria-label="delete">
-              <ArrowForwardIosIcon />
-            </IconButton>
-          </ListItemSecondaryAction>
-        </ListItem>
+                  </div>
+                </div>
+                <div className="secondLevelShareThree">
+                  <div className="secondLevelThree">
+                    <div className="shouldButtonThree">
+                        <div className="shouldButtonText">
+                              {item.date} - {item.time}
+                        </div>
+                    </div>
+                  </div>
+                  <div className="secondLevelThreeTwo">
+                    <div className="shareButtonThree">
+                        <div className="shareButtonText">
+                              {item.sum} $
+                        </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
         </Link>
+
+      );
+
+  },[props.items]);
+
+
+
+  return (
+    <div className="fullWidth withoutScroll" >
+      {content}
     </div>
   );
 
-
-
-
-     return (
-          <Grid item xs={12} md={6}>
-            <div className={classestree.demo}>
-              <List dense={dense}>
-                  {content}
-              </List>
-            </div>
-          </Grid>
-
-     );
-
 }
-
 //xx
-const navigateToDetail = (item) => {
-
-
-
-}
-
 
 
 
@@ -360,7 +366,7 @@ const BusinessDashboard = (props) => {
 
     const businessConst = BusinesService.listenBusinessCore().subscribe(data => {
 
-      console.log(data.sdata);
+      //console.log(data.sdata);
       const list = listArray.concat(data.sdata);
 
       setListArray(list);
@@ -383,6 +389,18 @@ const BusinessDashboard = (props) => {
 
   var w = window.innerWidth / 2;
   var h = window.innerHeight / 3;
+
+  const history = useHistory();
+
+  const changePage = useCallback((Contacts) => {
+
+    if(Contacts == "Contacts"){
+      return history.push('/contactlist'), [history]
+    }else if(Contacts == "New Request"){
+      return history.push('/apply'), [history]
+    }
+
+  });
 
 
 
@@ -407,7 +425,7 @@ const BusinessDashboard = (props) => {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap>
-            Dashboard
+            Business dashboard
           </Typography>
         </Toolbar>
       </AppBar>
@@ -427,22 +445,15 @@ const BusinessDashboard = (props) => {
         </div>
         <Divider />
         <List >
-          {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-            <ListItem button key={text}>
+          {['Contacts', 'New Request'].map((text, index) => (
+            <ListItem button key={text} onClick={event => changePage(text)}>
               <ListItemIcon className={classestwo.icon}>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
               <ListItemText primary={text} />
             </ListItem>
           ))}
         </List>
         <Divider />
-        <List className={classestwo.icon}>
-          {['All mail', 'Trash', 'Spam'].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon className={classestwo.icon}>{index % 2 === 0 ? <InboxIcon  /> : <MailIcon  />}</ListItemIcon >
-              <ListItemText  primary={text} />
-            </ListItem>
-          ))}
-        </List>
+
       </Drawer>
       <main
         className={clsx(classestwo.content, {
@@ -452,7 +463,7 @@ const BusinessDashboard = (props) => {
         <div className={classestwo.drawerHeader} />
 
 
-        <ListComponent items={listArray}/>
+                <BlockComponent items={listArray}/>
 
 
 

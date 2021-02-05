@@ -27,13 +27,14 @@
   border-radius: 7px;
   background:linear-gradient(to right, #8936f4, #0083ff);
   margin-top:5px;
+  overflow: hidden;
 }
 
 .firstLevel{
   width:96.5%;
   height: 44%;
   /* background-color: blue; */
-  margin-top:5px;
+  margin-top:7px;
   margin-left:5px;
   border-radius: 7px;
   border:1px solid white;

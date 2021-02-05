@@ -10,6 +10,7 @@
     -moz-box-shadow: 0px 0px 11px 0px rgba(217,217,217,1);
     box-shadow: 0px 0px 11px 0px rgba(217,217,217,1);
     width: 100%;
+    z-index: 1 !important;
 
 }
 
@@ -89,9 +90,6 @@
     opacity: 0.8;
     font-size: 1.05em;
     font-weight: 500;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    overflow: hidden;
     background-color: #3880ff;
     text-align: center;
     border-radius: 10px;
@@ -100,6 +98,9 @@
 
   .prightBlockTwoTwoNumber{
     margin-top:6px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
   }
 
   .prightBlockOneTwo{
@@ -209,9 +210,6 @@
   width:78%;
   height: 100%;
   float:left;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
   font-size: 1.05em;
   font-weight: 500;
   opacity: 0.8;
@@ -219,6 +217,9 @@
 
 .prightBlockTwoOneText{
   margin-top:5px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 .prightBlockTwoTwo{
 
@@ -249,14 +250,15 @@
   font-size: 1.3em;
   font-weight: 500;
   opacity: 0.8;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
+
 }
 
 .prightBlockOneTwoText{
   margin-top:10%;
   color:#161730;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 .prightBlockOneThree{

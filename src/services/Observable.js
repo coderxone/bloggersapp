@@ -46,6 +46,12 @@ const observ_f = {
 
         return timer5000second;
       },
+      subscribeByTimer_5_min:() => {
+
+        const timer5000min = interval(300000);
+
+        return timer5000min;
+      },
 
       test:(test => {
         return "test";

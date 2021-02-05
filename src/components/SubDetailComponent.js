@@ -18,7 +18,7 @@ import DetailService from '../services/DetailService';
 import DoneOutlineIcon from '@material-ui/icons/DoneOutline';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import List from '@material-ui/core/List';
-import GoBackComponent from '../helperComponents/goBackWithCenterComponent';
+import GoBackComponent from '../helperComponents/goBackAbsoluteComponent';
 import PropTypes from 'prop-types';
 import ConfirmDialogComponent from '../helperComponents/ConfirmDialogComponent';
 

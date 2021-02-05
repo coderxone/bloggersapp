@@ -13,7 +13,7 @@ import {
 } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Input from '@material-ui/core/Input';
-
+import GoBackAbsoluteComponent from '../helperComponents/goBackAbsoluteComponent';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Logo from '../icons/logo_circle_new_circle.png';
@@ -21,6 +21,7 @@ import Box from '@material-ui/core/Box';
 import { connect } from 'react-redux';
 import AuthService from '../services/AuthService';
 import HomeService from '../services/Homeservice';
+import ContactListService from '../services/ContactListService';
 import DialogComponent from '../components/DialogComponent';
 import config from '../config/config.js';
 
@@ -62,53 +63,99 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
+const MapList = ((props) => {
 
-const CssTextField = withStyles({
-  root: {
-    '& label.Mui-focused': {
-      color: '#8936f4',
-    },
-    '& label': {
-      color: '#8936f4',
-    },
-    '& .MuiInput-underline:after': {
-      borderBottomColor: '#8936f4',
-    },
-    '& .MuiOutlinedInput-root': {
-      '& fieldset': {
-        borderColor: 'red',
-      },
-      '&:hover fieldset': {
-        borderColor: 'yellow',
-      },
-      '&.Mui-focused fieldset': {
-        borderColor: '#8936f4',
-      },
-      '& input:valid + fieldset': {
-        borderColor: '#8936f4',
-      },
-      '& input:invalid + fieldset': {
-        borderColor: 'red',
-      },
+  const list = props.list;
 
-    },
-  },
-})(TextField);
+  const eliotIco = "https://www.daily-sun.com/assets/news_images/2017/08/14/thumbnails/Daily-Sun-38-01-14-08-2017.jpg";
 
-const schema = yup.object().shape({
-  email: yup.string().required("Required").email(),
+  const [messageCount,setMessageCount] = useState(3);
+  const [online,setOnline] = useState(1);
+  var contactObj = {
+    name:"testName",
+    date:"someDate",
+    message:"newMessage",
+    count:3
+
+  }
+  const [contact,setContact] = useState(contactObj);
+
+  const checkingEmail = ((email,emailtwo) => {
+
+    if(email == config.getUserEmail()){
+      return emailtwo;
+    }else{
+      return email;
+    }
+
+  });
+
+  const ListConst = list.map((item) =>
+
+        <Link
+          to={{
+            pathname: "/suggest",
+            projectId: item.projectId,
+            email:checkingEmail(item.fromEmail,item.toEmail)
+          }}
+
+         key={item.id} className="mainList deleteUrlClass">
+          <div className="pleftBlock">
+            <div style ={ { backgroundPosition: "center",backgroundRepeat:"no-repeat",backgroundSize:"cover",background: "url("+eliotIco+") no-repeat center/cover" }  } className="pleftBlockOne"></div>
+            <div className="pleftBlockTwo">
+            {item.online == 1 ? (
+                  <FiberManualRecordIcon className="mysize "/>
+             ) : (
+                  <FiberManualRecordIcon className="mysize-offline"/>
+             )}
+
+            </div>
+          </div>
+          <div className="prightBlock">
+            <div className="prightBlockOne">
+              <div className="prightBlockOneTwo">
+                <div className="prightBlockOneTwoText">
+                  {checkingEmail(item.fromEmail,item.toEmail)}
+                </div>
+              </div>
+              <div className="prightBlockOneThree">
+                <div className="prightBlockOneThreeText">
+                  {item.date}
+                </div>
+              </div>
+            </div>
+
+            <div className="prightBlockTwo">
+              <div className="prightBlockTwoOne">
+                <div className="prightBlockTwoOneText">
+                  {item.message}
+                </div>
+
+              </div>
+              {item.count > 0 ? (
+                <div className="prightBlockTwoTwo">
+                      <div className="prightBlockTwoTwoNumber">
+                          {item.count}
+                      </div>
+                </div>
+               ) : (
+                 <div></div>
+               )}
+
+            </div>
+
+
+          </div>
+      </Link>
+
+  );
+
+
+  return ListConst;
+
+
+
 });
-
-
-const MessageComponent = (props) => {
-  return (
-    <div className="errorBox">
-        {props.message}
-    </div>
-  )
-}
-
-
 
 
 const ContactListComponent = (props) => {
@@ -133,32 +180,25 @@ const ContactListComponent = (props) => {
 
 
   const classes = useStyles();
-  const { register, handleSubmit, errors,setError } = useForm({
-    resolver: yupResolver(schema)
-  });
-
 
 
   const [cancelDoubleEvent,setCancelDoubleEvent] = useState(0);
 
   const [closeDialog,setCloseDialog] = useState(false);
 
-  const onSubmit = ((data) => {
-
-
-
-
-  });
+  const [contactList,setContactList] = useState([]);
 
 
 
   useEffect(() => {
 
-
+    const contactsub = ContactListService.listenContactData().subscribe(data => {
+      setContactList(data.data);
+    });
     //unsubscribe
 
     return () => {
-
+      contactsub.unsubscribe();
     }
 
     //unsubscribe
@@ -169,86 +209,23 @@ const ContactListComponent = (props) => {
   useEffect(() => {
 
     //initiase functions
+    ContactListService.getContactData();
 
 
   }, []);
 
-  const eliotIco = "https://www.daily-sun.com/assets/news_images/2017/08/14/thumbnails/Daily-Sun-38-01-14-08-2017.jpg";
 
-  const [messageCount,setMessageCount] = useState(3);
-  const [online,setOnline] = useState(1);
-  var contactObj = {
-    name:"testName",
-    date:"someDate",
-    message:"newMessage",
-    count:3
-
-  }
-  const [contact,setContact] = useState(contactObj);
 
   return (
 
-   	<div className={classes.root}>
+   	  <div className={classes.root}>
+        <GoBackAbsoluteComponent />
         <Grid container >
 
-              <div  className="mainList" >
-                  <div className="pleftBlock">
-                    <div style ={ { backgroundPosition: "center",backgroundRepeat:"no-repeat",backgroundSize:"cover",background: "url("+eliotIco+") no-repeat center/cover" }  } className="pleftBlockOne"></div>
-                    <div className="pleftBlockTwo">
-
-                    {online > 1 ? (
-
-                          <FiberManualRecordIcon className="mysize "/>
-
-                     ) : (
-
-                          <FiberManualRecordIcon className="mysize-offline"/>
-
-                     )}
+          <MapList list={contactList} />
 
 
-                    </div>
-                  </div>
-                  <div className="prightBlock">
-                    <div className="prightBlockOne">
-                      <div className="prightBlockOneTwo">
-                        <div className="prightBlockOneTwoText">
-                          {contact.name}
-                        </div>
-
-                      </div>
-                      <div className="prightBlockOneThree">
-                        <div className="prightBlockOneThreeText">
-                          {contact.date}
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="prightBlockTwo">
-                      <div className="prightBlockTwoOne">
-                        <div className="prightBlockTwoOneText">
-                          {contact.message}
-                        </div>
-
-                      </div>
-                      {messageCount > 0 ? (
-                        <div className="prightBlockTwoTwo">
-                              <div className="prightBlockTwoTwoNumber">
-                                  {contact.count}
-                              </div>
-                        </div>
-                       ) : (
-                         <div></div>
-                       )}
-
-                    </div>
-
-
-                  </div>
-              </div>
-
-
-          </Grid>
+        </Grid>
       </div>
 
 

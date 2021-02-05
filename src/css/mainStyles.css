@@ -272,3 +272,21 @@ ion-item {
   color: #FFFFFF;
   text-decoration: none;
 }
+
+.backstyle{
+  margin-top:15px;
+  margin-left:20px;
+  font-size: 22px;
+  color:white !important;
+}
+
+.backabsolute{
+  position: absolute;
+  left:0px;
+  top:0px;
+  width: 55px;
+  height: 55px;
+  z-index: 100 !important;
+  background-color: rgba(4, 16, 47, 0.4);
+  border-radius: 5px;
+}

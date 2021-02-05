@@ -6,7 +6,7 @@ import LocalizeComponent from '../localize/LocalizeComponent';
 import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
-import GoBackWithCenterComponent from '../helperComponents/goBackWithCenterComponent';
+import GoBackWithCenterComponent from '../helperComponents/goBackAbsoluteComponent';
 import {
   withStyles,
   makeStyles,

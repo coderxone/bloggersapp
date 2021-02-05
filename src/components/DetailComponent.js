@@ -24,7 +24,7 @@ import List from '@material-ui/core/List';
 import PropTypes from 'prop-types';
 import Typography from '@material-ui/core/Typography';
 import $ from "jquery";
-
+import GoBackAbsoluteComponent from '../helperComponents/goBackAbsoluteComponent';
 import { increment, decrement,save_email } from '../actions/actions';
 import {
   Link,
@@ -579,6 +579,8 @@ useEffect(() => {
 
     <div className={classes.root}>
         <Grid container >
+
+          <GoBackAbsoluteComponent/>
 
           <div className="project_title">
               {LocalizeComponent.request}{ItemData.id}
