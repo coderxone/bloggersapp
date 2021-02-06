@@ -2,6 +2,7 @@ import { interval, Subject } from 'rxjs';
 
 const observ_subject = new Subject();
 const observ_subjectM = new Subject();
+const observ_subjectD = new Subject();
 
 const observ_f = {
 
@@ -12,6 +13,15 @@ const observ_f = {
       getData_subject:() => {
         return observ_subject;
       },
+      sendData_subjectDilog: data => {
+        return observ_subjectD.next(data);
+      },
+
+      getData_subjectDialog:() => {
+        return observ_subjectD;
+      },
+
+
       sendData_subject_M: data => {
         return observ_subjectM.next(data);
       },

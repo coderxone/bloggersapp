@@ -6,6 +6,7 @@ import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
 import LocalizeComponent from '../localize/LocalizeComponent';
 import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
+import Observable from '../services/Observable';
 import * as yup from "yup";
 import {
   withStyles,
@@ -208,8 +209,16 @@ const ContactListComponent = (props) => {
 
   useEffect(() => {
 
+    const chekBytime = Observable.subscribeByTimer_5_second().subscribe(data => {
+        ContactListService.getContactData();
+    });
+
     //initiase functions
     ContactListService.getContactData();
+
+    return () => {
+      chekBytime.unsubscribe();
+    }
 
 
   }, []);

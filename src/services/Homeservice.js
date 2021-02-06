@@ -30,6 +30,8 @@ const initSocket = (() => {
 
  }
 
+
+
  const listenServices = (() => {
 
    //listen online users
@@ -42,9 +44,34 @@ const initSocket = (() => {
    });
 
    homeservice.listenNotificationsMessages().subscribe(data => {//count of new messages
-     console.log(data);
 
-     homeservice.notificationVoice();
+     //console.log(data);
+
+     if(data.count > 0){
+
+       if(config.getNotificationCount() != data.count){
+         config.TurnOnNotification();
+       }
+
+       var notStatus = config.getNotificationStatus();
+       //console.log(notStatus);
+       if(notStatus == true){
+         //console.log("dialog request");
+         var messageObj = {
+           alert:"opendialog",
+           projectId:data.details[data.details.length - 1].projectId,
+           message:data.details[data.details.length - 1].message
+         }
+         Observable.sendData_subjectDilog(messageObj);
+         homeservice.notificationVoice();
+         config.turnOffNotification();
+         config.saveNotificationCount(data.count);
+       }
+
+
+     }
+
+
    });
 
    homeservice.joinUser();//connect as user
@@ -110,7 +137,7 @@ const homeservice = {
             "email":config.getUserEmail()
           }
 
-          console.log(datas);
+          //console.log(datas);
 
           var encryptedData = cryptLibrary.encrypt(datas);
 
@@ -145,8 +172,8 @@ const homeservice = {
       },
 
       fiveMinutObserver:() => {
-        Observable.subscribeByTimer_5_min().subscribe(data => {
-          this.checkNotificationsMessages();//check for new messages
+        Observable.subscribeByTimer_10_second().subscribe(data => {
+          homeservice.checkNotificationsMessages();//check for new messages
         });
       },
 

@@ -15,7 +15,6 @@ export default function AlertDialog(props) {
   var leftText = props.left;
   var rightText = props.right;
   var status = props.status;
-  var closeStatus = props.close;
   var check = 0;
 
   const Cancel = (() => {

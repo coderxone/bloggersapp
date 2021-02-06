@@ -1,4 +1,4 @@
-import React, {useState,useMemo,useEffect} from 'react';
+import React, {useState,useMemo,useEffect,useCallback} from 'react';
 // import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonInput, IonItem, IonLabel, IonList, IonItemDivider } from '@ionic/react';
 import '../css/mainStyles.css';
 import '../css/bloggerdashboard.css';
@@ -9,6 +9,7 @@ import * as yup from "yup";
 import {
   withStyles,
   makeStyles,
+  useTheme,
 } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Paper from '@material-ui/core/Paper';
@@ -26,8 +27,29 @@ import BloggerService from '../services/BloggersService';
 import SkeletonComponent from '../helperComponents/SkeletonComponent';
 import { increment, decrement,save_email } from '../actions/actions';
 import {
-  Link,
+  Link,useHistory
 } from "react-router-dom";
+
+import clsx from 'clsx';
+import Drawer from '@material-ui/core/Drawer';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import List from '@material-ui/core/List';
+import Typography from '@material-ui/core/Typography';
+import Divider from '@material-ui/core/Divider';
+import IconButton from '@material-ui/core/IconButton';
+import MenuIcon from '@material-ui/icons/Menu';
+import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import InboxIcon from '@material-ui/icons/MoveToInbox';
+import MailIcon from '@material-ui/icons/Mail';
+import ListItemAvatar from '@material-ui/core/ListItemAvatar';
+import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
+import ConfirmDialogComponent from '../helperComponents/ConfirmDialogComponent';
 
 
 
@@ -47,6 +69,81 @@ const mapDispatchToProps = dispatch => ({
   dispatch,
   save_email
 });
+
+
+const drawerWidth = 240;
+
+const useStylestwo = makeStyles((theme) => ({
+  root: {
+    display: 'flex',
+    height:'100%'
+  },
+  icon:{
+    color:"white"
+  },
+  appBar: {
+    transition: theme.transitions.create(['margin', 'width'], {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen,
+    }),
+
+  },
+  appBarShift: {
+    width: `calc(100% - ${drawerWidth}px)`,
+    marginLeft: drawerWidth,
+    transition: theme.transitions.create(['margin', 'width'], {
+      easing: theme.transitions.easing.easeOut,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+
+  },
+  menuButton: {
+    marginRight: theme.spacing(2),
+  },
+  hide: {
+    display: 'none',
+  },
+  drawer: {
+    width: drawerWidth,
+    flexShrink: 0,
+  },
+  drawerPaper: {
+    width: drawerWidth,
+    backgroundColor:"#161730",
+    color:"white",
+  },
+  drawerHeader: {
+    display: 'flex',
+    alignItems: 'center',
+    padding: theme.spacing(0, 1),
+    // necessary for content to be below app bar
+    ...theme.mixins.toolbar,
+    justifyContent: 'flex-end',
+
+
+
+  },
+  content: {
+    flexGrow: 1,
+    padding: theme.spacing(1),
+    transition: theme.transitions.create('margin', {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen,
+    }),
+    marginLeft: -drawerWidth,
+    backgroundColor:"#161730",
+    color:"white",
+    height:"100%",
+  },
+  contentShift: {
+    transition: theme.transitions.create('margin', {
+      easing: theme.transitions.easing.easeOut,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+    marginLeft: 0,
+    height:'100%',
+  },
+}));
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -235,14 +332,15 @@ const BloggerDashboardComponent = (props) => {
         }
 
   });
-
-
+//xx
+  const [requestStatus,setRequestStatus] = useState(true);
 
   useEffect(() => {
 
     const BloggerListen = BloggerService.listenUserDataG().subscribe((data) => {
 
-        if(data.sdata.length > 0){
+
+        if((data.sdata.length > 0) && (data.status == "ok")){
           const insertArray = [...items];
           var deleteArray = new Array();
           if(insertArray.length > data.sdata.length){ //delete elements
@@ -283,6 +381,9 @@ const BloggerDashboardComponent = (props) => {
           SetItems(insertArray);
           setDistance(data.distance);
           SetStatus(true);
+        }else if(data.status == "later"){
+          //console.log("request denied");
+          setRequestStatus(false);
         }else{
           SetStatus(false);
         }
@@ -290,7 +391,13 @@ const BloggerDashboardComponent = (props) => {
     });
 
     const b = Observable.subscribeByTimer_10_second().subscribe(data => {
+      if(requestStatus == true){
+        //console.log("request send");
         checkData();
+      }else{
+        //console.log("denied");
+      }
+
     });
 
 
@@ -321,8 +428,13 @@ const BloggerDashboardComponent = (props) => {
       WatchPosition();
 
       setTimeout(function(){
-        checkData();
-      },2000);
+        if(requestStatus == true){
+          //console.log("request send");
+          checkData();
+        }else{
+          //console.log("denied");
+        }
+      },5000);
 
       // if((latitude != 0) && (longitude != 0)){
       //   //console.log(latitude);
@@ -344,27 +456,160 @@ const BloggerDashboardComponent = (props) => {
 
     //unsubscribe
 
-  }, [latitude,longitude,status]);
+  }, [latitude,longitude,status,requestStatus]);
 
+
+
+  const classestwo = useStylestwo();
+  const theme = useTheme();
+  const history = useHistory();
+  const [open, setOpen] = React.useState(false);
+  const handleDrawerOpen = () => {
+    setOpen(true);
+  };
+
+  const handleDrawerClose = () => {
+    setOpen(false);
+  };
+
+  const changePage = useCallback((Contacts) => {
+
+    if(Contacts == "Contacts"){
+      return history.push('/contactlist'), [history]
+    }
+
+  });
+
+  //notification part
+
+  const goToContacts = useCallback((Contacts) => {
+
+      return history.push({pathname: '/contactlist'}), [history];
+
+  });
+
+  useEffect(() => {
+    const DialogNotif = Observable.getData_subject().subscribe(data => {
+      if(data == "confirm"){
+        goToContacts();
+        //go to page with id
+      }else if(data == "cancel"){
+        setDialogStatus(false);
+      }
+
+    });
+
+
+
+    const DialogExecute = Observable.getData_subjectDialog().subscribe(data => {
+      if(data.alert == "opendialog"){
+        //console.log(data);
+        setLeftbutton(LocalizeComponent.cancel);
+        setRightbutton(LocalizeComponent.check);
+        setDialogText(LocalizeComponent.dialogCheckMessage);
+        setDetailProjectId(data.projectId);
+        setDetailMessage(data.message);
+        setDialogStatus(true);
+        //go to page with id
+      }
+
+    });
+
+    return () => {
+      DialogNotif.unsubscribe();
+      DialogExecute.unsubscribe();
+    }
+  },[])
+
+
+
+  const [dialogStatus,setDialogStatus] = useState(false);
+  const [leftbutton,setLeftbutton] = useState('');
+  const [rightbutton,setRightbutton] = useState('');
+  const [dialogText,setDialogText] = useState('');
+  const [detailProjectId,setDetailProjectId] = useState(0);
+  const [detailMessage,setDetailMessage] = useState("");
 
 
 
 
   return (
 
-   	<div className={classes.root}>
+    <div className={classestwo.root}>
+      <CssBaseline />
+      <AppBar
+        position="fixed"
+        className={clsx(classestwo.appBar, {
+          [classestwo.appBarShift]: open,
+        })}
+      >
+        <Toolbar>
+          <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            onClick={handleDrawerOpen}
+            edge="start"
+            className={clsx(classestwo.menuButton, open && classestwo.hide)}
+          >
+            <MenuIcon />
+          </IconButton>
+          <Typography variant="h6" noWrap>
+            Business dashboard
+          </Typography>
+        </Toolbar>
+      </AppBar>
+      <Drawer
+        className={classestwo.drawer}
+        variant="persistent"
+        anchor="left"
+        open={open}
+        classes={{
+          paper: classestwo.drawerPaper,
+        }}
+      >
+        <div className={classestwo.drawerHeader}>
+          <IconButton onClick={handleDrawerClose}>
+            {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+          </IconButton>
+        </div>
+        <Divider />
+        <List >
+          {['Contacts','MyTasks'].map((text, index) => (
+            <ListItem button key={text} onClick={event => changePage(text)}>
+              <ListItemIcon className={classestwo.icon}>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+              <ListItemText primary={text} />
+            </ListItem>
+          ))}
+        </List>
+        <Divider />
 
-      {status === false ? (
-        <Grid container className="withoutScroll">
-           <SkeletonComponent/>
-        </Grid>
-       ) : (
-         <Grid container className="withoutScroll">
-            <BlockComponent items={items} distance={distance}/>
-         </Grid>
-       )}
+      </Drawer>
+      <main
+        className={clsx(classestwo.content, {
+          [classestwo.contentShift]: open,
+        })}
+      >
+        <div className={classestwo.drawerHeader} />
 
-      </div>
+
+          {status === false ? (
+            <Grid container className="withoutScroll">
+               <SkeletonComponent/>
+            </Grid>
+           ) : (
+             <Grid container className="withoutScroll">
+                <BlockComponent items={items} distance={distance}/>
+             </Grid>
+           )}
+
+
+           <ConfirmDialogComponent status={dialogStatus} left={leftbutton} right={rightbutton} text={dialogText}/>
+      </main>
+    </div>
+
+
+
+
 
 
   );

@@ -1,9 +1,10 @@
-import React, {useState,useEffect,useMemo} from 'react';
+import React, {useState,useEffect,useMemo,useCallback} from 'react';
 // import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonInput, IonItem, IonLabel, IonList, IonItemDivider } from '@ionic/react';
 import '../css/detailComponent.css';
 import LocalizeComponent from '../localize/LocalizeComponent';
 import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
+import Observable from '../services/Observable';
 import * as yup from "yup";
 import {
   withStyles,
@@ -25,9 +26,10 @@ import PropTypes from 'prop-types';
 import Typography from '@material-ui/core/Typography';
 import $ from "jquery";
 import GoBackAbsoluteComponent from '../helperComponents/goBackAbsoluteComponent';
+import ConfirmDialogComponent from '../helperComponents/ConfirmDialogComponent';
 import { increment, decrement,save_email } from '../actions/actions';
 import {
-  Link,
+  Link,useHistory,
 } from "react-router-dom";
 
 
@@ -474,7 +476,7 @@ const DetailComponent = (props) => {
 
     const listenDetailService = DetailService.listenDetailData().subscribe(data => {
 
-      console.log(data);
+      //console.log(data);
       if(data.status != "false"){
 
         var modifiedArray = data.data;
@@ -575,6 +577,56 @@ useEffect(() => {
  var widthValueFirst = 30 + "%";
  var widthValueSecond = 70 + "%";
 
+ //notification part
+ const history = useHistory();
+ const goToContacts = useCallback((Contacts) => {
+
+     return history.push({pathname: '/contactlist'}), [history];
+
+ });
+
+ useEffect(() => {
+   const DialogNotif = Observable.getData_subject().subscribe(data => {
+     if(data == "confirm"){
+       goToContacts();
+       //go to page with id
+     }else if(data == "cancel"){
+       setDialogStatus(false);
+     }
+
+   });
+
+
+
+   const DialogExecute = Observable.getData_subjectDialog().subscribe(data => {
+     if(data.alert == "opendialog"){
+       //console.log(data);
+       setLeftbutton(LocalizeComponent.cancel);
+       setRightbutton(LocalizeComponent.check);
+       setDialogText(LocalizeComponent.dialogCheckMessage);
+       setDetailProjectId(data.projectId);
+       setDetailMessage(data.message);
+       setDialogStatus(true);
+       //go to page with id
+     }
+
+   });
+
+   return () => {
+     DialogNotif.unsubscribe();
+     DialogExecute.unsubscribe();
+   }
+ },[])
+
+
+
+ const [dialogStatus,setDialogStatus] = useState(false);
+ const [leftbutton,setLeftbutton] = useState('');
+ const [rightbutton,setRightbutton] = useState('');
+ const [dialogText,setDialogText] = useState('');
+ const [detailProjectId,setDetailProjectId] = useState(0);
+ const [detailMessage,setDetailMessage] = useState("");
+
   return (
 
     <div className={classes.root}>
@@ -663,7 +715,7 @@ useEffect(() => {
 
               </div>
           </div>
-
+          <ConfirmDialogComponent status={dialogStatus} left={leftbutton} right={rightbutton} text={dialogText}/>
         </Grid>
     </div>
 

@@ -6,6 +6,8 @@ import LocalizeComponent from '../localize/LocalizeComponent';
 import BusinesService from '../services/BusinessService';
 import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
+import Observable from '../services/Observable';
+import ConfirmDialogComponent from '../helperComponents/ConfirmDialogComponent';
 import * as yup from "yup";
 import {
   withStyles,
@@ -402,6 +404,56 @@ const BusinessDashboard = (props) => {
 
   });
 
+  //notification part
+
+  const goToContacts = useCallback((Contacts) => {
+
+      return history.push({pathname: '/contactlist'}), [history];
+
+  });
+
+  useEffect(() => {
+    const DialogNotif = Observable.getData_subject().subscribe(data => {
+      if(data == "confirm"){
+        goToContacts();
+        //go to page with id
+      }else if(data == "cancel"){
+        setDialogStatus(false);
+      }
+
+    });
+
+
+
+    const DialogExecute = Observable.getData_subjectDialog().subscribe(data => {
+      if(data.alert == "opendialog"){
+        //console.log(data);
+        setLeftbutton(LocalizeComponent.cancel);
+        setRightbutton(LocalizeComponent.check);
+        setDialogText(LocalizeComponent.dialogCheckMessage);
+        setDetailProjectId(data.projectId);
+        setDetailMessage(data.message);
+        setDialogStatus(true);
+        //go to page with id
+      }
+
+    });
+
+    return () => {
+      DialogNotif.unsubscribe();
+      DialogExecute.unsubscribe();
+    }
+  },[])
+
+
+
+  const [dialogStatus,setDialogStatus] = useState(false);
+  const [leftbutton,setLeftbutton] = useState('');
+  const [rightbutton,setRightbutton] = useState('');
+  const [dialogText,setDialogText] = useState('');
+  const [detailProjectId,setDetailProjectId] = useState(0);
+  const [detailMessage,setDetailMessage] = useState("");
+
 
 
   return (
@@ -466,7 +518,7 @@ const BusinessDashboard = (props) => {
                 <BlockComponent items={listArray}/>
 
 
-
+                <ConfirmDialogComponent status={dialogStatus} left={leftbutton} right={rightbutton} text={dialogText}/>
       </main>
     </div>
 

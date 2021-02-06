@@ -1,4 +1,4 @@
-import React, {useState,useMemo,useEffect} from 'react';
+import React, {useState,useMemo,useEffect,useCallback} from 'react';
 // import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonInput, IonItem, IonLabel, IonList, IonItemDivider } from '@ionic/react';
 import '../css/mainStyles.css';
 import '../css/DetailDescriptionComponent.css';
@@ -16,7 +16,11 @@ import AlertSuccessComponent from '../helperComponents/AlertSuccessComponent';
 import AlertDangerComponent from '../helperComponents/AlertDangerComponent';
 import StepperComponent from '../helperComponents/StepperComponent';
 import Observable from '../services/Observable';
-
+import GoBackAbsoluteComponent from '../helperComponents/goBackAbsoluteComponent';
+import ConfirmDialogComponent from '../helperComponents/ConfirmDialogComponent';
+import {
+  useHistory
+} from "react-router-dom";
 
 import { increment, decrement,save_email } from '../actions/actions';
 
@@ -85,7 +89,7 @@ const DetailTaskComponent = (props) => {
       }
   },[]);
 
-  console.log(detailData);
+  //console.log(detailData);
 
 
 
@@ -117,6 +121,10 @@ const DetailTaskComponent = (props) => {
 
   const GenerateUrl = (() => {
       DetailTaskService.generateUrl(detailData.id);
+  });
+  //xx
+  const checkGenerateUrl = (() => {
+      DetailTaskService.checkGenerateUrl(detailData.id);
   });
 
   const [sucessState,SetSucessState] = useState(false);
@@ -245,6 +253,8 @@ const DetailTaskComponent = (props) => {
         id:id
       }
 
+      //console.log(submitObj);
+
       DetailTaskService.submitOrder(submitObj);
   }
 
@@ -253,6 +263,7 @@ const DetailTaskComponent = (props) => {
 useEffect(() => {
   const ListenlistenCheckUrl = DetailTaskService.listenCheckUrl().subscribe(data => {
 
+    //console.log(data);
     if(data.status == "false"){
 
     }else if(data.status == "ok"){
@@ -316,7 +327,7 @@ useEffect(() => {
   // },[data]);
 
   useEffect(() => {
-//xx
+
     const ListenlistenSetUrl = DetailTaskService.listenSetUrl().subscribe(data => {
       //console.log(data);
       if(data.status == "inserted"){
@@ -338,7 +349,7 @@ useEffect(() => {
         SubmittedTask(detailData.id);
     });
 
-
+//xx
     const unsub = DetailTaskService.listenGenerateUrl().subscribe(data => {
         //console.log(data);
 
@@ -369,19 +380,79 @@ useEffect(() => {
 
 //run 1 time
 useEffect(() => {
-
+//xx
   SethowManySteps(netWorkArrayState.length + 1);
   CheckVideos(detailData.id);
+  //console.log(detailData.id);
+  //console.log("checked");
+  checkGenerateUrl();
 
 
 }, []);
+
+//notification part
+const history = useHistory();
+const goToContacts = useCallback((Contacts) => {
+
+    return history.push({pathname: '/contactlist'}), [history];
+
+});
+
+const goToChat = useCallback((Contacts) => {
+
+    return history.push({pathname: '/suggest',projectId:detailData.id,email:detailData.email}), [history];
+
+});
+
+useEffect(() => {
+  const DialogNotif = Observable.getData_subject().subscribe(data => {
+    if(data == "confirm"){
+      goToContacts();
+      //go to page with id
+    }else if(data == "cancel"){
+      setDialogStatus(false);
+    }
+
+  });
+
+
+
+  const DialogExecute = Observable.getData_subjectDialog().subscribe(data => {
+    if(data.alert == "opendialog"){
+      //console.log(data);
+      setLeftbutton(LocalizeComponent.cancel);
+      setRightbutton(LocalizeComponent.check);
+      setDialogText(LocalizeComponent.dialogCheckMessage);
+      setDetailProjectId(data.projectId);
+      setDetailMessage(data.message);
+      setDialogStatus(true);
+      //go to page with id
+    }
+
+  });
+
+  return () => {
+    DialogNotif.unsubscribe();
+    DialogExecute.unsubscribe();
+  }
+},[])
+
+
+
+const [dialogStatus,setDialogStatus] = useState(false);
+const [leftbutton,setLeftbutton] = useState('');
+const [rightbutton,setRightbutton] = useState('');
+const [dialogText,setDialogText] = useState('');
+const [detailProjectId,setDetailProjectId] = useState(0);
+const [detailMessage,setDetailMessage] = useState("");
+
 
 
   return (
 
    	<div className={classes.root}>
         <Grid container >
-
+              <GoBackAbsoluteComponent/>
               <div className="descriptBox">
                   <div className="descriptionText">
                       Name of business: {detailData.url}
@@ -396,7 +467,7 @@ useEffect(() => {
                 <div className="buttonBox">
                     <div className="generateButton" onClick={GenerateUrl}>
                         <div className="generateButtonText"  >
-                            generate url
+                            {LocalizeComponent.startTask}
                         </div>
                     </div>
                 </div>
@@ -404,7 +475,7 @@ useEffect(() => {
                  <div className="buttonBox">
                      <div className="generateButton" onClick={CopyUrl}>
                          <div className="generateButtonText"  >
-                             copy url
+                             {LocalizeComponent.CopyUrl}
                          </div>
                      </div>
                  </div>
@@ -432,7 +503,7 @@ useEffect(() => {
                          <div className="buttonBoxSet">
                              <div className="generateButtonSet" onClick={Share}>
                                  <div className="generateButtonTextSet"  >
-                                     next
+                                     {LocalizeComponent.next_x}
                                  </div>
                              </div>
                          </div>
@@ -447,6 +518,13 @@ useEffect(() => {
 
                </div>
 
+               <div className="buttonBoxSet">
+                   <div className="generateButtonSet" onClick={(event) => goToChat()}>
+                       <div className="generateButtonTextSet"  >
+                           {LocalizeComponent.chat_with_business}
+                       </div>
+                   </div>
+               </div>
                <div className="buttonShare">
                    <div className="generateButton" >
                        <div className="generateButtonText"  >
@@ -462,8 +540,10 @@ useEffect(() => {
                    </div>
                </div>
 
+
                <AlertSuccessComponent state={sucessState} text={alertText}/>
                <AlertDangerComponent state={dangerState} text={dangerText}/>
+               <ConfirmDialogComponent status={dialogStatus} left={leftbutton} right={rightbutton} text={dialogText}/>
 
 
           </Grid>

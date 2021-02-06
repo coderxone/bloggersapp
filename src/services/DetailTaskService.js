@@ -15,7 +15,22 @@ const DetailTaskService = {
               deviceid:config.getdeviceid(),
               email:config.getUserEmail(),
               id: id,
-              status:"set" //check
+              status:"set" //set
+            }
+
+            console.log(data);
+
+            var encryptedData = cryptLibrary.encrypt(data);
+
+            socket.emit("makeHref",encryptedData);
+          },
+          checkGenerateUrl:(id) => {
+
+            var data = {
+              deviceid:config.getdeviceid(),
+              email:config.getUserEmail(),
+              id: id,
+              status:"check" //set
             }
 
             console.log(data);
@@ -62,14 +77,14 @@ const DetailTaskService = {
             return observ_subject2;
           },
 
-
+//xx
           checkUrl:(obj) => {
 
             var data = {
               deviceid:config.getdeviceid(),
               email:config.getUserEmail(),
               id: obj.id,
-              status:obj.set //check
+              status:obj.status //check
             }
 
             //console.log(data);
@@ -98,7 +113,7 @@ const DetailTaskService = {
               approvetask:obj.approvetask
             }
 
-            //console.log(data);
+          //  console.log(data);
 
             var encryptedData = cryptLibrary.encrypt(data);
             //emit("closeorders",data);

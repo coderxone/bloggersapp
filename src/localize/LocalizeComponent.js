@@ -58,6 +58,13 @@ let strings = new LocalizedStrings({
    doneTask:"Task Submitted",
    waitingApprove:"under consideration by business",
    Offers:"Offers",
+   cancel:"cancel",
+   check:"check",
+   dialogCheckMessage:"You have new suggestion from business please go to Contacts to discuss",
+   startTask:"Start task",
+   CopyUrl:"Copy url",
+   next_x:"Next",
+   chat_with_business:"Chat with Business",
 
  },
  it: {

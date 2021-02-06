@@ -89,6 +89,35 @@ const newmodule = {
 
       getCryptKey:() => {
         return cryptKey;
+      },
+
+      TurnOnNotification:() => {
+        localStorage.setItem("notification","1");
+      },
+
+      turnOffNotification:() => {
+        localStorage.setItem("notification","0");
+      },
+
+      getNotificationStatus:() => {
+
+        var notStatus = localStorage.getItem("notification");
+        if(notStatus){
+          if(notStatus == 1){
+            return true;
+          }else{
+            return false;
+          }
+        }
+
+      },
+
+      saveNotificationCount:(count) => {
+        localStorage.setItem("notificationcount",count);
+      },
+
+      getNotificationCount:() => {
+        return localStorage.getItem("notificationcount");
       }
 
 }

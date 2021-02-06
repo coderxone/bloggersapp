@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form";
 import ChatService from '../services/Chatservice';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
+import GoBackAbsoluteComponent from '../helperComponents/goBackAbsoluteComponent';
 import {
   withStyles,
   makeStyles,
@@ -144,7 +145,10 @@ const MessageListComponent = ((props) => {
     }
 
     const sendMessage = (() => {
-        Observable.sendData_subject_M(newMessage);
+        //<br>
+        const newCleanString = newMessage.replace('<br>','');
+        Observable.sendData_subject_M(newCleanString);
+        console.log(newCleanString);
         setNewMessage("");
     });
 
@@ -172,7 +176,7 @@ const SuggestComponent = (props) => {
 
       if(locationData.email){
         //save in browser memory
-        console.log(props.location.email);
+        //console.log(props.location.email);
         localStorage.setItem("currentEmail",props.location.email);
         //return object;
         return props.location.email;
@@ -182,6 +186,8 @@ const SuggestComponent = (props) => {
       }
 
   },[]);
+
+  //console.log(currentEmail);
 
   const projectId = useMemo(() => {
 
@@ -198,12 +204,14 @@ const SuggestComponent = (props) => {
 
   },[]);
 
+  //console.log(projectId);
+
   const deviceEmail = useMemo(() => {
     return config.getUserEmail();
   },[])
 
 
-  const windowHeight = window.screen.height + "px";
+  const windowHeight = (window.screen.height / 2)  + "px";
 
 
 
@@ -282,7 +290,7 @@ const SuggestComponent = (props) => {
 
 
     const listenMessages = ChatService.listenAllMessages().subscribe(data => {
-          console.log(data.data);
+          //console.log(data.data);
 
           var existlist = data.data;
 
@@ -317,11 +325,7 @@ const SuggestComponent = (props) => {
     });
 
 
-    const listenSendM = ChatService.listengetMessage().subscribe(data => {
-      console.log(data);
-      ChatService.readMessage(data);
-      HomeService.notificationVoice();
-    });
+
 
     const listenReadMessage = ChatService.listenReadMessage().subscribe(data => {
       console.log(data);
@@ -329,7 +333,6 @@ const SuggestComponent = (props) => {
 
     return () => {
       listenMessages.unsubscribe();
-      listenSendM.unsubscribe();
       listenReadMessage.unsubscribe();
     }
 
@@ -371,6 +374,8 @@ const SuggestComponent = (props) => {
             projectId:projectId,
             currentEmail:currentEmail,
           }
+
+          console.log(sendObj);
           ChatService.sendMessage(sendObj);
 
         }
@@ -379,6 +384,44 @@ const SuggestComponent = (props) => {
 
     return () => {
       obs.unsubscribe();
+    }
+
+  },[messagesList,lastMessageId]);
+
+
+  useEffect(() => {
+
+    const listenSendM = ChatService.listengetMessage().subscribe(data => {
+      //xx
+      console.log(data);
+
+      if(data.message.length > 0){
+        const lastMid = lastMessageId + 1;
+        const newList = [...messagesList];
+        var newmessage = outgoing(data.message,data.fromEmail,demoUrl,data.date,lastMid);
+
+        var found = 0;
+        for(var i = 0;i < newList.length;i++){
+          if(newList[i].id == newmessage.id){
+            found = 1;
+          }
+        }
+        if(found == 0){
+          newList.push(newmessage);
+          setLastMessageId(lastMid);
+          setMessagesList(newList);
+          ChatService.readMessage(data);
+          HomeService.notificationVoice();
+        }
+
+
+      }
+
+    });
+
+
+    return () => {
+      listenSendM.unsubscribe();
     }
 
   },[messagesList,lastMessageId])
@@ -398,7 +441,7 @@ const SuggestComponent = (props) => {
   return (
     <div className={classes.root}>
         <Grid container >
-
+              <GoBackAbsoluteComponent/>
               <MainContainer style ={{height:windowHeight,width:"100%"}}>
 
 

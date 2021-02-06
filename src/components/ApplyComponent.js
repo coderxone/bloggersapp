@@ -229,6 +229,15 @@ const ApplyComponent = () => {
   },[]);
 
 
+  useEffect(() => {
+    var obj = {
+      amount:defaultSliderValue
+    }
+    
+    ApplyService.checkSubscriberCore(obj);
+  },[]);
+
+
   return (
 
    	<div className={classes.root}>
