@@ -60,18 +60,13 @@ const mapDispatchToProps = dispatch => ({
   save_email
 });
 
+const windowHeight = (window.screen.height - 20)  + "px";
+
 const useStyles = makeStyles((theme) => ({
   root: {
-    flexGrow: 1,
-    backgroundColor:'#161730',
-    width:"100%"
-  },
-  paper: {
-    padding: theme.spacing(2),
-    textAlign: 'center',
-    color: theme.palette.text.secondary,
-    backgroundColor:'#161730',
-  },
+    width:"100%",
+    height:windowHeight,
+  }
 }));
 
 
@@ -157,7 +152,7 @@ const MessageListComponent = ((props) => {
       <MessageList >
           {returnList}
       </MessageList>
-      <MessageInput onChange={event => SetMessage(event)}  onSend={event => sendMessage()} placeholder="Type message here" />
+      <MessageInput class="chatstyles" onChange={event => SetMessage(event)}  onSend={event => sendMessage()} placeholder="Type message here" />
       </ChatContainer>
 
 
@@ -211,7 +206,7 @@ const SuggestComponent = (props) => {
   },[])
 
 
-  const windowHeight = (window.screen.height / 2)  + "px";
+
 
 
 
@@ -430,6 +425,7 @@ const SuggestComponent = (props) => {
   useEffect(() => {
 
     initMessageService();
+    initMessageService();
     requestToCheckMessages();
 
 
@@ -439,22 +435,13 @@ const SuggestComponent = (props) => {
 
 
   return (
-    <div className={classes.root}>
-        <Grid container >
+
+        <Grid container className={classes.root}>
               <GoBackAbsoluteComponent/>
-              <MainContainer style ={{height:windowHeight,width:"100%"}}>
-
-
-                      <MessageListComponent list={messagesList}/>
-
-
+              <MainContainer  style ={{heigth:"100%",width:"100%"}}>
+                <MessageListComponent list={messagesList}/>
               </MainContainer>
-
-
-          </Grid>
-      </div>
-
-
+        </Grid>
 
   );
 };

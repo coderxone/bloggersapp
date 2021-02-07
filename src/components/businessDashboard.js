@@ -454,6 +454,9 @@ const BusinessDashboard = (props) => {
   const [detailProjectId,setDetailProjectId] = useState(0);
   const [detailMessage,setDetailMessage] = useState("");
 
+  const CloseDrawer = () => {
+    setOpen(false);
+  }
 
 
   return (
@@ -476,7 +479,7 @@ const BusinessDashboard = (props) => {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap>
+          <Typography variant="h6"  onClick={event => CloseDrawer()} noWrap>
             Business dashboard
           </Typography>
         </Toolbar>

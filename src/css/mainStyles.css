@@ -290,3 +290,18 @@ ion-item {
   background-color: rgba(4, 16, 47, 0.4);
   border-radius: 5px;
 }
+
+.cs-main-container{
+  position: fixed !important;
+  width: 100%;
+  height: 93% !important;
+  bottom:50px !important;
+  left:0px !important;
+}
+.cs-message-input{
+  position: fixed !important;
+  width: 100%;
+
+  bottom:0px !important;
+  left:0px !important;
+}

@@ -305,6 +305,13 @@ const BloggerDashboardComponent = (props) => {
     email:""
   };
 
+  const TimeoutRequest = () => {
+    setTimeout(function(){
+        setRequestStatus(true);
+        //console.log("checking again");
+    },4000);
+  }
+
 
   const [storageData,setStorageData] = useState(obj);
 
@@ -323,18 +330,50 @@ const BloggerDashboardComponent = (props) => {
   const [latitude, setLatitude] = useState(0);
   const [longitude, setLongitude] = useState(0);
 
+  const [firstLoadStorage,setFirstLoadStorage] = useState(true);
   const checkData = (() => {
 
         if((latitude != 0) && (longitude != 0)){
-
           BloggerService.setAllData(latitude,longitude);
+        }
+//xx
+        if(firstLoadStorage == true){
+
+          if(ListStorageData != false){
+
+
+            SetItems(ListStorageData);
+            setDistance(tempstorageDistanceState);
+            SetStatus(true);
+            console.log("setted");
+            setFirstLoadStorage(false);
+          }
 
         }
 
   });
-//xx
-  const [requestStatus,setRequestStatus] = useState(true);
 
+  const [requestStatus,setRequestStatus] = useState(true);
+  const [fixSearch,setFixSearch] = useState(false);
+  const [fixSearchTwo,setFixSearchTwo] = useState(true);
+  //checking existing storage
+  const ListStorageData = useMemo(() => {
+      const storageOne = localStorage.getItem("tempstorageData");
+      if(storageOne){
+        return JSON.parse(storageOne);
+      }else{
+        return false;
+      }
+  },[]);
+
+  const tempstorageDistanceState = useMemo(() => {
+      const storageOneD = localStorage.getItem("tempstorageDistance");
+      if(storageOneD){
+        return storageOneD;
+      }else{
+        return false;
+      }
+  },[]);
   useEffect(() => {
 
     const BloggerListen = BloggerService.listenUserDataG().subscribe((data) => {
@@ -377,29 +416,28 @@ const BloggerDashboardComponent = (props) => {
             }
           }
 
+          //save in storage
+          //console.log(insertArray);
+          var json = JSON.stringify(insertArray);
+          localStorage.setItem("tempstorageData",json);
+          localStorage.setItem("tempstorageDistance",data.distance);
 
           SetItems(insertArray);
           setDistance(data.distance);
           SetStatus(true);
+
+
+
         }else if(data.status == "later"){
           //console.log("request denied");
           setRequestStatus(false);
+          SetItems([]);
+          SetStatus(false);
         }else{
           SetStatus(false);
         }
 
     });
-
-    const b = Observable.subscribeByTimer_10_second().subscribe(data => {
-      if(requestStatus == true){
-        //console.log("request send");
-        checkData();
-      }else{
-        //console.log("denied");
-      }
-
-    });
-
 
     const WatchPosition = async function WatchPosition(){
 
@@ -412,6 +450,12 @@ const BloggerDashboardComponent = (props) => {
           if(position){
             setLatitude(position.coords.latitude);
             setLongitude(position.coords.longitude);
+
+            if(fixSearchTwo == true){
+              setFixSearch(true);
+            }
+
+
           }
 
 
@@ -423,41 +467,45 @@ const BloggerDashboardComponent = (props) => {
 
     };
 
-    const d = Observable.subscribeByTimer_4_second().subscribe((data) => {
+    const b = Observable.subscribeByTimer_10_second().subscribe(data => {
+      if(requestStatus == true){
+        //console.log("request send");
+        WatchPosition();
+        checkData();
 
-      WatchPosition();
-
-      setTimeout(function(){
-        if(requestStatus == true){
-          //console.log("request send");
-          checkData();
-        }else{
-          //console.log("denied");
-        }
-      },5000);
-
-      // if((latitude != 0) && (longitude != 0)){
-      //   //console.log(latitude);
-      //   //console.log(longitude);
-      // }
+      }else{
+        TimeoutRequest();
+        console.log("denied 2");
+        SetItems([]);
+        SetStatus(false);
+      }
 
     });
 
+
     WatchPosition();
+
+
 
     //unsubscribe
 
     return () => {
         BloggerListen.unsubscribe();
         b.unsubscribe();
-
-        d.unsubscribe();
     }
 
     //unsubscribe
 
-  }, [latitude,longitude,status,requestStatus]);
+  }, [latitude,longitude,status,requestStatus,fixSearchTwo]);
 
+
+  useMemo(() => {
+    if(fixSearch == true){
+      checkData();
+      setFixSearch(false);
+      setFixSearchTwo(false);
+    }
+  },[fixSearch]);
 
 
   const classestwo = useStylestwo();
@@ -475,7 +523,9 @@ const BloggerDashboardComponent = (props) => {
   const changePage = useCallback((Contacts) => {
 
     if(Contacts == "Contacts"){
-      return history.push('/contactlist'), [history]
+      return history.push('/contactlist'), [history];
+    }else if(Contacts == "MyTasks"){
+      return history.push('/mytasks'), [history];
     }
 
   });
@@ -488,6 +538,7 @@ const BloggerDashboardComponent = (props) => {
 
   });
 
+//init functions
   useEffect(() => {
     const DialogNotif = Observable.getData_subject().subscribe(data => {
       if(data == "confirm"){
@@ -530,8 +581,12 @@ const BloggerDashboardComponent = (props) => {
   const [detailProjectId,setDetailProjectId] = useState(0);
   const [detailMessage,setDetailMessage] = useState("");
 
+  const CloseDrawer = () => {
+    setOpen(false);
+  }
 
 
+//xx
 
   return (
 
@@ -553,8 +608,8 @@ const BloggerDashboardComponent = (props) => {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap>
-            Business dashboard
+          <Typography variant="h6" onClick={event => CloseDrawer()} noWrap>
+            Creator dashboard
           </Typography>
         </Toolbar>
       </AppBar>

@@ -178,7 +178,7 @@ const DetailTaskComponent = (props) => {
 
   const [stepper,SetStep] = useState(0);
 
-  const [checkLinksValidationsArray,SetcheckLinksValidationsArray] = useState(["instagram.com","facebook.com","youtube.com","twitter.com"]);
+  const [checkLinksValidationsArray,SetcheckLinksValidationsArray] = useState(["inst","face","yout","twit"]);
 
   const Share = (() => {
 
@@ -303,6 +303,8 @@ useEffect(() => {
       if(countOfTask == count){
         SetcompletedTask(true);
         SubmittedTask(detailData.id);
+        localStorage.removeItem("tempstorageData");
+        localStorage.removeItem("tempstorageDistance");
       }
       //SetCurrentNetwork
     }

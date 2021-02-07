@@ -219,8 +219,14 @@ const homeservice = {
       }),
 
       notificationVoice:() => {
-        const audio = new Audio(soundfile);
-        audio.play();
+
+        try{
+          const audio = new Audio(soundfile);
+          audio.play();
+        }catch(e){
+
+        }
+
       },
 
       checkNotificationsMessages:() => {

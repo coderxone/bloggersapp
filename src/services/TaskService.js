@@ -1,31 +1,31 @@
+import React,{useState, useEffect} from 'react';
 import { Subject } from 'rxjs';
 import socket from '../config/socket.js';
 import config from '../config/config.js';
 import cryptLibrary from '../helpers/CryptLibrary';
 const observ_subject = new Subject();
+const observ_subject2 = new Subject();
+const timer10s = new Subject();
 
-const BloggerService = {
+const taskService = {
 
-          setAllData:(lat,long) => {
+
+          getTaskData:() => {
 
             var data = {
-              lat:lat,
-              long:long,
               deviceId:config.getdeviceid(),
-              email:config.getUserEmail(),
-              role:config.getUserRole(),
-              message:"1"
+              email:config.getUserEmail()
             }
 
             //console.log(data);
 
             var encryptedData = cryptLibrary.encrypt(data);
 
-            socket.emit("getAllDataE",encryptedData);
+            socket.emit("getAllDataTask",encryptedData);
           },
 
-          listenUserDataG:() => {
-            socket.on("getAllDataE",(data) => {
+          listenUserDataTask:() => {
+            socket.on("getAllDataTask",(data) => {
                 //console.log(data);
                 observ_subject.next(cryptLibrary.decrypt(data));
             });
@@ -38,4 +38,4 @@ const BloggerService = {
       }
 
 
-export default BloggerService;
+export default taskService;
