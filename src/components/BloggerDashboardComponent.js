@@ -27,8 +27,9 @@ import BloggerService from '../services/BloggersService';
 import SkeletonComponent from '../helperComponents/SkeletonComponent';
 import { increment, decrement,save_email } from '../actions/actions';
 import {
-  Link,useHistory
+  Link,useHistory,
 } from "react-router-dom";
+import { LastLocationProvider } from 'react-router-last-location';
 
 import clsx from 'clsx';
 import Drawer from '@material-ui/core/Drawer';
@@ -50,6 +51,7 @@ import MailIcon from '@material-ui/icons/Mail';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import ConfirmDialogComponent from '../helperComponents/ConfirmDialogComponent';
+import { useLastLocation } from 'react-router-last-location';
 
 
 
@@ -211,6 +213,7 @@ const BlockComponent = (props) => {
   const items = props.items;
   const dist = props.distance;
 
+
   const content = useMemo(() => {
 
     return items.map((item,index) =>
@@ -284,6 +287,8 @@ const BlockComponent = (props) => {
 
 const BloggerDashboardComponent = (props) => {
 
+  const lastLocation = useLastLocation();
+
   const checkingEmail = useMemo(() => {
     const locationData = props.location;
     if(locationData.data){
@@ -294,8 +299,6 @@ const BloggerDashboardComponent = (props) => {
       return localStorage.getItem("checkingEmail");
     }
   },[]);
-
-  //console.log(checkingEmail);
 
   const classes = useStyles();
   const { register, handleSubmit, errors,setError } = useForm({
@@ -333,6 +336,7 @@ const BloggerDashboardComponent = (props) => {
   const [firstLoadStorage,setFirstLoadStorage] = useState(true);
   const checkData = (() => {
 
+        //console.log("searching");
         if((latitude != 0) && (longitude != 0)){
           BloggerService.setAllData(latitude,longitude);
         }
@@ -347,6 +351,7 @@ const BloggerDashboardComponent = (props) => {
             SetStatus(true);
             console.log("setted");
             setFirstLoadStorage(false);
+            setFixSearchTwo(true);
           }
 
         }
@@ -378,7 +383,7 @@ const BloggerDashboardComponent = (props) => {
 
     const BloggerListen = BloggerService.listenUserDataG().subscribe((data) => {
 
-
+        console.log(data);
         if((data.sdata.length > 0) && (data.status == "ok")){
           const insertArray = [...items];
           var deleteArray = new Array();
@@ -399,7 +404,7 @@ const BloggerDashboardComponent = (props) => {
             for(var l = 0;l < deleteArray.length;l++){
               insertArray.splice(deleteArray[l],1);
             }
-            console.log(insertArray.length);
+
           }else{//add or update elements in array
             //console.log("another");
             for(var i = 0;i < data.sdata.length;i++){
@@ -425,7 +430,8 @@ const BloggerDashboardComponent = (props) => {
           SetItems(insertArray);
           setDistance(data.distance);
           SetStatus(true);
-
+          setFixSearchTwo(true);
+          setFixSearch(true);
 
 
         }else if(data.status == "later"){
@@ -471,7 +477,7 @@ const BloggerDashboardComponent = (props) => {
       if(requestStatus == true){
         //console.log("request send");
         WatchPosition();
-        checkData();
+        //checkData();
 
       }else{
         TimeoutRequest();
@@ -484,6 +490,15 @@ const BloggerDashboardComponent = (props) => {
 
 
     WatchPosition();
+
+    if(lastLocation != null){
+      if(lastLocation.pathname == "/detailtask"){
+
+        setFixSearch(true);
+        setFixSearchTwo(true);
+      }
+    }
+
 
 
 

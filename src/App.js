@@ -6,6 +6,7 @@ import {
   Route,
   Link
 } from "react-router-dom";
+import { LastLocationProvider } from 'react-router-last-location';
 
 
 import { IonApp, IonRouterOutlet } from '@ionic/react';
@@ -41,6 +42,7 @@ const App = () => (
     //   <IonReactRouter>
     //     <IonRouterOutlet>
             <Router>
+              <LastLocationProvider>
               <Route path="/home" component={Home} exact={true} />
               <Route path="/login" component={AuthorizationComponent} exact={true} />
               <Route path="/restore" component={RestorepasswordComponent} exact={true} />
@@ -59,6 +61,7 @@ const App = () => (
               <Route path="/contactlist" component={ContactListComponent} exact={true} />
               <Route path="/mytasks" component={TaskComponent} exact={true} />
               <Route exact path="/" render={() => <Redirect to="/login" />} />
+              </LastLocationProvider>
             </Router>
     //     </IonRouterOutlet>
     //   </IonReactRouter>

@@ -91,12 +91,22 @@ const MapList = ((props) => {
 
   });
 
+  const checkProjectId = (projectId) => {
+
+
+    if((projectId == null) || (projectId == undefined)){
+      return 11;
+    }else{
+      return projectId;
+    }
+  }
+
   const ListConst = list.map((item) =>
 
         <Link
           to={{
             pathname: "/suggest",
-            projectId: item.projectId,
+            projectId: checkProjectId(item.projectId),
             email:checkingEmail(item.fromEmail,item.toEmail)
           }}
 
