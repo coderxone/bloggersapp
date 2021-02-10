@@ -7,20 +7,13 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
 import {
-  withStyles,
   makeStyles,
   useTheme,
 } from '@material-ui/core/styles';
-import TextField from '@material-ui/core/TextField';
-import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
-import Logo from '../icons/logo_circle_new_circle.png';
-import Box from '@material-ui/core/Box';
+
+
 import { connect } from 'react-redux';
-import AuthService from '../services/AuthService';
-import HomeService from '../services/Homeservice';
-import DialogComponent from '../components/DialogComponent';
-import config from '../config/config.js';
 import { Plugins} from "@capacitor/core";
 import Observable from '../services/Observable';
 import BloggerService from '../services/BloggersService';
@@ -29,7 +22,6 @@ import { increment, decrement,save_email } from '../actions/actions';
 import {
   Link,useHistory,
 } from "react-router-dom";
-import { LastLocationProvider } from 'react-router-last-location';
 
 import clsx from 'clsx';
 import Drawer from '@material-ui/core/Drawer';
@@ -48,8 +40,6 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
-import ListItemAvatar from '@material-ui/core/ListItemAvatar';
-import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import ConfirmDialogComponent from '../helperComponents/ConfirmDialogComponent';
 import { useLastLocation } from 'react-router-last-location';
 
@@ -162,50 +152,10 @@ const useStyles = makeStyles((theme) => ({
 
 
 
-const CssTextField = withStyles({
-  root: {
-    '& label.Mui-focused': {
-      color: '#8936f4',
-    },
-    '& label': {
-      color: '#8936f4',
-    },
-    '& .MuiInput-underline:after': {
-      borderBottomColor: '#8936f4',
-    },
-    '& .MuiOutlinedInput-root': {
-      '& fieldset': {
-        borderColor: 'red',
-      },
-      '&:hover fieldset': {
-        borderColor: 'yellow',
-      },
-      '&.Mui-focused fieldset': {
-        borderColor: '#8936f4',
-      },
-      '& input:valid + fieldset': {
-        borderColor: '#8936f4',
-      },
-      '& input:invalid + fieldset': {
-        borderColor: 'red',
-      },
-
-    },
-  },
-})(TextField);
-
 const schema = yup.object().shape({
   email: yup.string().required("Required").email(),
 });
 
-
-const MessageComponent = (props) => {
-  return (
-    <div className="errorBox">
-        {props.message}
-    </div>
-  )
-}
 
 
 const BlockComponent = (props) => {
@@ -298,29 +248,21 @@ const BloggerDashboardComponent = (props) => {
     }else{
       return localStorage.getItem("checkingEmail");
     }
-  },[]);
+  },[props]);
 
-  const classes = useStyles();
-  const { register, handleSubmit, errors,setError } = useForm({
-    resolver: yupResolver(schema)
-  });
+
+
   var obj = {
     email:""
   };
 
-  const TimeoutRequest = () => {
-    setTimeout(function(){
-        setRequestStatus(true);
-        //console.log("checking again");
-    },4000);
-  }
+  // const TimeoutRequest = () => {
+  //   setTimeout(function(){
+  //       setRequestStatus(true);
+  //       //console.log("checking again");
+  //   },4000);
+  // }
 
-
-  const [storageData,setStorageData] = useState(obj);
-
-  const [cancelDoubleEvent,setCancelDoubleEvent] = useState(0);
-
-  const [closeDialog,setCloseDialog] = useState(false);
 
   const [items,SetItems] = useState([]);
 
@@ -336,8 +278,9 @@ const BloggerDashboardComponent = (props) => {
   const [firstLoadStorage,setFirstLoadStorage] = useState(true);
 
   useMemo(() => {
-    //console.log("Memo Executed");
+
     if((latitude != 0) && (longitude != 0)){
+      console.log("Memo Executed");
       BloggerService.setAllData(latitude,longitude);
     }
   },[latitude,longitude])
@@ -347,7 +290,7 @@ const BloggerDashboardComponent = (props) => {
 //xx
         if(firstLoadStorage == true){
 
-          if(ListStorageData != false){
+          if(ListStorageData !== false){
 
 
             SetItems(ListStorageData);
@@ -459,8 +402,12 @@ const BloggerDashboardComponent = (props) => {
 ///---------
 
 useEffect(() => {
-
-    const wait = Geolocation.watchPosition({}, (position, err) => {
+    var options = {
+      maximumAge: 60000,
+      enableHighAccuracy: true,
+      timeout: 20000
+    }
+    const wait = Geolocation.watchPosition(options, (position, err) => {
 
       if(err){
         return false;

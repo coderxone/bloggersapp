@@ -57,7 +57,7 @@ const initSocket = (() => {
        }
 
        var notStatus = config.getNotificationStatus();
-       console.log(notStatus);
+      // console.log(notStatus);
        if(notStatus == true){
          //console.log("dialog request");
          var messageObj = {
