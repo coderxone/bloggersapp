@@ -1,7 +1,7 @@
 import React, {useState,useEffect,useMemo} from 'react';
 // import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonInput, IonItem, IonLabel, IonList, IonItemDivider } from '@ionic/react';
-import '../css/mainStyles.css';
-import '../css/contactListComponent.css';
+import '../css/mainStyles.scss';
+import '../css/contactListComponent.scss';
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
 import LocalizeComponent from '../localize/LocalizeComponent';
 import { useForm } from "react-hook-form";
@@ -53,13 +53,13 @@ const mapDispatchToProps = dispatch => ({
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-    backgroundColor:'#161730',
+    backgroundColor:'transparent',
   },
   paper: {
-    padding: theme.spacing(2),
+    padding: theme.spacing(1),
     textAlign: 'center',
     color: theme.palette.text.secondary,
-    backgroundColor:'#161730',
+    backgroundColor:'transparent',
   },
 }));
 

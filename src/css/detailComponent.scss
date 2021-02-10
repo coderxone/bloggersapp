@@ -1,3 +1,8 @@
+$base-app-color:#0083ff;
+$base-app-colorRight:#0083ff;
+$fontSize:#0083ff;
+$buttonColor:white;
+
 .MuiBox-root-19{
   padding:0px !important;
 }
@@ -9,6 +14,7 @@
   border:1px solid white;
   border-radius: 7px;
   margin-top:5px;
+  background-color: $base-app-color;
 }
 
 .ItemMainBlock{
@@ -93,7 +99,7 @@
   height: 2em;
   border-radius: 15px;
   float: left;
-  background:linear-gradient(to right, #8936f4, #0083ff);
+  background:linear-gradient(to right, $buttonColor, $buttonColor);
   margin-left:7%;
 }
 
@@ -113,6 +119,7 @@
   text-align: center;
   font-family:"Times New Roman", Times, serif;
   font-size: 16px;
+  color:$base-app-color;
 }
 
 .centrDivCopy{
@@ -131,7 +138,7 @@
   width:30%;
   height: 2em;
   border-radius: 15px;
-  background:linear-gradient(to right, #8936f4, #0083ff);
+  background:linear-gradient(to right, $buttonColor, $buttonColor);
   float: left;
   margin-left:3%;
 }
@@ -142,7 +149,7 @@
   width:25%;
   height: 2em;
   border-radius: 15px;
-  background:linear-gradient(to right, #8936f4, #0083ff);
+  background:linear-gradient(to right, $buttonColor, $buttonColor);
   float: left;
   margin-left:3%;
 }
@@ -182,7 +189,7 @@
   text-align:center;
   font-family:"Times New Roman", Times, serif;
   font-size: 1.5em;
-  color:white;
+  color:$base-app-color;
 }
 .project_description{
   width:100%;
@@ -196,7 +203,9 @@
   padding-bottom: 4%;
   margin:5px;
   margin-bottom: 20px;
-  border:2px solid white;
+  border:2px solid $base-app-color;
+  color:$base-app-color;
+  font-size: $fontSize;
   border-radius: 10px;
 }
 
@@ -204,14 +213,14 @@
   width:100%;
   font-family:"Times New Roman", Times, serif;
   height: 30px;
-  color:white;
+  color:$base-app-color;
 
 }
 .project_double_l{
   width:100%;
   font-family:"Times New Roman", Times, serif;
   height: 90px;
-  color:white;
+  color:$base-app-color;
 
 }
 
@@ -242,7 +251,7 @@
   font-family:"Times New Roman", Times, serif;
   width:100%;
   text-align: center;
-  color:white;
+  color:$base-app-color;
 }
 
 .blogger_block_margin{
@@ -285,7 +294,7 @@
 .left_button_one{
   width:25%;
   height: 22px;
-  background:linear-gradient(to right, #8936f4, #0083ff);
+  background:linear-gradient(to right, $base-app-color, $base-app-colorRight);
   border-radius: 5px;
   float: left;
   margin-left: 18px;
@@ -294,13 +303,13 @@
 
 .left_button_one_name{
   text-align: center;
-
+  color:white;
 }
 
 .left_button_two{
   width:25%;
   height: 22px;
-  background:linear-gradient(to right, #8936f4, #0083ff);
+  background:linear-gradient(to right, $base-app-color, $base-app-colorRight);
   border-radius: 5px;
   float: left;
   margin-left: 8px;
@@ -310,7 +319,7 @@
 .left_button_three{
   width:25%;
   height: 22px;
-  background:linear-gradient(to right, #8936f4, #0083ff);
+  background:linear-gradient(to right, $base-app-color, $base-app-colorRight);
   border-radius: 5px;
   float: left;
   margin-left: 8px;
@@ -324,7 +333,7 @@
   margin-left: 2px;
   margin-top:10px;
   margin-bottom: 10px;
-  color:white;
+  color:$base-app-color;
 }
 
 .left_childCompletitionBlock{
@@ -344,6 +353,7 @@
   height:30px;
   background-color: white;
   border-radius: 5px;
+  border:1px solid $base-app-color;
 
 }
 .leftprogressButton{

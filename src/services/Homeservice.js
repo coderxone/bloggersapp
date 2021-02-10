@@ -49,12 +49,15 @@ const initSocket = (() => {
 
      if(data.count > 0){
 
+       // config.TurnOnNotification();
+       //
+       // return false;
        if(config.getNotificationCount() != data.count){
          config.TurnOnNotification();
        }
 
        var notStatus = config.getNotificationStatus();
-       //console.log(notStatus);
+       console.log(notStatus);
        if(notStatus == true){
          //console.log("dialog request");
          var messageObj = {
@@ -85,7 +88,8 @@ const initSocket = (() => {
      var s = {
              email:us_email,
              role:config.getUserRole(),
-             type:1
+             type:1,
+             deviceId:config.getdeviceid(),
            }
      homeservice.checkAutomaticMessages(s);
    }

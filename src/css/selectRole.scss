@@ -1,3 +1,5 @@
+$base-app-color:#0083ff;
+
 .additionalMarginTop{
   margin-top:10px;
 }
@@ -29,7 +31,7 @@
 
 .role_button_style{
   text-align: center;
-  color:#161730;
+  color:$base-app-color;
   font-family:"Roboto", "Helvetica", "Arial", sans-serif;
   font-size: 18px;
   padding-top:9px;

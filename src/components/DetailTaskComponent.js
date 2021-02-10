@@ -1,7 +1,7 @@
 import React, {useState,useMemo,useEffect,useCallback} from 'react';
 // import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonInput, IonItem, IonLabel, IonList, IonItemDivider } from '@ionic/react';
-import '../css/mainStyles.css';
-import '../css/DetailDescriptionComponent.css';
+import '../css/mainStyles.scss';
+import '../css/DetailDescriptionComponent.scss';
 import LocalizeComponent from '../localize/LocalizeComponent';
 import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -45,13 +45,13 @@ const mapDispatchToProps = dispatch => ({
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-    backgroundColor:'#161730',
+    backgroundColor:'transparent',
   },
   paper: {
     padding: theme.spacing(2),
     textAlign: 'center',
     color: theme.palette.text.secondary,
-    backgroundColor:'#161730',
+    backgroundColor:'transparent',
   },
 }));
 
@@ -300,8 +300,9 @@ useEffect(() => {
 
       SetStep(count);
 
-      if(countOfTask == count){
+      if((countOfTask == count) && (countOfTask > 0) && (count > 0)){
         SetcompletedTask(true);
+        console.log(111);
         SubmittedTask(detailData.id);
         localStorage.removeItem("tempstorageData");
         localStorage.removeItem("tempstorageDistance");
@@ -348,7 +349,7 @@ useEffect(() => {
     });
 
     const obs = Observable.subscribeByTimer_10_second().subscribe(data => {
-        SubmittedTask(detailData.id);
+        //SubmittedTask(detailData.id);
     });
 
 //xx

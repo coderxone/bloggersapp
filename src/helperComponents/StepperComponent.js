@@ -6,7 +6,7 @@ const StyledMobileStepper = withStyles({
   root: {
     maxWidth: "100%",
     flexGrow: 1,
-    background:"#161730",
+    background:"transparent",
   },
   progress: {
     width: "100%"

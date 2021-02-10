@@ -1,3 +1,6 @@
+$base-app-color:#0083ff;
+
+
 .mainList{
     height: 13.5vh;
     margin-top:2%;
@@ -67,7 +70,7 @@
   }
 
   .prightBlockTwoOne{
-    color:#161730;
+    color:#0083ff;
     width:67%;
     height: 100%;
     float:left;
@@ -118,7 +121,7 @@
 
   .prightBlockOneTwoText{
     margin-top:5%;
-    color:#161730;
+    color:$base-app-color;
   }
 
   .prightBlockOneThree{
@@ -132,7 +135,7 @@
   }
 
   .prightBlockOneThreeText{
-    color:#161730;
+    color:#0083ff;
     margin-top:8%;
   }
 
@@ -206,7 +209,7 @@
 }
 
 .prightBlockTwoOne{
-  color:#161730;
+  color:$base-app-color;
   width:78%;
   height: 100%;
   float:left;
@@ -255,7 +258,7 @@
 
 .prightBlockOneTwoText{
   margin-top:10%;
-  color:#161730;
+  color:$base-app-color;
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
@@ -272,7 +275,7 @@
 }
 
 .prightBlockOneThreeText{
-  color:#161730;
+  color:$base-app-color;
   margin-top:27%;
 }
 

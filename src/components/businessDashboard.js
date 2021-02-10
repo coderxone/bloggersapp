@@ -1,7 +1,7 @@
 import React, {useState,useEffect,useMemo,useCallback} from 'react';
 import clsx from 'clsx';
 // import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonInput, IonItem, IonLabel, IonList, IonItemDivider } from '@ionic/react';
-import '../css/businessDashboard.css';
+import '../css/businessDashboard.scss';
 import LocalizeComponent from '../localize/LocalizeComponent';
 import BusinesService from '../services/BusinessService';
 import { useForm } from "react-hook-form";
@@ -84,13 +84,13 @@ const mapDispatchToProps = dispatch => ({
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-    backgroundColor:'#161730',
+    backgroundColor:'#0083ff',
   },
   paper: {
     padding: theme.spacing(2),
     textAlign: 'center',
     color: theme.palette.text.secondary,
-    backgroundColor:'#161730',
+    backgroundColor:'#0083ff',
   },
 }));
 
@@ -103,7 +103,7 @@ const useStylestwo = makeStyles((theme) => ({
     height:'100%'
   },
   icon:{
-    color:"white"
+    color:"#0083ff"
   },
   appBar: {
     transition: theme.transitions.create(['margin', 'width'], {
@@ -133,8 +133,8 @@ const useStylestwo = makeStyles((theme) => ({
   },
   drawerPaper: {
     width: drawerWidth,
-    backgroundColor:"#161730",
-    color:"white",
+    backgroundColor:"white",
+    color:"#0083ff",
   },
   drawerHeader: {
     display: 'flex',
@@ -149,14 +149,14 @@ const useStylestwo = makeStyles((theme) => ({
   },
   content: {
     flexGrow: 1,
-    padding: theme.spacing(1),
+    padding: theme.spacing(0),
     transition: theme.transitions.create('margin', {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
     marginLeft: -drawerWidth,
-    backgroundColor:"#161730",
-    color:"white",
+    backgroundColor:"white",
+    color:"#0083ff",
     height:"100%",
   },
   contentShift: {

@@ -33,7 +33,7 @@ const DetailTaskService = {
               status:"check" //set
             }
 
-            console.log(data);
+      //      console.log(data);
 
             var encryptedData = cryptLibrary.encrypt(data);
 
@@ -113,7 +113,7 @@ const DetailTaskService = {
               approvetask:obj.approvetask
             }
 
-          //  console.log(data);
+            console.log(data);
 
             var encryptedData = cryptLibrary.encrypt(data);
             //emit("closeorders",data);

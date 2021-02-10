@@ -1,6 +1,6 @@
 import React, {useState,useEffect} from 'react';
 // import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonInput, IonItem, IonLabel, IonList, IonItemDivider } from '@ionic/react';
-import '../css/mainStyles.css';
+import '../css/mainStyles.scss';
 import LocalizeComponent from '../localize/LocalizeComponent';
 import ApplyService from '../services/ApplyService';
 import { useForm } from "react-hook-form";
@@ -233,7 +233,7 @@ const ApplyComponent = () => {
     var obj = {
       amount:defaultSliderValue
     }
-    
+
     ApplyService.checkSubscriberCore(obj);
   },[]);
 

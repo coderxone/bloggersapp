@@ -1,7 +1,7 @@
 import React, {useState,useEffect,useMemo} from 'react';
 // import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonInput, IonItem, IonLabel, IonList, IonItemDivider } from '@ionic/react';
-import '../css/mainStyles.css';
-import '../css/selectRole.css';
+import '../css/mainStyles.scss';
+import '../css/selectRole.scss';
 import LocalizeComponent from '../localize/LocalizeComponent';
 import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';

@@ -1,9 +1,10 @@
-body{
-  background-color:#161730 !important;
+$base-app-color:#0083ff;
+$fontSize:18px;
+.makeStyles-drawerHeader-9{
+  background-color: $base-app-color;
 }
-
 .MuiAppBar-colorPrimary{
-  background-color: #161730 !important;
+  background-color: $base-app-color !important;
 }
 
 .MuiIconButton-root{
@@ -66,6 +67,8 @@ body{
   width: 100%;
   font-family:"Times New Roman", Times, serif;
   color:white;
+  font-size: $fontSize;
+  font-weight: bold;
 
   /* white-space: nowrap; */
 }
@@ -115,7 +118,8 @@ body{
   font-family:"Times New Roman", Times, serif;
   color:white;
   text-align: center;
-  font-size: 18px;
+  font-size: $fontSize;
+  font-weight: bold;
   padding-top:1px;
 }
 
@@ -137,6 +141,8 @@ body{
   text-align: center;
   font-size: 18px;
   padding-top:1px;
+  font-size: $fontSize;
+  font-weight: bold;
 }
 
 .thirstLevel{
@@ -144,7 +150,7 @@ body{
   height: 43%;
   margin-left:5px;
   border-radius: 7px;
-  border:1px solid #161730;
+  border:1px solid $base-app-color;
 }
 
 .secondLevelShareThree{

@@ -1,6 +1,6 @@
 import React, {useState,useEffect,useMemo} from 'react';
 // import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonInput, IonItem, IonLabel, IonList, IonItemDivider } from '@ionic/react';
-import '../css/detailComponent.css';
+import '../css/detailComponent.scss';
 import LocalizeComponent from '../localize/LocalizeComponent';
 import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -53,14 +53,14 @@ const mapDispatchToProps = dispatch => ({
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-    backgroundColor:'#161730',
-    color:'#ffffff',
+    backgroundColor:'#transparent',
+    color:'white',
   },
   paper: {
     padding: theme.spacing(1),
     textAlign: 'center',
     color: theme.palette.text.secondary,
-    backgroundColor:'#161730',
+    backgroundColor:'transparent',
   },
 }));
 

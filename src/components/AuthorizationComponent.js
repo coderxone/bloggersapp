@@ -1,6 +1,6 @@
 import React, {useState,useEffect,useMemo} from 'react';
 // import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonInput, IonItem, IonLabel, IonList, IonItemDivider } from '@ionic/react';
-import '../css/mainStyles.css';
+import '../css/mainStyles.scss';
 import LocalizeComponent from '../localize/LocalizeComponent';
 import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -12,7 +12,7 @@ import {
 import TextField from '@material-ui/core/TextField';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
-import Logo from '../icons/logo_circle_new_circle.png';
+import Logo from '../icons/Logo_Echohub.png';
 import Box from '@material-ui/core/Box';
 import { connect } from 'react-redux';
 import AuthService from '../services/AuthService';
@@ -45,13 +45,13 @@ const mapDispatchToProps = dispatch => ({
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-    backgroundColor:'#161730',
+    backgroundColor:'transparent',
   },
   paper: {
     padding: theme.spacing(2),
     textAlign: 'center',
     color: theme.palette.text.secondary,
-    backgroundColor:'#161730',
+    backgroundColor:'transparent',
   },
 }));
 
@@ -60,13 +60,13 @@ const useStyles = makeStyles((theme) => ({
 const CssTextField = withStyles({
   root: {
     '& label.Mui-focused': {
-      color: '#8936f4',
+      color: '#0083ff',
     },
     '& label': {
-      color: '#8936f4',
+      color: '#0083ff',
     },
     '& .MuiInput-underline:after': {
-      borderBottomColor: '#8936f4',
+      borderBottomColor: '#0083ff',
     },
     '& .MuiOutlinedInput-root': {
       '& fieldset': {
@@ -76,10 +76,10 @@ const CssTextField = withStyles({
         borderColor: 'yellow',
       },
       '&.Mui-focused fieldset': {
-        borderColor: '#8936f4',
+        borderColor: '#0083ff',
       },
       '& input:valid + fieldset': {
-        borderColor: '#8936f4',
+        borderColor: '#0083ff',
       },
       '& input:invalid + fieldset': {
         borderColor: 'red',

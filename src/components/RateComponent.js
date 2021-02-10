@@ -1,6 +1,6 @@
 import React, {useState,useEffect,useMemo} from 'react';
 // import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonInput, IonItem, IonLabel, IonList, IonItemDivider } from '@ionic/react';
-import '../css/mainStyles.css';
+import '../css/mainStyles.scss';
 import LocalizeComponent from '../localize/LocalizeComponent';
 import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -17,7 +17,7 @@ import AlertDangerComponent from '../helperComponents/AlertDangerComponent';
 import GoBack from '../helperComponents/goBackComponent';
 import RateService from '../services/RateService';
 import StarIcon from '@material-ui/icons/Star';
-
+import GoBackWithCenterComponent from '../helperComponents/goBackAbsoluteComponent';
 
 import { increment, decrement,save_email } from '../actions/actions';
 import {
@@ -47,13 +47,13 @@ const mapDispatchToProps = dispatch => ({
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-    backgroundColor:'#161730',
+    backgroundColor:'transparent',
   },
   paper: {
     padding: theme.spacing(2),
     textAlign: 'center',
     color: theme.palette.text.secondary,
-    backgroundColor:'#161730',
+    backgroundColor:'transparent',
   },
 }));
 
@@ -62,26 +62,26 @@ const useStyles = makeStyles((theme) => ({
 const CssTextField = withStyles({
   root: {
     '& label.Mui-focused': {
-      color: '#8936f4',
+      color: '#0083ff',
     },
     '& label': {
-      color: '#8936f4',
+      color: '#0083ff',
     },
     '& .MuiInput-underline:after': {
-      borderBottomColor: '#8936f4',
+      borderBottomColor: '#0083ff',
     },
     '& .MuiOutlinedInput-root': {
       '& fieldset': {
-        borderColor: '#8936f4',
+        borderColor: '#0083ff',
       },
       '&:hover fieldset': {
         borderColor: 'yellow',
       },
       '&.Mui-focused fieldset': {
-        borderColor: '#8936f4',
+        borderColor: '#0083ff',
       },
       '& input:valid + fieldset': {
-        borderColor: '#8936f4',
+        borderColor: '#0083ff',
       },
       '& input:invalid + fieldset': {
         borderColor: 'red',
@@ -312,6 +312,8 @@ const RateComponent = (props) => {
 
    	<div className={classes.root}>
         <Grid container >
+
+          <GoBackWithCenterComponent center={LocalizeComponent.rate}/>
 
           <GoBack/>
 

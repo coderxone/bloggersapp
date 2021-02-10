@@ -1,7 +1,7 @@
 import React, {useState,useMemo,useEffect,useCallback} from 'react';
 // import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonInput, IonItem, IonLabel, IonList, IonItemDivider } from '@ionic/react';
-import '../css/mainStyles.css';
-import '../css/bloggerdashboard.css';
+import '../css/mainStyles.scss';
+import '../css/bloggerdashboard.scss';
 import LocalizeComponent from '../localize/LocalizeComponent';
 import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -81,7 +81,7 @@ const useStylestwo = makeStyles((theme) => ({
     height:'100%'
   },
   icon:{
-    color:"white"
+    color:"#0083ff"
   },
   appBar: {
     transition: theme.transitions.create(['margin', 'width'], {
@@ -111,8 +111,8 @@ const useStylestwo = makeStyles((theme) => ({
   },
   drawerPaper: {
     width: drawerWidth,
-    backgroundColor:"#161730",
-    color:"white",
+    backgroundColor:"white",
+    color:"#0083ff",
   },
   drawerHeader: {
     display: 'flex',
@@ -127,14 +127,14 @@ const useStylestwo = makeStyles((theme) => ({
   },
   content: {
     flexGrow: 1,
-    padding: theme.spacing(1),
+    padding: theme.spacing(0),
     transition: theme.transitions.create('margin', {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
     marginLeft: -drawerWidth,
-    backgroundColor:"#161730",
-    color:"white",
+    backgroundColor:"white",
+    color:"#0083ff",
     height:"100%",
   },
   contentShift: {
@@ -150,13 +150,13 @@ const useStylestwo = makeStyles((theme) => ({
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-    backgroundColor:'#161730',
+    backgroundColor:'#0083ff',
   },
   paper: {
     padding: theme.spacing(2),
     textAlign: 'center',
     color: theme.palette.text.secondary,
-    backgroundColor:'#161730',
+    backgroundColor:'#0083ff',
   },
 }));
 
@@ -259,7 +259,7 @@ const BlockComponent = (props) => {
                   <div className="secondLevelThreeTwo">
                     <div className="shareButtonThree">
                         <div className="shareButtonText">
-                              {item.sum} $
+                              {Math.round(item.sum / item.peoplecount - 1)} $
                         </div>
                     </div>
                   </div>
@@ -332,14 +332,18 @@ const BloggerDashboardComponent = (props) => {
 
   const [latitude, setLatitude] = useState(0);
   const [longitude, setLongitude] = useState(0);
-
+  //const [searchcountD,SetsearchcountD] = useState(0);
   const [firstLoadStorage,setFirstLoadStorage] = useState(true);
+
+  useMemo(() => {
+    //console.log("Memo Executed");
+    if((latitude != 0) && (longitude != 0)){
+      BloggerService.setAllData(latitude,longitude);
+    }
+  },[latitude,longitude])
+
   const checkData = (() => {
 
-        //console.log("searching");
-        if((latitude != 0) && (longitude != 0)){
-          BloggerService.setAllData(latitude,longitude);
-        }
 //xx
         if(firstLoadStorage == true){
 
@@ -349,9 +353,10 @@ const BloggerDashboardComponent = (props) => {
             SetItems(ListStorageData);
             setDistance(tempstorageDistanceState);
             SetStatus(true);
-            console.log("setted");
             setFirstLoadStorage(false);
-            setFixSearchTwo(true);
+
+          //  console.log("storage initialised");
+
           }
 
         }
@@ -359,8 +364,7 @@ const BloggerDashboardComponent = (props) => {
   });
 
   const [requestStatus,setRequestStatus] = useState(true);
-  const [fixSearch,setFixSearch] = useState(false);
-  const [fixSearchTwo,setFixSearchTwo] = useState(true);
+
   //checking existing storage
   const ListStorageData = useMemo(() => {
       const storageOne = localStorage.getItem("tempstorageData");
@@ -379,11 +383,13 @@ const BloggerDashboardComponent = (props) => {
         return false;
       }
   },[]);
+
+
+
   useEffect(() => {
+    const BloggerListen = BloggerService.listenUserDataG().subscribe((data) => {//items
 
-    const BloggerListen = BloggerService.listenUserDataG().subscribe((data) => {
-
-        console.log(data);
+        //console.log(data);
         if((data.sdata.length > 0) && (data.status == "ok")){
           const insertArray = [...items];
           var deleteArray = new Array();
@@ -430,8 +436,7 @@ const BloggerDashboardComponent = (props) => {
           SetItems(insertArray);
           setDistance(data.distance);
           SetStatus(true);
-          setFixSearchTwo(true);
-          setFixSearch(true);
+
 
 
         }else if(data.status == "later"){
@@ -445,82 +450,60 @@ const BloggerDashboardComponent = (props) => {
 
     });
 
-    const WatchPosition = async function WatchPosition(){
 
-      try{
-        const wait = Geolocation.watchPosition({}, (position, err) => {
+    return () => {
+      BloggerListen.unsubscribe();
+    }
 
-          if(err){
-            return false;
-          }
-          if(position){
-            setLatitude(position.coords.latitude);
-            setLongitude(position.coords.longitude);
+  },[items])
+///---------
 
-            if(fixSearchTwo == true){
-              setFixSearch(true);
-            }
+useEffect(() => {
 
+    const wait = Geolocation.watchPosition({}, (position, err) => {
 
-          }
-
-
-        });
-      }catch(e){
-        //console.log(e);
+      if(err){
+        return false;
       }
+      if(position){
+
+        checkData();
+        setLatitude(position.coords.latitude);
+        setLongitude(position.coords.longitude);
 
 
-    };
-
-    const b = Observable.subscribeByTimer_10_second().subscribe(data => {
-      if(requestStatus == true){
-        //console.log("request send");
-        WatchPosition();
-        //checkData();
-
-      }else{
-        TimeoutRequest();
-        console.log("denied 2");
-        SetItems([]);
-        SetStatus(false);
       }
 
     });
 
+    return () => {
+      Geolocation.clearWatch(wait);
+    }
 
-    WatchPosition();
+},[])
+///---------
+  useEffect(() => {
+
 
     if(lastLocation != null){
       if(lastLocation.pathname == "/detailtask"){
 
-        setFixSearch(true);
-        setFixSearchTwo(true);
+         checkData();
       }
     }
-
-
-
 
     //unsubscribe
 
     return () => {
-        BloggerListen.unsubscribe();
-        b.unsubscribe();
+
     }
 
     //unsubscribe
 
-  }, [latitude,longitude,status,requestStatus,fixSearchTwo]);
+  }, []);
 
 
-  useMemo(() => {
-    if(fixSearch == true){
-      checkData();
-      setFixSearch(false);
-      setFixSearchTwo(false);
-    }
-  },[fixSearch]);
+
 
 
   const classestwo = useStylestwo();
@@ -601,7 +584,6 @@ const BloggerDashboardComponent = (props) => {
   }
 
 
-//xx
 
   return (
 
@@ -629,7 +611,7 @@ const BloggerDashboardComponent = (props) => {
         </Toolbar>
       </AppBar>
       <Drawer
-        className={classestwo.drawer}
+        className={classestwo.drawer + " leftDrawer"}
         variant="persistent"
         anchor="left"
         open={open}

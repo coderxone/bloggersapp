@@ -1,3 +1,6 @@
+$base-app-color:#0083ff;
+$font-size: 18px;
+
 ::-webkit-scrollbar {
       display: none !important;
   }
@@ -8,7 +11,29 @@
 }
 body{
 
-    background-color:#161730;
+    /* background-color:$base-app-color; */
+    background-color:white !important;
+    background:white !important;
+}
+
+.makeStyles-drawerHeader-11{
+  background-color: $base-app-color;
+}
+
+.commonBackgroundColor{
+  background:white !important;
+}
+
+.leftDrawer{
+  color:$base-app-color !important;
+}
+.makeStyles-drawerHeader-11{
+  color:$base-app-color !important;
+}
+
+
+.MuiPaper-elevation1{
+  box-shadow: none !important;
 }
 
 .appColor{
@@ -20,14 +45,15 @@ body{
 }
 
 .MainLogo{
-  width: 20ch;
-  height: 19ch;
+    /* base styles */
+  width: 35ch;
+  height: 22ch;
 }
 
 .b_letter{
 	width: 40%;
 	height: 100%;
-    background-image: linear-gradient( #0083ff, #8936f4);
+    background-image: linear-gradient( $base-app-color, #8936f4);
     /*background-color:#0bbbe1;*/
     /*background-size: 100%;*/
     -webkit-background-clip: text;
@@ -35,7 +61,7 @@ body{
     -webkit-text-fill-color: transparent;
     -moz-text-fill-color: transparent;
     background-repeat: repeat;
-	/*color:linear-gradient(to right, #8936f4, #0083ff);*/
+	/*color:linear-gradient(to right, #8936f4, $base-app-color);*/
 	font-size:100px;
 	float:left;
 	font-weight:bold;
@@ -50,7 +76,8 @@ body{
 }
 
 .mainCentralDiv{
-	color:white;
+  /* base styles */
+	color:$base-app-color;
 	width: 100%;
 	height: 20px;
 
@@ -112,15 +139,19 @@ body{
 }
 
 .MuiFormLabel-root{
-  color:#8936f4 !important;
+    /* base styles */
+  /* color:#8936f4 !important; */
+  color:$base-app-color !important;
 }
 
 
 
 .buttonStyle{
+    /* base styles */
 	width:50%;
 	height: 100%;
-	background:linear-gradient(to right, #8936f4, #0083ff);
+	/* background:linear-gradient(to right, #8936f4, $base-app-color); */
+	background:linear-gradient(to right, $base-app-color, $base-app-color);
 	border-radius:15px;
   color:white;
   border:0px;
@@ -155,7 +186,7 @@ body{
 
 ion-item {
 
-        --highlight-color-focused:linear-gradient(to right, #8936f4, #0083ff) !important;
+        --highlight-color-focused:linear-gradient(to right, #8936f4, $base-app-color) !important;
         --highlight-color-invalid: red !important;
         --highlight-color-valid: green !important;
 	        /*--border-color: var(--ion-color-danger, #f1453d);*/
@@ -177,7 +208,9 @@ ion-item {
 }
 
 .MuiInputBase-input{
-  color:white !important;
+  /* color:white !important; */
+  /* base styles */
+  color:$base-app-color !important;
 }
 
 .center-text{
@@ -241,7 +274,7 @@ ion-item {
 }
 
 .usualColorStatus{
-  color:white;
+  color: $base-app-color;
 }
 
 .yellowColorStatus{
@@ -266,6 +299,7 @@ ion-item {
   font-family:"Times New Roman", Times, serif;
   text-align: center;
   margin-top:8px;
+  color: $base-app-color;
 }
 
 .deleteUrlClass{
@@ -301,7 +335,15 @@ ion-item {
 .cs-message-input{
   position: fixed !important;
   width: 100%;
-
+  color:$base-app-color !important;
   bottom:0px !important;
   left:0px !important;
+}
+
+.cs-message-input__content-editor{
+  color:$base-app-color !important;
+}
+
+.cs-chat-container{
+  color:$base-app-color !important;
 }

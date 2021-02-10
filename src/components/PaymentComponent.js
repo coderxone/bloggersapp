@@ -1,7 +1,7 @@
 import React, {useState,useEffect} from 'react';
 import { PayPalButton } from "react-paypal-button-v2";
 // import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonInput, IonItem, IonLabel, IonList, IonItemDivider } from '@ionic/react';
-import '../css/mainStyles.css';
+import '../css/mainStyles.scss';
 import LocalizeComponent from '../localize/LocalizeComponent';
 import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -206,7 +206,7 @@ const PaymentComponent = (props) => {
                     }}
 
                     options={{
-                      clientId: "AWNN2lrrAjKYkq0AsXM656L_AoQuQuJFSFeuEXAOyHdyqCmlkaajVIpyKrInFxHfNrGzmzb9l8vnN_GN",
+                      clientId: "AW3Q8YTzK6AblOoFcJ9kCI5aXq51N_1KeJh-SgbQ3a28knHp8TmFE4JPy6lnzTv9pLZaYiaBDrWJMQ1-",
                       currency:"USD",
 
                     }}
