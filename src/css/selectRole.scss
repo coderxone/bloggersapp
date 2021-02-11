@@ -4,6 +4,11 @@ $base-app-color:#0083ff;
   margin-top:10px;
 }
 
+.profileInformation{
+  font-size: 25px;
+  font-family:"Roboto", "Helvetica", "Arial", sans-serif;
+}
+
 .additionalButtonTop{
   margin-top:20%;
 }
@@ -24,14 +29,14 @@ $base-app-color:#0083ff;
 .ChildRoleBox{
   width:70%;
   height: 100%;
-  background-color: white;
+  background-color: $base-app-color;
   margin-left:15%;
   border-radius: 5px;
 }
 
 .role_button_style{
   text-align: center;
-  color:$base-app-color;
+  color:white;
   font-family:"Roboto", "Helvetica", "Arial", sans-serif;
   font-size: 18px;
   padding-top:9px;

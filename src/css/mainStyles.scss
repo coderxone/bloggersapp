@@ -16,6 +16,10 @@ body{
     background:white !important;
 }
 
+.appColor{
+  color:$base-app-color;
+}
+
 .makeStyles-drawerHeader-11{
   background-color: $base-app-color;
 }
@@ -32,13 +36,13 @@ body{
 }
 
 
+
+
 .MuiPaper-elevation1{
   box-shadow: none !important;
 }
 
-.appColor{
-  color:#8936f4;
-}
+
 .logo-position{
 	width:100%;
 	height:100px;
@@ -53,7 +57,7 @@ body{
 .b_letter{
 	width: 40%;
 	height: 100%;
-    background-image: linear-gradient( $base-app-color, #8936f4);
+    background-image: linear-gradient( $base-app-color, $base-app-color);
     /*background-color:#0bbbe1;*/
     /*background-size: 100%;*/
     -webkit-background-clip: text;
@@ -100,6 +104,8 @@ body{
   color:white;
 }
 
+
+
 .main-input-padding{
 	margin-top:15%;
 }
@@ -118,19 +124,19 @@ body{
 .datepickerColor{
   margin-top:10px !important;
   width:100%;
-  color:#8936f4;
+  color:$base-app-color;
 
 }
 
 .MuiIconButton-root{
-  color:#8936f4 !important;
+  color:$base-app-color !important;
 }
 
 
 .location-search-input{
   margin-top:10px !important;
   width:100%;
-  color:#8936f4;
+  color:$base-app-color;
 }
 
 .textArea{
@@ -186,7 +192,7 @@ body{
 
 ion-item {
 
-        --highlight-color-focused:linear-gradient(to right, #8936f4, $base-app-color) !important;
+        --highlight-color-focused:linear-gradient(to right, $base-app-color, $base-app-color) !important;
         --highlight-color-invalid: red !important;
         --highlight-color-valid: green !important;
 	        /*--border-color: var(--ion-color-danger, #f1453d);*/
@@ -210,6 +216,7 @@ ion-item {
 .MuiInputBase-input{
   /* color:white !important; */
   /* base styles */
+  border-color: $base-app-color;
   color:$base-app-color !important;
 }
 
@@ -218,7 +225,7 @@ ion-item {
 }
 
 .showText{
-  color:#8936f4;
+  color:$base-app-color;
   font-family:"Roboto", "Helvetica", "Arial", sans-serif;
   text-align: left;
   font-size: 1rem;
@@ -346,4 +353,24 @@ ion-item {
 
 .cs-chat-container{
   color:$base-app-color !important;
+}
+
+.MuiAutocomplete-root{
+   border-color: $base-app-color !important;
+}
+// #combo-box-demo{
+//    border-color: $base-app-color !important;
+//
+// }
+
+
+
+.MuiFormControl-root{
+  border-color: $base-app-color !important;
+}
+
+#combo-box-demo:focus {
+    // outline: none !important;
+    // border:1px solid red;
+    // box-shadow: 0 0 10px #719ECE;
 }

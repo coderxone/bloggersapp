@@ -43,31 +43,31 @@ import {
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-    backgroundColor:'#161730',
+    backgroundColor:'transparent',
   },
   paper: {
     padding: theme.spacing(2),
     textAlign: 'center',
     color: theme.palette.text.secondary,
-    backgroundColor:'#161730',
+    backgroundColor:'transparent',
   },
   icon:{
-    color:'#8936f4',
-    htmlColor:'#8936f4',
-    headerColor:'#8936f4',
+    color:'#0083ff',
+    htmlColor:'#0083ff',
+    headerColor:'#0083ff',
   }
 }));
 
 const PrettoSlider = withStyles({
   root: {
-    color: '#8936f4',
+    color: '#0083ff',
     height: 8,
   },
   thumb: {
     height: 24,
     width: 24,
     backgroundColor: '#fff',
-    border: '2px solid currentColor',
+    border: '2px solid #0083ff',
     marginTop: -8,
     marginLeft: -12,
     '&:focus, &:hover, &$active': {
@@ -92,26 +92,26 @@ const PrettoSlider = withStyles({
 const CssTextField = withStyles({
   root: {
     '& label.Mui-focused': {
-      color: '#8936f4',
+      color: '#0083ff',
     },
     '& label': {
-      color: '#8936f4',
+      color: '#0083ff',
     },
     '& .MuiInput-underline:after': {
-      borderBottomColor: '#8936f4',
+      borderBottomColor: '#0083ff',
     },
     '& .MuiOutlinedInput-root': {
       '& fieldset': {
-        borderColor: '#8936f4',
+        borderColor: '#0083ff',
       },
       '&:hover fieldset': {
         borderColor: 'yellow',
       },
       '&.Mui-focused fieldset': {
-        borderColor: '#8936f4',
+        borderColor: '#0083ff',
       },
       '& input:valid + fieldset': {
-        borderColor: '#8936f4',
+        borderColor: '#0083ff',
       },
       '& input:invalid + fieldset': {
         borderColor: 'red',
@@ -122,7 +122,11 @@ const CssTextField = withStyles({
 })(TextField);
 
 const schema = yup.object().shape({
-  title: yup.string().required("Required"),
+  title: yup.string().matches(
+            /((https?):\/\/)?(www.)?[a-z0-9]+(\.[a-z]{2,}){1,3}(#?\/?[a-zA-Z0-9#]+)*\/?(\?[a-zA-Z0-9-_]+=[a-zA-Z0-9-%]+&?)?$/,
+            'Enter correct url!'
+        )
+        .required('Please enter url').required("Required"),
   description: yup.string().required("Required"),
   date: yup.string().required("Required"),
   time: yup.string().required("Required"),
@@ -188,11 +192,10 @@ const ApplyComponent = () => {
         data.amount = defaultSliderValue;
         data.peopleCount = peopleCount;
         data.subscribers = subscribersor;
+
+        HomeService.sendApplyData(data);
       }
 
-      //console.log(data);
-
-      HomeService.sendApplyData(data);
 
   });
 
@@ -276,7 +279,7 @@ const ApplyComponent = () => {
 
                 <Box mt={1} width={1}>
                     <ReactGeoCodeComponent/>
-                  </Box>
+                </Box>
 
 
               <MuiPickersUtilsProvider utils={DateFnsUtils}>
@@ -294,7 +297,7 @@ const ApplyComponent = () => {
                     KeyboardButtonProps={{
                       'aria-label': 'change date',
                     }}
-                    keyboardIcon={<CalendarTodayIcon style={{color:"#8936f4"}} />}
+                    keyboardIcon={<CalendarTodayIcon style={{color:"#0083ff"}} />}
                   />
 
                   <KeyboardTimePicker
@@ -312,7 +315,7 @@ const ApplyComponent = () => {
                     KeyboardButtonProps={{
                       'aria-label': 'change time',
                     }}
-                    keyboardIcon={<AlarmIcon style={{color:"#8936f4"}} />}
+                    keyboardIcon={<AlarmIcon style={{color:"#0083ff"}} />}
                   />
                 </MuiPickersUtilsProvider>
 

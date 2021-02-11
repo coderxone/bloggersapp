@@ -12,7 +12,7 @@ import {
 import TextField from '@material-ui/core/TextField';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
-import Logo from '../icons/logo_circle_new_circle.png';
+import Logo from '../icons/Logo_Echohub.png';
 import Box from '@material-ui/core/Box';
 import { connect } from 'react-redux';
 import AuthService from '../services/AuthService';
@@ -46,13 +46,13 @@ const mapDispatchToProps = dispatch => ({
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-    backgroundColor:'#161730',
+    backgroundColor:'transparent',
   },
   paper: {
     padding: theme.spacing(2),
     textAlign: 'center',
     color: theme.palette.text.secondary,
-    backgroundColor:'#161730',
+    backgroundColor:'transparent',
   },
 }));
 
@@ -213,9 +213,6 @@ const RestorepasswordComponent = (props) => {
 
 
 
-
-
-
                 <div className="buttonDiv">
                       <input  className="buttonStyle" type="submit" value={LocalizeComponent.restore_button}/>
                 </div>
@@ -230,7 +227,7 @@ const RestorepasswordComponent = (props) => {
             <Paper  className={classes.paper}>
 
               <Box mt={1} className="forgot-password">
-                <Link className="colorWhite" to="/login">{LocalizeComponent.login}</Link>
+                <Link className="appColor" to="/login">{LocalizeComponent.login}</Link>
               </Box>
 
             </Paper>

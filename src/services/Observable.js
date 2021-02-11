@@ -3,6 +3,7 @@ import { interval, Subject } from 'rxjs';
 const observ_subject = new Subject();
 const observ_subjectM = new Subject();
 const observ_subjectD = new Subject();
+const observ_subjectEdit = new Subject();
 
 const observ_f = {
 
@@ -28,6 +29,13 @@ const observ_f = {
 
       getData_subject_M:() => {
         return observ_subjectM;
+      },
+      sendData_subject_Edit: data => {
+        return observ_subjectEdit.next(data);
+      },
+
+      getData_subject_Edit:() => {
+        return observ_subjectEdit;
       },
 
       subscribeByTimer_10_second:() => {

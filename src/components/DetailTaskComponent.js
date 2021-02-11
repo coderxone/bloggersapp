@@ -6,6 +6,11 @@ import LocalizeComponent from '../localize/LocalizeComponent';
 import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
 import {
   makeStyles,
 } from '@material-ui/core/styles';
@@ -18,6 +23,7 @@ import StepperComponent from '../helperComponents/StepperComponent';
 import Observable from '../services/Observable';
 import GoBackAbsoluteComponent from '../helperComponents/goBackAbsoluteComponent';
 import ConfirmDialogComponent from '../helperComponents/ConfirmDialogComponent';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import {
   useHistory
 } from "react-router-dom";
@@ -53,12 +59,79 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.text.secondary,
     backgroundColor:'transparent',
   },
+  formControl: {
+    margin: theme.spacing(1),
+    minWidth: 120,
+    width:"100%",
+  },
 }));
 
 
 
 const schema = yup.object().shape({
-  email: yup.string().required("Required").email(),
+  url: yup.string().required("Required"),
+});
+
+
+const BannedList = ((props) => {
+
+    const list = props.list;
+
+    const showList = list.map((item,index) =>
+
+        <div className="BanBoxList" key={item.id}>
+            <div className="banBoxText">
+              {item.type}
+            </div>
+
+        </div>
+    );
+
+    return (
+      <div className="banBox">
+          <div className="banBoxTitle">
+              {LocalizeComponent.banBoxTitle}
+          </div>
+            <div className="boxIconPosition">
+              <ExpandMoreIcon className="boxIconStyle"/>
+            </div>
+          {showList}
+      </div>
+    );
+
+});
+
+
+const EditList = ((props) => {
+
+    const list = props.list;
+    const currentNetworkTwo = props.currentNetworkTwo;
+
+    const showList = list.map((item,index) =>
+
+        <MenuItem key={index} value={item}>{item}</MenuItem>
+
+    );
+
+    const InsidehandleEdit = (event) => {
+        Observable.sendData_subject_Edit(event.target.value);
+    };
+
+    return (
+
+      <Select
+        labelId="demo-simple-select-label"
+        id="demo-simple-select"
+        value={currentNetworkTwo}
+        onChange={InsidehandleEdit}
+      >
+        {showList}
+
+      </Select>
+
+    );
+
+
 });
 
 
@@ -94,7 +167,7 @@ const DetailTaskComponent = (props) => {
 
 
   const classes = useStyles();
-  const { register, handleSubmit, errors,setError } = useForm({
+  const { register, handleSubmit, errors,setError,reset } = useForm({
     resolver: yupResolver(schema)
   });
   var obj = {
@@ -122,7 +195,7 @@ const DetailTaskComponent = (props) => {
   const GenerateUrl = (() => {
       DetailTaskService.generateUrl(detailData.id);
   });
-  //xx
+
   const checkGenerateUrl = (() => {
       DetailTaskService.checkGenerateUrl(detailData.id);
   });
@@ -135,7 +208,7 @@ const DetailTaskComponent = (props) => {
     setTimeout(function(){
       SetSucessState(false);
       SetdangerState(false);
-    },3000);
+    },5000);
   }
 
   const CopyUrl = (() => {
@@ -145,7 +218,7 @@ const DetailTaskComponent = (props) => {
     selBox.style.left = '0';
     selBox.style.top = '0';
     selBox.style.opacity = '0';
-    selBox.value = document.location.origin + "/checkurl/" + url;
+    selBox.value = document.location.origin + "/follow/" + url;
     document.body.appendChild(selBox);
     selBox.focus();
     selBox.select();
@@ -265,13 +338,18 @@ useEffect(() => {
 
     //console.log(data);
     if(data.status == "false"){
-
+      if(stepper > 0){
+        SetStep(0);
+      }
     }else if(data.status == "ok"){
 
       var findArray = new Array();
 
 
       var count = data.data.length;
+
+      //console.log(count);
+
       var countOfTask = originalNetWorkArrayState.length;
       var replaceArray = netWorkArrayState;
 
@@ -310,24 +388,81 @@ useEffect(() => {
       //SetCurrentNetwork
     }
 
-    return () => {
-      ListenlistenCheckUrl.unsubscribe();
-    }
+
     //SetStep(stepper => stepper + 1);
   });
-},[]);
+
+
+  return () => {
+    ListenlistenCheckUrl.unsubscribe();
+
+  }
+
+},[stepper]);
 
 
 
-  // useEffect(() => {
-  //
-  //
-  //
-  //   return () => {
-  //
-  //   }
-  //
-  // },[data]);
+
+//xx
+const [banVideo,SetBanVideo] = useState([]);
+
+const CheckcheckBannedVideoF = ((id) => {
+
+  var checkObj = {
+    status:"check",
+    id:id,
+  }
+
+  DetailTaskService.checkBannedVideo(checkObj);
+});
+
+useEffect(() => {
+  const listencheckBannedVideo = DetailTaskService.listencheckBannedVideo().subscribe(data => {
+
+    if(data.status == "ok"){
+
+        var bannedVideoArray = data.data;
+        const newArbanVideo = [...banVideo];
+
+        if(bannedVideoArray.length > newArbanVideo.length){
+
+          for(var i = 0;i < bannedVideoArray.length;i++){
+
+            var found = 0;
+            for(var j = 0;j < newArbanVideo.length;j++){
+              if(newArbanVideo[j].id == bannedVideoArray[i].id){
+                found = 1;
+              }
+            }
+
+            if(found == 0){
+              newArbanVideo.push(bannedVideoArray[i]);
+            }
+
+
+          }
+
+          SetBanVideo(newArbanVideo);
+        }else if(bannedVideoArray.length < newArbanVideo.length){
+          SetBanVideo([]);
+
+          SetBanVideo(bannedVideoArray);
+        }else if(bannedVideoArray.length === newArbanVideo.length){
+          SetBanVideo([]);
+          SetBanVideo(bannedVideoArray);
+        }
+
+    }else if(data.status == "false"){
+      if(banVideo.length > 0){
+        SetBanVideo([]);
+      }
+    }
+  });
+
+  return () => {
+    listencheckBannedVideo.unsubscribe();
+  }
+},[banVideo])
 
   useEffect(() => {
 
@@ -350,9 +485,13 @@ useEffect(() => {
 
     const obs = Observable.subscribeByTimer_10_second().subscribe(data => {
         //SubmittedTask(detailData.id);
+        //console.log(detailData.id);
+        CheckVideos(detailData.id);
+        CheckcheckBannedVideoF(detailData.id);
+
     });
 
-//xx
+
     const unsub = DetailTaskService.listenGenerateUrl().subscribe(data => {
         //console.log(data);
 
@@ -364,6 +503,31 @@ useEffect(() => {
         //console.log(generatedUrl);
     });
 
+
+    const ListenEditObserv = Observable.getData_subject_Edit().subscribe(data => {
+
+        SetCurrentNetworkTwo(data);
+
+    });
+
+    const listenEditUrl = DetailTaskService.listenEditUrl().subscribe(data => {
+
+      if(data.status == "updated"){
+        reset();
+        SetalertText(LocalizeComponent.successAction);
+        SetSucessState(true);
+        seteditFormStatus(false);
+        hideAlert();
+      }else if(data.status == "already"){
+        reset();
+        SetdangerText(LocalizeComponent.edit_confirmation);
+        SetdangerState(true);
+        seteditFormStatus(false);
+        hideAlert();
+      }
+
+    });
+
     //unsubscribe
 
     return () => {
@@ -371,6 +535,8 @@ useEffect(() => {
         listenSubmittedOrder.unsubscribe();
         obs.unsubscribe();
         unsub.unsubscribe();
+        ListenEditObserv.unsubscribe();
+        listenEditUrl.unsubscribe();
     }
 
     //unsubscribe
@@ -383,12 +549,14 @@ useEffect(() => {
 
 //run 1 time
 useEffect(() => {
-//xx
+
   SethowManySteps(netWorkArrayState.length + 1);
   CheckVideos(detailData.id);
+  CheckcheckBannedVideoF(detailData.id);
   //console.log(detailData.id);
   //console.log("checked");
   checkGenerateUrl();
+
 
 
 }, []);
@@ -442,12 +610,69 @@ useEffect(() => {
 
 
 
+
+
 const [dialogStatus,setDialogStatus] = useState(false);
 const [leftbutton,setLeftbutton] = useState('');
 const [rightbutton,setRightbutton] = useState('');
 const [dialogText,setDialogText] = useState('');
 const [detailProjectId,setDetailProjectId] = useState(0);
 const [detailMessage,setDetailMessage] = useState("");
+
+
+const [currentNetworkTwo, SetCurrentNetworkTwo] = React.useState('');
+const [editFormStatus,seteditFormStatus] = useState(false);
+const EnableEditBox = () => {
+  seteditFormStatus(true);
+}
+const DisableEditBox = () => {
+  seteditFormStatus(false);
+}
+const [selectError,SetselectError] = useState(false);
+const EditNetwork = (data) => {
+
+  if(currentNetworkTwo.length < 1){
+    SetselectError(true);
+    return false;
+  }else{
+    SetselectError(false);
+  }
+
+  var inputString = data.url;
+
+  if(inputString.length > 0){
+
+      var foundIndex = 0;
+      for(var i = 0;i < originalNetWorkArrayState.length;i++){
+        if(originalNetWorkArrayState[i] == currentNetworkTwo){
+          foundIndex = i;
+        }
+      }
+
+      console.log(inputString.indexOf(checkLinksValidationsArray[foundIndex]));
+      console.log(checkLinksValidationsArray[foundIndex]);
+
+      if(inputString.indexOf(checkLinksValidationsArray[foundIndex]) >= 0){
+
+        var obj = {
+          id:detailData.id,
+          videotype:currentNetworkTwo,
+          url:inputString,
+          set:"set"
+        }
+        //  console.log(obj);
+        DetailTaskService.EditUrl(obj);
+
+      }else{
+        reset();
+      }
+
+      //checkLinksValidationsArray
+  }else{
+
+  }
+
+}
 
 
 
@@ -503,6 +728,14 @@ const [detailMessage,setDetailMessage] = useState("");
 
                        <input type="text" value={inputtext}  onChange={event => setText(event.target.value)} className="setInputStyle" name="setUrl"></input>
 
+                         {banVideo.length > 0 ? (
+                           <BannedList list={banVideo}/>
+                          ) : (
+                            <div></div>
+                          )}
+
+
+
                          <div className="buttonBoxSet">
                              <div className="generateButtonSet" onClick={Share}>
                                  <div className="generateButtonTextSet"  >
@@ -521,6 +754,52 @@ const [detailMessage,setDetailMessage] = useState("");
 
                </div>
 
+               {editFormStatus === true ? (
+                 <div className="setBoxTwo">
+
+                   <div>
+                       <div className="ShareNameBoxEdit" onClick={DisableEditBox}>
+
+                          <div className="ShareNameTextB">
+                                {LocalizeComponent.edit_social}
+                          </div>
+                       </div>
+
+                       <div className="SelectSocial">
+
+                         <FormControl className={classes.formControl} error={selectError}>
+                               <InputLabel id="demo-simple-select-label">{LocalizeComponent.select_social}</InputLabel>
+                               <EditList list={originalNetWorkArrayState} currentNetworkTwo={currentNetworkTwo}/>
+                         </FormControl>
+
+                       </div>
+
+
+                       <form onSubmit={handleSubmit(EditNetwork)}>
+
+                       <input ref={register} required type="text" className="setInputStyle" name="url"/>
+
+                         <div className="buttonBoxSet">
+
+                            <input type="submit"  className="generateButtonSetButton" value={LocalizeComponent.confirm_edit} />
+
+                         </div>
+
+                         </form>
+                   </div>
+
+                 </div>
+                ) : (
+                  <div className="buttonBoxSet">
+                      <div className="generateButtonSet" onClick={EnableEditBox}>
+                          <div className="generateButtonTextSet"  >
+                              {LocalizeComponent.edit_button_link}
+                          </div>
+                      </div>
+                  </div>
+                )}
+
+
                <div className="buttonBoxSet">
                    <div className="generateButtonSet" onClick={(event) => goToChat()}>
                        <div className="generateButtonTextSet"  >
@@ -528,20 +807,7 @@ const [detailMessage,setDetailMessage] = useState("");
                        </div>
                    </div>
                </div>
-               <div className="buttonShare">
-                   <div className="generateButton" >
-                       <div className="generateButtonText"  >
-                           Complete this task with a friend creator
-                       </div>
-                   </div>
-               </div>
-               <div className="buttonShare">
-                   <div className="generateButton" >
-                       <div className="generateButtonText"  >
-                           Share this task with a friend influencer
-                       </div>
-                   </div>
-               </div>
+
 
 
                <AlertSuccessComponent state={sucessState} text={alertText}/>

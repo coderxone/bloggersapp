@@ -111,6 +111,7 @@ const useStylestwo = makeStyles((theme) => ({
     // necessary for content to be below app bar
     ...theme.mixins.toolbar,
     justifyContent: 'flex-end',
+    backgroundColor:'#0083ff',
 
 
 
@@ -163,10 +164,7 @@ const BlockComponent = (props) => {
   const items = props.items;
   const dist = props.distance;
 
-
-  const content = useMemo(() => {
-
-    return items.map((item,index) =>
+    const content = items.map((item,index) =>
 
       <Link key={item.id} className="deleteUrlClass"
           to={{
@@ -220,7 +218,7 @@ const BlockComponent = (props) => {
 
       );
 
-  },[props.items]);
+
 
 
 
@@ -280,7 +278,7 @@ const BloggerDashboardComponent = (props) => {
   useMemo(() => {
 
     if((latitude != 0) && (longitude != 0)){
-      console.log("Memo Executed");
+      //console.log("Memo Executed");
       BloggerService.setAllData(latitude,longitude);
     }
   },[latitude,longitude])
@@ -404,7 +402,7 @@ const BloggerDashboardComponent = (props) => {
 useEffect(() => {
     var options = {
       maximumAge: 60000,
-      enableHighAccuracy: true,
+      enableHighAccuracy: false,
       timeout: 20000
     }
     const wait = Geolocation.watchPosition(options, (position, err) => {
@@ -414,6 +412,7 @@ useEffect(() => {
       }
       if(position){
 
+        //console.log(position);
         checkData();
         setLatitude(position.coords.latitude);
         setLongitude(position.coords.longitude);

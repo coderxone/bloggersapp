@@ -31,6 +31,7 @@ import MainComponent from './components/MainComponent';
 import SuggestComponent from './components/SuggestComponent';
 import ContactListComponent from './components/contactListComponent';
 import TaskComponent from './components/TaskComponent';
+import RedirectComponent from './components/RedirectComponent';
 
 
 
@@ -60,6 +61,7 @@ const App = () => (
               <Route path="/suggest" component={SuggestComponent} exact={true} />
               <Route path="/contactlist" component={ContactListComponent} exact={true} />
               <Route path="/mytasks" component={TaskComponent} exact={true} />
+              <Route path="/follow/:id" component={RedirectComponent} exact={true} />
               <Route exact path="/" render={() => <Redirect to="/login" />} />
               </LastLocationProvider>
             </Router>

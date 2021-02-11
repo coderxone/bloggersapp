@@ -421,35 +421,65 @@ const DetailComponent = (props) => {
   const [banId,setBanId] = useState(0);
 
   useEffect(() => {
-
-
-
     const listenDetailService = DetailService.listenCheckvideosByUser().subscribe(data => {
 
       //console.log(data);
       //console.log(historyId);
+//xx
+
 
       if(data.status == "ok"){
-        var modifiedArray = data.data;
 
-        for(var i = 0;i < modifiedArray.length;i++){
-          if(modifiedArray[i].id == historyId){
-            modifiedArray[i].status = true;
-          }else{
-            modifiedArray[i].status = false;
-          }
-        }
+            var modifiedArray = data.data;
 
-        const list = listArray.concat(modifiedArray);
+            const newArray = [...listArray];
 
-        setListArray(list);
 
-        // console.log(listArray);
+            if(modifiedArray.length > newArray.length){
+
+                for(var b = 0;b < modifiedArray.length;b++){
+                  var found = 0;
+
+                  for(var  i = 0;i < newArray.length;i++){
+                    if(newArray[i].id == modifiedArray[b].id){
+                      found = 1;
+                    }
+                  }
+
+                  if(found == 0){
+                    newArray.push(modifiedArray[b]);
+                  }
+
+                }
+
+                setListArray(newArray);
+
+            }else if(modifiedArray.length < newArray.length){
+
+
+              setListArray([]);
+
+              for(var j = 0;j < modifiedArray.length;j++){
+                newArray.push(modifiedArray[j]);
+              }
+
+              setListArray(newArray);
+            }
+
+      }else if(data.status == "false"){
+          setListArray([]);
       }
 
 
 
     });
+
+    return () => {
+      listenDetailService.unsubscribe();
+    }
+  },[listArray])
+
+  useEffect(() => {
 
     const listenBan = DetailService.listenBan().subscribe(data => {
 
@@ -496,7 +526,7 @@ const DetailComponent = (props) => {
     //unsubscribe
 
     return () => {
-      listenDetailService.unsubscribe();
+
       listenBan.unsubscribe();
       observable.unsubscribe();
       intervalObservable.unsubscribe();
@@ -514,7 +544,7 @@ const DetailComponent = (props) => {
         //console.log("cancel");
         setDialogStatus(false);
       }else if(data == "confirm"){
-
+//xx
           //console.log(banId);
           DetailService.setBan(banId);
 

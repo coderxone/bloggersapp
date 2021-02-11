@@ -256,7 +256,7 @@ const AuthorizationComponent = (props) => {
 
               <Box mt={1} className="forgot-password">
 
-                  <Link className="colorWhite" to="/restore">{LocalizeComponent.restore_password}</Link>
+                  <Link className="appColor" to="/restore">{LocalizeComponent.restore_password}</Link>
 
 
 

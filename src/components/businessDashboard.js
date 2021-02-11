@@ -143,6 +143,7 @@ const useStylestwo = makeStyles((theme) => ({
     // necessary for content to be below app bar
     ...theme.mixins.toolbar,
     justifyContent: 'flex-end',
+    backgroundColor:'#0083ff',
 
 
 

@@ -6,6 +6,8 @@ const observ_subject = new Subject();
 const observ_subject2 = new Subject();
 const observ_subject3 = new Subject();
 const observ_subject4 = new Subject();
+const observ_subject5 = new Subject();
+const observ_subject6 = new Subject();
 
 const DetailTaskService = {
 
@@ -77,6 +79,33 @@ const DetailTaskService = {
             return observ_subject2;
           },
 
+          EditUrl:(obj) => {
+
+            var data = {
+              deviceid:config.getdeviceid(),
+              email:config.getUserEmail(),
+              id: obj.id,
+              videotype:obj.videotype,
+              url:obj.url,
+              status:obj.set //check
+            }
+
+            //console.log(data);
+
+            var encryptedData = cryptLibrary.encrypt(data);
+
+            socket.emit("editvideo",encryptedData);
+          },
+
+          listenEditUrl:() => {
+            socket.on("editvideo",(data) => {
+                //console.log(data);
+                observ_subject5.next(cryptLibrary.decrypt(data));
+            });
+
+            return observ_subject5;
+          },
+
 //xx
           checkUrl:(obj) => {
 
@@ -101,6 +130,32 @@ const DetailTaskService = {
             });
 
             return observ_subject3;
+          },
+
+
+          checkBannedVideo:(obj) => {
+
+            var data = {
+              deviceid:config.getdeviceid(),
+              email:config.getUserEmail(),
+              id: obj.id,
+              status:obj.status //check
+            }
+
+            //console.log(data);
+
+            var encryptedData = cryptLibrary.encrypt(data);
+
+            socket.emit("checkBannedvideo",encryptedData);
+          },
+
+          listencheckBannedVideo:() => {
+            socket.on("checkBannedvideo",(data) => {
+                //console.log(data);
+                observ_subject6.next(cryptLibrary.decrypt(data));
+            });
+
+            return observ_subject6;
           },
 
 

@@ -3,7 +3,7 @@ $base-app-colorRight:#0083ff;
 $font-size: 18px;
 .descriptBox{
   width:100%;
-  height: 250px;
+
   border-radius: 7px;
   /* background-color: white; */
   margin-left:5px;
@@ -77,12 +77,35 @@ $font-size: 18px;
   margin-top:5px;
   /* background-color: white; */
 }
+.ShareNameBoxEdit{
+  width: 100%;
+  height: 15px;
+  margin-top:5px;
+  /* background-color: white; */
+}
 
 .ShareNameText{
   text-align: center;
   font-size: $font-size;
   color: $base-app-color;
   font-weight: bold;
+}
+.ShareNameTextB{
+  width:50%;
+  margin-left: 25%;
+  border-radius: 7px;
+  border:1px solid $base-app-color;
+  text-align: center;
+  font-size: $font-size;
+  color: $base-app-color;
+  font-weight: bold;
+
+}
+
+
+.SelectSocial{
+  width: 92%;
+  margin-left: 2%;
 }
 
 .socialColor{
@@ -92,10 +115,59 @@ $font-size: 18px;
 .setBox{
   border:1px solid $base-app-color;
   width: 100%;
-  height: 220px;
+  min-height: 220px;
+  // height: 220px;
   /* background-color: white; */
   border-radius: 7px;
   margin-top:15px;
+  padding-bottom: 7px;
+}
+
+
+.banBox{
+  width: 70%;
+  margin-left: 15%;
+  border:1px solid $base-app-color;
+  border-radius: 7px;
+  padding: 2px;
+  margin-top:7px;
+}
+
+.banBoxTitle{
+  color:red;
+  padding: 2px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.boxIconPosition{
+  width: 100%;
+  text-align: center;
+}
+.boxIconStyle{
+  color:red;
+  font-size: 32px !important;
+  width: 100%;
+}
+
+
+.BanBoxList{
+  padding:2px;
+  text-align: center;
+}
+.banBoxText{
+  color:$base-app-color;
+  font-size: $font-size;
+  font-weight: bold;
+}
+.setBoxTwo{
+  border:1px solid $base-app-color;
+  width: 100%;
+  height: 180px;
+  /* background-color: white; */
+  border-radius: 7px;
+  margin-top:15px;
+
 }
 
 .setInputStyle{
@@ -125,6 +197,17 @@ $font-size: 18px;
   background:linear-gradient(to right, $base-app-color, $base-app-colorRight);
   border-radius: 10px;
 }
+.generateButtonSetButton{
+  width: 70%;
+  height: 100%;
+  margin-left: 15%;
+  background:linear-gradient(to right, $base-app-color, $base-app-colorRight);
+  border-radius: 10px;
+  border-color: $base-app-color;
+  font-size: 18px;
+  font-family:"Times New Roman", Times, serif;
+  color:white;
+}
 
 .generateButtonTextSet{
   color:white;
@@ -133,3 +216,18 @@ $font-size: 18px;
   text-align: center;
   padding-top:3px;
 }
+
+// <div className="buttonShare">
+//     <div className="generateButton" >
+//         <div className="generateButtonText"  >
+//             Complete this task with a friend creator
+//         </div>
+//     </div>
+// </div>
+// <div className="buttonShare">
+//     <div className="generateButton" >
+//         <div className="generateButtonText"  >
+//             Share this task with a friend influencer
+//         </div>
+//     </div>
+// </div>
