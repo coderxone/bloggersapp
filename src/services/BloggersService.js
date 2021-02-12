@@ -6,7 +6,7 @@ const observ_subject = new Subject();
 
 const BloggerService = {
 
-          setAllData:(lat,long) => {
+          setAllData:(lat,long,gps) => {
 
             var data = {
               lat:lat,
@@ -14,6 +14,7 @@ const BloggerService = {
               deviceId:config.getdeviceid(),
               email:config.getUserEmail(),
               role:config.getUserRole(),
+              gps:gps,
               message:"1"
             }
 

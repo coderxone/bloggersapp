@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
 import GoBackAbsoluteComponent from '../helperComponents/goBackAbsoluteComponent';
+import Switch from '@material-ui/core/Switch';
 import {
   withStyles,
   makeStyles,
@@ -66,7 +67,7 @@ const PrettoSlider = withStyles({
   thumb: {
     height: 24,
     width: 24,
-    backgroundColor: '#fff',
+    // backgroundColor: '#fff',
     border: '2px solid #0083ff',
     marginTop: -8,
     marginLeft: -12,
@@ -192,6 +193,11 @@ const ApplyComponent = () => {
         data.amount = defaultSliderValue;
         data.peopleCount = peopleCount;
         data.subscribers = subscribersor;
+        if(swithState == true){
+          data.gps = 1;
+        }else{
+          data.gps = 2;
+        }
 
         HomeService.sendApplyData(data);
       }
@@ -240,6 +246,12 @@ const ApplyComponent = () => {
     ApplyService.checkSubscriberCore(obj);
   },[]);
 
+  const [swithState,SetswithState] = useState(false);
+
+  const handleSwitch = (event) => {
+    SetswithState(event.target.checked);
+  }
+
 
   return (
 
@@ -280,6 +292,28 @@ const ApplyComponent = () => {
                 <Box mt={1} width={1}>
                     <ReactGeoCodeComponent/>
                 </Box>
+
+                <div className="switchBox">
+
+                  <div className="lswitchBox">
+                    {LocalizeComponent.onlyLocal}
+                  </div>
+                  <div className="rswitchBox">
+                    <Switch
+                      checked={swithState}
+                      onChange={handleSwitch}
+                      color="primary"
+                      className="switchCheckbox"
+                      name="checkedB"
+                      inputProps={{ 'aria-label': 'primary checkbox' }}
+                    />
+
+                  </div>
+
+
+                </div>
+
+
 
 
               <MuiPickersUtilsProvider utils={DateFnsUtils}>

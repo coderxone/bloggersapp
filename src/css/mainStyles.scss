@@ -1,5 +1,7 @@
 $base-app-color:#0083ff;
 $font-size: 18px;
+$fontStyles:"Times New Roman", Times, serif;
+
 
 ::-webkit-scrollbar {
       display: none !important;
@@ -15,6 +17,80 @@ body{
     background-color:white !important;
     background:white !important;
 }
+
+.switchBox{
+  width: 100%;
+  height: 40px;
+   // background-color: yellow;
+   margin-top:12px;
+  overflow: hidden;
+}
+.switchBoxTwo{
+  width: 90%;
+  height: 80px;
+   // background-color: yellow;
+   margin-top:12px;
+   margin-bottom:12px;
+   margin-left:5px;
+
+  overflow: hidden !important;
+}
+
+.lswitchBoxTwo{
+  float: left;
+  text-align: center;
+  padding-top:7px;
+  width:75%;
+  height: 100%;
+  // background-color: purple;
+  font-family:$fontStyles;
+  font-size: $font-size;
+  color:$base-app-color;
+  font-weight: bold;
+  overflow: hidden !important;
+
+}
+.rswitchBoxTwo{
+  float: left;
+  margin-top:15px;
+  width:25%;
+  height: 100%;
+  overflow: hidden !important;
+  // background-color: green;
+}
+
+
+.lswitchBox{
+  float: left;
+  text-align: left;
+  padding-top:7px;
+  width:75%;
+  height: 100%;
+  // background-color: purple;
+  font-family:$fontStyles;
+  font-size: $font-size;
+  color:$base-app-color;
+
+}
+.rswitchBox{
+  float: left;
+  width:25%;
+  height: 100%;
+  // background-color: green;
+}
+
+.switchCheckbox{
+  background-color: RGBA(0,131,255,0.11);
+  border-radius: 10px;
+}
+
+
+
+.MuiSwitch-colorPrimary.Mui-checked{
+  color:$base-app-color !important;
+}
+
+
 
 .appColor{
   color:$base-app-color;
@@ -35,8 +111,13 @@ body{
   color:$base-app-color !important;
 }
 
+.MuiButton-label{
+  color:$base-app-color !important;
+}
 
-
+.MuiTypography-colorInherit{
+  color:$base-app-color !important;
+}
 
 .MuiPaper-elevation1{
   box-shadow: none !important;
@@ -129,7 +210,7 @@ body{
 }
 
 .MuiIconButton-root{
-  color:$base-app-color !important;
+  color:white !important;
 }
 
 
@@ -217,6 +298,10 @@ ion-item {
   /* color:white !important; */
   /* base styles */
   border-color: $base-app-color;
+
+}
+
+.MuiInputBase-root{
   color:$base-app-color !important;
 }
 
@@ -363,14 +448,41 @@ ion-item {
 //
 // }
 
-
-
 .MuiFormControl-root{
   border-color: $base-app-color !important;
 }
 
-#combo-box-demo:focus {
-    // outline: none !important;
-    // border:1px solid red;
-    // box-shadow: 0 0 10px #719ECE;
+.myToolbar{
+  width: 100%;
+  height: 35px !important;
+  overflow: hidden;
+}
+
+.leftM{
+  width:10% !important;
+  // background-color: red !important;
+  padding:0px !important;
+  margin:0px !important;
+  margin-top:4px !important;
+  float: left;
+}
+.centerM{
+  width:80% !important;
+  // background-color: red !important;
+  padding:0px !important;
+  padding-left: 10px !important;
+  margin:0px !important;
+  float: left;
+  font-style: $fontStyles !important;
+
+}
+.rightM{
+  width:10% !important;
+  text-align: right !important;
+  // background-color: red !important;
+  padding:0px !important;
+  margin:0px !important;
+  margin-top:4px !important;
+  float: left;
+
 }

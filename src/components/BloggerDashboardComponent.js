@@ -22,7 +22,7 @@ import { increment, decrement,save_email } from '../actions/actions';
 import {
   Link,useHistory,
 } from "react-router-dom";
-
+import Switch from '@material-ui/core/Switch';
 import clsx from 'clsx';
 import Drawer from '@material-ui/core/Drawer';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -42,6 +42,7 @@ import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
 import ConfirmDialogComponent from '../helperComponents/ConfirmDialogComponent';
 import { useLastLocation } from 'react-router-last-location';
+import FilterListIcon from '@material-ui/icons/FilterList';
 
 
 
@@ -112,9 +113,15 @@ const useStylestwo = makeStyles((theme) => ({
     ...theme.mixins.toolbar,
     justifyContent: 'flex-end',
     backgroundColor:'#0083ff',
-
-
-
+  },
+  drawerHeaderRight: {
+    display: 'flex',
+    alignItems: 'center',
+    padding: theme.spacing(0, 1),
+    // necessary for content to be below app bar
+    ...theme.mixins.toolbar,
+    justifyContent: 'flex-start',
+    backgroundColor:'#0083ff',
   },
   content: {
     flexGrow: 1,
@@ -124,6 +131,7 @@ const useStylestwo = makeStyles((theme) => ({
       duration: theme.transitions.duration.leavingScreen,
     }),
     marginLeft: -drawerWidth,
+    marginRight: -drawerWidth,
     backgroundColor:"white",
     color:"#0083ff",
     height:"100%",
@@ -134,6 +142,7 @@ const useStylestwo = makeStyles((theme) => ({
       duration: theme.transitions.duration.enteringScreen,
     }),
     marginLeft: 0,
+    marginRight: 0,
     height:'100%',
   },
 }));
@@ -274,12 +283,36 @@ const BloggerDashboardComponent = (props) => {
   const [longitude, setLongitude] = useState(0);
   //const [searchcountD,SetsearchcountD] = useState(0);
   const [firstLoadStorage,setFirstLoadStorage] = useState(true);
+  const [swithState,SetswithState] = useState(false);
+
+  useMemo(() => {
+
+    var currentSwitcher = localStorage.getItem("switcher");
+    if(currentSwitcher){
+      if(currentSwitcher == 1){
+        SetswithState(true);
+      }
+    }
+
+  },[])
 
   useMemo(() => {
 
     if((latitude != 0) && (longitude != 0)){
       //console.log("Memo Executed");
-      BloggerService.setAllData(latitude,longitude);
+      var gps = 2;
+      if(swithState === true){
+        gps = 1;
+      }
+
+      var currentSwitcher = localStorage.getItem("switcher");
+      if(currentSwitcher){
+        if(currentSwitcher == 1){
+          gps = 1;
+        }
+      }
+
+      BloggerService.setAllData(latitude,longitude,gps);
     }
   },[latitude,longitude])
 
@@ -456,12 +489,21 @@ useEffect(() => {
   const theme = useTheme();
   const history = useHistory();
   const [open, setOpen] = React.useState(false);
+  const [openRight, setOpenRight] = React.useState(false);
   const handleDrawerOpen = () => {
     setOpen(true);
   };
 
   const handleDrawerClose = () => {
     setOpen(false);
+  };
+
+  const rightHandleDrawerOpen = () => {
+    setOpenRight(true);
+  };
+
+  const rightHandleDrawerClose = () => {
+    setOpenRight(false);
   };
 
   const changePage = useCallback((Contacts) => {
@@ -525,8 +567,23 @@ useEffect(() => {
   const [detailProjectId,setDetailProjectId] = useState(0);
   const [detailMessage,setDetailMessage] = useState("");
 
+//xx
   const CloseDrawer = () => {
     setOpen(false);
+    setOpenRight(false);
+  }
+
+
+
+  const handleSwitch = (event) => {
+    var SwitcherValue = event.target.checked;
+    var saveSwitcherValue = 2;
+    if(SwitcherValue == true){
+      saveSwitcherValue = 1;
+    }
+    localStorage.setItem("switcher",saveSwitcherValue);
+
+    SetswithState(SwitcherValue);
   }
 
 
@@ -542,18 +599,28 @@ useEffect(() => {
         })}
       >
         <Toolbar>
+            <div className="myToolbar">
           <IconButton
             color="inherit"
             aria-label="open drawer"
             onClick={handleDrawerOpen}
-            edge="start"
-            className={clsx(classestwo.menuButton, open && classestwo.hide)}
+            className={clsx(classestwo.menuButton, open && classestwo.hide) + " leftM"}
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" onClick={event => CloseDrawer()} noWrap>
+
+          <Typography className="centerM" variant="h6" onClick={event => CloseDrawer()} noWrap>
             Creator dashboard
           </Typography>
+          <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            onClick={rightHandleDrawerOpen}
+            className={clsx(classestwo.menuButton, open && classestwo.hide) + " rightM"}
+          >
+            <FilterListIcon />
+          </IconButton>
+          </div>
         </Toolbar>
       </AppBar>
       <Drawer
@@ -582,6 +649,8 @@ useEffect(() => {
         <Divider />
 
       </Drawer>
+
+
       <main
         className={clsx(classestwo.content, {
           [classestwo.contentShift]: open,
@@ -603,6 +672,45 @@ useEffect(() => {
 
            <ConfirmDialogComponent status={dialogStatus} left={leftbutton} right={rightbutton} text={dialogText}/>
       </main>
+
+      <Drawer
+        className={classestwo.drawer + " leftDrawer"}
+        variant="persistent"
+        anchor="right"
+        open={openRight}
+        classes={{
+          paper: classestwo.drawerPaper,
+        }}
+      >
+        <div className={classestwo.drawerHeaderRight}>
+          <IconButton onClick={rightHandleDrawerClose}>
+            {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+          </IconButton>
+        </div>
+        <Divider />
+          <div className="switchBoxTwo">
+
+            <div className="lswitchBoxTwo">
+              {LocalizeComponent.searchLocal}
+            </div>
+            <div className="rswitchBoxTwo">
+              <Switch
+                checked={swithState}
+                onChange={handleSwitch}
+                color="primary"
+                className="switchCheckbox"
+                name="checkedA"
+                inputProps={{ 'aria-label': 'primary checkbox' }}
+              />
+
+            </div>
+
+
+          </div>
+        <Divider />
+
+      </Drawer>
+
     </div>
 
 

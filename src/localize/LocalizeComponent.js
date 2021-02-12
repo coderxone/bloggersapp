@@ -71,6 +71,8 @@ let strings = new LocalizedStrings({
    edit_confirmation:"this field only to update purpose, try field above to add new link if previous video was banned",
    edit_button_link:"Edit Video Link",
    banBoxTitle:"This videos were banned please make new videos and upload for this social networks and insert link above to form",
+   onlyLocal:"Involve only local creators",
+   searchLocal:"Search only local business",
 
  },
  it: {
