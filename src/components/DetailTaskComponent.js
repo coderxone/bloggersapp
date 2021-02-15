@@ -8,7 +8,6 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
-import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import {
@@ -160,34 +159,25 @@ const DetailTaskComponent = (props) => {
           return gettingData;
         }
       }
-  },[]);
+  },[props]);
 
   //console.log(detailData);
 
 
 
   const classes = useStyles();
-  const { register, handleSubmit, errors,setError,reset } = useForm({
+  const { register, handleSubmit,reset } = useForm({
     resolver: yupResolver(schema)
   });
-  var obj = {
-    email:""
-  };
+
 
   const [completedTask,SetcompletedTask] = useState(false);
 
-  const [storageData,setStorageData] = useState(obj);
-
-  const [cancelDoubleEvent,setCancelDoubleEvent] = useState(0);
-
-  const [closeDialog,setCloseDialog] = useState(false);
 
   const [dangerState,SetdangerState] = useState(false);
   const [dangerText,SetdangerText] = useState("");
 
-  const onSubmit = ((data) => {
 
-  });
 
   const [swithbutton,SetSwithButton] = useState(false);
   const [url,SetUrl] = useState("");
@@ -240,7 +230,7 @@ const DetailTaskComponent = (props) => {
 
   const netWorkArray = ["Instagram","Facebook","Youtube","Twitter"];
 
-  const [originalNetWorkArrayState,setOriginalNetWorkArrayState] = useState(["Instagram","Facebook","Youtube","Twitter"]);
+  const [originalNetWorkArrayState] = useState(["Instagram","Facebook","Youtube","Twitter"]);
   const [netWorkArrayState,setnetWorkArrayState] = useState(["Instagram","Facebook","Youtube","Twitter"]);
 
   const [findArrayState,SetFindArrayState] = useState([]);
@@ -251,7 +241,7 @@ const DetailTaskComponent = (props) => {
 
   const [stepper,SetStep] = useState(0);
 
-  const [checkLinksValidationsArray,SetcheckLinksValidationsArray] = useState(["inst","face","yout","twit"]);
+  const [checkLinksValidationsArray] = useState(["inst","face","yout","twit"]);
 
   const Share = (() => {
 
@@ -277,22 +267,22 @@ const DetailTaskComponent = (props) => {
 
           for(var j = 0;j < permitControlArray.length;j++){
             //console.log(permitControlArray[j].url);
-            if(inputtext == permitControlArray[j].url){
+            if(inputtext === permitControlArray[j].url){
               uploadedNotice = 2;
               findUploadSocialNetworksText = permitControlArray[j].type;
             }
           }
 
-          if(uploadedNotice == 1){
+          if(uploadedNotice === 1){
             SetdangerText("video for " + findUploadSocialNetworksText + " already uploaded ");
             SetdangerState(true);
             hideAlert();
-          }else if(uploadedNotice == 2){
+          }else if(uploadedNotice === 2){
             SetdangerText("video for " + findUploadSocialNetworksText + " already uploaded for this project ");
             SetdangerState(true);
             hideAlert();
           }else{
-            if(validate == 1){
+            if(validate === 1){
                 var obj = {
                   id:detailData.id,
                   videotype:netWorkArray[stepper],
@@ -332,61 +322,64 @@ const DetailTaskComponent = (props) => {
   }
 
 
+const CountTaskFunction = (data) => {
+  if(data.status === "false"){
+    if(stepper > 0){
+      SetStep(0);
+    }
+  }else if(data.status === "ok"){
+
+    var findArray = [];
+
+    var count = data.data.length;
+
+    //console.log(count);
+
+    var countOfTask = originalNetWorkArrayState.length;
+    var replaceArray = netWorkArrayState;
+
+        for(var i = 0;i < count;i++){
+            var platform = data.data[i].type;
+            findArray.push(platform);
+        }
+
+        SetpermitControlArray(data.data);
+        SetFindArrayState(findArray);
+        //SetCurrentNetwork()
+        for(var j = 0;j < netWorkArrayState.length;j++){
+            for(var k = 0;k < findArray.length;k++){
+                var searchString = netWorkArrayState[j];
+                //console.log(searchString);
+                if(searchString.indexOf(findArray[k]) >= 0){
+                  replaceArray.splice(j, 1);
+                }
+            }
+        }
+
+    //console.log(replaceArray);
+    //netWorkArray = replaceArray;
+    setnetWorkArrayState(replaceArray);
+    SetCurrentNetwork(replaceArray[0]);
+
+    SetStep(count);
+
+    if((countOfTask == count) && (countOfTask > 0) && (count > 0)){
+      SetcompletedTask(true);
+      console.log(111);
+      SubmittedTask(detailData.id);
+      localStorage.removeItem("tempstorageData");
+      localStorage.removeItem("tempstorageDistance");
+    }
+    //SetCurrentNetwork
+  }
+};
+
 
 useEffect(() => {
   const ListenlistenCheckUrl = DetailTaskService.listenCheckUrl().subscribe(data => {
 
     //console.log(data);
-    if(data.status == "false"){
-      if(stepper > 0){
-        SetStep(0);
-      }
-    }else if(data.status == "ok"){
-
-      var findArray = new Array();
-
-
-      var count = data.data.length;
-
-      //console.log(count);
-
-      var countOfTask = originalNetWorkArrayState.length;
-      var replaceArray = netWorkArrayState;
-
-          for(var i = 0;i < count;i++){
-              var platform = data.data[i].type;
-              findArray.push(platform);
-          }
-
-          SetpermitControlArray(data.data);
-          SetFindArrayState(findArray);
-          //SetCurrentNetwork()
-          for(var j = 0;j < netWorkArrayState.length;j++){
-              for(var k = 0;k < findArray.length;k++){
-                  var searchString = netWorkArrayState[j];
-                  //console.log(searchString);
-                  if(searchString.indexOf(findArray[k]) >= 0){
-                    replaceArray.splice(j, 1);
-                  }
-              }
-          }
-
-      //console.log(replaceArray);
-      //netWorkArray = replaceArray;
-      setnetWorkArrayState(replaceArray);
-      SetCurrentNetwork(replaceArray[0]);
-
-      SetStep(count);
-
-      if((countOfTask == count) && (countOfTask > 0) && (count > 0)){
-        SetcompletedTask(true);
-        console.log(111);
-        SubmittedTask(detailData.id);
-        localStorage.removeItem("tempstorageData");
-        localStorage.removeItem("tempstorageDistance");
-      }
-      //SetCurrentNetwork
-    }
+      CountTaskFunction(data);
 
 
     //SetStep(stepper => stepper + 1);
@@ -398,7 +391,7 @@ useEffect(() => {
 
   }
 
-},[stepper]);
+},[]);
 
 
 
@@ -416,53 +409,61 @@ const CheckcheckBannedVideoF = ((id) => {
   DetailTaskService.checkBannedVideo(checkObj);
 });
 
+
+const ExecutelistencheckBannedVideo = (data) => {
+
+      if(data.status == "ok"){
+
+          var bannedVideoArray = data.data;
+          const newArbanVideo = [...banVideo];
+
+          if(bannedVideoArray.length > newArbanVideo.length){
+
+            for(var i = 0;i < bannedVideoArray.length;i++){
+
+              var found = 0;
+              for(var j = 0;j < newArbanVideo.length;j++){
+                if(newArbanVideo[j].id == bannedVideoArray[i].id){
+                  found = 1;
+                }
+              }
+
+              if(found == 0){
+                newArbanVideo.push(bannedVideoArray[i]);
+              }
+
+
+            }
+
+            SetBanVideo(newArbanVideo);
+          }else if(bannedVideoArray.length < newArbanVideo.length){
+            SetBanVideo([]);
+
+            SetBanVideo(bannedVideoArray);
+          }else if(bannedVideoArray.length === newArbanVideo.length){
+            SetBanVideo([]);
+            SetBanVideo(bannedVideoArray);
+          }
+
+      }else if(data.status == "false"){
+        if(banVideo.length > 0){
+          SetBanVideo([]);
+        }
+      }
+
+}
+
 useEffect(() => {
   const listencheckBannedVideo = DetailTaskService.listencheckBannedVideo().subscribe(data => {
 
-    if(data.status == "ok"){
+      ExecutelistencheckBannedVideo(data);
 
-        var bannedVideoArray = data.data;
-        const newArbanVideo = [...banVideo];
-
-        if(bannedVideoArray.length > newArbanVideo.length){
-
-          for(var i = 0;i < bannedVideoArray.length;i++){
-
-            var found = 0;
-            for(var j = 0;j < newArbanVideo.length;j++){
-              if(newArbanVideo[j].id == bannedVideoArray[i].id){
-                found = 1;
-              }
-            }
-
-            if(found == 0){
-              newArbanVideo.push(bannedVideoArray[i]);
-            }
-
-
-          }
-
-          SetBanVideo(newArbanVideo);
-        }else if(bannedVideoArray.length < newArbanVideo.length){
-          SetBanVideo([]);
-
-          SetBanVideo(bannedVideoArray);
-        }else if(bannedVideoArray.length === newArbanVideo.length){
-          SetBanVideo([]);
-          SetBanVideo(bannedVideoArray);
-        }
-
-    }else if(data.status == "false"){
-      if(banVideo.length > 0){
-        SetBanVideo([]);
-      }
-    }
   });
 
   return () => {
     listencheckBannedVideo.unsubscribe();
   }
-},[banVideo])
+},[])
 
   useEffect(() => {
 

@@ -6,7 +6,7 @@ const observ_subject = new Subject();
 
 const BloggerService = {
 
-          setAllData:(lat,long,gps) => {
+          setAllData:async (lat,long,gps) => {
 
             var data = {
               lat:lat,

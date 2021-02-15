@@ -24,7 +24,6 @@ import VisibilityIcon from '@material-ui/icons/Visibility';
 import List from '@material-ui/core/List';
 import PropTypes from 'prop-types';
 import Typography from '@material-ui/core/Typography';
-import $ from "jquery";
 import GoBackAbsoluteComponent from '../helperComponents/goBackAbsoluteComponent';
 import ConfirmDialogComponent from '../helperComponents/ConfirmDialogComponent';
 import { increment, decrement,save_email } from '../actions/actions';
@@ -237,9 +236,9 @@ const SubComponent = (props) => {
 
 
   if(status === true){
-      $(".dynamicClass" + id).css("height","6em");
+      //$(".dynamicClass" + id).css("height","6em");
   }else if(status === false){
-    $(".dynamicClass" + id).css("height","3.7em");
+    //$(".dynamicClass" + id).css("height","3.7em");
   }
 
   return (

@@ -6,14 +6,11 @@ import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import { createStore, applyMiddleware } from 'redux';
 import rootReducer from './store/rootReducer'
-import HomeService from './services/Homeservice';
 import config from './config/config.js';
 const store = createStore(rootReducer,applyMiddleware(thunk));
 
 
-//connect to server
-HomeService.initialConnect();
-//connect to server
+
 //connect user
 
 

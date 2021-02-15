@@ -370,9 +370,30 @@ const BusinessDashboard = (props) => {
     const businessConst = BusinesService.listenBusinessCore().subscribe(data => {
 
       //console.log(data.sdata);
-      const list = listArray.concat(data.sdata);
+      const NewlistArrays = listArray.slice();
 
-      setListArray(list);
+      if(data.sdata > NewlistArrays.length){
+        for(var i = 0;i < data.sdata.length;i++){
+            var f = 0;
+            for(var j = 0;j < NewlistArrays.length;j++){
+              if(NewlistArrays[j].id == data.sdata[i].id){
+                f = 1;
+              }
+            }
+
+            if(f == 0){
+              NewlistArrays.push(data.sdata[i]);
+            }
+
+        }
+      }else if(NewlistArrays > data.sdata){
+        setListArray([]);
+        setListArray(data.sdata);
+      }
+
+
+
+      setListArray(NewlistArrays);
 
 
     });
@@ -384,7 +405,7 @@ const BusinessDashboard = (props) => {
 
     //unsubscribe
 
-  }, []);
+  }, [listArray]);
 
   useEffect(() => {
     BusinesService.getBusinessData();

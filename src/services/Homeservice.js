@@ -17,7 +17,7 @@ const observ_subjectTwo = new Subject();
 const initSocket = (() => {
 
         socket.on('connect',function () {
-            console.log('connected to server');
+          //  console.log('connected to server');
           });
         socket.on('disconnect',function(){
           console.log('disconnected from server');
@@ -36,11 +36,11 @@ const initSocket = (() => {
 
    //listen online users
    homeservice.listenOnlineUsers().subscribe(data => {
-     console.log(data);
+     //console.log(data);
    });
 
    homeservice.listencheckAutomaticMessages().subscribe(data => {
-     console.log(data);
+    // console.log(data);
    });
 
    homeservice.listenNotificationsMessages().subscribe(data => {//count of new messages
@@ -176,7 +176,7 @@ const homeservice = {
       },
 
       fiveMinutObserver:() => {
-        Observable.subscribeByTimer_10_second().subscribe(data => {
+        Observable.subscribeByTimer_15_second().subscribe(data => {
           homeservice.checkNotificationsMessages();//check for new messages
         });
       },
@@ -233,7 +233,7 @@ const homeservice = {
 
       },
 
-      checkNotificationsMessages:() => {
+      checkNotificationsMessages:async () => {
         var data = {
           "deviceid":config.getdeviceid(),
           "email":config.getUserEmail()

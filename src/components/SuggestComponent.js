@@ -152,7 +152,7 @@ const MessageListComponent = ((props) => {
       <MessageList >
           {returnList}
       </MessageList>
-      <MessageInput class="chatstyles" onChange={event => SetMessage(event)}  onSend={event => sendMessage()} placeholder="Type message here" />
+      <MessageInput className="chatstyles" onChange={event => SetMessage(event)}  onSend={event => sendMessage()} placeholder="Type message here" />
       </ChatContainer>
 
 

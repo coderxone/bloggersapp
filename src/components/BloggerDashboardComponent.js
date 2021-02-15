@@ -14,7 +14,7 @@ import Grid from '@material-ui/core/Grid';
 
 
 import { connect } from 'react-redux';
-import { Plugins} from "@capacitor/core";
+import Geolocation from '@react-native-community/geolocation';
 import Observable from '../services/Observable';
 import BloggerService from '../services/BloggersService';
 import SkeletonComponent from '../helperComponents/SkeletonComponent';
@@ -100,6 +100,10 @@ const useStylestwo = makeStyles((theme) => ({
     width: drawerWidth,
     flexShrink: 0,
   },
+  drawerRight: {
+    width: drawerWidth,
+    flexShrink: 0,
+  },
   drawerPaper: {
     width: drawerWidth,
     backgroundColor:"white",
@@ -131,6 +135,19 @@ const useStylestwo = makeStyles((theme) => ({
       duration: theme.transitions.duration.leavingScreen,
     }),
     marginLeft: -drawerWidth,
+    marginRight: 0,
+    backgroundColor:"white",
+    color:"#0083ff",
+    height:"100%",
+  },
+  contentRight: {
+    flexGrow: 1,
+    padding: theme.spacing(0),
+    transition: theme.transitions.create('margin', {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen,
+    }),
+    marginLeft: -drawerWidth,
     marginRight: -drawerWidth,
     backgroundColor:"white",
     color:"#0083ff",
@@ -142,7 +159,16 @@ const useStylestwo = makeStyles((theme) => ({
       duration: theme.transitions.duration.enteringScreen,
     }),
     marginLeft: 0,
-    marginRight: 0,
+    marginRight: drawerWidth,
+    height:'100%',
+  },
+  contentShiftRight: {
+    transition: theme.transitions.create('margin', {
+      easing: theme.transitions.easing.easeOut,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+    marginLeft: 0,
+    marginRight: drawerWidth,
     height:'100%',
   },
 }));
@@ -172,6 +198,7 @@ const BlockComponent = (props) => {
 
   const items = props.items;
   const dist = props.distance;
+
 
     const content = items.map((item,index) =>
 
@@ -277,7 +304,7 @@ const BloggerDashboardComponent = (props) => {
 
   const [distance,setDistance] = useState(20);
 
-  const { Geolocation} = Plugins;
+
 
   const [latitude, setLatitude] = useState(0);
   const [longitude, setLongitude] = useState(0);
@@ -295,7 +322,7 @@ const BloggerDashboardComponent = (props) => {
     }
 
   },[])
-
+//xx
   useMemo(() => {
 
     if((latitude != 0) && (longitude != 0)){
@@ -314,10 +341,12 @@ const BloggerDashboardComponent = (props) => {
 
       BloggerService.setAllData(latitude,longitude,gps);
     }
-  },[latitude,longitude])
+  },[latitude,longitude,swithState]);
+
+
 
   const checkData = (() => {
-
+        //console.log("1");
 //xx
         if(firstLoadStorage == true){
 
@@ -329,7 +358,7 @@ const BloggerDashboardComponent = (props) => {
             SetStatus(true);
             setFirstLoadStorage(false);
 
-          //  console.log("storage initialised");
+            //console.log("storage initialised");
 
           }
 
@@ -359,16 +388,14 @@ const BloggerDashboardComponent = (props) => {
   },[]);
 
 
+  const RenderFunction = (data) => {
 
-  useEffect(() => {
-    const BloggerListen = BloggerService.listenUserDataG().subscribe((data) => {//items
+      if((data.sdata.length > 0) && (data.status == "ok")){
+        const insertArray = [...items];
+        var deleteArray = new Array();
+        if(insertArray.length > data.sdata.length){ //delete elements
 
-        //console.log(data);
-        if((data.sdata.length > 0) && (data.status == "ok")){
-          const insertArray = [...items];
-          var deleteArray = new Array();
-          if(insertArray.length > data.sdata.length){ //delete elements
-            //console.log("array less correct");
+          if(data.sdata.length < insertArray.length){
             for(var i = 0;i < insertArray.length;i++){
               var findInd = 0;
               for(var b = 0;b < data.sdata.length;b++){
@@ -385,42 +412,68 @@ const BloggerDashboardComponent = (props) => {
               insertArray.splice(deleteArray[l],1);
             }
 
-          }else{//add or update elements in array
-            //console.log("another");
-            for(var i = 0;i < data.sdata.length;i++){
-              var findInd = 0;
-              for(var b = 0;b < insertArray.length;b++){
-                if(insertArray[b].id == data.sdata[i].id){
-                  insertArray[b] = data.sdata[i];
-                  findInd = 1;
-                }
-              }
-              if(findInd == 0){
-                insertArray.push(data.sdata[i]);
-              }
-            }
+            var json = JSON.stringify(insertArray);
+            localStorage.setItem("tempstorageData",json);
+            localStorage.setItem("tempstorageDistance",data.distance);
+
+            SetItems(insertArray);
+            setDistance(data.distance);
+            SetStatus(true);
+
           }
 
-          //save in storage
-          //console.log(insertArray);
-          var json = JSON.stringify(insertArray);
-          localStorage.setItem("tempstorageData",json);
-          localStorage.setItem("tempstorageDistance",data.distance);
 
-          SetItems(insertArray);
-          setDistance(data.distance);
-          SetStatus(true);
+        }else{//add or update elements in array
 
+          if(data.sdata.length > insertArray.length){
 
+              for(var i = 0;i < data.sdata.length;i++){
+                var findInd = 0;
+                for(var b = 0;b < insertArray.length;b++){
+                  if(insertArray[b].id == data.sdata[i].id){
+                    insertArray[b] = data.sdata[i];
+                    findInd = 1;
+                  }
+                }
+                if(findInd == 0){
+                  insertArray.push(data.sdata[i]);
+                }
+              }
 
-        }else if(data.status == "later"){
-          //console.log("request denied");
-          setRequestStatus(false);
-          SetItems([]);
-          SetStatus(false);
-        }else{
-          SetStatus(false);
+              //save in storage
+              //console.log(insertArray);
+              var json = JSON.stringify(insertArray);
+              localStorage.setItem("tempstorageData",json);
+              localStorage.setItem("tempstorageDistance",data.distance);
+
+              SetItems(insertArray);
+              setDistance(data.distance);
+              SetStatus(true);
+
+          }
+
         }
+
+
+
+
+
+      }else if(data.status == "later"){
+        //console.log("request denied");
+        setRequestStatus(false);
+        SetItems([]);
+        SetStatus(false);
+      }else{
+        SetStatus(false);
+      }
+
+  }
+
+
+  useEffect(() => {
+    const BloggerListen = BloggerService.listenUserDataG().subscribe((data) => {//items
+          //console.log(data);
+          RenderFunction(data);
 
     });
 
@@ -429,57 +482,79 @@ const BloggerDashboardComponent = (props) => {
       BloggerListen.unsubscribe();
     }
 
-  },[items])
-///---------
+  },[]);
+
+
+
+
+
+const SuccessLocationWatcher = (position) => {
+      checkData();
+      setLatitude(position.coords.latitude);
+      setLongitude(position.coords.longitude);
+}
+
+const ErrorPosition = (data) => {
+  //console.log(data);
+}
 
 useEffect(() => {
-    var options = {
-      maximumAge: 60000,
-      enableHighAccuracy: false,
-      timeout: 20000
+
+
+  const DialogNotif = Observable.getData_subject().subscribe(data => {
+    if(data == "confirm"){
+      goToContacts();
+      //go to page with id
+    }else if(data == "cancel"){
+      setDialogStatus(false);
     }
-    const wait = Geolocation.watchPosition(options, (position, err) => {
 
-      if(err){
-        return false;
-      }
-      if(position){
-
-        //console.log(position);
-        checkData();
-        setLatitude(position.coords.latitude);
-        setLongitude(position.coords.longitude);
+  });
 
 
-      }
 
-    });
+  const DialogExecute = Observable.getData_subjectDialog().subscribe(data => {
+    if(data.alert == "opendialog"){
+      //console.log(data);
+      setLeftbutton(LocalizeComponent.cancel);
+      setRightbutton(LocalizeComponent.check);
+      setDialogText(LocalizeComponent.dialogCheckMessage);
+      setDetailProjectId(data.projectId);
+      setDetailMessage(data.message);
+      setDialogStatus(true);
+      //go to page with id
+    }
+
+  });
+
+
+
+  if(lastLocation != null){
+    if(lastLocation.pathname == "/detailtask"){
+
+       checkData();
+    }
+  }
+
+  var options = {
+    maximumAge: 60000,
+    enableHighAccuracy: true,
+    timeout: 60000
+  }
+
+    const watchId = Geolocation.watchPosition(SuccessLocationWatcher, ErrorPosition, options);
+
 
     return () => {
-      Geolocation.clearWatch(wait);
+        Geolocation.clearWatch(watchId);
+        DialogNotif.unsubscribe();
+        DialogExecute.unsubscribe();
+
     }
 
 },[])
 ///---------
-  useEffect(() => {
 
-
-    if(lastLocation != null){
-      if(lastLocation.pathname == "/detailtask"){
-
-         checkData();
-      }
-    }
-
-    //unsubscribe
-
-    return () => {
-
-    }
-
-    //unsubscribe
-
-  }, []);
 
 
 
@@ -524,39 +599,6 @@ useEffect(() => {
 
   });
 
-//init functions
-  useEffect(() => {
-    const DialogNotif = Observable.getData_subject().subscribe(data => {
-      if(data == "confirm"){
-        goToContacts();
-        //go to page with id
-      }else if(data == "cancel"){
-        setDialogStatus(false);
-      }
-
-    });
-
-
-
-    const DialogExecute = Observable.getData_subjectDialog().subscribe(data => {
-      if(data.alert == "opendialog"){
-        //console.log(data);
-        setLeftbutton(LocalizeComponent.cancel);
-        setRightbutton(LocalizeComponent.check);
-        setDialogText(LocalizeComponent.dialogCheckMessage);
-        setDetailProjectId(data.projectId);
-        setDetailMessage(data.message);
-        setDialogStatus(true);
-        //go to page with id
-      }
-
-    });
-
-    return () => {
-      DialogNotif.unsubscribe();
-      DialogExecute.unsubscribe();
-    }
-  },[])
 
 
 
@@ -572,6 +614,7 @@ useEffect(() => {
     setOpen(false);
     setOpenRight(false);
   }
+
 
 
 
@@ -651,65 +694,75 @@ useEffect(() => {
       </Drawer>
 
 
-      <main
-        className={clsx(classestwo.content, {
-          [classestwo.contentShift]: open,
-        })}
-      >
-        <div className={classestwo.drawerHeader} />
+
+      {openRight === false ? (
+        <main
+          className={clsx(classestwo.content, {
+            [classestwo.contentShift]: open,
+          })}
+        >
+          <div className={classestwo.drawerHeader} />
 
 
-          {status === false ? (
-            <Grid container className="withoutScroll">
-               <SkeletonComponent/>
-            </Grid>
-           ) : (
-             <Grid container className="withoutScroll">
-                <BlockComponent items={items} distance={distance}/>
-             </Grid>
-           )}
+            {status === false ? (
+              <Grid container className="withoutScroll">
+                 <SkeletonComponent/>
+              </Grid>
+             ) : (
+               <Grid container className="withoutScroll">
+                  <BlockComponent items={items} distance={distance}/>
+               </Grid>
+             )}
 
 
-           <ConfirmDialogComponent status={dialogStatus} left={leftbutton} right={rightbutton} text={dialogText}/>
-      </main>
+             <ConfirmDialogComponent status={dialogStatus} left={leftbutton} right={rightbutton} text={dialogText}/>
+        </main>
+       ) : (
+         <Drawer
+           className={classestwo.drawerRight + " leftDrawer"}
+           variant="persistent"
+           anchor="right"
+           open={openRight}
+           classes={{
+             paper: classestwo.drawerPaper,
+           }}
+         >
+           <div className={classestwo.drawerHeaderRight}>
+             <IconButton onClick={rightHandleDrawerClose}>
+               {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+             </IconButton>
+           </div>
+           <Divider />
+             <div className="switchBoxTwo">
 
-      <Drawer
-        className={classestwo.drawer + " leftDrawer"}
-        variant="persistent"
-        anchor="right"
-        open={openRight}
-        classes={{
-          paper: classestwo.drawerPaper,
-        }}
-      >
-        <div className={classestwo.drawerHeaderRight}>
-          <IconButton onClick={rightHandleDrawerClose}>
-            {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
-          </IconButton>
-        </div>
-        <Divider />
-          <div className="switchBoxTwo">
+               <div className="lswitchBoxTwo">
+                 {LocalizeComponent.searchLocal}
+               </div>
+               <div className="rswitchBoxTwo">
+                 <Switch
+                   checked={swithState}
+                   onChange={handleSwitch}
+                   color="primary"
+                   className="switchCheckbox"
+                   name="checkedA"
+                   inputProps={{ 'aria-label': 'primary checkbox' }}
+                 />
 
-            <div className="lswitchBoxTwo">
-              {LocalizeComponent.searchLocal}
-            </div>
-            <div className="rswitchBoxTwo">
-              <Switch
-                checked={swithState}
-                onChange={handleSwitch}
-                color="primary"
-                className="switchCheckbox"
-                name="checkedA"
-                inputProps={{ 'aria-label': 'primary checkbox' }}
-              />
-
-            </div>
+               </div>
 
 
-          </div>
-        <Divider />
+             </div>
+           <Divider />
 
-      </Drawer>
+         </Drawer>
+       )}
+
+
+
+
+
+
+
 
     </div>
 

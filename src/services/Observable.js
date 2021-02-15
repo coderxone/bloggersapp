@@ -44,6 +44,12 @@ const observ_f = {
 
         return timer10second;
       },
+      subscribeByTimer_15_second:() => {
+
+        const timer15second = interval(15000);
+
+        return timer15second;
+      },
 
       subscribeByTimer_2_second:() => {
 
