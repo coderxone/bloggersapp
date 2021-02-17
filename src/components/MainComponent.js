@@ -4,6 +4,10 @@ import * as THREE from "three";
 import { MeshLine, MeshLineMaterial, MeshLineRaycast } from 'three.meshline';
 import sample from '../images/sample1.jpeg';
 import sample2 from '../images/sample2.jpg';
+import instagramIcon from '../images/instagram.png';
+import YoutubeIcon from '../images/youtube.png';
+import FacebookIcon from '../images/facebook.png';
+import TiktokIcon from '../images/tiktok.png';
 import '../css/MainComponent.css';
 import fontStylesD from '../fonts/helvetiker_regular_typeface.json';
 
@@ -100,6 +104,7 @@ const TextColor = "#0083ff";
 const BusinessEllipseColor = "#0083ff";
 const PersonCircleColor = "#0083ff";
 const PersonTextColor = "white";
+var enableAnimation = 0;
 //const AnimationLineColor = "rgba(255,251,36,0.36)";
 const AnimationLineColor = "rgba(0,131,255,0.08)";
 //const AnimationLineColor = "#fffb24";
@@ -124,14 +129,22 @@ const NewHookComponent = () => {
   const cameraPerspective = new THREE.PerspectiveCamera( 75,ASPECT_RATIO, 150, 1000);
   const cameraPerspectiveHelper = new THREE.CameraHelper( camera );
   const renderer = new THREE.WebGLRenderer({ antialias: true })
-
+  //var viewPosition = {x:0,y:0,z:250};
+  var viewPosition = {x:0,y:0,z:100};
+  var viewPositionAnimation = {x:0,y:-250,z:-200};
+  //var viewPositionAnimation = {x:0,y:-90,z:0};
   const SetCameraPosition = () => {
-    camera.position.set( 0, 0, 100 );
+    camera.position.set( viewPosition.x, viewPosition.y, viewPosition.z );
     camera.updateMatrixWorld();
-    camera.lookAt( 0, 0, 0 );
+    // camera.lookAt( 0, -80, 0 );
+    camera.lookAt( viewPositionAnimation.x, viewPositionAnimation.y, viewPositionAnimation.z );
 
     renderer.setClearColor(backgroundColor)
     renderer.setSize(width, height)
+  }
+
+  const SetCamera = () => {
+    camera.lookAt( viewPositionAnimation.x, viewPositionAnimation.y, viewPositionAnimation.z );
   }
 
   function onWindowResize() {
@@ -339,6 +352,107 @@ const NewHookComponent = () => {
 
         //webgl.add(LineCurveCoordinatesCurveLineObject[0]);
 
+        //social network
+
+        //sentral
+        const Socialgeometry = new THREE.CircleGeometry( 15, 32 );
+        const Socialmaterial = new THREE.MeshBasicMaterial( { color: PersonCircleColor } );
+        const SocialcircleObject = new THREE.Mesh( Socialgeometry, Socialmaterial );
+        SocialcircleObject.position.x = 0;
+        SocialcircleObject.position.y = -140;
+        SocialcircleObject.rotation.x = -0.3;
+        scene.add( SocialcircleObject );
+
+        const SocialPersontextOptions = {
+          font,
+          size: 4, // font size
+          height: 1, // how much extrusion (how thick / deep are the letters)
+        };
+
+        var SocialPersontextGeometry = new THREE.TextGeometry( "Video", SocialPersontextOptions);
+
+        var SocialPersontextMaterial = new THREE.MeshBasicMaterial(
+          { color: PersonTextColor }
+        );
+
+        var SocialPersonTextmesh = new THREE.Mesh( SocialPersontextGeometry, SocialPersontextMaterial );
+        SocialPersonTextmesh.geometry.center();
+        SocialPersonTextmesh.rotation.x = 0;
+        SocialPersonTextmesh.position.x = 0.3;
+        SocialcircleObject.add(SocialPersonTextmesh);
+        //sentral
+
+        //instagram image
+        // const textureInst = new THREE.TextureLoader().load(instagramIcon);
+        // const geometryInst = new THREE.BoxBufferGeometry( 15, 15, 15 );
+        // const materialInstag = new THREE.MeshBasicMaterial( { map: textureInst } );
+        // const instagMesh = new THREE.Mesh(geometryInst, materialInstag);
+        // instagMesh.position.x = -30;
+        // instagMesh.position.y = -110;
+        // scene.add(instagMesh);
+        var img = new THREE.MeshBasicMaterial({
+            map:THREE.ImageUtils.loadTexture(instagramIcon)
+        });
+        img.map.needsUpdate = true; //ADDED
+        var image_mesh = new THREE.Mesh(new THREE.PlaneGeometry(20, 20),img);
+        image_mesh.overdraw = true;
+        image_mesh.material.needsUpdate = true;
+        image_mesh.position.x = -60;
+        image_mesh.position.y = -140;
+        image_mesh.rotation.x = -0.5;
+        image_mesh.rotation.z = -0.05;
+        scene.add(image_mesh);
+        //instagram image
+
+        //youtube
+        var imgYoutube = new THREE.MeshBasicMaterial({
+            map:THREE.ImageUtils.loadTexture(YoutubeIcon)
+        });
+        imgYoutube.map.needsUpdate = true; //ADDED
+        var Youtube_image_mesh = new THREE.Mesh(new THREE.PlaneGeometry(20, 20),imgYoutube);
+        Youtube_image_mesh.overdraw = true;
+        Youtube_image_mesh.material.needsUpdate = true;
+        Youtube_image_mesh.position.x = 60;
+        Youtube_image_mesh.position.y = -140;
+        Youtube_image_mesh.rotation.x = -0.5;
+        //Youtube_image_mesh.rotation.z = -0.05;
+        scene.add(Youtube_image_mesh);
+        //youtube
+
+        //facebook
+        var imgFacebook = new THREE.MeshBasicMaterial({
+            map:THREE.ImageUtils.loadTexture(FacebookIcon)
+        });
+        imgFacebook.map.needsUpdate = true; //ADDED
+        var Facebook_image_mesh = new THREE.Mesh(new THREE.PlaneGeometry(13, 13),imgFacebook);
+        Facebook_image_mesh.overdraw = true;
+        Facebook_image_mesh.material.needsUpdate = true;
+        Facebook_image_mesh.position.x = 0;
+        Facebook_image_mesh.position.y = -80;
+        Facebook_image_mesh.rotation.x = -0.5;
+        //Youtube_image_mesh.rotation.z = -0.05;
+        scene.add(Facebook_image_mesh);
+        //facebook
+
+        //tiktok
+        var imgTiktok = new THREE.MeshBasicMaterial({
+            map:THREE.ImageUtils.loadTexture(TiktokIcon)
+        });
+        imgTiktok.map.needsUpdate = true; //ADDED
+        var Tiktok_image_mesh = new THREE.Mesh(new THREE.PlaneGeometry(25, 25),imgTiktok);
+        Tiktok_image_mesh.overdraw = true;
+        Tiktok_image_mesh.material.needsUpdate = true;
+        Tiktok_image_mesh.position.x = 0;
+        Tiktok_image_mesh.position.y = -250;
+        Tiktok_image_mesh.rotation.x = -0.5;
+        //Youtube_image_mesh.rotation.z = -0.05;
+        scene.add(Tiktok_image_mesh);
+        //tiktok
+//xx
+        //
+
+        //social network
+
 
 
 
@@ -390,12 +504,23 @@ const NewHookComponent = () => {
         // }
         // Decrement the dashOffset value to animate the path with the dash.
         //LineCurveCoordinatesCurveLineObject[0].material.uniforms.dashOffset.value -= 0.01;
+        if(enableAnimation == 1){
+
+
         LineCurveCoordinatesCurveLineObject[0].material.dashOffset -= LineSpeed;
         LineCurveCoordinatesCurveLineObject[1].material.dashOffset -= LineSpeedTwo;
         LineCurveCoordinatesCurveLineObject[2].material.dashOffset -= LineSpeedThree;
         LineCurveCoordinatesCurveLineObject[3].material.dashOffset -= LineSpeedFour;
         LineCurveCoordinatesCurveLineObject[4].material.dashOffset -= LineSpeedFive;
         LineCurveCoordinatesCurveLineObject[5].material.dashOffset -= LineSpeedSix;
+
+        // viewPositionAnimation.y -= 0.04;
+        // SetCamera();
+        //
+        // if(viewPositionAnimation.y < -80){
+        //   viewPositionAnimation.y = 0;
+        // }
+        }
 
 
       }
@@ -405,14 +530,19 @@ const NewHookComponent = () => {
         return (Math.random() * (0.001 - 0.006) + 0.006).toFixed(4)
       }
 
-      setInterval(function(){
-        LineSpeed = getRandomFloat();
-        LineSpeedTwo = getRandomFloat();
-        LineSpeedThree = getRandomFloat();
-        LineSpeedFour = getRandomFloat();
-        LineSpeedFive = getRandomFloat();
-        LineSpeedSix = getRandomFloat();
-      },2000)
+      if(enableAnimation == 1){
+        setInterval(function(){
+          LineSpeed = getRandomFloat();
+          LineSpeedTwo = getRandomFloat();
+          LineSpeedThree = getRandomFloat();
+          LineSpeedFour = getRandomFloat();
+          LineSpeedFive = getRandomFloat();
+          LineSpeedSix = getRandomFloat();
+
+
+        },2000)
+      }
+
 
       //onWindowResize();
 
