@@ -1,6 +1,7 @@
 import React, { useRef,useEffect, useState,useLayoutEffect } from 'react';
 import { Canvas, useFrame } from 'react-three-fiber';
 import * as THREE from "three";
+import { MeshLine, MeshLineMaterial, MeshLineRaycast } from 'three.meshline';
 import sample from '../images/sample1.jpeg';
 import sample2 from '../images/sample2.jpg';
 import '../css/MainComponent.css';
@@ -95,8 +96,17 @@ function newShaderMaterial(){
 
 
 const backgroundColor = "#ffffff";
-const TextColor = "#3be3e3";
-const BusinessEllipseColor = "#3be3e3";
+const TextColor = "#0083ff";
+const BusinessEllipseColor = "#0083ff";
+const PersonCircleColor = "#0083ff";
+const PersonTextColor = "white";
+//const AnimationLineColor = "rgba(255,251,36,0.36)";
+const AnimationLineColor = "rgba(0,131,255,0.08)";
+//const AnimationLineColor = "#fffb24";
+const AnimationLineColorOriginal = "#e3e3e3";
+//const AnimationLineColorOriginal = "rgba(0,131,255,0.08)";
+//const AnimationLineColorOriginal = "#0083ff";
+
 const ASPECT_RATIO = window.innerWidth / window.innerHeight;
 const WIDTH = ( window.innerWidth ) * window.devicePixelRatio;
 const HEIGHT = ( window.innerHeight ) * window.devicePixelRatio;
@@ -123,13 +133,21 @@ const NewHookComponent = () => {
     renderer.setClearColor(backgroundColor)
     renderer.setSize(width, height)
   }
+
+  function onWindowResize() {
+
+     camera.aspect = window.innerWidth / window.innerHeight;
+     camera.updateProjectionMatrix();
+     renderer.setSize( window.innerWidth, window.innerHeight );
+
+  }
   useEffect(() => {
 
     SetCameraPosition();
     group.add( camera );//adding camera to group
     //scene.add( cameraPerspectiveHelper );
     scene.add(group); //add group with camera to scene
-    //ellipse
+    //business side ellipse
     const curve = new THREE.EllipseCurve(
          0,  0,            // ax, aY
          30, 10,           // xRadius, yRadius
@@ -148,20 +166,14 @@ const NewHookComponent = () => {
       	linejoin:  'round' //ignored by WebGLRenderer
 
      } );
+     var businessPosition = {y:60};
      const ellipse = new THREE.Line( geometryEl, materialEl );
-     ellipse.position.y = 40;
+     ellipse.position.y = 60;
+     businessPosition.x = ellipse.position.x;
      ellipse.rotation.x = 0.4;
 
      scene.add(ellipse);
     //ellipse
-
-    //cube
-    const geometry = new THREE.BoxGeometry(20, 20, 20)
-    const material = new THREE.MeshBasicMaterial({ color: 0xff00ff })
-    const cube = new THREE.Mesh(geometry, material)
-    //ellipse.add( cube );
-    //cube
-
     //text
     const font = new THREE.FontLoader().parse(fontStylesD);
 
@@ -169,7 +181,7 @@ const NewHookComponent = () => {
     const textOptions = {
       font,
       size: 7, // font size
-      height: 7, // how much extrusion (how thick / deep are the letters)
+      height: 4, // how much extrusion (how thick / deep are the letters)
 
     };
 
@@ -182,24 +194,229 @@ const NewHookComponent = () => {
     var Textmesh = new THREE.Mesh( textGeometry, textMaterial );
     Textmesh.geometry.center();
     ellipse.add(Textmesh);
+    //business side text
+
+    //persons
+
+    var startPosition = -38;
+    var stepper = 25;
+    var personsYposition = -50;
+    var currentCoordinates = [];
+
+
+    const Persongeometry = new THREE.CircleGeometry( 10, 32 );
+    const Personmaterial = new THREE.MeshBasicMaterial( { color: PersonCircleColor } );
+    const Personcircle = new THREE.Mesh( Persongeometry, Personmaterial );
+    Personcircle.position.x = startPosition - stepper;
+    Personcircle.position.y = personsYposition;
+    scene.add( Personcircle );
+    currentCoordinates.push({x:startPosition - stepper,y:personsYposition})
+
+    //text
+    const PersontextOptions = {
+      font,
+      size: 3, // font size
+      height: 1, // how much extrusion (how thick / deep are the letters)
+    };
+
+    var PersontextGeometry = new THREE.TextGeometry( "Blogger", PersontextOptions);
+
+    var PersontextMaterial = new THREE.MeshBasicMaterial(
+      { color: PersonTextColor }
+    );
+
+    var PersonTextmesh = new THREE.Mesh( PersontextGeometry, PersontextMaterial );
+    PersonTextmesh.geometry.center();
+    PersonTextmesh.rotation.x = -0.2;
+    PersonTextmesh.position.x = 0.3;
+    Personcircle.add(PersonTextmesh);
+    //text
+    var Persons = [];
+
+    for(var i = 0;i < 5;i++){
+      Persons[i] = Personcircle.clone();
+      Persons[i].position.x = startPosition;
+      currentCoordinates.push({x:startPosition,y:personsYposition})
+      startPosition += stepper;
+      scene.add(Persons[i]);
+
+    }
+
+    console.log(currentCoordinates); //current Persons coordinates
+    //console.log(businessPosition);
+    //persons
+
+    //curves lines from business to bloggers
+
+    // Create a sine-like wave
+
+        // const curveLine = new THREE.SplineCurve( [
+        // 	new THREE.Vector2( businessPosition.x - 20, businessPosition.y - 9 ),
+        // 	new THREE.Vector2( currentCoordinates[0].x + 3, currentCoordinates[0].y + 10 )
+        // ] );
+        //
+        // const pointsCurveLine = curveLine.getPoints( 50 );
+        // const geometryCurveLine = new THREE.BufferGeometry().setFromPoints( pointsCurveLine );
+        //
+        // const materialCurveLine = new THREE.LineBasicMaterial( { color : 0xff0000 } );
+        //
+        // // Create the final object to add to the scene
+        // const CurveLineObject = new THREE.Line( geometryCurveLine, materialCurveLine );
+
+        //scene.add(CurveLineObject);
+
+
+        var LineCurveCoordinates = [];
+        var LineCurveCoordinatesGeometries = [];
+        var LineCurveCoordinatesCurveLineObject = [];
+        var LineCurveCoordinatesCurveLineObjectOriginal = [];
+        var pointsArrayCurveLine = [];
+        var materialMeshLineArray = [];
+
+        var newXArrays = [];
+
+        var newXposition = businessPosition.x - 18;
+        var newYposition = businessPosition.y - 10;
+
+        const baseLineMesh = new MeshLineMaterial({
+                // transparent: true,
+                lineWidth: 0.7,
+                color: new THREE.Color(AnimationLineColorOriginal),
+                // dashArray: 0.7,     // always has to be the double of the line
+                // dashOffset: 0,    // start the dash at zero
+                // dashRatio: 0.75,  // visible length range min: 0.99, max: 0.5
+              });
+
+        for(var j = 0;j < 6;j++){
+
+          var downLinePosition = currentCoordinates[j].x;
+          if(j < 2){
+            downLinePosition = downLinePosition + 2;
+          }else if(j > 4){
+            downLinePosition = downLinePosition - 2;
+          }
+
+          if(j < 3){
+            newYposition = newYposition - 1;
+          }else if(j > 3){
+            newYposition = newYposition + 1;
+          }
+
+
+          var pointsMeshLine = [];
+          pointsMeshLine.push( new THREE.Vector3(newXposition, newYposition, 0 ) );
+          pointsMeshLine.push( new THREE.Vector3( downLinePosition, currentCoordinates[j].y + 11, 0 ) );
+          LineCurveCoordinates[j] = pointsMeshLine;
+
+
+
+          newXArrays.push({x:newXposition,y:newYposition})
+          newXposition += 7;
+
+
+          LineCurveCoordinatesGeometries[j] = new MeshLine();
+          LineCurveCoordinatesGeometries[j].setPoints(LineCurveCoordinates[j]);
+
+          materialMeshLineArray[j] = new MeshLineMaterial({
+                  transparent: true,
+                  lineWidth: 2,
+                  color: new THREE.Color(AnimationLineColor),
+                  dashArray: 1,     // always has to be the double of the line
+                  dashOffset: 0,    // start the dash at zero
+                  dashRatio: 0.99,  // visible length range min: 0.99, max: 0.5
+                  //dashRatio: 0.75,  // visible length range min: 0.99, max: 0.5
+                });
+
+          LineCurveCoordinatesCurveLineObjectOriginal[j] = new THREE.Mesh( LineCurveCoordinatesGeometries[j],baseLineMesh);
+          //LineCurveCoordinatesCurveLineObjectOriginal[j].renderOrder = 2;
+          scene.add( LineCurveCoordinatesCurveLineObjectOriginal[j] );
+          LineCurveCoordinatesCurveLineObject[j] = new THREE.Mesh( LineCurveCoordinatesGeometries[j], materialMeshLineArray[j]);
+          //LineCurveCoordinatesCurveLineObject[j].renderOrder = 1;
+          scene.add( LineCurveCoordinatesCurveLineObject[j]);
+
+
+        }
+
+        //webgl.add(LineCurveCoordinatesCurveLineObject[0]);
+
+
+
+
+
+//curves lines from business to bloggers
+
+//meshLine
+//MeshLine, MeshLineMaterial, MeshLineRaycast
+
+
+
+            // // ! Assuming you have your own webgl engine to add meshes on scene and update them.
+            //   webgl.add(lineMesh);
+
+            // ! Call each frame
+              // function update() {
+              //   // Check if the dash is out to stop animate it.
+              //   if (lineMesh.material.uniforms.dashOffset.value < -2) return;
+              //
+              //   // Decrement the dashOffset value to animate the path with the dash.
+              //   lineMesh.material.uniforms.dashOffset.value -= 0.01;
+              // }
+//meshLine
+
+
 
 
 
     //scene.add(group);
 
-
+    console.log(LineCurveCoordinatesCurveLineObject[0]);
 
 
 
     //text
-
-
+    var LineSpeed = 0.002;
+    var LineSpeedTwo = 0.002;
+    var LineSpeedThree = 0.002;
+    var LineSpeedFour = 0.002;
+    var LineSpeedFive = 0.002;
+    var LineSpeedSix = 0.002;
 
     function animate() {
         renderer.render(scene, camera)
         setTimeout(animate, 5);
+        // Check if the dash is out to stop animate it.
+        // if (LineCurveCoordinatesCurveLineObject[0].material.uniforms.dashOffset.value < -2){
+        //   return false;
+        // }
+        // Decrement the dashOffset value to animate the path with the dash.
+        //LineCurveCoordinatesCurveLineObject[0].material.uniforms.dashOffset.value -= 0.01;
+        LineCurveCoordinatesCurveLineObject[0].material.dashOffset -= LineSpeed;
+        LineCurveCoordinatesCurveLineObject[1].material.dashOffset -= LineSpeedTwo;
+        LineCurveCoordinatesCurveLineObject[2].material.dashOffset -= LineSpeedThree;
+        LineCurveCoordinatesCurveLineObject[3].material.dashOffset -= LineSpeedFour;
+        LineCurveCoordinatesCurveLineObject[4].material.dashOffset -= LineSpeedFive;
+        LineCurveCoordinatesCurveLineObject[5].material.dashOffset -= LineSpeedSix;
+
+
       }
       animate();
+
+      function getRandomFloat() {
+        return (Math.random() * (0.001 - 0.006) + 0.006).toFixed(4)
+      }
+
+      setInterval(function(){
+        LineSpeed = getRandomFloat();
+        LineSpeedTwo = getRandomFloat();
+        LineSpeedThree = getRandomFloat();
+        LineSpeedFour = getRandomFloat();
+        LineSpeedFive = getRandomFloat();
+        LineSpeedSix = getRandomFloat();
+      },2000)
+
+      //onWindowResize();
+
+      //window.addEventListener( 'resize', onWindowResize, false );
 
     mount.current.appendChild(renderer.domElement)
 
