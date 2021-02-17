@@ -3,8 +3,8 @@ import io from 'socket.io-client'
 
 //const url = 'https://kazpoisk.kz:3001';
 //const url = 'https://localhost:3002';
-//const url = 'http://localhost:3004';
-const url = 'https://echohub.io:3004';
+const url = 'http://localhost:3004';
+//const url = 'https://echohub.io:3004';
 //private url = 'http://18.218.27.49:3002';
 //private url = 'http://kazpoisk.kz:3002';
 //const socket = io(url);

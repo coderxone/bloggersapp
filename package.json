@@ -44,11 +44,12 @@
     "react-router-dom": "^5.1.2",
     "react-router-last-location": "^2.0.1",
     "react-scripts": "3.4.0",
+    "react-three-fiber": "^5.3.18",
     "redux-thunk": "^2.3.0",
     "rxjs": "^6.6.3",
     "socket.io": "^3.0.3",
     "socket.io-client": "^3.0.3",
-    "three": "^0.125.1",
+    "three": "^0.125.2",
     "typescript": "3.8.3",
     "yup": "^0.30.0"
   },
