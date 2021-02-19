@@ -1,6 +1,10 @@
-import React, { useRef,useEffect, useState,useLayoutEffect } from 'react';
+import React, { useRef,useEffect, useState,useMemo } from 'react';
 import { Canvas, useFrame } from 'react-three-fiber';
 import * as THREE from "three";
+// import {
+//   Mesh, Vector3, SplineCurve, Geometry, Color,
+// } from 'three';
+
 import { MeshLine, MeshLineMaterial, MeshLineRaycast } from 'three.meshline';
 import sample from '../images/sample1.jpeg';
 import sample2 from '../images/sample2.jpg';
@@ -32,26 +36,53 @@ const ASPECT_RATIO = window.innerWidth / window.innerHeight;
 const WIDTH = ( window.innerWidth ) * window.devicePixelRatio;
 const HEIGHT = ( window.innerHeight ) * window.devicePixelRatio;
 
+const group = new THREE.Object3D();
+const scene = new THREE.Scene();
+const width = window.innerWidth;
+const height = window.innerHeight;
+const camera = new THREE.PerspectiveCamera(45,ASPECT_RATIO, 1, 1000);
+const renderer = new THREE.WebGLRenderer({ antialias: true })
+var viewPosition = {x:0,y:-150,z:600};
+var viewPositionAnimation = {x:0,y:0,z:0};
+
 var enableAnimation = 0;//control video animation from business to bloggers
 var enableAnimationVideo = 0;//control video animation from bloggers to video
 var VideoLineCoordinatesObjectAnimatedSpepper = 0;//control video animation from bloggers to video //step to step before 5
 var SocialAnimLineEnable = 0;//control Social animation line from video to social networks icon
 var SocialAnimLineCoordinatesObjectAnimatedStepper = 0;//control Social animation line from video to social networks icon //step to step before 5
-
+var SocialWorldLineEnable = 0;//control Social WORLD animation line from social Networks to social earth icon
+var SocialWorldLineEnableStepper = 0;//control Social WORLD animation line from social Networks to social earth icon //step to step before 3
+var WorldEnable = 0;
 const NewHookComponent = () => {
+//xx
+  const [ManageStep,setManageStep] = useState(0);
+
+
+
+  useMemo(() => {
+    //console.log("step");
+    if(ManageStep == 1){
+      enableAnimation = 1;
+    }
+    if(ManageStep == 2){
+      enableAnimationVideo = 1;
+    }
+    if(ManageStep == 3){
+      SocialAnimLineEnable = 1;
+    }
+    if(ManageStep == 4){
+      SocialWorldLineEnable = 1;
+    }
+    if(ManageStep == 5){
+      WorldEnable = 1;
+    }
+  },[ManageStep])
 
   const mount = useRef(null)
   const [isAnimating, setAnimating] = useState(true)
   const controls = useRef(null)
-  const group = new THREE.Object3D();
-  const scene = new THREE.Scene();
-  let width = window.innerWidth;
-  let height = window.innerHeight;
-  const camera = new THREE.PerspectiveCamera(45,ASPECT_RATIO, 1, 1000);
-  const renderer = new THREE.WebGLRenderer({ antialias: true })
-  var viewPosition = {x:0,y:-220,z:300};
-  var viewPositionAnimation = {x:0,y:0,z:0};
-//xx
+
+
   const SetCameraPosition = () => {
     //camera.position.set( 0, 15, 35 );
     camera.position.set( viewPosition.x, viewPosition.y, viewPosition.z );
@@ -77,11 +108,7 @@ const NewHookComponent = () => {
 
   var step = 0;
 
-  const StepperAnimation = () => {
-      //1 step enableAnimation = 1;
-  }
-
-  useEffect(() => {
+  const Core = () => {
 
     SetCameraPosition();
     //scene.background = new THREE.Color('black' );
@@ -90,7 +117,7 @@ const NewHookComponent = () => {
     scene.add(camera); //add group with camera to scene
     // LIGHTS
     scene.add(new THREE.AmbientLight(0x333333));
-//xx
+
     const light = new THREE.DirectionalLight( 0xffffff, 2 );
     light.position.set(-40,10,100);
     scene.add(light);
@@ -121,7 +148,7 @@ const NewHookComponent = () => {
      } );
      var businessPosition = {y:60};
      const ellipse = new THREE.Line( geometryEl, materialEl );
-     ellipse.position.y = 60;
+     ellipse.position.y = businessPosition.y;
      businessPosition.x = ellipse.position.x;
      ellipse.rotation.x = 0.4;
 
@@ -255,7 +282,7 @@ const NewHookComponent = () => {
 
           materialMeshLineArray[j] = new MeshLineMaterial({
                   transparent: true,
-                  lineWidth: 2,
+                  lineWidth: 3,
                   color: new THREE.Color(AnimationLineColor),
                   dashArray: 1,     // always has to be the double of the line
                   dashOffset: 0,    // start the dash at zero
@@ -335,7 +362,7 @@ const NewHookComponent = () => {
 
           VideomaterialMeshLineArray[i] = new MeshLineMaterial({
                   transparent: true,
-                  lineWidth: 2,
+                  lineWidth: 3,
                   color: new THREE.Color(AnimationLineColor),
                   dashArray: 1,     // always has to be the double of the line
                   dashOffset: 0,    // start the dash at zero
@@ -431,6 +458,7 @@ const NewHookComponent = () => {
         roundPeoples_image_mesh.material.needsUpdate = true;
         roundPeoples_image_mesh.position.x = PeoplePosition.x;
         roundPeoples_image_mesh.position.y = PeoplePosition.y;
+        roundPeoples_image_mesh.geometry.center();
         scene.add(roundPeoples_image_mesh);
         //Peoples
         //load 3d earth
@@ -439,13 +467,14 @@ const NewHookComponent = () => {
         var texture = textureLoader.load(Earthtexture);
         texture.flipY = false;
         //Earthtexture
-
+//xx
         var geometryEarth = new THREE.SphereGeometry(30, 32, 32);
         var materialEarth = new THREE.MeshPhongMaterial();
         materialEarth.map = texture;
         var earthmesh = new THREE.Mesh(geometryEarth, materialEarth);
         earthmesh.position.x = PeoplePosition.x;
         earthmesh.position.y = PeoplePosition.y;
+        earthmesh.geometry.center();
         scene.add( earthmesh );
 
         //Social Icons Animation Line
@@ -477,7 +506,7 @@ const NewHookComponent = () => {
 
               SocialAnimmaterialMeshLineArray[i] = new MeshLineMaterial({
                       transparent: true,
-                      lineWidth: 2,
+                      lineWidth: 3,
                       color: new THREE.Color(AnimationLineColor),
                       dashArray: 1,     // always has to be the double of the line
                       dashOffset: 0,    // start the dash at zero
@@ -511,7 +540,7 @@ const NewHookComponent = () => {
 
             PPeopleAnimmaterialMeshLineArray[j] = new MeshLineMaterial({
                     transparent: true,
-                    lineWidth: 2,
+                    lineWidth: 3,
                     color: new THREE.Color(AnimationLineColor),
                     dashArray: 1,     // always has to be the double of the line
                     dashOffset: 0,    // start the dash at zero
@@ -519,22 +548,31 @@ const NewHookComponent = () => {
                     //dashRatio: 0.75,  // visible length range min: 0.99, max: 0.5
                   });
 
-            
 
 
-            // if(j == 1){
-            //   console.log(j);
-            //   correctYposition = PeoplePosition.y + 50;
-            // }else if(j == 2){
-            //   correctYposition = PeoplePosition.y + 50;
-            //   console.log(j);
-            // }
+            var correctXposition;
+            var correctYposition;
+            if(j == 0){
+              console.log(j);
+              correctXposition = PeoplePosition.x - 10;
+              correctYposition = PeoplePosition.y + 40;
+              console.log(correctYposition);
+            }else if(j == 1){
+              correctXposition = PeoplePosition.x;
+              correctYposition = PeoplePosition.y - 50;
+            }else if(j == 2){
+              correctXposition = PeoplePosition.x;
+              correctYposition = PeoplePosition.y - 50;
+            }else if(j == 3){
+              correctXposition = PeoplePosition.x + 8;
+              correctYposition = PeoplePosition.y + 40;
+            }
 
             //add Animation from social to world
             //PeoplePosition
             var PPeoplepointsMeshLine = [];
             PPeoplepointsMeshLine.push( new THREE.Vector3(SocialIconsPositions[j].x, SocialIconsPositions[j].y - 11, 0 ) );
-            PPeoplepointsMeshLine.push( new THREE.Vector3( PeoplePosition.x, PeoplePosition.y, 0 ) );
+            PPeoplepointsMeshLine.push( new THREE.Vector3( correctXposition, correctYposition, 0 ) );
 
             PPeopleLineCoordinates[j] = PPeoplepointsMeshLine;
             PPeopleLineCoordinatesGeometries[j] = new MeshLine();
@@ -545,51 +583,84 @@ const NewHookComponent = () => {
             scene.add( PPeopleLineCoordinatesObjectAnimated[j] );
             //add Animation from social to world
 
-
         }
 
-        //console.log(GlobalSocialAnimLineCoordinatesObjectAnimated);
+        //world coordinates
+        const turbulence = 0.5;
+
+        const NearestRandomPoints = (mainpoint) => {
+          var randomValue = mainpoint + (Math.random() * (turbulence * 2)) - turbulence;
+          return randomValue;
+        }
+
+        var WorldColors = []
+        var WorldOutCoordinates = [];
+        var WorldOutCoordinatesTwo = [];
+        var WorldLineCoordinatesGeometries = [];
+        var WorldLineCoordinatesGeometriesTwo = [];
+        var WorldGeneratedlinePoints = [];
+        var WorldLineCoordinatesObjectOriginal = [];
+        var WorldLineCoordinatesObjectOriginalTwo = [];
+        var WorldLineCoordinatesObjectOriginalAnime = [];
+        var WorldLineCoordinatesObjectOriginalAnimeTwo = [];
+
+
+
+        for(var k = 0;k < 4;k++){
+
+          WorldColors[k] = new MeshLineMaterial({
+            transparent: true,
+            lineWidth: 3,
+            color: new THREE.Color(AnimationLineColor),
+            dashArray: 1,     // always has to be the double of the line
+            dashOffset: 0,    // start the dash at zero
+            dashRatio: 0.99,  // visible length range min: 0.99, max: 0.5
+            //dashRatio: 0.75,  // visible length range min: 0.99, max: 0.5
+                });
+
+
+
+          var worldInsideCoordinates = [];
+          var worldInsideCoordinatestwo = [];
+
+          worldInsideCoordinates.push( new THREE.Vector3(PeoplePosition.x, PeoplePosition.y, 0 ) );
+          worldInsideCoordinates.push( new THREE.Vector3(NearestRandomPoints(-120), NearestRandomPoints(businessPosition.y + PeoplePosition.y) , 0 ) );
+          worldInsideCoordinates.push( new THREE.Vector3(NearestRandomPoints(-120), NearestRandomPoints((businessPosition.y + PeoplePosition.y) / 4) , 0 ) );
+          worldInsideCoordinates.push( new THREE.Vector3(businessPosition.x - 30, businessPosition.y, 0 ) );
+
+          WorldOutCoordinates[k] = worldInsideCoordinates;
+
+          worldInsideCoordinatestwo.push( new THREE.Vector3(PeoplePosition.x, PeoplePosition.y, 0 ) );
+          worldInsideCoordinatestwo.push( new THREE.Vector3(NearestRandomPoints(+120), NearestRandomPoints(businessPosition.y + PeoplePosition.y) , 0 ) );
+          worldInsideCoordinatestwo.push( new THREE.Vector3(NearestRandomPoints(+120), NearestRandomPoints((businessPosition.y + PeoplePosition.y) / 4) , 0 ) );
+          worldInsideCoordinatestwo.push( new THREE.Vector3(businessPosition.x + 30, businessPosition.y, 0 ) );
+
+          WorldOutCoordinatesTwo[k] = worldInsideCoordinatestwo;
+
+
+          WorldLineCoordinatesGeometries[k] = new MeshLine();
+          WorldLineCoordinatesGeometries[k].setPoints(WorldOutCoordinates[k]);
+          WorldLineCoordinatesGeometriesTwo[k] = new MeshLine();
+          WorldLineCoordinatesGeometriesTwo[k].setPoints(WorldOutCoordinatesTwo[k]);
+
+
+           WorldLineCoordinatesObjectOriginal[k] = new THREE.Mesh(WorldLineCoordinatesGeometries[k], baseLineMesh);
+           WorldLineCoordinatesObjectOriginalAnime[k] = new THREE.Mesh(WorldLineCoordinatesGeometries[k], WorldColors[k]);
+
+           WorldLineCoordinatesObjectOriginalTwo[k] = new THREE.Mesh(WorldLineCoordinatesGeometriesTwo[k], baseLineMesh);
+           WorldLineCoordinatesObjectOriginalAnimeTwo[k] = new THREE.Mesh(WorldLineCoordinatesGeometriesTwo[k], WorldColors[k]);
+
+
+          //scene.add( WorldLineCoordinatesObjectOriginal[1] );
+          scene.add( WorldLineCoordinatesObjectOriginal[k] );
+          scene.add( WorldLineCoordinatesObjectOriginalAnime[k] );
+          scene.add( WorldLineCoordinatesObjectOriginalTwo[k] );
+          scene.add( WorldLineCoordinatesObjectOriginalAnimeTwo[k] );
+        }
 
 
 
 
-        //load 3d earth
-
-        //
-
-        //social network
-
-
-
-
-
-//curves lines from business to bloggers
-
-//meshLine
-//MeshLine, MeshLineMaterial, MeshLineRaycast
-
-
-
-            // // ! Assuming you have your own webgl engine to add meshes on scene and update them.
-            //   webgl.add(lineMesh);
-
-            // ! Call each frame
-              // function update() {
-              //   // Check if the dash is out to stop animate it.
-              //   if (lineMesh.material.uniforms.dashOffset.value < -2) return;
-              //
-              //   // Decrement the dashOffset value to animate the path with the dash.
-              //   lineMesh.material.uniforms.dashOffset.value -= 0.01;
-              // }
-//meshLine
-
-
-
-
-
-    //scene.add(group);
-
-    //console.log(LineCurveCoordinatesCurveLineObject[0]);
 
 
 
@@ -600,11 +671,12 @@ const NewHookComponent = () => {
     var LineSpeedFour = 0.002;
     var LineSpeedFive = 0.002;
     var LineSpeedSix = 0.002;
-
-
+//xx
+    //var iterator = 0;
     function animate() {
         renderer.render(scene, camera)
         requestAnimationFrame(animate);
+
         // Check if the dash is out to stop animate it.
         // if (LineCurveCoordinatesCurveLineObject[0].material.uniforms.dashOffset.value < -2){
         //   return false;
@@ -623,6 +695,13 @@ const NewHookComponent = () => {
 
         if(LineCurveCoordinatesCurveLineObject[5].material.dashOffset.toFixed(2) < -0.6){
           enableAnimation = 0;
+          setManageStep(2);
+
+
+
+
+
+
         }
 
         // viewPositionAnimation.y -= 0.04;
@@ -637,6 +716,15 @@ const NewHookComponent = () => {
           VideoLineCoordinatesObjectAnimated[VideoLineCoordinatesObjectAnimatedSpepper].material.dashOffset -= LineSpeed;
           if(VideoLineCoordinatesObjectAnimated[VideoLineCoordinatesObjectAnimatedSpepper].material.dashOffset.toFixed(2) < -0.6){
             enableAnimationVideo = 0;
+            VideoLineCoordinatesObjectAnimated[VideoLineCoordinatesObjectAnimatedSpepper].material.dashOffset = 0;
+            setManageStep(3);
+
+            if(VideoLineCoordinatesObjectAnimatedSpepper == 5){
+              VideoLineCoordinatesObjectAnimatedSpepper = 0;
+            }else{
+              VideoLineCoordinatesObjectAnimatedSpepper++;
+            }
+
           }
         }
 
@@ -648,41 +736,120 @@ const NewHookComponent = () => {
           if(GlobalSocialAnimLineCoordinatesObjectAnimated[SocialAnimLineCoordinatesObjectAnimatedStepper][0].material.dashOffset.toFixed(2) < -0.6){
 
               SocialAnimLineEnable = 0;
-              // SocialAnimLineCoordinatesObjectAnimatedStepper++;
-              // if(SocialAnimLineCoordinatesObjectAnimatedStepper == 6){
-              //   SocialAnimLineEnable = 0;
-              // }
+              setManageStep(4);
+              GlobalSocialAnimLineCoordinatesObjectAnimated[SocialAnimLineCoordinatesObjectAnimatedStepper][0].material.dashOffset = 0;
+              GlobalSocialAnimLineCoordinatesObjectAnimated[SocialAnimLineCoordinatesObjectAnimatedStepper][1].material.dashOffset = 0;
+              GlobalSocialAnimLineCoordinatesObjectAnimated[SocialAnimLineCoordinatesObjectAnimatedStepper][2].material.dashOffset = 0;
+              GlobalSocialAnimLineCoordinatesObjectAnimated[SocialAnimLineCoordinatesObjectAnimatedStepper][3].material.dashOffset = 0;
+
+              if(SocialAnimLineCoordinatesObjectAnimatedStepper == 5){
+                SocialAnimLineCoordinatesObjectAnimatedStepper = 0;
+              }else{
+                SocialAnimLineCoordinatesObjectAnimatedStepper++;
+              }
+
+          }
+        }
+
+        if(SocialWorldLineEnable == 1){
+          PPeopleLineCoordinatesObjectAnimated[0].material.dashOffset -= LineSpeed;
+          PPeopleLineCoordinatesObjectAnimated[1].material.dashOffset -= LineSpeed;
+          PPeopleLineCoordinatesObjectAnimated[2].material.dashOffset -= LineSpeed;
+          PPeopleLineCoordinatesObjectAnimated[3].material.dashOffset -= LineSpeed;
+
+          if(PPeopleLineCoordinatesObjectAnimated[SocialWorldLineEnableStepper].material.dashOffset.toFixed(2) < -0.6){
+
+              SocialWorldLineEnable = 0;
+
+              PPeopleLineCoordinatesObjectAnimated[0].material.dashOffset = 0;
+              PPeopleLineCoordinatesObjectAnimated[1].material.dashOffset = 0;
+              PPeopleLineCoordinatesObjectAnimated[2].material.dashOffset = 0;
+              PPeopleLineCoordinatesObjectAnimated[3].material.dashOffset = 0;
+
+              // earthmesh.rotation.y = 0;
+              // roundPeoples_image_mesh.rotation.z -= 0.01;
+
+              setManageStep(5);
 
           }
         }
 
 
 
+        if(WorldEnable == 1){
+          WorldLineCoordinatesObjectOriginalAnime[0].material.dashOffset -= 0.002;
+           WorldLineCoordinatesObjectOriginalAnime[1].material.dashOffset -= 0.001;
+           WorldLineCoordinatesObjectOriginalAnime[2].material.dashOffset -= 0.003;
+           WorldLineCoordinatesObjectOriginalAnime[3].material.dashOffset -= 0.004;
+
+          WorldLineCoordinatesObjectOriginalAnimeTwo[0].material.dashOffset -= 0.002;
+           WorldLineCoordinatesObjectOriginalAnimeTwo[1].material.dashOffset -= 0.001;
+           WorldLineCoordinatesObjectOriginalAnimeTwo[2].material.dashOffset -= 0.003;
+           WorldLineCoordinatesObjectOriginalAnimeTwo[3].material.dashOffset -= 0.004;
+
+           earthmesh.rotation.y += 0.05;
+           roundPeoples_image_mesh.rotation.z -= 0.01;
+
+           if(WorldLineCoordinatesObjectOriginalAnime[0].material.dashOffset.toFixed(2) < -0.6){
+
+              WorldLineCoordinatesObjectOriginalAnime[0].material.dashOffset = 0;
+              WorldLineCoordinatesObjectOriginalAnime[1].material.dashOffset = 0;
+              WorldLineCoordinatesObjectOriginalAnime[2].material.dashOffset = 0;
+              WorldLineCoordinatesObjectOriginalAnime[3].material.dashOffset = 0;
+
+             WorldLineCoordinatesObjectOriginalAnimeTwo[0].material.dashOffset = 0;
+              WorldLineCoordinatesObjectOriginalAnimeTwo[1].material.dashOffset = 0;
+              WorldLineCoordinatesObjectOriginalAnimeTwo[2].material.dashOffset = 0;
+              WorldLineCoordinatesObjectOriginalAnimeTwo[3].material.dashOffset = 0;
+
+             runAgain();
+           }
+        }
+
+
+
+          //console.log(positions);
+
+
       }
       animate();
+
+
 
       function getRandomFloat() {
         return (Math.random() * (0.001 - 0.006) + 0.006).toFixed(4)
       }
 
-      if(enableAnimation == 1){
-        setInterval(function(){
-          // LineSpeed = getRandomFloat();
-          // LineSpeedTwo = getRandomFloat();
-          // LineSpeedThree = getRandomFloat();
-          // LineSpeedFour = getRandomFloat();
-          // LineSpeedFive = getRandomFloat();
-          // LineSpeedSix = getRandomFloat();
+      const runAgain = () => {
+        setTimeout(function(){
+          WorldEnable = 0;
+          WorldLineCoordinatesObjectOriginalAnime[0].material.dashOffset = 0;
+          WorldLineCoordinatesObjectOriginalAnime[1].material.dashOffset = 0;
+          WorldLineCoordinatesObjectOriginalAnime[2].material.dashOffset = 0;
+          WorldLineCoordinatesObjectOriginalAnime[3].material.dashOffset = 0;
 
-
-        },2000)
+         WorldLineCoordinatesObjectOriginalAnimeTwo[0].material.dashOffset = 0;
+          WorldLineCoordinatesObjectOriginalAnimeTwo[1].material.dashOffset = 0;
+          WorldLineCoordinatesObjectOriginalAnimeTwo[2].material.dashOffset = 0;
+          WorldLineCoordinatesObjectOriginalAnimeTwo[3].material.dashOffset = 0;
+          setManageStep(2);
+        },5000);
       }
 
 
+
+
+
+  }
+
+  useEffect(() => {
+
+    Core();
+    setManageStep(1);
       //onWindowResize();
 
       //window.addEventListener( 'resize', onWindowResize, false );
-
+    //
     mount.current.appendChild(renderer.domElement)
 
     return () => {
