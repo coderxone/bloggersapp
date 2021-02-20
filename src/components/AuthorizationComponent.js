@@ -258,8 +258,6 @@ const AuthorizationComponent = (props) => {
 
                   <Link className="appColor" to="/restore">{LocalizeComponent.restore_password}</Link>
 
-
-
               </Box>
 
 

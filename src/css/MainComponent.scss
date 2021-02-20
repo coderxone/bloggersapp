@@ -1,0 +1,137 @@
+$base-app-color:#0083ff;
+$font-size: 18px;
+$fontStyles:"Times New Roman", Times, serif;
+$greyText:#767676;
+
+.businessContainer{
+  padding-bottom:20px;  
+}
+
+.vis {
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.Business-title{
+  width:100%;
+  margin-top:10px;
+}
+
+.Business-title-text{
+  color:$base-app-color;
+  font-style: $fontStyles;
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.Business-desc-one{
+  margin-left:5px;
+  margin-right:5px;
+}
+
+.Business-desc-text{
+  color:$greyText;
+  font-style: $fontStyles;
+  font-size: 20px;
+  padding:7px;
+  text-align: center;
+}
+
+.Business-title-two{
+  width:100%;
+}
+
+.Business-title-text-two{
+  color:$base-app-color;
+  font-style: $fontStyles;
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.business-offer{
+  width:100%;
+  margin-left:10px;
+  margin-right:5px;
+}
+
+.business-offer-left{
+  width:14%;
+  float: left;
+  margin-top:10px;
+  text-align: center;
+}
+.business-offer-left-money{
+  width:14%;
+  float: left;
+  margin-top:2.5px;
+  text-align: center;
+}
+
+.business-offer-right{
+  width: 86%;
+  float: left;
+  color:$greyText;
+  font-style: $fontStyles;
+  font-size: 18px;
+  padding:7px;
+}
+
+.business-icon-color{
+  color:$base-app-color !important;
+  font-size: 30px !important;
+}
+
+.Business-title-three{
+  margin-top:10px;
+  margin-bottom:10px;
+  width:100%;
+}
+
+.Business-title-text-three{
+  margin:4px;
+  color:$base-app-color;
+  font-style: $fontStyles;
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.Business-titleTwo{
+  margin-top:10px;
+  width:100%;
+}
+
+.Business-titleTwo-Text{
+  margin:4px;
+  color:$base-app-color;
+  font-style: $fontStyles;
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+}
+.Business-title-four{
+  margin-top:5px;
+  margin-bottom:10px;
+  width:100%;
+}
+.Business-title-four-text{
+  margin:4px;
+  color:$base-app-color;
+  font-style: $fontStyles;
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.creator-icon-color{
+  color:$base-app-color !important;
+  font-size: 15px !important;
+}
+
+.buttonCenter{
+  margin-left: 25%;
+}
