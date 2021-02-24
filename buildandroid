@@ -1,0 +1,1 @@
+ionic capacitor build android

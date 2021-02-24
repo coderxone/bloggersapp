@@ -1,7 +1,9 @@
 {
-  "name": "myApp",
+  "name": "EchoHub.io",
   "integrations": {
-    "capacitor": {}
+    "capacitor": {
+      "webDir": "build"
+    }
   },
   "type": "react"
 }

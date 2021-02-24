@@ -17,7 +17,7 @@ import '../css/MainComponent.scss';
 import fontStylesD from '../fonts/helvetiker_regular_typeface.json';
 import  Earthtexture from '../3dmodels/earth_texture_two.png';
 import VideocamIcon from '../images/camera.png';
-
+import config from '../config/config';
 
 
 const backgroundColor = "#ffffff";
@@ -45,6 +45,11 @@ const camera = new THREE.PerspectiveCamera(45,ASPECT_RATIO, 1, 1000);
 const renderer = new THREE.WebGLRenderer({ antialias: true })
 //var viewPosition = {x:0,y:-150,z:200};
 var viewPosition = {x:0,y:-150,z:550};//for mobiles
+if(config.getDeployData().deployPlatform == "android"){
+  viewPosition = {x:0,y:-150,z:590};//for android
+}
+
+console.log(viewPosition);
 var viewPositionAnimation = {x:0,y:0,z:0};
 
 var enableAnimation = 0;//control video animation from business to bloggers

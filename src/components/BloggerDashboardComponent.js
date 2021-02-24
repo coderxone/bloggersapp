@@ -271,6 +271,9 @@ const BlockComponent = (props) => {
 
 const BloggerDashboardComponent = (props) => {
 
+  const locationConfig = {skipPermissionRequests:false,authorizationLevel:"whenInUse"}
+
+
   const lastLocation = useLastLocation();
 
   const checkingEmail = useMemo(() => {
@@ -495,7 +498,8 @@ const SuccessLocationWatcher = (position) => {
 }
 
 const ErrorPosition = (data) => {
-  //console.log(data);
+  console.log(data);
+  Geolocation.requestAuthorization();
 }
 
 useEffect(() => {
@@ -541,6 +545,13 @@ useEffect(() => {
     enableHighAccuracy: true,
     timeout: 60000
   }
+    try{
+      Geolocation.setRNConfiguration(locationConfig);
+    }catch(e){
+
+    }
+
+
 
     const watchId = Geolocation.watchPosition(SuccessLocationWatcher, ErrorPosition, options);
 

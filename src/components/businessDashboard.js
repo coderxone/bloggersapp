@@ -369,10 +369,12 @@ const BusinessDashboard = (props) => {
 
     const businessConst = BusinesService.listenBusinessCore().subscribe(data => {
 
-      //console.log(data.sdata);
+      
+
       const NewlistArrays = listArray.slice();
 
-      if(data.sdata > NewlistArrays.length){
+      if(data.sdata.length > NewlistArrays.length){
+
         for(var i = 0;i < data.sdata.length;i++){
             var f = 0;
             for(var j = 0;j < NewlistArrays.length;j++){
@@ -382,6 +384,7 @@ const BusinessDashboard = (props) => {
             }
 
             if(f == 0){
+
               NewlistArrays.push(data.sdata[i]);
             }
 

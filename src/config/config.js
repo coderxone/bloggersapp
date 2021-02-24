@@ -1,6 +1,8 @@
 import generateModule from '../helpers/GenerateNumber';
 import React from 'react';
 
+const deployMode = "production";
+const deployPlatform = "android";
 const cryptKey = "cryptoGraph2020";
 const routeUrl = "https://kazpoisk.kz";
 //const userRole = "1"; blogger
@@ -119,6 +121,14 @@ const newmodule = {
       getNotificationCount:() => {
         return localStorage.getItem("notificationcount");
       }
+      ,
+      getDeployData:() => {
+        return {
+          deployMode:deployMode,
+          deployPlatform:deployPlatform
+        };
+      }
+
 
 }
 

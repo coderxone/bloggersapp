@@ -33,6 +33,7 @@ import ContactListComponent from './components/contactListComponent';
 import TaskComponent from './components/TaskComponent';
 import RedirectComponent from './components/RedirectComponent';
 import MainComponent from './components/MainComponent';
+import DandelionComponent from './components/dandelionComponent';
 
 
 
@@ -72,6 +73,7 @@ const App = () => {
                 <Route path="/contactlist" component={ContactListComponent} exact={true} />
                 <Route path="/mytasks" component={TaskComponent} exact={true} />
                 <Route path="/main" component={MainComponent} exact={true} />
+                <Route path="/dandelion" component={DandelionComponent} exact={true} />
                 <Route path="/follow/:id" component={RedirectComponent} exact={true} />
                 <Route exact path="/" render={() => <Redirect to="/main" />} />
                 </LastLocationProvider>
