@@ -12,11 +12,12 @@ import {
 import TextField from '@material-ui/core/TextField';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
-import Logo from '../icons/Logo_Echohub.png';
+import Logo from '../icons/Logo_Echohub_1_part.png';
+import LogoTwo from '../icons/Logo_Echohub_2_part.png';
 import Box from '@material-ui/core/Box';
 import { connect } from 'react-redux';
 import AuthService from '../services/AuthService';
-
+import DandelionComponent from '../components/dandelionComponent.js';
 import { increment, decrement,save_email } from '../actions/actions';
 import {
   Link, Redirect
@@ -193,9 +194,14 @@ const AuthorizationComponent = (props) => {
           <Grid item xs={12}>
             <Paper className={classes.paper}>
 
-              <Box mt={3} >
-                <img src={Logo} alt="Logo" className="MainLogo" />
-              </Box>
+              <div className="MainLCenterWrap">
+                <div className="MainLCenter">
+                  <img src={Logo} alt="Logo" className="MainLogoLeft" />
+                  <div className="MainLogoCenter"><DandelionComponent /></div>
+                  <img src={LogoTwo} alt="Logo" className="MainLogoRight" />
+                </div>
+              </div>
+
 
             </Paper>
           </Grid>

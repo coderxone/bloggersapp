@@ -130,10 +130,53 @@ body{
 	height:100px;
 }
 
+.MainLCenterWrap{
+  width: 100%;
+  overflow: hidden;
+}
+
+.MainLCenter{
+  width: 100%;
+  margin-left: 15%;
+}
 .MainLogo{
     /* base styles */
   width: 35ch;
   height: 22ch;
+
+}
+.MainLogoLeft{
+  float: left;
+  width: 35ch;
+  height: 22ch;
+  width:25%;
+
+}
+
+.MainLogoCenter{
+  float: left;
+  width:50%;
+  margin-top:-42%;
+  margin-left: -2%;
+  z-index: 1;
+}
+.MainLogoRight{
+  width: 35ch;
+  height: 22ch;
+  float: left;
+  width:25%;
+  z-index: 100;
+  margin-left: -28%;
+}
+
+.dandelion > canvas{
+  width:100% !important;
+  height: 100% !important;
+  z-index: 1 !important;
+}
+.dandelion{
+
+  z-index: 1 !important;
 }
 
 .b_letter{
