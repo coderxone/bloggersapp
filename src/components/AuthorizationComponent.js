@@ -195,12 +195,10 @@ const AuthorizationComponent = (props) => {
             <Paper className={classes.paper}>
 
               <div className="MainLCenterWrap">
-                <div className="MainLCenter">
-                  <img src={Logo} alt="Logo" className="MainLogoLeft" />
+
                   <div className="MainLogoCenter"><DandelionComponent /></div>
-                  <img src={LogoTwo} alt="Logo" className="MainLogoRight" />
+
                 </div>
-              </div>
 
 
             </Paper>

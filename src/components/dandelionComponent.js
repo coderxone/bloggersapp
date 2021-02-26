@@ -6,9 +6,9 @@ import * as THREE from "three";
 // } from 'three';
 
 import { MeshLine, MeshLineMaterial, MeshLineRaycast } from 'three.meshline';
-import sample from '../images/sample1.jpeg';
-import sample2 from '../images/sample2.jpg';
-import instagramIcon from '../images/instagram.png';
+
+import Logo_Echohub_1_part from '../icons/Logo_Echohub_1_part.png';
+import Logo_Echohub_2_part from '../icons/Logo_Echohub_2_part.png';
 import YoutubeIcon from '../images/youtube.png';
 import FacebookIcon from '../images/facebook.png';
 import TiktokIcon from '../images/tiktok.png';
@@ -41,35 +41,46 @@ const group = new THREE.Object3D();
 const scene = new THREE.Scene();
 const width = window.innerWidth;
 const height = window.innerHeight;
-const camera = new THREE.PerspectiveCamera(45,ASPECT_RATIO, 1, 1000);
-const renderer = new THREE.WebGLRenderer({ antialias: true,alpha: true })
+const camera = new THREE.PerspectiveCamera(45,ASPECT_RATIO, 1, 2000);
+//const renderer = new THREE.WebGLRenderer({ antialias: true,alpha: true })
+const renderer = new THREE.WebGLRenderer({ antialias: true })
 
 var AnimationParams = {
-  color: "#0181C2",
+  //color: "white",
+   color: "#0181C2",
   opacity:1,
   transparent:true
 }
-var BackgroundColor = "white";
+//var BackgroundColor = "white";
+var BackgroundColor = "#0181C2";
 
 var AnimationControl = 0;
 
-var moveInsideX = 160;
-var moveInsideY = 140;
-var animX = 0;
-var animY = 50;
-var xViewMobile = 470;
-if(width < 800){
-  animX = 0;
-  xViewMobile = 900;
+var moveInsideX = 80;
+var moveInsideY = 80;
+
+var movingPointX = 35;
+var movingPointY = 300;
+
+var echoX = -262 + movingPointX;
+var hubX = 195 + movingPointX;
+var animX = 0 + movingPointX;
+var animY = 0 + movingPointY;
+var xViewMobile = 1650;
+
+if((width < 376) && (height > 650) && (height < 850)){
+  xViewMobile = 2000;
+  movingPointY = 400;
+  animY = 0 + movingPointY;
 }
 
-if(height < 1200){
-  animY = -150;
-}
+// if(height < 1200){
+//   animY = 0;
+// }
 //var viewPosition = {x:0,y:-150,z:200};
-var viewPosition = {x:0,y:50,z:450};//for mobiles
+var viewPosition = {x:0,y:0,z:xViewMobile};//for mobiles
 if(config.getDeployData().deployPlatform == "android"){
-  viewPosition = {x:0,y:50,z:xViewMobile};//for android
+  //viewPosition = {x:0,y:50,z:xViewMobile};//for android
 }
 
 //console.log(viewPosition);
@@ -122,7 +133,7 @@ const NewHookComponent = () => {
 
     //camera.lookAt( viewPositionAnimation.x, viewPositionAnimation.y, viewPositionAnimation.z );
 
-    //renderer.setClearColor(backgroundColor)
+    renderer.setClearColor(backgroundColor)
     //renderer.setClearColor(0x000000, 0)
     renderer.setSize(width, height)
   }
@@ -164,10 +175,30 @@ const NewHookComponent = () => {
     //scene.add(light);
 
 
-    //create rectangle geometry
-    const geometry = new THREE.PlaneGeometry( 400, 400, 32 );
-    const material = new THREE.MeshBasicMaterial( { side: THREE.DoubleSide, wireframe: true, opacity: 1} );
-    const plane = new THREE.Mesh( geometry, material );
+    var imgEcho1 = new THREE.MeshBasicMaterial({
+        map:THREE.ImageUtils.loadTexture(Logo_Echohub_1_part)
+    });
+    imgEcho1.map.needsUpdate = true; //ADDED
+    var imgEcho1_mesh = new THREE.Mesh(new THREE.PlaneGeometry(320, 420),imgEcho1);
+    imgEcho1_mesh.overdraw = true;
+    imgEcho1_mesh.material.needsUpdate = true;
+    imgEcho1_mesh.position.x = echoX;;
+    imgEcho1_mesh.position.y = 24 + movingPointY;
+    scene.add(imgEcho1_mesh);
+
+    var imgEcho2 = new THREE.MeshBasicMaterial({
+        map:THREE.ImageUtils.loadTexture(Logo_Echohub_2_part)
+    });
+    imgEcho2.map.needsUpdate = true; //ADDED
+    var imgEcho2_mesh = new THREE.Mesh(new THREE.PlaneGeometry(320, 420),imgEcho2);
+    imgEcho2_mesh.overdraw = true;
+    imgEcho2_mesh.position.x = hubX;
+    imgEcho2_mesh.position.y = 24 + movingPointY;
+    imgEcho2_mesh.material.needsUpdate = true;
+
+    scene.add(imgEcho2_mesh);
+
+    const plane = new THREE.Object3D();
     plane.position.x = animX;
     plane.position.y = animY;
 
