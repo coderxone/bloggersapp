@@ -4,6 +4,7 @@ import config from '../config/config.js';
 import cryptLibrary from '../helpers/CryptLibrary';
 
 const observ_subject = new Subject();
+const observ_subjecttwo = new Subject();
 
 const business = {
 
@@ -13,8 +14,6 @@ const business = {
           "email":config.getUserEmail(),
           "role":config.getUserRole(),
         }
-
-        console.log(datas);
 
         var encryptedData = cryptLibrary.encrypt(datas);
 
@@ -28,6 +27,29 @@ const business = {
         });
 
         return observ_subject;
+      },
+
+      RequestCheckTasks:() => {
+        var datas = {
+          "deviceid":config.getdeviceid(),
+          "email":config.getUserEmail(),
+          "role":config.getUserRole()
+        }
+
+        //console.log(datas);
+
+        var encryptedData = cryptLibrary.encrypt(datas);
+
+        socket.emit("checkTasks",encryptedData);
+      },
+
+      ListenCheckTasks:() => {
+        socket.on("checkTasks",(data) => {
+            //console.log(data);
+            observ_subjecttwo.next(cryptLibrary.decrypt(data));
+        });
+
+        return observ_subjecttwo;
       },
 
       async_function: async function(){ //a function that returns a promise

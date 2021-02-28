@@ -8,22 +8,14 @@ if((config.getDeployData().deployMode == "production") && (config.getDeployData(
 }else if((config.getDeployData().deployMode == "development") && (config.getDeployData().deployPlatform == "android")){
   url = 'http://localhost:3002';//android
 }else if((config.getDeployData().deployMode == "development") && (config.getDeployData().deployPlatform == "browser")){
-  url = 'http://localhost:3004';
+  url = 'https://localhost:3004';
 }
+
+//url = 'https://localhost:3004';
 
 //private url = 'http://kazpoisk.kz:3002';
 //const socket = io(url);
 //browser
-const socket = io.connect(url,{
-                  reconnection: true,
-                  reconnectionDelay: 1000,
-                  reconnectionDelayMax : 5000,
-                  reconnectionAttempts: Infinity,
-                  rememberUpgrade:true,
-                  transports: ['websocket'],
-                  rejectUnauthorized: false
-                });
-//browser https
 // const socket = io.connect(url,{
 //                   reconnection: true,
 //                   reconnectionDelay: 1000,
@@ -31,9 +23,19 @@ const socket = io.connect(url,{
 //                   reconnectionAttempts: Infinity,
 //                   rememberUpgrade:true,
 //                   transports: ['websocket'],
-//                   secure:false,
 //                   rejectUnauthorized: false
-//                 });;
+//                 });
+//browser https
+const socket = io.connect(url,{
+                  reconnection: true,
+                  reconnectionDelay: 1000,
+                  reconnectionDelayMax : 5000,
+                  reconnectionAttempts: Infinity,
+                  rememberUpgrade:true,
+                  transports: ['websocket'],
+                  secure:true,
+                  rejectUnauthorized: false
+                });;
 
 
 

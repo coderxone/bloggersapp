@@ -48,12 +48,8 @@ import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 
-
 import FolderIcon from '@material-ui/icons/Folder';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
-
-
-
 import { increment, decrement,save_email } from '../actions/actions';
 import {
   Link,useHistory,
@@ -312,7 +308,7 @@ const BlockComponent = (props) => {
   );
 
 }
-//xx
+
 
 
 
@@ -362,14 +358,13 @@ const BusinessDashboard = (props) => {
 
 
 
-//xx
+
   const [ listArray, setListArray ] = useState([]);
 
   useEffect(() => {
 
     const businessConst = BusinesService.listenBusinessCore().subscribe(data => {
 
-      
 
       const NewlistArrays = listArray.slice();
 
@@ -412,6 +407,7 @@ const BusinessDashboard = (props) => {
 
   useEffect(() => {
     BusinesService.getBusinessData();
+    BusinesService.RequestCheckTasks();
   },[])
 
   var w = window.innerWidth / 2;
@@ -437,18 +433,52 @@ const BusinessDashboard = (props) => {
 
   });
 
+  const goToTaskIdPage = useCallback(() => {
+
+      var findItem = {};
+      var newList = [...listArray];
+      for(var i = 0;i < newList.length;i++){
+        if(newList[i].id == detailProjectId){
+          //console.log(newList[i]);
+          findItem = newList[i];
+        }
+      }
+      //return false;
+      return history.push({pathname: '/detail',data: findItem}), [history];
+
+  });
+
+const [dialogSwitcher,SetdialogSwitcher] = useState(0);
+
   useEffect(() => {
     const DialogNotif = Observable.getData_subject().subscribe(data => {
-      if(data == "confirm"){
-        goToContacts();
-        //go to page with id
-      }else if(data == "cancel"){
-        setDialogStatus(false);
+
+      if(dialogSwitcher == 0){
+        if(data == "confirm"){
+          goToContacts();
+          //go to page with id
+        }else if(data == "cancel"){
+          setDialogStatus(false);
+        }
+      }else if(dialogSwitcher == 1){
+        if(data == "confirm"){
+
+          goToTaskIdPage();
+          //go to page with id
+        }else if(data == "cancel"){
+          setDialogStatus(false);
+        }
       }
+
 
     });
 
-
+    return () => {
+      DialogNotif.unsubscribe();
+    }
+  },[dialogSwitcher]);
+//xx
+  useEffect(() => {
 
     const DialogExecute = Observable.getData_subjectDialog().subscribe(data => {
       if(data.alert == "opendialog"){
@@ -457,6 +487,7 @@ const BusinessDashboard = (props) => {
         setRightbutton(LocalizeComponent.check);
         setDialogText(LocalizeComponent.dialogCheckMessage);
         setDetailProjectId(data.projectId);
+        SetdialogSwitcher(0);
         setDetailMessage(data.message);
         setDialogStatus(true);
         //go to page with id
@@ -464,9 +495,31 @@ const BusinessDashboard = (props) => {
 
     });
 
+    //done tasks from each enfluencer
+    const ListenCheckTasks = BusinesService.ListenCheckTasks().subscribe(data => {
+      if(data.status == "ok"){
+        var task_id = data.result[0].task_id;
+        //console.log(task_id);
+
+        setLeftbutton(LocalizeComponent.cancel);
+        setRightbutton(LocalizeComponent.check);
+        setDialogText(LocalizeComponent.newCompletedUser);
+        setDetailProjectId(task_id);
+        SetdialogSwitcher(1);
+        setDetailMessage(data.PleaseCheckThisTask);
+        setDialogStatus(true);
+      }
+
+    });
+
+    const timer10s = Observable.subscribeByTimer_10_second().subscribe(data => {
+      BusinesService.RequestCheckTasks();
+    });
+
     return () => {
-      DialogNotif.unsubscribe();
+      ListenCheckTasks.unsubscribe();
       DialogExecute.unsubscribe();
+      timer10s.unsubscribe();
     }
   },[])
 
@@ -477,6 +530,7 @@ const BusinessDashboard = (props) => {
   const [rightbutton,setRightbutton] = useState('');
   const [dialogText,setDialogText] = useState('');
   const [detailProjectId,setDetailProjectId] = useState(0);
+
   const [detailMessage,setDetailMessage] = useState("");
 
   const CloseDrawer = () => {

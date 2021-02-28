@@ -9,6 +9,7 @@ const observ_subjectthree = new Subject();
 const observ_subjectfour = new Subject();
 const observ_subjectfive = new Subject();
 const observ_subjectfive44 = new Subject();
+const observ_subjectfive45 = new Subject();
 
 const detailservice = {
 
@@ -32,6 +33,30 @@ const detailservice = {
         });
 
         return observ_subjectfive44;
+      },
+
+      getSendTaskDone:(user_email,checkDetailId) => {
+        var datas = {
+          "deviceid":config.getdeviceid(),
+          "email":config.getUserEmail(),
+          "role":config.getUserRole(),
+          "user_email":user_email,
+          "task_id":checkDetailId,
+          "status":1,
+        }
+
+        var encryptedData = cryptLibrary.encrypt(datas);
+
+        socket.emit("setTasks",encryptedData);
+      },
+
+      listenSendTaskDone:() => {
+        socket.on("setTasks",(data) => {
+            //console.log(data);
+            observ_subjectfive45.next(cryptLibrary.decrypt(data));
+        });
+
+        return observ_subjectfive45;
       },
 
 

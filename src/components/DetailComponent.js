@@ -26,6 +26,7 @@ import PropTypes from 'prop-types';
 import Typography from '@material-ui/core/Typography';
 import GoBackAbsoluteComponent from '../helperComponents/goBackAbsoluteComponent';
 import ConfirmDialogComponent from '../helperComponents/ConfirmDialogComponent';
+import DoneIcon from '@material-ui/icons/Done';
 import { increment, decrement,save_email } from '../actions/actions';
 import {
   Link,useHistory,
@@ -140,70 +141,7 @@ const useStylesthree = makeStyles((theme) => ({
 
 var historyId = 9900;
 
-const ListComponent = (props) => {
 
-  const classestree = useStylesthree();
-
-  var statusArray = new Array(4);
-
-  const [secondary, setSecondary] = React.useState(false);
-
-  const items = props.items;
-
-  if(!items){
-    return false;
-  }
-
-
-  const handleInsideComponent = (item_id,items) => {
-
-
-    // items[item_id].status = true;
-    // historyId = items[item_id].id;
-    // var sendObject = {
-    //   id:item_id,
-    //   items:items,
-    //   from:1
-    // }
-    // ObservableService.sendData_subject(sendObject);
-
-  }
-
-
-
-  const content = items.map((item,index) =>
-
-    <div key={item.id} className={'FullList dynamicClass' + item.id} >
-
-          <div className="centralList">
-              <div className="leftSideList" onClick={(e) => handleInsideComponent(index,items)}>
-                {item.user_email}
-              </div>
-              <div className="rightSideList">
-                {item.status === false ? (
-                  <ExpandLessIcon />
-                 ) : (
-                   <ExpandMoreIcon/>
-                 )}
-              </div>
-          </div>
-          <SubComponent condition={item}/>
-
-    </div>
-  );
-
-     return (
-          <Grid item xs={12} md={6}>
-            <div className={classestree.demo}>
-              <List >
-                  {content}
-              </List>
-            </div>
-          </Grid>
-
-     );
-
-}
 
 
 
@@ -331,26 +269,38 @@ const navigateToDetail = (item,e) => {
 const SubDetail = (item,e) => {
 
 }
+
+
+
 //xx
 const BlogListComponent = (props) => {
 
   const items = props.items;
 
+  //console.log(items);
+
+  const ConfirmTask = (user_email) => {
+
+      var sendObject = {
+        from:2,
+        user_email:user_email
+      }
+      ObservableService.sendData_subject(sendObject);
+  }
+
   const content = items.map((item) =>
 
-          <div key={item.id} onClick={(e) => navigateToDetail(item, e)} className="blogger_block">
-                <div className="circle_image" style ={ { backgroundPosition: "center",backgroundRepeat:"no-repeat",backgroundSize:"cover",background: "url("+item.image_url+") no-repeat center/cover" }  }>
-                </div>
-                <div className="bl_name_center">
-                    <div className="bl_email_text">{item.user_email}</div>
-                    <div className="buttons_block">
-                      <div className="left_button">
-                        <div className="left_button_one">
-                          <div className="left_button_one_name">
-                             {item.raiting_stars} / 5
-                          </div>
-                        </div>
-                        <div className="left_button_two">
+      <div key={item.id} onClick={(e) => navigateToDetail(item, e)} className="blogger_block_main">
+  {item.complete === 1 ? (
+          <div className="blogger_block_two">
+              <div className="circle_image" style ={ { backgroundPosition: "center",backgroundRepeat:"no-repeat",backgroundSize:"cover",background: "url("+item.image_url+") no-repeat center/cover" }  }>
+              </div>
+              <div className="bl_name_center">
+                  <div className="bl_email_text_two">{item.user_email}</div>
+                  <div className="buttons_block_two">
+                    <div className="left_button">
+                      <div className="left_button_one">
+                        <div className="left_button_one_name">
                           <Link
                             className="removeUrlStyles"
                             to={{
@@ -363,22 +313,118 @@ const BlogListComponent = (props) => {
                             </div>
                         </Link>
                         </div>
-                        <div className="left_button_three">
-                          <div className="left_button_one_name">
-                            <Link className="removeUrlStyles"
-                              to={{
-                                pathname: "/subdetail",
-                                data: item // your data array of objects
-                              }}
-                            >
-                             {LocalizeComponent.detail}
-                           </Link>
-                          </div>
+                      </div>
+                      <div className="left_button_two">
+                        <div className="left_button_one_name">
+                        <Link className="removeUrlStyles"
+                          to={{
+                            pathname: "/subdetail",
+                            data: item // your data array of objects
+                          }}
+                        >
+                         {LocalizeComponent.detail}
+                       </Link>
                         </div>
                       </div>
+                      <div className="left_button_three">
+                        {item.complete === 1 ? (
+                          <div className="done_button_one_name">
+                            <DoneIcon className="done_button_one_name_size" />
+                          </div>
+                         ) : (
+                           <div className="left_button_one_name">
+                             {item.CountTasks}/{item.taskList.length}
+                           </div>
+                         )}
+
+                      </div>
                     </div>
-                </div>
-            </div>
+                  </div>
+
+                  <div className="buttons_block_three">
+                    {item.status === 2 ? (
+                      <div className="left_button_confirm">
+                        <div className="left_button_one_name">
+
+                          <div  className="left_button_one_name_confirm" onClick={event => ConfirmTask(item.user_email)}>
+                             {LocalizeComponent.Confirm_task}
+                          </div>
+
+
+                        </div>
+                      </div>
+                     ) : (
+                       <div className="left_button_confirmed">
+                         <div className="left_button_one_name">
+
+                           <div  className="left_button_one_name_confirmed" >
+                              <DoneIcon className="done_button_one_name_size_two" /><div className="confirmed_text">{LocalizeComponent.Confirmed_task}</div>
+                           </div>
+
+
+                         </div>
+                       </div>
+
+                     )}
+
+                  </div>
+              </div>
+          </div>
+       ) : (
+         <div className="blogger_block">
+               <div className="circle_image" style ={ { backgroundPosition: "center",backgroundRepeat:"no-repeat",backgroundSize:"cover",background: "url("+item.image_url+") no-repeat center/cover" }  }>
+               </div>
+               <div className="bl_name_center">
+                   <div className="bl_email_text">{item.user_email}</div>
+                   <div className="buttons_block">
+                     <div className="left_button">
+                       <div className="left_button_one">
+                         <div className="left_button_one_name">
+                           <Link
+                             className="removeUrlStyles"
+                             to={{
+                               pathname: "/profile",
+                               data: item // your data array of objects
+                             }}
+                           >
+                             <div  className="left_button_one_name">
+                                {LocalizeComponent.profile}
+                             </div>
+                         </Link>
+                         </div>
+                       </div>
+                       <div className="left_button_two">
+                         <div className="left_button_one_name">
+                         <Link className="removeUrlStyles"
+                           to={{
+                             pathname: "/subdetail",
+                             data: item // your data array of objects
+                           }}
+                         >
+                          {LocalizeComponent.detail}
+                        </Link>
+                         </div>
+                       </div>
+                       <div className="left_button_three">
+                         {item.complete === 1 ? (
+                           <div className="done_button_one_name">
+                             <DoneIcon className="done_button_one_name_size" />
+                           </div>
+                          ) : (
+                            <div className="left_button_one_name">
+                              {item.CountTasks}/{item.taskList.length}
+                            </div>
+                          )}
+
+                       </div>
+                     </div>
+                   </div>
+
+               </div>
+           </div>
+       )}
+       </div>
+
   );
 
   return (
@@ -471,8 +517,12 @@ const DetailComponent = (props) => {
   const [ listArrayApprove, setListApproveArray ] = useState([]);
   const [ viewsCount,setViewsCount ] = useState(0);
 
-  useEffect(() => {
+  const SendConfirmTask = (user_email) => {
+      DetailService.getSendTaskDone(user_email,checkDetailId);
+  }
 
+  useEffect(() => {
+//xx
     const listenDetailService = DetailService.listenDetailData().subscribe(data => {
 
       //console.log(data);
@@ -480,14 +530,14 @@ const DetailComponent = (props) => {
 
         var modifiedArray = data.data;
 
-        for(var i = 0;i < modifiedArray.length;i++){
-          if(modifiedArray[i].id == historyId){
-            modifiedArray[i].status = true;
-          }else{
-            modifiedArray[i].status = false;
-          }
-
-        }
+        // for(var i = 0;i < modifiedArray.length;i++){
+        //   if(modifiedArray[i].id == historyId){
+        //     modifiedArray[i].status = true;
+        //   }else{
+        //     modifiedArray[i].status = false;
+        //   }
+        //
+        // }
 
         const list = listArray.concat(modifiedArray);
 
@@ -511,20 +561,21 @@ const DetailComponent = (props) => {
       var from = data.from;
       var modify = data.items;
       var modifyId = data.id;
-
+      //
+      // if(from == 1){
+      //   for(var i = 0;i < modify.length;i++){
+      //     if(i != modifyId){
+      //       modify[i].status = false;
+      //     }else{
+      //       modify[i].status = true;
+      //     }
+      //   }
+      //
+      //   const ModifArray = listArray.concat(modify);
+      //   setListArray(ModifArray);
       if(from == 1){
-        for(var i = 0;i < modify.length;i++){
-          if(i != modifyId){
-            modify[i].status = false;
-          }else{
-            modify[i].status = true;
-          }
-        }
-
-        const ModifArray = listArray.concat(modify);
-        setListArray(ModifArray);
       }else if(from == 2){
-
+          SendConfirmTask(data.user_email);
       }else if(from == 10){
 
         setInterval(function(){
@@ -544,6 +595,11 @@ const DetailComponent = (props) => {
       setViewsCount(data.count);
     });
 
+    const listenSendTaskDone = DetailService.listenSendTaskDone().subscribe(data => {
+        //console.log(data);
+        getDetailData();
+    });
+
 
     //unsubscribe
 
@@ -553,6 +609,7 @@ const DetailComponent = (props) => {
       intervalObservable.unsubscribe();
       intervalObservable.unsubscribe();
       listenViews.unsubscribe();
+      listenSendTaskDone.unsubscribe();
     }
 
     //unsubscribe

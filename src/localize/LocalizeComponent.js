@@ -73,6 +73,10 @@ let strings = new LocalizedStrings({
    banBoxTitle:"This videos were banned please make new videos and upload for this social networks and insert link above to form",
    onlyLocal:"Involve only local creators",
    searchLocal:"Search only local business",
+   newCompletedUser:"1 user completed task",
+   PleaseCheckThisTask:"Please check this task ",
+   Confirm_task:"Confirm task",
+   Confirmed_task:"Task Confirmed",
 
  },
  it: {

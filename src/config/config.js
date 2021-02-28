@@ -1,8 +1,8 @@
 import generateModule from '../helpers/GenerateNumber';
 import React from 'react';
 
-const deployMode = "production";
-const deployPlatform = "android";
+const deployMode = "development";//development//production
+const deployPlatform = "browser";//browser//android
 const cryptKey = "cryptoGraph2020";
 const routeUrl = "https://kazpoisk.kz";
 //const userRole = "1"; blogger
