@@ -72,10 +72,12 @@ let strings = new LocalizedStrings({
    edit_button_link:"Edit Video Link",
    banBoxTitle:"This videos were banned please make new videos and upload for this social networks and insert link above to form",
    onlyLocal:"Involve only local creators",
+   highRank:"Work only with famous influencers",
    searchLocal:"Search only local business",
    newCompletedUser:"1 user completed task",
    PleaseCheckThisTask:"Please check this task ",
    Confirm_task:"Confirm task",
+   UncorfimedTask:"You Have new unconfirmed task",
    Confirmed_task:"Task Confirmed",
 
  },

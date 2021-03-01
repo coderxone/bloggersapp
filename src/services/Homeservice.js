@@ -7,8 +7,10 @@ import soundfiletwo from '../voice/to-the-point.mp3';
 import Observable from '../services/Observable';
 
 
+
 const observ_subject = new Subject();
 const observ_subjectTwo = new Subject();
+const observ_subjectParams = new Subject();
 // const timer10s$ = new Subject<any>();
 // const timer60s = new Subject<any>();
 // const timer300000s$ = new Subject<any>();
@@ -77,6 +79,18 @@ const initSocket = (() => {
 
    });
 
+   homeservice.listenSystemParams().subscribe(data => {
+
+     var famousPrice = data.alldata.famousPrice;
+     localStorage.setItem("famousPrice",famousPrice);
+      var s = JSON.stringify(data.socialNetworkList);
+      //console.log(s);
+      localStorage.setItem("soc",s);
+     //listenServices();
+   });
+
+
+   homeservice.checkSystemParams();
    homeservice.joinUser();//connect as user
    homeservice.checkNotificationsMessages();//check for new messages
    homeservice.fiveMinutObserver();
@@ -106,6 +120,8 @@ const homeservice = {
         reConnect();
         config.setDeviceid();
         listenServices();
+
+
       },
 
       sendFirstRequest:() => {
@@ -216,6 +232,23 @@ const homeservice = {
         })
 
         return observ_subject;
+      },
+      checkSystemParams:(data) => {
+        var datas = {
+          "deviceid":config.getdeviceid(),
+          "email":config.getUserEmail(),
+          "data":data,
+        }
+
+        socket.emit("load_all_info",cryptLibrary.encrypt(datas));
+      },
+
+      listenSystemParams:() => {
+        socket.on("load_all_info",data => {
+            observ_subjectParams.next(cryptLibrary.decrypt(data));
+        })
+
+        return observ_subjectParams;
       },
 
       test:(test => {

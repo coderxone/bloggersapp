@@ -1,4 +1,4 @@
-import React, {useState,useEffect} from 'react';
+import React, {useState,useEffect,useMemo} from 'react';
 // import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonInput, IonItem, IonLabel, IonList, IonItemDivider } from '@ionic/react';
 import '../css/mainStyles.scss';
 import LocalizeComponent from '../localize/LocalizeComponent';
@@ -147,6 +147,11 @@ const ApplyComponent = () => {
     setSelectedDate(date);
   };
 
+  const famousPrice = useMemo(() => {
+      return parseInt(localStorage.getItem("famousPrice"));
+  },[])
+
+
   const [maxdefaultSliderValue] = useState(5000);
   const [mindefaultSliderValue] = useState(200);
   const [defaultSliderValue,setDefaultSliderValue] = useState(200);
@@ -161,12 +166,20 @@ const ApplyComponent = () => {
   const handleChangeSlider = (event,newValue) => {
     //console.log(newValue);
 //xx
+
+
     var obj = {
       amount:newValue
     }
     ApplyService.checkSubscriberCore(obj);
+    //famousPrice
 
-    setDefaultSliderValue(newValue);
+      if(swithFamous === false){
+        setDefaultSliderValue(newValue);
+      }
+
+
+
   }
 
   const [alertState,setAlertState] = useState(false);
@@ -199,11 +212,44 @@ const ApplyComponent = () => {
           data.gps = 2;
         }
 
+        if(swithFamous == true){
+          data.famous = 1;
+        }else{
+          data.famous = 2;
+        }
+
         HomeService.sendApplyData(data);
       }
 
 
   });
+
+  const [swithFamous,SetswithFamous] = useState(false);
+
+  const CorrectPrice = ((count) => {
+
+    if(swithFamous === true){
+      console.log(defaultSliderValue);
+      setDefaultSliderValue(defaultSliderValue + (famousPrice * count));
+    }
+
+  });
+
+  useEffect(() => {
+    const listenSubscriberCore = ApplyService.listenSubscriberCore().subscribe(data => {
+        //console.log(data);
+        setPeopleCount(data.countOfBloggers);
+        setSubscribers(data.subscribersResult);
+        setSubscribersor(data.originalNumber);
+        CorrectPrice(data.countOfBloggers);
+        //originalNumber
+    });
+
+    return () => {
+      listenSubscriberCore.unsubscribe();
+    }
+
+  },[]);
 
 
 
@@ -221,18 +267,11 @@ const ApplyComponent = () => {
           }
       });
 
-      const listenSubscriberCore = ApplyService.listenSubscriberCore().subscribe(data => {
-          //console.log(data);
-          setPeopleCount(data.countOfBloggers);
-          setSubscribers(data.subscribersResult);
-          setSubscribersor(data.originalNumber);
-          //originalNumber
-      });
+
 
 
       return () => {
         firstListener.unsubscribe();
-        listenSubscriberCore.unsubscribe();
       }
 
   },[]);
@@ -248,8 +287,13 @@ const ApplyComponent = () => {
 
   const [swithState,SetswithState] = useState(false);
 
+
   const handleSwitch = (event) => {
     SetswithState(event.target.checked);
+  }
+
+  const handleSwitchInfl = (event) => {
+    SetswithFamous(event.target.checked);
   }
 
 
@@ -302,6 +346,27 @@ const ApplyComponent = () => {
                     <Switch
                       checked={swithState}
                       onChange={handleSwitch}
+                      color="primary"
+                      className="switchCheckbox"
+                      name="checkedB"
+                      inputProps={{ 'aria-label': 'primary checkbox' }}
+                    />
+
+                  </div>
+
+
+                </div>
+
+
+                <div className="switchBoxIfl">
+
+                  <div className="lswitchBox">
+                    {LocalizeComponent.highRank}
+                  </div>
+                  <div className="rswitchBox">
+                    <Switch
+                      checked={swithFamous}
+                      onChange={handleSwitchInfl}
                       color="primary"
                       className="switchCheckbox"
                       name="checkedB"

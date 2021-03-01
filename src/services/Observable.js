@@ -50,6 +50,12 @@ const observ_f = {
 
         return timer15second;
       },
+      subscribeByTimer_30_second:() => {
+
+        const timer30second = interval(30000);
+
+        return timer30second;
+      },
 
       subscribeByTimer_2_second:() => {
 

@@ -49,7 +49,7 @@ if(config.getDeployData().deployPlatform == "android"){
   viewPosition = {x:0,y:-150,z:590};//for android
 }
 
-console.log(viewPosition);
+//console.log(viewPosition);
 var viewPositionAnimation = {x:0,y:0,z:0};
 
 var enableAnimation = 0;//control video animation from business to bloggers

@@ -499,7 +499,12 @@ const SuccessLocationWatcher = (position) => {
 
 const ErrorPosition = (data) => {
   console.log(data);
-  Geolocation.requestAuthorization();
+  try{
+    Geolocation.requestAuthorization();
+  }catch(e){
+    
+  }
+
 }
 
 useEffect(() => {

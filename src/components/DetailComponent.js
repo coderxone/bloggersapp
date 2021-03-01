@@ -26,6 +26,8 @@ import PropTypes from 'prop-types';
 import Typography from '@material-ui/core/Typography';
 import GoBackAbsoluteComponent from '../helperComponents/goBackAbsoluteComponent';
 import ConfirmDialogComponent from '../helperComponents/ConfirmDialogComponent';
+import HomeService from '../services/Homeservice';
+import BusinesService from '../services/BusinessService';
 import DoneIcon from '@material-ui/icons/Done';
 import { increment, decrement,save_email } from '../actions/actions';
 import {
@@ -437,6 +439,26 @@ const BlogListComponent = (props) => {
 }
 //BlogList Component
 
+const SocialNetworkComponent = (props) => {
+
+  var list = props.list;
+
+  const readyList = list.map((item) =>
+
+        <div key={item.id}>
+          &middot; {item.name}
+        </div>
+
+  );
+
+  return (
+    <div className="line4">
+        {readyList}
+    </div>
+  );
+
+}
+
 
 const DetailComponent = (props) => {
 
@@ -468,6 +490,11 @@ const DetailComponent = (props) => {
   },[]);
 
 //xx
+  const SocialNetworkList = useMemo(function(){
+
+      return JSON.parse(localStorage.getItem("soc"));
+
+  },[]);
 
   //console.log(ItemData);
 
@@ -521,6 +548,29 @@ const DetailComponent = (props) => {
       DetailService.getSendTaskDone(user_email,checkDetailId);
   }
 
+  const [progressBarValue,SetprogressBarValue] = useState(10);
+
+  var widthValueFirst = progressBarValue + "%";
+  var widthValueSecond = 70 + "%";
+
+  const CountPercentFunction = (data) => {
+    //data.data
+    //SetprogressBarValue
+    //ItemData.peoplecount
+    var completeTasks = 0;
+    for(var i = 0;i < data.length;i++){
+      if(data[i].complete == 1){
+        completeTasks++;
+      }
+    }
+    var result = Math.round((completeTasks / ItemData.peoplecount) * 100);
+
+    if(result > progressBarValue){
+      SetprogressBarValue(result);
+    }
+
+  }
+
   useEffect(() => {
 //xx
     const listenDetailService = DetailService.listenDetailData().subscribe(data => {
@@ -530,14 +580,7 @@ const DetailComponent = (props) => {
 
         var modifiedArray = data.data;
 
-        // for(var i = 0;i < modifiedArray.length;i++){
-        //   if(modifiedArray[i].id == historyId){
-        //     modifiedArray[i].status = true;
-        //   }else{
-        //     modifiedArray[i].status = false;
-        //   }
-        //
-        // }
+        CountPercentFunction(modifiedArray);
 
         const list = listArray.concat(modifiedArray);
 
@@ -590,6 +633,10 @@ const DetailComponent = (props) => {
       getDetailData();
     });
 
+    const intervalObservableThory = ObservableService.subscribeByTimer_30_second().subscribe(data => {
+      BusinesService.RequestCheckTasks();
+    });
+
     const listenViews = DetailService.listenViews().subscribe(data => {
       //console.log(data);
       setViewsCount(data.count);
@@ -607,7 +654,7 @@ const DetailComponent = (props) => {
       listenDetailService.unsubscribe();
       observable.unsubscribe();
       intervalObservable.unsubscribe();
-      intervalObservable.unsubscribe();
+      intervalObservableThory.unsubscribe();
       listenViews.unsubscribe();
       listenSendTaskDone.unsubscribe();
     }
@@ -619,6 +666,7 @@ const DetailComponent = (props) => {
 //init functionns
 useEffect(() => {
   getDetailData();
+  BusinesService.RequestCheckTasks();
 },[])
 
 
@@ -630,8 +678,7 @@ useEffect(() => {
     setValue(newValue);
   };
 
- var widthValueFirst = 30 + "%";
- var widthValueSecond = 70 + "%";
+
 
  //notification part
  const history = useHistory();
@@ -641,16 +688,32 @@ useEffect(() => {
 
  });
 
+ const [dialogAction,SetDialogAction] = useState(0);
+
  useEffect(() => {
    const DialogNotif = Observable.getData_subject().subscribe(data => {
      if(data == "confirm"){
-       goToContacts();
+        if(dialogAction == 0){
+          goToContacts();
+        }else if(dialogAction == 1){
+          setDialogStatus(false);
+        }
+
        //go to page with id
      }else if(data == "cancel"){
        setDialogStatus(false);
      }
 
    });
+
+   return () => {
+     DialogNotif.unsubscribe();
+   }
+
+ },[dialogAction])
+
+ useEffect(() => {
+
 
 
 
@@ -662,15 +725,35 @@ useEffect(() => {
        setDialogText(LocalizeComponent.dialogCheckMessage);
        setDetailProjectId(data.projectId);
        setDetailMessage(data.message);
+       SetDialogAction(0);
        setDialogStatus(true);
+       HomeService.notificationVoice();
+
        //go to page with id
      }
 
    });
 
+   //done tasks from each enfluencer
+   const ListenCheckTasks = BusinesService.ListenCheckTasks().subscribe(data => {
+     if(data.status == "ok"){
+       var task_id = data.result[0].task_id;
+       //console.log(task_id);
+
+       setLeftbutton(LocalizeComponent.cancel);
+       setRightbutton(LocalizeComponent.check);
+       setDialogText(LocalizeComponent.UncorfimedTask);
+       setDetailMessage(data.PleaseCheckThisTask);
+       SetDialogAction(1);
+       setDialogStatus(true);
+       HomeService.notificationVoice();
+     }
+
+   });
+
    return () => {
-     DialogNotif.unsubscribe();
      DialogExecute.unsubscribe();
+     ListenCheckTasks.unsubscribe();
    }
  },[])
 
@@ -705,7 +788,7 @@ useEffect(() => {
                 {LocalizeComponent.paid}
               </div>
               <div className="line2">
-                {ItemData.sum}
+                {ItemData.sum}$
               </div>
           </div>
 
@@ -731,20 +814,7 @@ useEffect(() => {
               <div className="line3">
                 {LocalizeComponent.platforms_in_use}
               </div>
-              <div className="line4">
-                <div>
-                  &middot; {LocalizeComponent.tiktok}
-                </div>
-                <div>
-                  &middot; {LocalizeComponent.instagramm}
-                </div>
-                <div>
-                  &middot; {LocalizeComponent.facebook}
-                </div>
-                <div>
-                  &middot; {LocalizeComponent.twitter}
-                </div>
-              </div>
+              <SocialNetworkComponent list={SocialNetworkList} />
           </div>
 
           <div className="list_of_bloggers">

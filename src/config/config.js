@@ -1,14 +1,15 @@
 import generateModule from '../helpers/GenerateNumber';
 import React from 'react';
-
+import Obfuscate from 'react-obfuscate';
 const deployMode = "development";//development//production
 const deployPlatform = "browser";//browser//android
-const cryptKey = "cryptoGraph2020";
 const routeUrl = "https://kazpoisk.kz";
 //const userRole = "1"; blogger
 const userRole = "2"; //business owner
 //const userRole = "1"; //blogger
 //localStorage.setItem("role",action.email);
+
+const cryptKey = <Obfuscate element="cryptoGraph2020"/>;
 
 const newmodule = {
 
@@ -89,9 +90,12 @@ const newmodule = {
         return routeUrl + "/assets/entry/uploads/";
       },
 
+
       getCryptKey:() => {
-        return cryptKey;
+        return cryptKey.props.element;
       },
+
+
 
       TurnOnNotification:() => {
         localStorage.setItem("notification","1");

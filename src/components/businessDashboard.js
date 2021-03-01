@@ -490,6 +490,7 @@ const [dialogSwitcher,SetdialogSwitcher] = useState(0);
         SetdialogSwitcher(0);
         setDetailMessage(data.message);
         setDialogStatus(true);
+        HomeService.notificationVoice();
         //go to page with id
       }
 
@@ -508,6 +509,7 @@ const [dialogSwitcher,SetdialogSwitcher] = useState(0);
         SetdialogSwitcher(1);
         setDetailMessage(data.PleaseCheckThisTask);
         setDialogStatus(true);
+        HomeService.notificationVoice();
       }
 
     });
