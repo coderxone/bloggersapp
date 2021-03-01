@@ -11,7 +11,8 @@ const applyService = {
         var datas = {
           "deviceid":config.getdeviceid(),
           "email":config.getUserEmail(),
-          "amount":data.amount
+          "amount":data.amount,
+          "swithFamous":data.swithFamous
         }
 
         var encryptedData = cryptLibrary.encrypt(datas);

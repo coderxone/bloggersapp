@@ -155,6 +155,7 @@ const ApplyComponent = () => {
   const [maxdefaultSliderValue] = useState(5000);
   const [mindefaultSliderValue] = useState(200);
   const [defaultSliderValue,setDefaultSliderValue] = useState(200);
+  const [defaultSliderValueStore,setdefaultSliderValueStore] = useState(200);
   var databasedefaultSliderValue = 200;
   const [peopleCount,setPeopleCount] = useState(6);
   const [subscribers,setSubscribers] = useState(500);
@@ -164,21 +165,14 @@ const ApplyComponent = () => {
   const [route,SetRoute] = useState("");
 
   const handleChangeSlider = (event,newValue) => {
-    //console.log(newValue);
-//xx
-
 
     var obj = {
-      amount:newValue
+      amount:newValue,
+      swithFamous:swithFamous
     }
     ApplyService.checkSubscriberCore(obj);
     //famousPrice
-
-      if(swithFamous === false){
-        setDefaultSliderValue(newValue);
-      }
-
-
+    setdefaultSliderValueStore(newValue);
 
   }
 
@@ -226,23 +220,19 @@ const ApplyComponent = () => {
 
   const [swithFamous,SetswithFamous] = useState(false);
 
-  const CorrectPrice = ((count) => {
+  const CorrectPrice = ((data) => {
 
-    if(swithFamous === true){
-      console.log(defaultSliderValue);
-      setDefaultSliderValue(defaultSliderValue + (famousPrice * count));
-    }
+    setPeopleCount(data.countOfBloggers);
+    setSubscribers(data.subscribersResult);
+    setSubscribersor(data.originalNumber);
+    setDefaultSliderValue(data.NewCheckingAmount);
 
   });
 
   useEffect(() => {
     const listenSubscriberCore = ApplyService.listenSubscriberCore().subscribe(data => {
-        //console.log(data);
-        setPeopleCount(data.countOfBloggers);
-        setSubscribers(data.subscribersResult);
-        setSubscribersor(data.originalNumber);
-        CorrectPrice(data.countOfBloggers);
-        //originalNumber
+
+        CorrectPrice(data);
     });
 
     return () => {
@@ -279,7 +269,8 @@ const ApplyComponent = () => {
 
   useEffect(() => {
     var obj = {
-      amount:defaultSliderValue
+      amount:defaultSliderValue,
+      swithFamous:swithFamous
     }
 
     ApplyService.checkSubscriberCore(obj);
@@ -294,7 +285,17 @@ const ApplyComponent = () => {
 
   const handleSwitchInfl = (event) => {
     SetswithFamous(event.target.checked);
+
   }
+
+  useMemo(() => {
+    var obj = {
+      amount:defaultSliderValueStore,
+      swithFamous:swithFamous
+    }
+
+    ApplyService.checkSubscriberCore(obj);
+  },[swithFamous])
 
 
   return (
