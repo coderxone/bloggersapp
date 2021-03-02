@@ -1,6 +1,10 @@
 $base-app-color:#0083ff;
 $font-size: 18px;
 $fontStyles:"Times New Roman", Times, serif;
+$BlackFontColor:black;
+$whiteFontColor:white;
+$greyFontColor:#979797;
+$pushNotificationBackground:white;
 
 
 ::-webkit-scrollbar {
@@ -17,6 +21,179 @@ body{
     background-color:white !important;
     background:white !important;
 }
+
+
+.mainPush_root{
+  position: absolute;
+  left: 0px;
+  bottom:0px;
+  overflow: hidden;
+  width:100%;
+  height: 320px;
+  background-color: $pushNotificationBackground;
+}
+
+.declineButtonBlock{
+
+  overflow: hidden;
+  width:100%;
+  height: 60px;
+
+}
+
+.declineButtonStyle{
+  margin-top:10px;
+  margin-left:5px;
+  width:100px;
+  height: 42px;
+  border-radius: 25px;
+  background:linear-gradient(to right, $base-app-color, $base-app-color);
+  color:white;
+  font-size: 18px;
+  text-align: center;
+  font-weight: bold;
+  padding-top:8px;
+}
+
+.mainPush{
+  overflow: hidden;
+  width:100%;
+  height: 260px;
+
+}
+
+.mainPushColumsOne{
+  width:100%;
+  height: 38%;
+
+}
+
+.mainPushColumsOneLeft{
+  width:77%;
+  height: 100%;
+  float: left;
+  padding-top:7px;
+  padding-left:10px;
+
+}
+
+
+.mainPushColumsOneLeft_1{
+  color:$BlackFontColor !important;
+  height: 28%;
+  font-size: 22px;
+}
+.mainPushColumsOneLeft_2{
+  color:$BlackFontColor !important;
+  height: 36%;
+  font-size: 22px;
+  font-weight: bold;
+}
+.mainPushColumsOneLeft_3{
+  color:$greyFontColor !important;
+  height: 27%;
+  font-size: 18px;
+}
+
+.CircularProgress{
+  width:55px !important;
+}
+
+.CircleTimer{
+  margin-left:-33px !important;
+  margin-top:3px !important;
+  font-size: 22px;
+}
+
+.CircularProgressParent{
+  margin-top:27px;
+  margin-left:7px;
+}
+
+.mainPushColumsOneRight{
+  width:23%;
+  height: 100%;
+  float: left;
+
+}
+
+.mainPushColumsTwo{
+  width:100%;
+  height: 62%;
+
+}
+
+.mainPushColumsTwo_1{
+  width:100%;
+  height: 62%;
+
+  overflow: hidden;
+}
+
+.gorizontalGreyLine{
+  width:90%;
+  margin-left:17px;
+  height: 2px;
+  background-color: $greyFontColor !important;
+}
+
+.mainPushColumsTwo_1_Price{
+  width:100%;
+  height: 50px;
+  font-weight: bold;
+  color:$BlackFontColor !important;
+  font-size: 36px;
+  text-align: center;
+}
+
+.mainPushColumsTwo_2_Second{
+  width: 100%;
+  height: 24px;
+  font-size: 16px;
+  text-align: center;
+  color: $greyFontColor !important;
+}
+
+.mainPushColumsTwo_3_Third{
+  width: 100%;
+  height: 22px;
+  font-size: 16px;
+  text-align: center;
+  color: $greyFontColor !important;
+}
+
+.mainPushColumsTwo_2{
+  width:100%;
+  height: 38%;
+  overflow: hidden;
+}
+
+.buttonStylePush{
+    /* base styles */
+  margin-left:5%;
+  margin-top:9px;
+	width:90%;
+	height: 45px;
+	/* background:linear-gradient(to right, #8936f4, $base-app-color); */
+	background:linear-gradient(to right, $base-app-color, $base-app-color);
+	border-radius:25px;
+  border:0px;
+
+}
+
+.buttonStylePushText{
+  font-family:"Times New Roman", Times, serif;
+  font-size: 30px;
+  color:white;
+  font-weight: bold;
+  text-align: center;
+}
+
+
+
+
+
+
 
 
 

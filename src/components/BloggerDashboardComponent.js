@@ -43,6 +43,7 @@ import MailIcon from '@material-ui/icons/Mail';
 import ConfirmDialogComponent from '../helperComponents/ConfirmDialogComponent';
 import { useLastLocation } from 'react-router-last-location';
 import FilterListIcon from '@material-ui/icons/FilterList';
+import CircularProgressComponent from '../helperComponents/CircularProgressComponent';
 
 
 
@@ -502,7 +503,7 @@ const ErrorPosition = (data) => {
   try{
     Geolocation.requestAuthorization();
   }catch(e){
-    
+
   }
 
 }
@@ -615,8 +616,8 @@ useEffect(() => {
 
   });
 
-
-
+//xx
+// <BlockComponent items={items} distance={distance}/>
 
   const [dialogStatus,setDialogStatus] = useState(false);
   const [leftbutton,setLeftbutton] = useState('');
@@ -726,7 +727,55 @@ useEffect(() => {
               </Grid>
              ) : (
                <Grid container className="withoutScroll">
-                  <BlockComponent items={items} distance={distance}/>
+                 <div className="mainPush_root">
+                   <div className="declineButtonBlock">
+                      <div className="declineButtonStyle">
+                          Decline
+                      </div>
+                   </div>
+                   <div className="mainPush">
+                     <div className="mainPushColumsOne">
+                       <div className="mainPushColumsOneLeft">
+                           <div className="mainPushColumsOneLeft_1">Deliver by 6:11 PM</div>
+                           <div className="mainPushColumsOneLeft_2">McDonald's</div>
+                           <div className="mainPushColumsOneLeft_3">2 items* 2.9 mi</div>
+
+                       </div>
+                       <div className="mainPushColumsOneRight">
+                         <div className="CircularProgressParent">
+                           <CircularProgressComponent />
+                         </div>
+
+                       </div>
+
+                     </div>
+                     <div className="mainPushColumsTwo">
+
+                       <div className="mainPushColumsTwo_1">
+                         <div className="gorizontalGreyLine">
+                         </div>
+                         <div className="mainPushColumsTwo_1_Price">
+                           $7.00
+                         </div>
+                         <div className="mainPushColumsTwo_2_Second">
+                             Included Echohub pay and customer tip
+                         </div>
+                         <div className="mainPushColumsTwo_3_Third">
+                           (Total may be higher)
+                         </div>
+                       </div>
+                       <div className="mainPushColumsTwo_2">
+                           <div className="buttonStylePush">
+                               <div className="buttonStylePushText">Accept</div>
+                           </div>
+                       </div>
+
+
+                     </div>
+
+                   </div>
+                 </div>
+
                </Grid>
              )}
 
