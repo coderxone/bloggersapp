@@ -6,7 +6,16 @@ $whiteFontColor:white;
 $greyFontColor:#979797;
 $pushNotificationBackground:white;
 
+.gm-fullscreen-control{
+  display: none !important;
+}
 
+.gm-svpc{
+  display: none !important;
+}
+.gmnoprint{
+   display: none !important;
+}
 ::-webkit-scrollbar {
       display: none !important;
   }

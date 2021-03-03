@@ -1,5 +1,5 @@
 import config from '../config/config';
-import React ,{useState} from 'react';
+import React ,{useState,useMemo} from 'react';
 
 import { GoogleMap, useJsApiLoader,DirectionsService,LoadScript,DirectionsRenderer } from '@react-google-maps/api';
 
@@ -11,15 +11,20 @@ const containerStyle = {
 
 
 
-function MyComponent() {
+const MyComponent = (props) => {
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
     googleMapsApiKey: config.getGoogleMapKey()
   })
 
+
+  const latitude = props.latitude;
+  const longitude = props.longitude;
+
   const [map, setMap] = React.useState(null)
   const [travelMode] = useState('DRIVING');//DRIVING//BICYCLING//TRANSIT//WALKING
   const [origin,SetOrigin] = useState('mountain view,CA');
+//  const [origin,SetOrigin] = useState('mountain view,CA');
   const [destination,SetDestination] = useState('37.419444, -122.035045');
   const [response,SetResponse] = useState(null);
 
@@ -30,6 +35,8 @@ function MyComponent() {
     lng: -122.074659
   });
 
+
+
   const ChangeRoute = (origin,destination) => {
     if (origin !== '' && destination !== '') {
       SetOrigin(origin);
@@ -38,12 +45,17 @@ function MyComponent() {
   }
 
   const CenterMap = (newLat,newLng) => {
+
+    //console.log(newLat);
     const newValue = {...center};
     newValue.lat = newLat;
     newValue.lng = newLng;
     SetCenter(newValue);
   }
 
+  useMemo(() => {
+    CenterMap(latitude,longitude);
+  },[latitude,longitude])
 
 
 
@@ -69,6 +81,8 @@ function MyComponent() {
     }
   }
 
+
+
   return isLoaded ? (
       <GoogleMap
         mapContainerStyle={containerStyle}
@@ -76,7 +90,7 @@ function MyComponent() {
         zoom={2}
         onLoad={onLoad}
         onUnmount={onUnmount}
-        
+
       >
         {
           (
@@ -113,11 +127,11 @@ function MyComponent() {
                   }}
 
                   onLoad={directionsRenderer => {
-                    console.log('DirectionsRenderer onLoad directionsRenderer: ', directionsRenderer)
+                  //  console.log('DirectionsRenderer onLoad directionsRenderer: ', directionsRenderer)
                   }}
 
                   onUnmount={directionsRenderer => {
-                    console.log('DirectionsRenderer onUnmount directionsRenderer: ', directionsRenderer)
+                  //  console.log('DirectionsRenderer onUnmount directionsRenderer: ', directionsRenderer)
                   }}
                 />
                 )

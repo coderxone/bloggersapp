@@ -473,10 +473,10 @@ const BloggerDashboardComponent = (props) => {
 
   }
 
-
+//xx
   useEffect(() => {
     const BloggerListen = BloggerService.listenUserDataG().subscribe((data) => {//items
-          //console.log(data);
+          console.log(data);
           RenderFunction(data);
 
     });
@@ -729,7 +729,7 @@ useEffect(() => {
 
                <Grid container className="withoutScroll">
 
-                 <DirectionComponent/>
+                 <DirectionComponent latitude={latitude} longitude={longitude} />
 
                  <div className="mainPush_root">
                    <div className="declineButtonBlock">
