@@ -10,7 +10,7 @@ const userRole = "2"; //business owner
 //localStorage.setItem("role",action.email);
 
 const cryptKey = <Obfuscate element="cryptoGraph2020"/>;
-
+const googleMapKey = <Obfuscate element="AIzaSyAZSEPAxXmoxpPVFbiTsFoqCvMQYPuR8Uk"/>;
 const newmodule = {
 
        setDeviceid: () => {
@@ -93,6 +93,9 @@ const newmodule = {
 
       getCryptKey:() => {
         return cryptKey.props.element;
+      },
+      getGoogleMapKey:() => {
+        return googleMapKey.props.element;
       },
 
 

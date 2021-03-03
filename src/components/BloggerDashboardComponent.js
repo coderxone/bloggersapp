@@ -44,7 +44,7 @@ import ConfirmDialogComponent from '../helperComponents/ConfirmDialogComponent';
 import { useLastLocation } from 'react-router-last-location';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import CircularProgressComponent from '../helperComponents/CircularProgressComponent';
-
+import DirectionComponent from '../components/DirectionComponent';
 
 
 function mapStateToProps(state,ownProps) {
@@ -726,7 +726,11 @@ useEffect(() => {
                  <SkeletonComponent/>
               </Grid>
              ) : (
+
                <Grid container className="withoutScroll">
+
+                 <DirectionComponent/>
+
                  <div className="mainPush_root">
                    <div className="declineButtonBlock">
                       <div className="declineButtonStyle">

@@ -5,6 +5,7 @@ import Geocode from "react-geocode";
 import { save_coord } from '../actions/actions';
 import { connect } from 'react-redux';
 import LocalizeComponent from '../localize/LocalizeComponent';
+import config from '../config/config';
 
 const mapDispatchToProps = dispatch => ({
   save_coord
@@ -12,7 +13,7 @@ const mapDispatchToProps = dispatch => ({
 
 const Combo = function ComboBox(props) {
 
-  Geocode.setApiKey("AIzaSyAZSEPAxXmoxpPVFbiTsFoqCvMQYPuR8Uk");
+  Geocode.setApiKey(config.getGoogleMapKey());
   Geocode.setLanguage("en");
   Geocode.enableDebug();
 
