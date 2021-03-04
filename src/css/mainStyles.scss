@@ -6,6 +6,35 @@ $whiteFontColor:white;
 $greyFontColor:#979797;
 $pushNotificationBackground:white;
 
+
+.BloggerProgress{
+  width: 100% !important;
+}
+.CurrentTask{
+  position: absolute;
+  left: 0px;
+  bottom:0px;
+  width: 100%;
+  height: 80px;
+
+}
+
+.CurrentTaskTwo_2{
+  width:100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.CurrentTaskTwo_2Text{
+  font-family:"Times New Roman", Times, serif;
+  font-size: 25px;
+  color:white;
+  font-weight: bold;
+  text-align: center;
+}
+
+
+
 .gm-fullscreen-control{
   display: none !important;
 }
@@ -33,7 +62,7 @@ body{
 
 
 .mainPush_root{
-  display: none;
+
   position: absolute;
   left: 0px;
   bottom:0px;
@@ -98,6 +127,8 @@ body{
   height: 36%;
   font-size: 22px;
   font-weight: bold;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .mainPushColumsOneLeft_3{
   color:$greyFontColor !important;
@@ -107,6 +138,7 @@ body{
 
 .CircularProgress{
   width:55px !important;
+  color:$base-app-color !important;
 }
 
 .CircleTimer{

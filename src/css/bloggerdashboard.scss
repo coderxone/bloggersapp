@@ -109,6 +109,8 @@ $fontSize:18px;
   font-size: $fontSize;
   font-weight: bold;
   padding-top:1px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .shareButton{

@@ -45,7 +45,10 @@ import { useLastLocation } from 'react-router-last-location';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import CircularProgressComponent from '../helperComponents/CircularProgressComponent';
 import DirectionComponent from '../components/DirectionComponent';
-
+import DetailTaskService from '../services/DetailTaskService';
+import TaskService from '../services/TaskService';
+import LinearProgress from '@material-ui/core/LinearProgress';
+import Homeservice from '../services/Homeservice';
 
 function mapStateToProps(state,ownProps) {
   return {
@@ -195,6 +198,12 @@ const schema = yup.object().shape({
 
 
 
+
+
+
+
+
+
 const BlockComponent = (props) => {
 
   const items = props.items;
@@ -301,20 +310,39 @@ const BloggerDashboardComponent = (props) => {
   //   },4000);
   // }
 
+  const [timerVariable,SettimerVariable] = useState(60);
+  const [timerCircleVariable,SettimerCircleVariable] = useState(100);
 
   const [items,SetItems] = useState([]);
 
   const [status,SetStatus] = useState(false);
+  const [currentTask,SetcurrentTask] = useState(0);
+  const [currentItem,SetcurrentItem] = useState({});
 
-  const [distance,setDistance] = useState(20);
-
-
+  const [distance,setDistance] = useState("- mi");
 
   const [latitude, setLatitude] = useState(0);
   const [longitude, setLongitude] = useState(0);
   //const [searchcountD,SetsearchcountD] = useState(0);
   const [firstLoadStorage,setFirstLoadStorage] = useState(true);
   const [swithState,SetswithState] = useState(false);
+  const [onlineStatusSwitcher,SetonlineStatusSwitcher] = useState(false);
+  const [onlineStatus,SetonlineStatus] = useState(0);
+
+  useMemo(() => {
+      var onlineStatus = localStorage.getItem("online");
+      // localStorage.setItem("online",0);
+      // return false;
+      if(onlineStatus){
+        if(onlineStatus == 1){
+          SetonlineStatus(1);
+          SetonlineStatusSwitcher(false);
+        }else{
+          SetonlineStatus(0);
+          SetonlineStatusSwitcher(true);
+        }
+      }
+  },[]);
 
   useMemo(() => {
 
@@ -326,7 +354,7 @@ const BloggerDashboardComponent = (props) => {
     }
 
   },[])
-//xx
+
   useMemo(() => {
 
     if((latitude != 0) && (longitude != 0)){
@@ -358,7 +386,7 @@ const BloggerDashboardComponent = (props) => {
 
 
             SetItems(ListStorageData);
-            setDistance(tempstorageDistanceState);
+            //setDistance(tempstorageDistanceState);
             SetStatus(true);
             setFirstLoadStorage(false);
 
@@ -391,9 +419,10 @@ const BloggerDashboardComponent = (props) => {
       }
   },[]);
 
-
+//xx
   const RenderFunction = (data) => {
 
+    //  return false;
       if((data.sdata.length > 0) && (data.status == "ok")){
         const insertArray = [...items];
         var deleteArray = new Array();
@@ -409,7 +438,6 @@ const BloggerDashboardComponent = (props) => {
               }
               if(findInd == 0){
                 deleteArray.push(i);
-
               }
             }
             for(var l = 0;l < deleteArray.length;l++){
@@ -421,8 +449,11 @@ const BloggerDashboardComponent = (props) => {
             localStorage.setItem("tempstorageDistance",data.distance);
 
             SetItems(insertArray);
-            setDistance(data.distance);
+            //setDistance(data.distance);
             SetStatus(true);
+            Homeservice.notificationVoiceR();
+
+
 
           }
 
@@ -451,8 +482,11 @@ const BloggerDashboardComponent = (props) => {
               localStorage.setItem("tempstorageDistance",data.distance);
 
               SetItems(insertArray);
-              setDistance(data.distance);
+              //setDistance(data.distance);
               SetStatus(true);
+              Homeservice.notificationVoiceR();
+
+
 
           }
 
@@ -465,8 +499,9 @@ const BloggerDashboardComponent = (props) => {
       }else if(data.status == "later"){
         //console.log("request denied");
         setRequestStatus(false);
-        SetItems([]);
         SetStatus(false);
+        SetItems([]);
+
       }else{
         SetStatus(false);
       }
@@ -476,8 +511,13 @@ const BloggerDashboardComponent = (props) => {
 //xx
   useEffect(() => {
     const BloggerListen = BloggerService.listenUserDataG().subscribe((data) => {//items
-          console.log(data);
-          RenderFunction(data);
+          //console.log(currentTask);
+          if((currentTask === 0) && (onlineStatus === 1)){ //if user don't have current task
+            RenderFunction(data);
+          }else{
+            SetStatus(false);
+          }
+
 
     });
 
@@ -486,14 +526,14 @@ const BloggerDashboardComponent = (props) => {
       BloggerListen.unsubscribe();
     }
 
-  },[]);
+  },[currentTask,onlineStatus]);
 
 
 
 
-
+//xx
 const SuccessLocationWatcher = (position) => {
-      checkData();
+      //checkData();
       setLatitude(position.coords.latitude);
       setLongitude(position.coords.longitude);
 }
@@ -519,6 +559,54 @@ useEffect(() => {
       setDialogStatus(false);
     }
 
+  });
+
+  const RoutePassing = Observable.getRoute().subscribe(data => {
+
+    if(data.status === "ok"){
+      setDistance(data.distance)
+    }
+
+  });
+
+  const AnyDataCommunicate = Observable.getAny().subscribe(data => {
+
+    if(data.action === "cancelTask"){
+        if(data.status == 1){
+
+        }
+    }
+
+  });
+
+
+  const ListenlistenSetUrl = DetailTaskService.listenSetUrl().subscribe(data => {
+    //console.log(data);
+    // if(data.status == "inserted"){
+    //   CheckVideos(detailData.id);
+    //   SetInputText("");
+    //   //SetStep(stepper => stepper + 1);
+    // }
+
+  });
+
+
+  const listenSubmittedOrder = DetailTaskService.listenSubmittedOrder().subscribe(data => {
+    //console.log(data);
+  });
+
+//xx
+
+  const TaskServiceListen = TaskService.listenUserDataTask().subscribe(data => {
+      //console.log(data);
+      if(data.status == "ok"){
+        if(data.data.length > 0){
+          //console.log(data.data[0].id);
+          SetcurrentTask(data.data[0].id);
+          SetcurrentItem(data.data[0]);
+        }
+
+      }
   });
 
 
@@ -547,9 +635,9 @@ useEffect(() => {
   }
 
   var options = {
-    maximumAge: 60000,
+    maximumAge: 40000,
     enableHighAccuracy: true,
-    timeout: 60000
+    timeout: 40000
   }
     try{
       Geolocation.setRNConfiguration(locationConfig);
@@ -566,12 +654,96 @@ useEffect(() => {
         Geolocation.clearWatch(watchId);
         DialogNotif.unsubscribe();
         DialogExecute.unsubscribe();
+        RoutePassing.unsubscribe();
+        AnyDataCommunicate.unsubscribe();
+        ListenlistenSetUrl.unsubscribe();
+        listenSubmittedOrder.unsubscribe();
+        TaskServiceListen.unsubscribe();
 
     }
 
 },[])
 ///---------
 
+const IncrementFunction = () => {
+  SettimerCircleVariable(previousValue => previousValue - 1.66);
+  SettimerVariable(previousValue => previousValue - 1);
+}
+
+const RefreshIncrement = () => {
+  SettimerCircleVariable(previousValue => 100);
+  SettimerVariable(previousValue => 60);
+}
+
+useMemo(() => {
+  if(timerVariable == 0){
+
+    var obj = {
+      action:"cancelTask",
+      status:1
+    }
+    RefreshIncrement();
+    SetStatus(false);
+    //send request to reject task because of timer
+    //Observable.sendAny(obj);
+  }
+},[timerVariable]);
+
+useEffect(() => {
+  const secTimer = Observable.subscribeByTimer_1_second().subscribe(sec => {
+    if(status === true){
+      IncrementFunction();
+    }
+
+  });
+  //
+  return () => {
+    secTimer.unsubscribe();
+  }
+},[status]);
+///---------
+
+const StartTask = ((item) => {
+    Homeservice.notificationVoiceA();
+    DetailTaskService.generateUrl(item.id);
+    GoToTask(item);
+});
+
+const GoToTask = useCallback((item) => {
+
+    return history.push({pathname: '/detailtask',data:item}), [history];
+
+});
+//xx
+const rejectOrder = (item) => {
+  var obj = {
+    id:item.id,
+    approvetask:4
+  }
+  DetailTaskService.submitOrder(obj);
+  SetStatus(false);
+  Homeservice.notificationVoiceReject();
+}
+//xx
+const GoOnline = () => {
+    SetonlineStatus(1);
+    localStorage.setItem("online",1);
+    SetonlineStatusSwitcher(false);
+}
+
+const GoOffline = () => {
+  SetonlineStatus(0);
+  localStorage.setItem("online",0);
+  SetonlineStatusSwitcher(true);
+}
+
+//run to check services
+useEffect(() => {
+
+  TaskService.getTaskData();
+
+},[])
+//run to check services
 
 
 
@@ -616,7 +788,7 @@ useEffect(() => {
 
   });
 
-//xx
+
 // <BlockComponent items={items} distance={distance}/>
 
   const [dialogStatus,setDialogStatus] = useState(false);
@@ -626,7 +798,7 @@ useEffect(() => {
   const [detailProjectId,setDetailProjectId] = useState(0);
   const [detailMessage,setDetailMessage] = useState("");
 
-//xx
+
   const CloseDrawer = () => {
     setOpen(false);
     setOpenRight(false);
@@ -645,6 +817,13 @@ useEffect(() => {
 
     SetswithState(SwitcherValue);
   }
+
+  const handleSwitchOnlineStatusSwitcher = (event) => {
+    var SwitcherValue = event.target.checked;
+    SetonlineStatusSwitcher(SwitcherValue);
+    GoOffline();
+  }
+
 
 
 
@@ -721,67 +900,117 @@ useEffect(() => {
           <div className={classestwo.drawerHeader} />
 
 
-            {status === false ? (
-              <Grid container className="withoutScroll">
-                 <SkeletonComponent/>
-              </Grid>
-             ) : (
+
 
                <Grid container className="withoutScroll">
 
-                 <DirectionComponent latitude={latitude} longitude={longitude} />
+                {
+                  (
+                    status == false &&
+                    onlineStatus == 1
+                  ) && (
+                    <LinearProgress className="BloggerProgress" color="secondary" />
+                  )
+                }
 
-                 <div className="mainPush_root">
-                   <div className="declineButtonBlock">
-                      <div className="declineButtonStyle">
-                          Decline
+
+
+                 <DirectionComponent latitude={latitude} longitude={longitude} item={items[0]} status={status} />
+
+                   {
+                     currentTask != 0 && (
+                       <div className="CurrentTask">
+                         <div className="CurrentTaskTwo_2">
+                              <div className="buttonStylePush" onClick={event => GoToTask(currentItem)}>
+                                 <div className="CurrentTaskTwo_2Text">Continue Task</div>
+                             </div>
+                         </div>
+                       </div>
+                    )
+
+                  }
+
+
+
+                  {
+                    (
+                      onlineStatus === 0
+                    ) && (
+                    <div className="CurrentTask">
+                      <div className="CurrentTaskTwo_2">
+                           <div className="buttonStylePush" onClick={event => GoOnline()}>
+                              <div className="CurrentTaskTwo_2Text">Go Online</div>
+                          </div>
                       </div>
-                   </div>
-                   <div className="mainPush">
-                     <div className="mainPushColumsOne">
-                       <div className="mainPushColumsOneLeft">
-                           <div className="mainPushColumsOneLeft_1">Deliver by 6:11 PM</div>
-                           <div className="mainPushColumsOneLeft_2">McDonald's</div>
-                           <div className="mainPushColumsOneLeft_3">2 items* 2.9 mi</div>
+                    </div>
+                    )
 
-                       </div>
-                       <div className="mainPushColumsOneRight">
-                         <div className="CircularProgressParent">
-                           <CircularProgressComponent />
-                         </div>
+                  }
 
-                       </div>
 
-                     </div>
-                     <div className="mainPushColumsTwo">
 
-                       <div className="mainPushColumsTwo_1">
-                         <div className="gorizontalGreyLine">
-                         </div>
-                         <div className="mainPushColumsTwo_1_Price">
-                           $7.00
-                         </div>
-                         <div className="mainPushColumsTwo_2_Second">
-                             Included Echohub pay and customer tip
-                         </div>
-                         <div className="mainPushColumsTwo_3_Third">
-                           (Total may be higher)
-                         </div>
-                       </div>
-                       <div className="mainPushColumsTwo_2">
-                           <div className="buttonStylePush">
-                               <div className="buttonStylePushText">Accept</div>
+
+
+
+
+                   {status === false ? (
+                     <div></div>
+                    ) : (
+
+                      <div className="mainPush_root">
+                        <div className="declineButtonBlock">
+                           <div className="declineButtonStyle" onClick={event => rejectOrder(items[0])}>
+                               Decline
                            </div>
-                       </div>
+                        </div>
+                        <div className="mainPush">
+                          <div className="mainPushColumsOne">
+                            <div className="mainPushColumsOneLeft">
+                                <div className="mainPushColumsOneLeft_1">Do before {items[0].date}</div>
+                                <div className="mainPushColumsOneLeft_2">{items[0].url}</div>
+                                <div className="mainPushColumsOneLeft_3">Distance: {distance}</div>
+
+                            </div>
+                            <div className="mainPushColumsOneRight">
+                              <div className="CircularProgressParent">
+                                <CircularProgressComponent status={status} timerVariable={timerVariable} timerCircleVariable={timerCircleVariable}/>
+                              </div>
+
+                            </div>
+
+                          </div>
+                          <div className="mainPushColumsTwo">
+
+                            <div className="mainPushColumsTwo_1">
+                              <div className="gorizontalGreyLine">
+                              </div>
+                              <div className="mainPushColumsTwo_1_Price">
+                                ${Math.round(items[0].sum / items[0].peoplecount - 1)}
+                              </div>
+                              <div className="mainPushColumsTwo_2_Second">
+                                  Included Echohub pay and customer tip
+                              </div>
+                              <div className="mainPushColumsTwo_3_Third">
+                                (Total may be higher)
+                              </div>
+                            </div>
+                            <div className="mainPushColumsTwo_2">
+                                <div className="buttonStylePush" onClick={event => StartTask(items[0])}>
+                                    <div className="buttonStylePushText">Accept</div>
+                                </div>
+                            </div>
 
 
-                     </div>
+                          </div>
 
-                   </div>
-                 </div>
+                        </div>
+                      </div>
+
+                    )}
+
+
 
                </Grid>
-             )}
 
 
              <ConfirmDialogComponent status={dialogStatus} left={leftbutton} right={rightbutton} text={dialogText}/>
@@ -811,6 +1040,25 @@ useEffect(() => {
                  <Switch
                    checked={swithState}
                    onChange={handleSwitch}
+                   color="primary"
+                   className="switchCheckbox"
+                   name="checkedA"
+                   inputProps={{ 'aria-label': 'primary checkbox' }}
+                 />
+
+               </div>
+
+
+             </div>
+             <div className="switchBoxTwo">
+
+               <div className="lswitchBoxTwo">
+                 {LocalizeComponent.Go_offline}
+               </div>
+               <div className="rswitchBoxTwo">
+                 <Switch
+                   checked={onlineStatusSwitcher}
+                   onChange={handleSwitchOnlineStatusSwitcher}
                    color="primary"
                    className="switchCheckbox"
                    name="checkedA"

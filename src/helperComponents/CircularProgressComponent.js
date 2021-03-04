@@ -1,6 +1,7 @@
-import React from 'react';
+import React,{useState,useEffect,useMemo} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import Observable from '../services/Observable';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -11,17 +12,27 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const timerVariable = 10;
+const color = "#0083ff";
 
-export default function CircularDeterminate() {
+
+
+const CircularDeterminate = (props) => {
+
   const classes = useStyles();
+  const status = props.status;
   const [progress, setProgress] = React.useState(0);
+  const timerVariable = props.timerVariable;
+  const timerCircleVariable = props.timerCircleVariable;
+
+
 
   return (
     <div className={classes.root}>
-      <CircularProgress className="CircularProgress" color="#0083ff" variant="determinate" value={100} />
+      <CircularProgress className="CircularProgress"  variant="determinate" value={timerCircleVariable} />
 
       <div className="CircleTimer">{timerVariable}</div>
     </div>
   );
 }
+
+export default CircularDeterminate;

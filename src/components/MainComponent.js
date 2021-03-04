@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback,useEffect } from 'react';
 import AnimationComponent from '../components/AnimationComponent';
 import LocalizeComponent from '../localize/LocalizeComponent';
 import Grid from '@material-ui/core/Grid';
@@ -18,6 +18,7 @@ import AnnouncementIcon from '@material-ui/icons/Announcement';
 import CenterFocusStrongIcon from '@material-ui/icons/CenterFocusStrong';
 import TrendingUpIcon from '@material-ui/icons/TrendingUp';
 import WorkIcon from '@material-ui/icons/Work';
+
 import {
   useHistory,
 } from "react-router-dom";
@@ -32,6 +33,37 @@ const BottomFunc = () => {
 
   });
 
+  var elem = document.documentElement;
+
+  const fullScreenCheck = () => {
+
+      if (elem.requestFullscreen) {
+        return elem.requestFullscreen();
+      } else if (elem.mozRequestFullScreen) { /* Firefox */
+         return elem.mozRequestFullScreen();
+      } else if (elem.webkitRequestFullscreen) { /* Chrome, Safari and Opera */
+        return elem.webkitRequestFullscreen();
+      } else if (elem.msRequestFullscreen) { /* IE/Edge */
+        return elem.msRequestFullscreen();
+      }
+
+  }
+
+
+
+  useEffect(() => {
+
+    setTimeout(function(){
+
+      try {
+         fullScreenCheck();
+      } catch (err) {
+        console.error(err);
+      }
+
+
+    },3000)
+  },[]);
 
   return (
 
@@ -250,6 +282,7 @@ const BottomFunc = () => {
 
 
     </Grid>
+
 
 
 

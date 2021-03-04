@@ -79,6 +79,7 @@ let strings = new LocalizedStrings({
    Confirm_task:"Confirm task",
    UncorfimedTask:"You Have new unconfirmed task",
    Confirmed_task:"Task Confirmed",
+   Go_offline:"Go offline",
 
  },
  it: {

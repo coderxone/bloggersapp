@@ -4,6 +4,8 @@ const observ_subject = new Subject();
 const observ_subjectM = new Subject();
 const observ_subjectD = new Subject();
 const observ_subjectEdit = new Subject();
+const observ_subjectRoute = new Subject();
+const observ_subjectAny = new Subject();
 
 const observ_f = {
 
@@ -20,6 +22,20 @@ const observ_f = {
 
       getData_subjectDialog:() => {
         return observ_subjectD;
+      },
+      sendRoute: data => {
+        return observ_subjectRoute.next(data);
+      },
+
+      getRoute:() => {
+        return observ_subjectRoute;
+      },
+      sendAny: data => {
+        return observ_subjectAny.next(data);
+      },
+
+      getAny:() => {
+        return observ_subjectAny;
       },
 
 
@@ -55,6 +71,13 @@ const observ_f = {
         const timer30second = interval(30000);
 
         return timer30second;
+      },
+
+      subscribeByTimer_1_second:() => {
+
+        const timer1000second = interval(1000);
+
+        return timer1000second;
       },
 
       subscribeByTimer_2_second:() => {

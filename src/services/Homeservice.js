@@ -3,7 +3,10 @@ import socket from '../config/socket.js';
 import config from '../config/config.js';
 import cryptLibrary from '../helpers/CryptLibrary';
 import soundfile from '../voice/to-the-point.ogg';
+import soundfileNotif from '../voice/notification.mp3';
+import soundfileAccept from '../voice/sms.mp3';
 import soundfiletwo from '../voice/to-the-point.mp3';
+import soundfileReject from '../voice/notificationRej.mp3';
 import Observable from '../services/Observable';
 
 
@@ -259,6 +262,36 @@ const homeservice = {
 
         try{
           const audio = new Audio(soundfile);
+          audio.play();
+        }catch(e){
+
+        }
+
+      },
+      notificationVoiceR:() => {
+
+        try{
+          const audio = new Audio(soundfileNotif);
+          audio.play();
+        }catch(e){
+
+        }
+
+      },
+      notificationVoiceA:() => {
+
+        try{
+          const audio = new Audio(soundfileAccept);
+          audio.play();
+        }catch(e){
+
+        }
+
+      },
+      notificationVoiceReject:() => {
+
+        try{
+          const audio = new Audio(soundfileReject);
           audio.play();
         }catch(e){
 

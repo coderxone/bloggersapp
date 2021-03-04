@@ -365,7 +365,7 @@ const CountTaskFunction = (data) => {
 
     if((countOfTask == count) && (countOfTask > 0) && (count > 0)){
       SetcompletedTask(true);
-      console.log(111);
+      //console.log(111);
       SubmittedTask(detailData.id);
       localStorage.removeItem("tempstorageData");
       localStorage.removeItem("tempstorageDistance");
@@ -388,7 +388,6 @@ useEffect(() => {
 
   return () => {
     ListenlistenCheckUrl.unsubscribe();
-
   }
 
 },[]);
