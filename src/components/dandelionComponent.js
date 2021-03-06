@@ -1,6 +1,7 @@
 import React, { useRef,useEffect, useState,useMemo } from 'react';
 import { Canvas, useFrame } from 'react-three-fiber';
 import * as THREE from "three";
+
 // import {
 //   Mesh, Vector3, SplineCurve, Geometry, Color,
 // } from 'three';
@@ -52,7 +53,7 @@ var AnimationParams = {
   transparent:true
 }
 //var BackgroundColor = "white";
-var BackgroundColor = "#0181C2";
+//var BackgroundColor = "#0181C2";
 
 var AnimationControl = 0;
 
@@ -133,9 +134,9 @@ const NewHookComponent = () => {
 
     //camera.lookAt( viewPositionAnimation.x, viewPositionAnimation.y, viewPositionAnimation.z );
 
-    renderer.setClearColor(backgroundColor)
+    renderer.setClearColor(backgroundColor);
     //renderer.setClearColor(0x000000, 0)
-    renderer.setSize(width, height)
+    renderer.setSize(width, height);
   }
 
   const SetCamera = () => {
@@ -175,16 +176,19 @@ const NewHookComponent = () => {
     //scene.add(light);
 
 
-    var imgEcho1 = new THREE.MeshBasicMaterial({
-        map:THREE.ImageUtils.loadTexture(Logo_Echohub_1_part)
-    });
-    imgEcho1.map.needsUpdate = true; //ADDED
-    var imgEcho1_mesh = new THREE.Mesh(new THREE.PlaneGeometry(320, 420),imgEcho1);
-    imgEcho1_mesh.overdraw = true;
-    imgEcho1_mesh.material.needsUpdate = true;
-    imgEcho1_mesh.position.x = echoX;;
-    imgEcho1_mesh.position.y = 24 + movingPointY;
-    scene.add(imgEcho1_mesh);
+      var imgEcho1 = new THREE.MeshBasicMaterial({
+          map:THREE.ImageUtils.loadTexture(Logo_Echohub_1_part, {}, function() {
+          })
+      });
+      imgEcho1.map.needsUpdate = true; //ADDED
+      var imgEcho1_mesh = new THREE.Mesh(new THREE.PlaneGeometry(320, 420),imgEcho1);
+      imgEcho1_mesh.overdraw = true;
+      imgEcho1_mesh.material.needsUpdate = true;
+      imgEcho1_mesh.position.x = echoX;;
+      imgEcho1_mesh.position.y = 24 + movingPointY;
+      scene.add(imgEcho1_mesh);
+
+
 
     var imgEcho2 = new THREE.MeshBasicMaterial({
         map:THREE.ImageUtils.loadTexture(Logo_Echohub_2_part)
@@ -638,6 +642,8 @@ const AnimateDandelionAnimator = () => {
 
       }
       animate();
+
+
 
 
 

@@ -2,10 +2,65 @@ $base-app-color:#0083ff;
 $font-size: 18px;
 $fontStyles:"Times New Roman", Times, serif;
 $greyText:#767676;
+$newAppColor:#56c1f7;
+$newAppColorTwo:#65c7f7;
+
+@font-face {
+  font-family: 'AVA_LL';
+  src: local('AVA_LL'), url(../fonts/AVA_LL.TTF) format('TTF');
+}
+@font-face {
+  font-family: 'AVA_LDB';
+  src: local('AVA_LDB'), url(../fonts/AVA_LDB.TTF) format('TTF');
+}
+@font-face {
+  font-family: 'CMP57_';
+  src: local('CMP57_'), url(../fonts/CMP57_.TTF) format('TTF');
+}
+@font-face {
+  font-family: 'CMP58_';
+  src: local('CMP58_'), url(../fonts/CMP58_.TTF) format('TTF');
+}
+@font-face {
+  font-family: 'CMP67_';
+  src: local('CMP67_'), url(../fonts/CMP67_.TTF) format('TTF');
+}
+@font-face {
+  font-family: 'CONC';
+  src: local('CONC'), url(../fonts/CONC.TTF) format('TTF');
+}
 
 .businessContainer{
-  padding-bottom:20px;  
+  padding-bottom:20px;
+  background:linear-gradient(to right, $newAppColor, $newAppColorTwo);
 }
+
+.backgroundCl{
+  width: 100%;
+
+}
+
+.Rolebuttons{
+  background-color: blue;
+  width: 43%;
+  height: 100px;
+
+}
+
+.creatorButton{
+
+  background-color: #F1F8FC;
+  width: 100%;
+  height: 40%;
+  border-radius: 35px;
+  border: 2px solid #337BAE;
+}
+
+.textCreator{
+  color: black;
+
+}
+
 
 .vis {
   top: 0;

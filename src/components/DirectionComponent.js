@@ -87,7 +87,7 @@ const MyComponent = (props) => {
   useMemo(() => {
     if(status === false){
       const newContainerStyletwo = {...containerStyle};
-      newContainerStyletwo.height = '90vh';
+      newContainerStyletwo.height = '95vh';
       SetContainerStyle(newContainerStyletwo);
     }else if(status === true){
       const newContainerStyleOne = {...containerStyle};

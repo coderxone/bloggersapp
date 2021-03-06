@@ -3,13 +3,13 @@ import config from '../config/config';
 
 var url = 'https://echohub.io:3004';//browser https
 
-// if((config.getDeployData().deployMode == "production") && (config.getDeployData().deployPlatform == "android")){
-//   url = 'http://145.249.246.3:3002';//android
-// }else if((config.getDeployData().deployMode == "development") && (config.getDeployData().deployPlatform == "android")){
-//   url = 'http://localhost:3002';//android
-// }else if((config.getDeployData().deployMode == "development") && (config.getDeployData().deployPlatform == "browser")){
-//   url = 'https://localhost:3004';
-// }
+if((config.getDeployData().deployMode == "production") && (config.getDeployData().deployPlatform == "android")){
+  url = 'http://145.249.246.3:3002';//android
+}else if((config.getDeployData().deployMode == "development") && (config.getDeployData().deployPlatform == "android")){
+  url = 'http://localhost:3002';//android
+}else if((config.getDeployData().deployMode == "development") && (config.getDeployData().deployPlatform == "browser")){
+  url = 'https://localhost:3004';
+}
 
 //url = 'https://localhost:3004';
 
