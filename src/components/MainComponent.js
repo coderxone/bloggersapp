@@ -1,5 +1,6 @@
 import React, { useCallback,useEffect } from 'react';
 import AnimationComponent from '../components/AnimationComponent';
+import MainPageDandelion from '../components/MainPageDandelion';
 import LocalizeComponent from '../localize/LocalizeComponent';
 import Grid from '@material-ui/core/Grid';
 import GroupAddIcon from '@material-ui/icons/GroupAdd';
@@ -18,7 +19,8 @@ import AnnouncementIcon from '@material-ui/icons/Announcement';
 import CenterFocusStrongIcon from '@material-ui/icons/CenterFocusStrong';
 import TrendingUpIcon from '@material-ui/icons/TrendingUp';
 import WorkIcon from '@material-ui/icons/Work';
-import backgroundVector from '../images/main/BackgroundVectorTwo.png';
+
+
 
 
 import {
@@ -71,22 +73,55 @@ const BottomFunc = () => {
 
     <Grid container className="businessContainer" >
 
+            <div className="Login_block"  onClick={goToLogin}>
+              <div className="Login_image">
+                  <div className="Login_image_text">Sign up</div>
+              </div>
+
+              <div className="Login_sign_in"  onClick={goToLogin}>
+                <div className="Login_sign_in_text">
+                  Sign in
+                </div>
+              </div>
 
 
-        <div className="backgroundCl">
-            <img width="100%"  src={backgroundVector}/>
-        </div>
-
-        <div className="Rolebuttons">
-          <div className="creatorButton">
-            <div className="textCreator">
-              Creator
             </div>
-          </div>
-          <div >
 
-          </div>
-        </div>
+            <div className="dandelionBox">
+
+                <MainPageDandelion/>
+
+            </div>
+
+
+            <div className="backgroundCl" >
+
+            </div>
+
+            <div className="Rolebuttons">
+              <div className="creatorButtonDisabled">
+                <div className="textCreatorActiv">
+                  Creator
+                </div>
+              </div>
+              <div className="creatorButtonTwoDisabled">
+                <div className="textCreatorTwoDisabled">
+                  Business
+                </div>
+              </div>
+              <div >
+
+              </div>
+            </div>
+
+
+
+            <div className="BackgroundText">
+                <div className="BackgroundTextV">
+                  <span className="IO_size">.IO</span> - is a new, effective way of spreading information through a network of pooled bloggers.
+                </div>
+            </div>
+
 
 
 

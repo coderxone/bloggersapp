@@ -34,6 +34,9 @@ import TaskComponent from './components/TaskComponent';
 import RedirectComponent from './components/RedirectComponent';
 import MainComponent from './components/MainComponent';
 import DandelionComponent from './components/dandelionComponent';
+import MainPageDandelion from './components/MainPageDandelion';
+import businessExtendComponent from './components/businessExtendComponent';
+
 
 
 
@@ -74,6 +77,9 @@ const App = () => {
                 <Route path="/mytasks" component={TaskComponent} exact={true} />
                 <Route path="/main" component={MainComponent} exact={true} />
                 <Route path="/dandelion" component={DandelionComponent} exact={true} />
+                <Route path="/maindandelion" component={MainPageDandelion} exact={true} />
+                <Route path="/businessextend" component={businessExtendComponent} exact={true} />
+
                 <Route path="/follow/:id" component={RedirectComponent} exact={true} />
                 <Route exact path="/" render={() => <Redirect to="/main" />} />
                 </LastLocationProvider>

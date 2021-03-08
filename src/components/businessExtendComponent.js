@@ -99,7 +99,7 @@ const schema = yup.object().shape({
 
 
 
-const AuthorizationComponent = (props) => {
+const businessExtendComponent = (props) => {
 
 
 
@@ -126,4 +126,4 @@ const AuthorizationComponent = (props) => {
 };
 
 
- export default connect(mapStateToProps,mapDispatchToProps)(AuthorizationComponent);
+ export default connect(mapStateToProps,mapDispatchToProps)(businessExtendComponent);

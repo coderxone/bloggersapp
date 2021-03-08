@@ -4,6 +4,7 @@ $fontStyles:"Times New Roman", Times, serif;
 $greyText:#767676;
 $newAppColor:#56c1f7;
 $newAppColorTwo:#65c7f7;
+$mainTextColor:#00002F;
 
 @font-face {
   font-family: 'AVA_LL';
@@ -32,34 +33,169 @@ $newAppColorTwo:#65c7f7;
 
 .businessContainer{
   padding-bottom:20px;
-  background:linear-gradient(to right, $newAppColor, $newAppColorTwo);
+  // background:linear-gradient(to right, $newAppColor, $newAppColorTwo);
 }
+
+.dandelionBox{
+  width:100%;
+  position: absolute;
+  left:0px;
+  top:1%;
+  z-index: 20;
+}
+
+.Login_block{
+  width: 100%;
+  height: 5vh;
+  position: absolute;
+  left:0px;top:0px;
+  z-index: 21;
+}
+.Login_image{
+  background: url(../images/main/singnup_image.png);
+  background-repeat: no-repeat;
+  background-size: contain;
+  width: 80px;
+  height: 100%;
+  margin-left: 39%;
+  float: left;
+}
+
+.Login_image_text{
+  text-align: center;
+  margin-top:1px;
+  font-size: 14px;
+}
+
+.Login_sign_in{
+  width: 70px;
+  height: 100%;
+  float: left;
+  margin-left: 19%;
+}
+
+.Login_sign_in_text{
+  text-align: center;
+  font-size: 14px;
+  text-decoration: underline;
+  color:$mainTextColor;
+  margin-top:2px;
+}
+
+
+
 
 .backgroundCl{
   width: 100%;
+  height: 40vh;
+  z-index: 1;
+  background: url(../images/main/BackgroundVectorTwo.png);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
 
 }
 
 .Rolebuttons{
-  background-color: blue;
-  width: 43%;
-  height: 100px;
-
+   // background-color: blue;
+   position: absolute;
+   top:26%;
+   left:50%;
+   overflow: hidden;
+   width: 43%;
+   height: 90px;
+   z-index: 25;
 }
 
-.creatorButton{
+.creatorButtonDisabled{
 
   background-color: #F1F8FC;
   width: 100%;
-  height: 40%;
+  height: 45%;
+  border-radius: 35px;
+  border: 2px solid #337BAE;
+
+}
+.creatorButtonActive{
+
+  background:linear-gradient(#2999ff, #5ee6f2);
+  width: 100%;
+  height: 45%;
+  border-radius: 35px;
+  border: 2px solid #337BAE;
+
+}
+
+.textCreatorActiv{
+  margin-top:6%;
+  color: black;
+  text-align: center;
+}
+.textCreatorDisabled{
+  margin-top:6%;
+  color: black;
+  text-align: center;
+}
+
+.creatorButtonTwoDisabled{
+  margin-top:4%;
+  background-color: #F1F8FC;
+  width: 100%;
+  height: 45%;
+  border-radius: 35px;
+  border: 2px solid #337BAE;
+
+}
+
+.creatorButtonTwoActiv{
+  margin-top:4%;
+  background:linear-gradient(#2999ff, #5ee6f2);
+  width: 100%;
+  height: 45%;
   border-radius: 35px;
   border: 2px solid #337BAE;
 }
 
-.textCreator{
+.textCreatorTwoActiv{
+  margin-top:6%;
+  color: white;
+  text-align: center;
+}
+.textCreatorTwoDisabled{
+  margin-top:6%;
   color: black;
+  text-align: center;
+}
+
+.BackgroundText{
+  margin-top:20px;
+  background: url(../images/main/Background_text.png);
+  background-repeat: no-repeat;
+  background-size: contain;
+  width: 100%;
+  height: 30vh;
+  text-indent: 46%;
+  line-height: 1.3;
+  z-index: 25;
+}
+.IO_size{
+  font-size: 22px;
+  color:#132564;
 
 }
+.BackgroundTextV{
+  margin-top:40px;
+  color:$mainTextColor;
+  width: 100%;
+  height: 60px;
+  font-size: 18px;
+  // background-color: yellow;
+
+}
+
+
+
+
+
 
 
 .vis {
