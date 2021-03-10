@@ -34,8 +34,12 @@ import TaskComponent from './components/TaskComponent';
 import RedirectComponent from './components/RedirectComponent';
 import MainComponent from './components/MainComponent';
 import DandelionComponent from './components/dandelionComponent';
+import AnimationTwoComponent from './components/AnimationTwoComponent';
+import AnimationTwoFactory from './components/AnimationTwoFactory';
+import AnimationComponent from './components/AnimationComponent';
 import MainPageDandelion from './components/MainPageDandelion';
-import businessExtendComponent from './components/businessExtendComponent';
+import bComponent from './components/bComponent';
+import blComponent from './components/blComponent';
 
 
 
@@ -78,7 +82,11 @@ const App = () => {
                 <Route path="/main" component={MainComponent} exact={true} />
                 <Route path="/dandelion" component={DandelionComponent} exact={true} />
                 <Route path="/maindandelion" component={MainPageDandelion} exact={true} />
-                <Route path="/businessextend" component={businessExtendComponent} exact={true} />
+                <Route path="/animation" component={AnimationComponent} exact={true} />
+                <Route path="/animationtwo" component={AnimationTwoComponent} exact={true} />
+                <Route path="/animationtwof" component={AnimationTwoFactory} exact={true} />
+                <Route path="/echohub-for-business" component={bComponent} exact={true} />
+                <Route path="/echohub-for-bloggers" component={blComponent} exact={true} />
 
                 <Route path="/follow/:id" component={RedirectComponent} exact={true} />
                 <Route exact path="/" render={() => <Redirect to="/main" />} />

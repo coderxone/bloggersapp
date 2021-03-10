@@ -9,20 +9,23 @@ import {
   withStyles,
   makeStyles,
 } from '@material-ui/core/styles';
+import GoBackAbsoluteComponent from '../helperComponents/goBackAbsoluteComponent';
 import TextField from '@material-ui/core/TextField';
+import Input from '@material-ui/core/Input';
+
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
-import Logo from '../icons/Logo_Echohub_1_part.png';
-import LogoTwo from '../icons/Logo_Echohub_2_part.png';
+import Logo from '../icons/logo_circle_new_circle.png';
 import Box from '@material-ui/core/Box';
 import { connect } from 'react-redux';
-import AuthService from '../services/AuthService';
-import DandelionComponent from '../components/dandelionComponent.js';
+import DialogComponent from '../components/DialogComponent';
+import config from '../config/config.js';
+
+
 import { increment, decrement,save_email } from '../actions/actions';
 import {
-  Link, Redirect
+  Link,
 } from "react-router-dom";
-
 
 
 
@@ -49,7 +52,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor:'transparent',
   },
   paper: {
-    padding: theme.spacing(2),
+    padding: theme.spacing(0),
     textAlign: 'center',
     color: theme.palette.text.secondary,
     backgroundColor:'transparent',
@@ -61,13 +64,13 @@ const useStyles = makeStyles((theme) => ({
 const CssTextField = withStyles({
   root: {
     '& label.Mui-focused': {
-      color: '#0083ff',
+      color: '#8936f4',
     },
     '& label': {
-      color: '#0083ff',
+      color: '#8936f4',
     },
     '& .MuiInput-underline:after': {
-      borderBottomColor: '#0083ff',
+      borderBottomColor: '#8936f4',
     },
     '& .MuiOutlinedInput-root': {
       '& fieldset': {
@@ -77,10 +80,10 @@ const CssTextField = withStyles({
         borderColor: 'yellow',
       },
       '&.Mui-focused fieldset': {
-        borderColor: '#0083ff',
+        borderColor: '#8936f4',
       },
       '& input:valid + fieldset': {
-        borderColor: '#0083ff',
+        borderColor: '#8936f4',
       },
       '& input:invalid + fieldset': {
         borderColor: 'red',
@@ -92,32 +95,35 @@ const CssTextField = withStyles({
 
 const schema = yup.object().shape({
   email: yup.string().required("Required").email(),
-  password: yup.string().required('No password provided.')
-  .min(6, LocalizeComponent.password_length)
-  .matches(/^[A-Za-z0-9_]{6,}$/, 'Password should contain only letters and numbers.'),
 });
 
 
+const MessageComponent = (props) => {
+  return (
+    <div className="errorBox">
+        {props.message}
+    </div>
+  )
+}
 
-const businessExtendComponent = (props) => {
 
 
 
 
-  useEffect(() => {
+const BlComponent = (props) => {
 
 
-        //unsibscribe
-
-    },[]);
+  const classes = useStyles();
+  const { register, handleSubmit, errors,setError } = useForm({
+    resolver: yupResolver(schema)
+  });
 
 
   return (
 
    	<div className={classes.root}>
         <Grid container >
-
-
+              dfdfd
           </Grid>
       </div>
 
@@ -126,4 +132,4 @@ const businessExtendComponent = (props) => {
 };
 
 
- export default connect(mapStateToProps,mapDispatchToProps)(businessExtendComponent);
+ export default connect(mapStateToProps,mapDispatchToProps)(BlComponent);

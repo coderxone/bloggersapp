@@ -119,17 +119,21 @@ const TaskComponent = (props) => {
   });
 
 
-
-
   return (
+        <div className="bBackground">
 
-   	<div className={classes.root}>
-        <Grid container >
-              dfdfd
-          </Grid>
-      </div>
+          <div className="businessSchemeBlock">
+            <div className="businessScheme" >
+              <div className="businessSchemeText">
+                Business
+              </div>
+            </div>
+
+          </div>
 
 
+
+        </div>
   );
 };
 

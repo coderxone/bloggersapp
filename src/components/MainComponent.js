@@ -1,4 +1,4 @@
-import React, { useCallback,useEffect } from 'react';
+import React, { useCallback,useEffect,useState } from 'react';
 import AnimationComponent from '../components/AnimationComponent';
 import MainPageDandelion from '../components/MainPageDandelion';
 import LocalizeComponent from '../localize/LocalizeComponent';
@@ -19,6 +19,8 @@ import AnnouncementIcon from '@material-ui/icons/Announcement';
 import CenterFocusStrongIcon from '@material-ui/icons/CenterFocusStrong';
 import TrendingUpIcon from '@material-ui/icons/TrendingUp';
 import WorkIcon from '@material-ui/icons/Work';
+import BusinessPageComponent from '../components/bComponent';
+import blComponent from '../components/blComponent';
 
 
 
@@ -36,6 +38,32 @@ const BottomFunc = () => {
     return history.push('/login'), [history]
 
   });
+
+  const [BusinessSwitcher,SetBusinessSwitcher] = useState(0);
+
+  const goToBusinessPage = (() => {
+
+    SetBusinessSwitcher(0);
+
+  });
+
+  const goToBloggerPage = (() => {
+
+    SetBusinessSwitcher(1);
+
+  });
+
+  // const goToBusinessPage = useCallback(() => {
+  //
+  //   return history.push('/echohub-for-business'), [history]
+  //
+  // });
+  //
+  // const goToBloggerPage = useCallback(() => {
+  //
+  //   return history.push('/echohub-for-bloggers'), [history]
+  //
+  // });
 
   var elem = document.documentElement;
 
@@ -99,12 +127,12 @@ const BottomFunc = () => {
             </div>
 
             <div className="Rolebuttons">
-              <div className="creatorButtonDisabled">
+              <div className="creatorButtonDisabled" onClick={goToBloggerPage}>
                 <div className="textCreatorActiv">
                   Creator
                 </div>
               </div>
-              <div className="creatorButtonTwoDisabled">
+              <div className="creatorButtonTwoDisabled" onClick={goToBusinessPage}>
                 <div className="textCreatorTwoDisabled">
                   Business
                 </div>
@@ -116,6 +144,7 @@ const BottomFunc = () => {
 
 
 
+
             <div className="BackgroundText">
                 <div className="BackgroundTextV">
                   <span className="IO_size">.IO</span> - is a new, effective way of spreading information through a network of pooled bloggers.
@@ -123,7 +152,12 @@ const BottomFunc = () => {
             </div>
 
 
-
+            {
+              BusinessSwitcher == 0 &&
+              (
+                <BusinessPageComponent />
+              )
+            }
 
 
     </Grid>

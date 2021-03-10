@@ -194,8 +194,34 @@ $mainTextColor:#00002F;
 
 
 
+.bBackground{
+  width: 100%;
+  height: 420vh;
+  z-index: 1;
+  background: url(../images/main/schemeOne.png);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
 
+.businessSchemeBlock{
+  width: 100%;
+  height: 40px;
+  background-color: red;
+}
+.businessScheme{
+  overflow: hidden;
+  background:linear-gradient(#2999ff, #5ee6f2);
+  width:70%;
+  height: 100%;
+  border-radius: 35px;
+  margin-left:15%;
+}
 
+.businessSchemeText{
+  margin-top:10px;
+  color: white;
+  text-align: center;
+}
 
 
 .vis {
