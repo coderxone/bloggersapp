@@ -488,14 +488,14 @@ const NewHookComponent = () => {
         //Peoples
         //load 3d earth
         //
-        var textureLoader = new THREE.TextureLoader();
-        var texture = textureLoader.load(Earthtexture);
-        texture.flipY = false;
+        var textureLoaderF = new THREE.TextureLoader();
+        var textureF = textureLoaderF.load(Earthtexture);
+        textureF.flipY = false;
         //Earthtexture
 //xx
         var geometryEarth = new THREE.SphereGeometry(30, 32, 32);
         var materialEarth = new THREE.MeshPhongMaterial();
-        materialEarth.map = texture;
+        materialEarth.map = textureF;
         var earthmesh = new THREE.Mesh(geometryEarth, materialEarth);
         earthmesh.position.x = PeoplePosition.x;
         earthmesh.position.y = PeoplePosition.y;

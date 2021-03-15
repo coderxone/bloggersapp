@@ -20,7 +20,15 @@ import CenterFocusStrongIcon from '@material-ui/icons/CenterFocusStrong';
 import TrendingUpIcon from '@material-ui/icons/TrendingUp';
 import WorkIcon from '@material-ui/icons/Work';
 import BusinessPageComponent from '../components/bComponent';
-import blComponent from '../components/blComponent';
+import AnimationFComponent from '../components/businessComponents/AnimationTwoFactory';
+import AnimationFSecond from '../components/businessComponents/AnimationTwoFactorySecond';
+import AnimationFThird from '../components/businessComponents/AnimationTwoFactoryThird';
+import AnimationFFour from '../components/businessComponents/AnimationTwoFactoryFour';
+
+import BloggerAnimationComponent from '../components/bloggerComponents/BloggerAnimationComponent';
+import BloggerCopy2 from '../components/bloggerComponents/bloggerCopy2';
+import BloggerCopy3 from '../components/bloggerComponents/bloggerCopy3';
+import BloggerCopy4 from '../components/bloggerComponents/bloggerCopy4';
 
 
 
@@ -38,6 +46,7 @@ const BottomFunc = () => {
     return history.push('/login'), [history]
 
   });
+
 
   const [BusinessSwitcher,SetBusinessSwitcher] = useState(0);
 
@@ -106,8 +115,8 @@ const BottomFunc = () => {
                   <div className="Login_image_text">Sign up</div>
               </div>
 
-              <div className="Login_sign_in"  onClick={goToLogin}>
-                <div className="Login_sign_in_text">
+              <div className="Login_sign_in" >
+                <div className="Login_sign_in_text" onClick={goToLogin}>
                   Sign in
                 </div>
               </div>
@@ -127,19 +136,38 @@ const BottomFunc = () => {
             </div>
 
             <div className="Rolebuttons">
-              <div className="creatorButtonDisabled" onClick={goToBloggerPage}>
-                <div className="textCreatorActiv">
-                  Creator
-                </div>
-              </div>
-              <div className="creatorButtonTwoDisabled" onClick={goToBusinessPage}>
-                <div className="textCreatorTwoDisabled">
-                  Business
-                </div>
-              </div>
-              <div >
 
-              </div>
+              {BusinessSwitcher == 0 ? (
+                <div className="creatorButtonDisabled" onClick={goToBloggerPage}>
+                  <div className="textCreatorDisabled">
+                    Creator
+                  </div>
+                </div>
+               ) : (
+                 <div className="creatorButtonActive" onClick={goToBloggerPage}>
+                   <div className="textCreatorActiv">
+                     Creator
+                   </div>
+                 </div>
+               )}
+
+
+
+              {BusinessSwitcher == 0 ? (
+                <div className="creatorButtonTwoActiv" onClick={goToBusinessPage}>
+                  <div className="textCreatorTwoActiv">
+                    Business
+                  </div>
+                </div>
+               ) : (
+                 <div className="creatorButtonTwoDisabled" onClick={goToBusinessPage}>
+                   <div className="textCreatorTwoDisabled">
+                     Business
+                   </div>
+                 </div>
+               )}
+
+
             </div>
 
 
@@ -152,12 +180,24 @@ const BottomFunc = () => {
             </div>
 
 
-            {
-              BusinessSwitcher == 0 &&
-              (
-                <BusinessPageComponent />
-              )
-            }
+
+            {BusinessSwitcher == 0 ? (
+              <div>
+                <AnimationFComponent page={1} />
+                <AnimationFSecond  page={2} />
+                <AnimationFThird page={3} />
+                <AnimationFFour  page={4} />
+
+              </div>
+             ) : (
+               <div>
+                  <BloggerAnimationComponent page={1} />
+                  <BloggerCopy2 page={2} />
+                  <BloggerCopy3 page={3} />
+
+
+               </div>
+             )}
 
 
     </Grid>

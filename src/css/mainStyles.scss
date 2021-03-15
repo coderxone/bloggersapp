@@ -7,6 +7,13 @@ $greyFontColor:#979797;
 $pushNotificationBackground:white;
 
 
+
+.vis canvas{
+  touch-action:auto !important;
+}
+
+
+
 .BloggerProgress{
   width: 100% !important;
 }

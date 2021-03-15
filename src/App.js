@@ -35,16 +35,12 @@ import RedirectComponent from './components/RedirectComponent';
 import MainComponent from './components/MainComponent';
 import DandelionComponent from './components/dandelionComponent';
 import AnimationTwoComponent from './components/AnimationTwoComponent';
-import AnimationTwoFactory from './components/AnimationTwoFactory';
+import AnimationTwoFactory from './components/businessComponents/AnimationTwoFactory';
+import BloggerAnimationComponent from './components/bloggerComponents/BloggerAnimationComponent';
 import AnimationComponent from './components/AnimationComponent';
 import MainPageDandelion from './components/MainPageDandelion';
 import bComponent from './components/bComponent';
 import blComponent from './components/blComponent';
-
-
-
-
-
 
 
 
@@ -84,7 +80,8 @@ const App = () => {
                 <Route path="/maindandelion" component={MainPageDandelion} exact={true} />
                 <Route path="/animation" component={AnimationComponent} exact={true} />
                 <Route path="/animationtwo" component={AnimationTwoComponent} exact={true} />
-                <Route path="/animationtwof" component={AnimationTwoFactory} exact={true} />
+                <Route path="/animationtwof" component={AnimationTwoFactory } exact={true} />
+                <Route path="/animationblogger" component={BloggerAnimationComponent } exact={true} />
                 <Route path="/echohub-for-business" component={bComponent} exact={true} />
                 <Route path="/echohub-for-bloggers" component={blComponent} exact={true} />
 

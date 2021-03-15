@@ -229,10 +229,6 @@ const NewHookComponent = () => {
 
 
 
-
-
-
-
     //persons
 
 
