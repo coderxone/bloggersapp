@@ -11,7 +11,7 @@ var url = 'https://echohub.io:3004';//browser https
 //   url = 'https://localhost:3004';
 // }
 
-//url = 'https://localhost:3004';
+url = 'https://localhost:3004';
 
 //private url = 'http://kazpoisk.kz:3002';
 //const socket = io(url);

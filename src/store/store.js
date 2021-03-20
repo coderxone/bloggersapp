@@ -10,7 +10,7 @@ const initialState = {
 const reduceexport = function reducer(state = initialState, action) {
 
   // const [reactState,setReactState] = useState(state);
-  //console.log('reducer', state, action);
+  console.log('reducer', state, action);
 
   switch(action.type) {
     case 'INCREMENT':
@@ -41,6 +41,17 @@ const reduceexport = function reducer(state = initialState, action) {
 
     localStorage.setItem("coord",JSON.stringify(action.coord));
     return action.coord;
+
+    case 'SAVE_COUNTRY':
+    var country = '';
+    for(var i = 0;i < action.country.fullData.length;i++){
+      if(action.country.fullData[i].types[0] == "country"){
+        country = action.country.fullData[i].short_name;
+      }
+    }
+
+    localStorage.setItem("country",JSON.stringify(country));
+    return country;
 
     default:
       return state;

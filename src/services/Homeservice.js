@@ -14,6 +14,7 @@ import Observable from '../services/Observable';
 const observ_subject = new Subject();
 const observ_subjectTwo = new Subject();
 const observ_subjectParams = new Subject();
+const observ_subjectFormData = new Subject();
 // const timer10s$ = new Subject<any>();
 // const timer60s = new Subject<any>();
 // const timer300000s$ = new Subject<any>();
@@ -231,10 +232,10 @@ const homeservice = {
 
       listenApplyData:() => {
         socket.on("sendFormData",data => {
-            observ_subject.next(cryptLibrary.decrypt(data));
+            observ_subjectFormData.next(cryptLibrary.decrypt(data));
         })
 
-        return observ_subject;
+        return observ_subjectFormData;
       },
       checkSystemParams:(data) => {
         var datas = {

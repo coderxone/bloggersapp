@@ -49,6 +49,8 @@ import DetailTaskService from '../services/DetailTaskService';
 import TaskService from '../services/TaskService';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Homeservice from '../services/Homeservice';
+import PaymentIcon from '@material-ui/icons/Payment';
+import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
 
 function mapStateToProps(state,ownProps) {
   return {
@@ -878,9 +880,14 @@ useEffect(() => {
         </div>
         <Divider />
         <List >
-          {['Contacts','MyTasks'].map((text, index) => (
+          {['Contacts','MyTasks','Earning','Account'].map((text, index) => (
             <ListItem button key={text} onClick={event => changePage(text)}>
-              <ListItemIcon className={classestwo.icon}>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+              <ListItemIcon className={classestwo.icon}>
+                {index == 0 && <InboxIcon />}
+                {index == 1 && <MailIcon />}
+                {index == 2 && <PaymentIcon />}
+                {index == 3 && <PersonOutlineIcon />}
+              </ListItemIcon>
               <ListItemText primary={text} />
             </ListItem>
           ))}

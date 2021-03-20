@@ -246,6 +246,7 @@ const ApplyComponent = () => {
   useEffect(() => {
 
       const firstListener = HomeService.listenApplyData().subscribe(data => {
+
           if(data.status === "ok"){
               //data.insertId
               localStorage.setItem("insertId",data.insertId);

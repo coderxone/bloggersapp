@@ -19,12 +19,11 @@ import AnnouncementIcon from '@material-ui/icons/Announcement';
 import CenterFocusStrongIcon from '@material-ui/icons/CenterFocusStrong';
 import TrendingUpIcon from '@material-ui/icons/TrendingUp';
 import WorkIcon from '@material-ui/icons/Work';
-import BusinessPageComponent from '../components/bComponent';
 import AnimationFComponent from '../components/businessComponents/AnimationTwoFactory';
 import AnimationFSecond from '../components/businessComponents/AnimationTwoFactorySecond';
 import AnimationFThird from '../components/businessComponents/AnimationTwoFactoryThird';
 import AnimationFFour from '../components/businessComponents/AnimationTwoFactoryFour';
-
+import EchohubText from '../images/main/Background_text_name.png';
 import BloggerAnimationComponent from '../components/bloggerComponents/BloggerAnimationComponent';
 import BloggerCopy2 from '../components/bloggerComponents/bloggerCopy2';
 import BloggerCopy3 from '../components/bloggerComponents/bloggerCopy3';
@@ -175,7 +174,7 @@ const BottomFunc = () => {
 
             <div className="BackgroundText">
                 <div className="BackgroundTextV">
-                  <span className="IO_size">.IO</span> - is a new, effective way of spreading information through a network of pooled bloggers.
+                  <img className="BackgroundText_name" src={EchohubText}/> <span className="IO_size">.IO</span> - is a new, effective way of spreading information through a network of pooled bloggers.
                 </div>
             </div>
 

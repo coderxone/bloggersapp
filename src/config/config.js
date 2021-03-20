@@ -72,6 +72,17 @@ const newmodule = {
         }
 
       },
+      getUserCountry:() => {
+
+        var country = localStorage.getItem("country");
+
+        if(country){
+          return country;
+        }else{
+          return false;
+        }
+
+      },
 
       getUserEmail:() => {
         var email = localStorage.getItem("email");
