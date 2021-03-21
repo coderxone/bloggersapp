@@ -53,6 +53,19 @@ const reduceexport = function reducer(state = initialState, action) {
     localStorage.setItem("country",JSON.stringify(country));
     return country;
 
+    case 'SAVE_CATEGORY':
+
+    localStorage.setItem("category",action.category);
+    return action.category;
+
+    case 'SAVE_MULTI_DATA':
+
+    localStorage.setItem(action._object,action.name); //_object:firstName,name:firstName//firstName
+    return {
+      _object:action._object,
+      name:action.name
+    };
+
     default:
       return state;
   }

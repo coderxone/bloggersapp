@@ -7,9 +7,9 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
 import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
+
 import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
+
 import {
   makeStyles,
 } from '@material-ui/core/styles';
@@ -23,6 +23,7 @@ import Observable from '../services/Observable';
 import GoBackAbsoluteComponent from '../helperComponents/goBackAbsoluteComponent';
 import ConfirmDialogComponent from '../helperComponents/ConfirmDialogComponent';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import EditListComponent from '../helperComponents/EditSocialNetworkComponent.js';
 import {
   useHistory
 } from "react-router-dom";
@@ -101,37 +102,7 @@ const BannedList = ((props) => {
 });
 
 
-const EditList = ((props) => {
 
-    const list = props.list;
-    const currentNetworkTwo = props.currentNetworkTwo;
-
-    const showList = list.map((item,index) =>
-
-        <MenuItem key={index} value={item}>{item}</MenuItem>
-
-    );
-
-    const InsidehandleEdit = (event) => {
-        Observable.sendData_subject_Edit(event.target.value);
-    };
-
-    return (
-
-      <Select
-        labelId="demo-simple-select-label"
-        id="demo-simple-select"
-        value={currentNetworkTwo}
-        onChange={InsidehandleEdit}
-      >
-        {showList}
-
-      </Select>
-
-    );
-
-
-});
 
 
 
@@ -228,10 +199,42 @@ const DetailTaskComponent = (props) => {
       SetInputText(string);
   });
 
-  const netWorkArray = ["Instagram","Facebook","Youtube","Twitter"];
+  // const netWorkArray = ["Instagram","Facebook","Youtube","Twitter"];
+  const netWorkArray = useMemo(function(){
 
-  const [originalNetWorkArrayState] = useState(["Instagram","Facebook","Youtube","Twitter"]);
-  const [netWorkArrayState,setnetWorkArrayState] = useState(["Instagram","Facebook","Youtube","Twitter"]);
+      var array = [];
+      var cycleAr = JSON.parse(localStorage.getItem("soc"));
+      cycleAr.map(item => {
+        array.push(item.name);
+      });
+      return array;
+
+  },[]);
+
+  const OrigN = useMemo(function(){
+
+      var array = [];
+      var cycleAr = JSON.parse(localStorage.getItem("soc"));
+      cycleAr.map(item => {
+        array.push(item.name);
+      });
+      return array;
+
+  },[]);
+  const OrigNTwo = useMemo(function(){
+
+      var array = [];
+      var cycleAr = JSON.parse(localStorage.getItem("soc"));
+      cycleAr.map(item => {
+        array.push(item.name);
+      });
+      return array;
+
+  },[]);
+
+  const [originalNetWorkArrayState] = useState(OrigN);
+  const [netWorkArrayState,setnetWorkArrayState] = useState(OrigNTwo);
+
 
   const [findArrayState,SetFindArrayState] = useState([]);
   //var permitControlArray = new Array();
@@ -769,7 +772,7 @@ const EditNetwork = (data) => {
 
                          <FormControl className={classes.formControl} error={selectError}>
                                <InputLabel id="demo-simple-select-label">{LocalizeComponent.select_social}</InputLabel>
-                               <EditList list={originalNetWorkArrayState} currentNetworkTwo={currentNetworkTwo}/>
+                               <EditListComponent list={originalNetWorkArrayState} currentNetworkTwo={currentNetworkTwo}/>
                          </FormControl>
 
                        </div>

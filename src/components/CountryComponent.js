@@ -88,12 +88,12 @@ const ComboCountry = function ComboBox(props) {
       required
 
       options={findAddresses}
-
+      className="TextFieldStyle"
       getOptionLabel={(option) => option.title}
-      style={{ width: '100%',border:'#0083ff',borderColor:'#0083ff' }}
+      style={{ width: '100%',border:'#0083ff',borderColor:'#0083ff',fontFamily:'AppFont' }}
 
       renderInput={(params) => {
-        return <TextField {...params} label="type to find"  />;
+        return <TextField {...params}  label="type to find"  />;
       }}
     />
   );

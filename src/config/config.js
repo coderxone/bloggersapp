@@ -83,6 +83,46 @@ const newmodule = {
         }
 
       },
+      getCategories:() => {
+
+        var categories = localStorage.getItem("categories");
+
+        if(categories){
+          var parsedData = JSON.parse(categories);
+          var array = [];
+          parsedData.map((item) => {
+              array.push(item.name);
+          });
+          return array;
+
+        }else{
+          return false;
+        }
+
+      },
+      getUserCategory:() => {
+
+        var category = localStorage.getItem("category");
+
+        if(category){
+          return category;
+        }else{
+          return false;
+        }
+
+      },
+      getUserItemName:(name) => {
+
+        var gettingItem = localStorage.getItem(name);
+
+        if(gettingItem){
+          return gettingItem;
+        }else{
+          return false;
+        }
+
+      },
+
 
       getUserEmail:() => {
         var email = localStorage.getItem("email");

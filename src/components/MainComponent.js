@@ -129,10 +129,12 @@ const BottomFunc = () => {
 
             </div>
 
-
             <div className="backgroundCl" >
 
             </div>
+
+
+
 
             <div className="Rolebuttons">
 

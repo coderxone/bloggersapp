@@ -23,9 +23,11 @@ import { connect } from 'react-redux';
 import DialogComponent from '../components/DialogComponent';
 import config from '../config/config.js';
 import CountryComponent from '../components/CountryComponent';
+import CategoriesComponent from '../helperComponents/CategoriesComponent.js';
+import EditListComponent from '../helperComponents/SelfEditSocialNetworkComponent.js';
+import Observable from '../services/Observable';
 
-
-import { increment, decrement,save_email } from '../actions/actions';
+import { increment, decrement,save_email,save_age,save_multiData } from '../actions/actions';
 import {
   Link,
 } from "react-router-dom";
@@ -101,12 +103,14 @@ const schema = yup.object().shape({
 });
 
 function getSteps() {
-  return ['step 1', 'step 2', 'step 3','step 4'];
+  return ['step 1', 'step 2', 'step 3','step 4','step 5','step 6','step 7'];
 }
 
 
 const BloggerAnswersComponent = (props) => {
 
+  var QuestionsArray = ['Where are you located?','Please choose your audience interest','How old are you?','Please Enter your First Name','Please Enter your Last Name','Please Enter your Nick Name','please inter Social NetWork Account Link'];
+  const [questions] = useState(QuestionsArray);
 
   const classes = useStyles();
 
@@ -116,18 +120,21 @@ const BloggerAnswersComponent = (props) => {
   });
 
 
-  const [activeStep, setActiveStep] = React.useState(1);
+  const [activeStep, setActiveStep] = React.useState(6);
   const steps = getSteps();
 
   const handleNext = () => {
+    setName("");
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
   };
 
   const handleBack = () => {
+    setName("");
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
   const handleReset = () => {
+    setName("");
     setActiveStep(0);
   };
 
@@ -136,6 +143,37 @@ const BloggerAnswersComponent = (props) => {
 
   }
 
+  const [age,SetAge] = useState(0);
+  const setOld = (event) => {
+
+    var age = event.target.value;
+    if(age > 0){
+      SetAge(age);
+      props.dispatch(save_age(age));
+    }
+
+  }
+
+  const [name,setName] = useState('');
+
+  const setMultiData = (event) => {
+
+    var objName = '';
+    if(activeStep == 3){
+      objName = "firstName";
+    }else if(activeStep == 4){
+      objName = "lastName";
+    }else if(activeStep == 5){
+      objName = "nickName";
+    }
+
+    var firstName = event.target.value;
+    if(firstName.length > 0){
+      props.dispatch(save_multiData({_object:objName,name:firstName}));
+    }
+    setName(firstName);
+
+  }
 
   return (
 
@@ -147,26 +185,53 @@ const BloggerAnswersComponent = (props) => {
             <div className="askBox">
 
                 <div className="askBoxText">
-                    find your country
+                    {questions[activeStep]}
                 </div>
 
                 <div className="questionBox">
                     <form onSubmit={handleSubmit(onSubmit)}  >
 
                   {
-                    activeStep == 1 && (
+                    activeStep == 0 && (
                       <CountryComponent/>
+                    )
+                  }
+                  {
+                    activeStep == 1 && (
+                      <CategoriesComponent/>
+
                     )
                   }
                   {
                     activeStep == 2 && (
                       <TextField
-                          error
-                          inputRef={register}
-
+                          required
+                          onChange={setOld}
                           className="textFieldAppStyle"
-                          helperText={errors.title?.message}
                         />
+
+                    )
+                  }
+                  {
+                    (
+                    activeStep == 3 ||
+                    activeStep == 4 ||
+                    activeStep == 5
+                    ) && (
+                      <TextField
+                          required
+                          onChange={setMultiData}
+                          value={name}
+                          className="textFieldAppStyle"
+                        />
+                    )
+                  }
+
+                  {
+                    activeStep == 6 && (
+
+                      <EditListComponent />
+
                     )
                   }
 

@@ -858,8 +858,6 @@ body {
 }
 
 
-
-
 .manageButtons{
   margin-top:40%;
   width: 100%;
@@ -869,7 +867,9 @@ body {
   margin-bottom:0%;
   width: 100%;
 }
-
+.fullSelect{
+  width: 100%;
+}
 // app styles
 .MuiInput-underline:after{
   border-color:$base-app-color !important;
@@ -887,4 +887,12 @@ body {
   color:$base-app-color !important;
 }
 
+.TextFieldStyle{
+  font-family: 'AppFont';
+}
+
+.textFieldAppStyleTwo{
+  margin-top:5px !important;
+  width: 100%;
+}
 // app styles
