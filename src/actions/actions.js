@@ -4,7 +4,6 @@ export const SAVE_EMAIL = "SAVE_EMAIL";
 export const SAVE_COORD = "SAVE_COORD";
 export const SAVE_COUNTRY = "SAVE_COUNTRY";
 export const SAVE_CATEGORY = "SAVE_CATEGORY";
-export const SAVE_AGE = "SAVE_AGE";
 export const SAVE_MULTI_DATA = "SAVE_MULTI_DATA";
 
 export function increment() {
@@ -17,5 +16,4 @@ export const save_email = (data) => ({type: SAVE_EMAIL,email:data.email,count:da
 export const save_coord = (data) => ({type: SAVE_COORD,coord:data })
 export const save_country = (data) => ({type: SAVE_COUNTRY,country:data })
 export const save_category = (data) => ({type: SAVE_CATEGORY,category:data })
-export const save_age = (data) => ({type: SAVE_AGE,age:data })
 export const save_multiData = (obj) => ({type: SAVE_MULTI_DATA,_object:obj._object,name:obj.name})

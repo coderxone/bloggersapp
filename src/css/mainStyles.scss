@@ -4,6 +4,7 @@ $fontStyles:"Times New Roman", Times, serif;
 $BlackFontColor:black;
 $whiteFontColor:white;
 $greyFontColor:#979797;
+$successGreenColor:#34eb83;
 $pushNotificationBackground:white;
 
 @font-face {
@@ -304,6 +305,11 @@ body{
 
 }
 
+.bloggerAWrap{
+  margin-left:5%;
+  margin-right:5%;
+}
+
 
 .switchBox{
   width: 100%;
@@ -444,6 +450,7 @@ body{
 
 .MainLCenterWrap{
   width: 100%;
+  overflow: hidden;
 }
 
 
@@ -704,6 +711,10 @@ ion-item {
   left:15%;
   top:80%;
 }
+.alertBoxPosition{
+  margin-top:5px;
+  width:100%;
+}
 
 .profileBlock{
   width: 60%;
@@ -830,7 +841,7 @@ body {
 }
 
 .askBox{
-  margin-top:50%;
+  margin-top:7%;
   margin-left:4%;
   width:90%;
   height: 30vh;
@@ -839,7 +850,9 @@ body {
 }
 
 .askBoxText{
-  margin-top:45px;
+  margin-top:35px;
+  padding-left:2px;
+  padding-right:2px;
   font-family: 'AppFont';
   width: 100%;
   text-align: center;
@@ -859,7 +872,7 @@ body {
 
 
 .manageButtons{
-  margin-top:40%;
+  margin-top:24%;
   width: 100%;
   text-align: center;
 }
@@ -886,6 +899,10 @@ body {
 .MuiStepIcon-root.MuiStepIcon-active{
   color:$base-app-color !important;
 }
+.MuiStep-horizontal{
+  padding-left:0px !important;
+  padding-right:0px !important;
+}
 
 .TextFieldStyle{
   font-family: 'AppFont';
@@ -896,3 +913,95 @@ body {
   width: 100%;
 }
 // app styles
+
+//images styles
+.App {
+  text-align: center;
+  width: 100%;
+}
+
+.successUpload{
+  width: 100%;
+  margin-top:7px;
+  font-size: 30px !important;
+  text-align: center;
+  color:$successGreenColor;
+}
+
+.UploadImageStyleSecond{
+  width: 80px !important;
+  height: 80px !important;
+  float: left;
+}
+.UploadImageStyle{
+  margin-left:20px;
+  width: 80px !important;
+  height: 80px !important;
+  float: left;
+}
+
+.imageSecondBlock{
+  margin-top:32px;
+  width:100px;
+  height: 14px;
+  margin-left:5px;
+  float: left;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.uploadStyles{
+  width:200px;
+  height: 200px;
+  margin-left:100px;
+  margin-top:100px;
+}
+
+
+
+.fileClass{
+  width:40%;
+  height: 30px;
+  float: left;
+}
+.buttonClassImage{
+  width:50%;
+  height: 30px;
+  float: left;
+  margin-left:5px;
+}
+
+//images styles

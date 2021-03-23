@@ -50,7 +50,7 @@ const reduceexport = function reducer(state = initialState, action) {
       }
     }
 
-    localStorage.setItem("country",JSON.stringify(country));
+    localStorage.setItem("country",country);
     return country;
 
     case 'SAVE_CATEGORY':

@@ -34,17 +34,19 @@ import BloggerCopy4 from '../components/bloggerComponents/bloggerCopy4';
 
 import {
   useHistory,
+  Redirect,
 } from "react-router-dom";
 
 const BottomFunc = () => {
 
   const history = useHistory();
+  const [route,SetRoute] = useState("");
+  const [redirect,Setredirect] = useState(false);
 
-  const goToLogin = useCallback(() => {
-
-    return history.push('/login'), [history]
-
-  });
+  const goToLogin = () => {
+    SetRoute("/login");
+    Setredirect(true);
+  };
 
 
   const [BusinessSwitcher,SetBusinessSwitcher] = useState(0);
@@ -199,6 +201,12 @@ const BottomFunc = () => {
 
                </div>
              )}
+
+
+             {redirect === true && (
+                 <Redirect to={route} />
+               )
+             }
 
 
     </Grid>

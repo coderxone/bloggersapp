@@ -6,20 +6,16 @@ import { connect } from 'react-redux';
 import { save_multiData } from '../actions/actions';
 import TextField from '@material-ui/core/TextField';
 
-const EditList = ((props) => {
+const VerifyComponent = ((props) => {
 
-    const SocialNetworkList = useMemo(function(){
-
-        return JSON.parse(localStorage.getItem("soc"));
-
-    },[]);
+    const SocialNetworkList = ['SSN','ITIN','EIN'];
 
 
-    const [currentNetworkTwo, SetCurrentNetworkTwo] = React.useState('Instagram');
+    const [currentNetworkTwo, SetCurrentNetworkTwo] = React.useState('SSN');
 
     const showList = SocialNetworkList.map((item,index) =>
 
-        <MenuItem key={index} value={item.name}>{item.name}</MenuItem>
+        <MenuItem key={index} value={item}>{item}</MenuItem>
 
     );
 
@@ -33,9 +29,13 @@ const EditList = ((props) => {
 
     const setUrlEvent = (event) => {
       var url = event.target.value;
-      setUrl(url);
+      if(url.length < 10){
+        setUrl(url);
+        props.dispatch(save_multiData({_object:currentNetworkTwo,name:url}));
+      }
 
-      props.dispatch(save_multiData({_object:currentNetworkTwo,name:url}));
+
+
     }
 
     return (
@@ -66,4 +66,4 @@ const EditList = ((props) => {
 
 });
 
- export default connect()(EditList);
+ export default connect()(VerifyComponent);

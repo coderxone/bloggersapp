@@ -16,7 +16,7 @@ const ComboCountry = function ComboBox(props) {
   Geocode.setApiKey(config.getGoogleMapKey());
   Geocode.setLanguage("en");
   Geocode.enableDebug();
-
+  const erroratr = props.erroratr;
   const ShowLists = [
     // { title: 'The Shawshank Redemption', year: 1994 },
   ];
@@ -71,31 +71,32 @@ const ComboCountry = function ComboBox(props) {
 
 
   return (
-    <Autocomplete
-      id="combo-box-demo"
-      onInputChange={(event, newInputValue) => {
-          searchAddress(newInputValue);
-        }}
 
-      onChange={(event, newValue) => {
-        //console.log(newValue);
-        if(newValue){
-          SetAddress(newValue);
-          props.dispatch(save_country(newValue));
-        }
+        <Autocomplete
+          id="combo-box-demo"
+          onInputChange={(event, newInputValue) => {
+              searchAddress(newInputValue);
+            }}
 
-      }}
-      required
+          onChange={(event, newValue) => {
+            //console.log(newValue);
+            if(newValue){
+              SetAddress(newValue);
+              props.dispatch(save_country(newValue));
+            }
 
-      options={findAddresses}
-      className="TextFieldStyle"
-      getOptionLabel={(option) => option.title}
-      style={{ width: '100%',border:'#0083ff',borderColor:'#0083ff',fontFamily:'AppFont' }}
+          }}
+          required
+          options={findAddresses}
+          className="TextFieldStyle"
+          getOptionLabel={(option) => option.title}
+          style={{ width: '100%',border:'#0083ff',borderColor:'red',fontFamily:'AppFont' }}
 
-      renderInput={(params) => {
-        return <TextField {...params}  label="type to find"  />;
-      }}
-    />
+          renderInput={(params) => {
+            return <TextField {...params}  label="example 123 street "  />;
+          }}
+        />
+
   );
 }
 

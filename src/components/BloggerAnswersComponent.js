@@ -20,16 +20,19 @@ import Grid from '@material-ui/core/Grid';
 import Logo from '../icons/logo_circle_new_circle.png';
 import Box from '@material-ui/core/Box';
 import { connect } from 'react-redux';
-import DialogComponent from '../components/DialogComponent';
+import AlertComponent from '../helperComponents/AlertBoxComponent';
 import config from '../config/config.js';
 import CountryComponent from '../components/CountryComponent';
-import CategoriesComponent from '../helperComponents/CategoriesComponent.js';
-import EditListComponent from '../helperComponents/SelfEditSocialNetworkComponent.js';
+import CategoriesComponent from '../helperComponents/CategoriesComponent';
+import EditListComponent from '../helperComponents/SelfEditSocialNetworkComponent';
 import Observable from '../services/Observable';
-
-import { increment, decrement,save_email,save_age,save_multiData } from '../actions/actions';
+import VerifyComponent from '../helperComponents/VerifyComponent';
+import UploadDocumentComponent from '../helperComponents/UploadDocumentComponent';
+import { increment, decrement,save_email,save_multiData } from '../actions/actions';
+import BloggerAnswersService from '../services/BloggerAnswersService';
+import DandelionComponent from '../components/dandelionComponent';
 import {
-  Link,
+  Redirect,
 } from "react-router-dom";
 
 
@@ -103,30 +106,124 @@ const schema = yup.object().shape({
 });
 
 function getSteps() {
-  return ['step 1', 'step 2', 'step 3','step 4','step 5','step 6','step 7'];
+  return ['1', '2', '3','4','5','6','7','8','9','10'];
 }
 
 
 const BloggerAnswersComponent = (props) => {
 
-  var QuestionsArray = ['Where are you located?','Please choose your audience interest','How old are you?','Please Enter your First Name','Please Enter your Last Name','Please Enter your Nick Name','please inter Social NetWork Account Link'];
+  var QuestionsArray = ['Where are you located?','Please choose your audience interest','How old are you?','Please Enter your First Name','Please Enter your Last Name','Please Enter your Username','please inter Social Network Account Link','How many subscribers do you currently have ?','Enter your PayPal email for withdrawal','Enter SSN,ITIN or EIN for background verification','upload at least 1 document to proof identity'];
   const [questions] = useState(QuestionsArray);
 
   const classes = useStyles();
 
 
-  const { register, handleSubmit, errors,setError } = useForm({
-    resolver: yupResolver(schema)
-  });
-
-
-  const [activeStep, setActiveStep] = React.useState(6);
+  const [activeStep, setActiveStep] = React.useState(0);
   const steps = getSteps();
+
+  const [error,SetError] = useState(false);
+  const [AlertText,SetAlertText] = useState('please fill in');
+
 
   const handleNext = () => {
     setName("");
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
+
+    if(activeStep == 10){
+      onSubmit();
+    }else{
+
+      var resultStep = true;
+
+      resultStep = checkForms();
+
+      console.log(resultStep);
+
+      if(resultStep == true){
+        var stepper = activeStep + 1;
+        setActiveStep(stepper);
+        SetError(false);
+      }
+
+    }
+
+
   };
+
+  const [name,setName] = useState('');
+
+  const checkForms = () => {
+    if(activeStep == 0){
+      var result = config.getUserCountry();
+      if(result != false){
+        return true;
+      }else{
+        SetError(true);
+        return false;
+      }
+
+    }else if(activeStep == 1){
+      var result = config.getUserCategory();
+      if(result != false){
+        return true;
+      }else{
+        SetAlertText("please fill in");
+        SetError(true);
+        return false;
+      }
+    }else if(activeStep == 2){
+      if(age != 0){
+        return true;
+      }else{
+        SetError(true);
+        return false;
+      }
+    }else if((activeStep === 3) || (activeStep === 4) || (activeStep === 5)){
+      if(name.length > 0){
+        return true;
+      }else{
+        SetError(true);
+        return false;
+      }
+    }else if(activeStep === 6){
+      if(config.getUserSocialNetworks().status == true){
+        return true;
+      }else{
+        SetError(true);
+        return false;
+      }
+    }else if(activeStep === 7){
+      if(config.getUserItemName("subscribers_count") != false){
+        return true;
+      }else{
+        SetError(true);
+        return false;
+      }
+    }else if(activeStep === 8){
+      if(config.getUserItemName("paypal") != false){
+        return true;
+      }else{
+        SetError(true);
+        return false;
+      }
+    }else if(activeStep === 9){
+      if(config.getUserSSN().status != false){
+        return true;
+      }else{
+        SetAlertText("please fill in");
+        SetError(true);
+        return false;
+      }
+    }else if(activeStep === 10){
+      if(config.getUserItemName("photo") != false){
+        return true;
+      }else{
+        SetAlertText("please download image");
+        SetError(true);
+        return false;
+      }
+    }
+    //getUserSSN
+  }
 
   const handleBack = () => {
     setName("");
@@ -141,6 +238,33 @@ const BloggerAnswersComponent = (props) => {
 
   const onSubmit = (data) => {
 
+      const FinalLogic = async function(){
+         try {
+           var finalObject = {
+             country:config.getUserCountry(),
+             category:config.getUserCategory(),
+             age:config.getUserItemName("age"),
+             firstName:config.getUserItemName("firstName"),
+             lastName:config.getUserItemName("lastName"),
+             nickName:config.getUserItemName("nickName"),
+             subscribers_count:config.getUserItemName("subscribers_count"),
+             paypal:config.getUserItemName("paypal"),
+             socialNetworks:config.getUserSocialNetworks(),
+             ssn:config.getUserSSN(),
+             photo:config.getUserItemName("photo"),
+           }
+           return finalObject;
+         }catch (e){
+             //handle errors as needed
+         }
+      };
+
+      FinalLogic().then(response => {
+        BloggerAnswersService.updateUsersData(response);
+      })
+
+
+
   }
 
   const [age,SetAge] = useState(0);
@@ -149,12 +273,10 @@ const BloggerAnswersComponent = (props) => {
     var age = event.target.value;
     if(age > 0){
       SetAge(age);
-      props.dispatch(save_age(age));
+      props.dispatch(save_multiData({_object:'age',name:age}));
     }
 
   }
-
-  const [name,setName] = useState('');
 
   const setMultiData = (event) => {
 
@@ -165,6 +287,10 @@ const BloggerAnswersComponent = (props) => {
       objName = "lastName";
     }else if(activeStep == 5){
       objName = "nickName";
+    }else if(activeStep == 7){
+      objName = "subscribers_count";
+    }else if(activeStep == 8){
+      objName = "paypal";
     }
 
     var firstName = event.target.value;
@@ -175,11 +301,37 @@ const BloggerAnswersComponent = (props) => {
 
   }
 
+  const [route,SetRoute] = useState("");
+  const [redirect,Setredirect] = useState(false);
+
+
+  useEffect(() => {
+    const service = BloggerAnswersService.listenUpdateUsersData().subscribe(data => {
+
+      if(data.status == "ok"){
+        SetRoute("/blogger");
+        Setredirect(true);
+      }
+
+    });
+
+    return () => {
+      service.unsubscribe();
+    }
+  },[])
+
   return (
 
    	<div className={classes.root}>
         <Grid container >
 
+          <div className="bloggerAWrap">
+            <div className="MainLCenterWrap">
+
+                <div className="MainLogoCenter"><DandelionComponent /></div>
+
+              </div>
+          </div>
 
 
             <div className="askBox">
@@ -189,26 +341,35 @@ const BloggerAnswersComponent = (props) => {
                 </div>
 
                 <div className="questionBox">
-                    <form onSubmit={handleSubmit(onSubmit)}  >
+
 
                   {
                     activeStep == 0 && (
-                      <CountryComponent/>
+                      <div>
+                        <CountryComponent />
+                        <AlertComponent state={error} text={AlertText}/>
+                      </div>
                     )
                   }
                   {
                     activeStep == 1 && (
-                      <CategoriesComponent/>
-
+                      <div>
+                        <CategoriesComponent/>
+                        <AlertComponent state={error} text={AlertText}/>
+                      </div>
                     )
                   }
                   {
                     activeStep == 2 && (
-                      <TextField
-                          required
-                          onChange={setOld}
-                          className="textFieldAppStyle"
-                        />
+                      <div>
+                        <TextField
+                            required
+                            onChange={setOld}
+                            type="number"
+                            className="textFieldAppStyle"
+                          />
+                        <AlertComponent state={error} text={AlertText}/>
+                      </div>
 
                     )
                   }
@@ -218,26 +379,80 @@ const BloggerAnswersComponent = (props) => {
                     activeStep == 4 ||
                     activeStep == 5
                     ) && (
-                      <TextField
-                          required
-                          onChange={setMultiData}
-                          value={name}
-                          className="textFieldAppStyle"
-                        />
+                      <div>
+                          <TextField
+                              required
+                              onChange={setMultiData}
+                              value={name}
+                              className="textFieldAppStyle"
+                            />
+                          <AlertComponent state={error} text={AlertText}/>
+                      </div>
                     )
                   }
 
                   {
                     activeStep == 6 && (
 
-                      <EditListComponent />
+                      <div>
+                        <EditListComponent />
+                        <AlertComponent state={error} text={AlertText}/>
+                      </div>
+
+                    )
+                  }
+                  {
+                    activeStep == 7 && (
+
+                      <div>
+                          <TextField
+                              required
+                              onChange={setMultiData}
+                              value={name}
+                              type="number"
+                              className="textFieldAppStyle"
+                            />
+                          <AlertComponent state={error} text={AlertText}/>
+                      </div>
+
+                    )
+                  }
+                  {
+                    activeStep == 8 && (
+
+                      <div>
+                        <TextField
+                            required
+                            onChange={setMultiData}
+                            value={name}
+                            className="textFieldAppStyle"
+                          />
+                        <AlertComponent state={error} text={AlertText}/>
+                      </div>
+
+                    )
+                  }
+                  {
+                    activeStep == 9 && (
+
+                      <div>
+                        <VerifyComponent  />
+                        <AlertComponent state={error} text={AlertText}/>
+                      </div>
+
+                    )
+                  }
+                  {
+                    activeStep == 10 && (
+
+                      <div>
+                        <UploadDocumentComponent  />
+                        <AlertComponent state={error} text={AlertText}/>
+                      </div>
 
                     )
                   }
 
-
-
-                    </form>
 
                 </div>
 
@@ -250,14 +465,31 @@ const BloggerAnswersComponent = (props) => {
                   <Button disabled={activeStep === 0} onClick={handleBack} className={classes.button}>
                      Back
                    </Button>
-                   <Button
-                     variant="contained"
-                     color="primary"
-                     onClick={handleNext}
-                     className={classes.button}
-                   >
-                     {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
-                   </Button>
+                   {
+                     activeStep < steps.length && (
+                       <Button
+                         variant="contained"
+                         color="primary"
+                         onClick={handleNext}
+                         className={classes.button}
+                       >
+                         Next
+                       </Button>
+                       )
+                   }
+                   {
+                     activeStep === steps.length && (
+                       <Button
+                         variant="contained"
+                         color="primary"
+                         onClick={handleNext}
+                         className={classes.button}
+                       >
+                         Finish
+                       </Button>
+                       )
+                   }
+
 
               </div>
 
@@ -272,9 +504,10 @@ const BloggerAnswersComponent = (props) => {
                 </div>
 
 
-
-
-
+                {redirect === true && (
+                    <Redirect to={route} />
+                  )
+                }
 
 
           </Grid>

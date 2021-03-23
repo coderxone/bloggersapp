@@ -4,6 +4,8 @@ import Obfuscate from 'react-obfuscate';
 const deployMode = "development";//development//production
 const deployPlatform = "browser";//browser//android
 const routeUrl = "https://kazpoisk.kz";
+//const url = 'https://echohub.io:3004';//browser https
+const baseurl = 'https://localhost:3004';
 //const userRole = "1"; blogger
 const userRole = "2"; //business owner
 //const userRole = "1"; //blogger
@@ -59,6 +61,9 @@ const newmodule = {
 
       getdeviceid:() => {
         return localStorage.getItem("deviceid");
+      },
+      getBaseDomainUrl:() => {
+        return baseurl;
       },
 
       getUserCoordinates:() => {
@@ -119,6 +124,88 @@ const newmodule = {
           return gettingItem;
         }else{
           return false;
+        }
+
+      },
+      getUserSocialNetworks:() => {
+
+        var SocialObject = {};
+        var checkVariable = 0;
+
+        var gettingItem = localStorage.getItem("Instagram");
+
+        if(gettingItem){
+          checkVariable = 1;
+          SocialObject.Instagram = gettingItem;
+        }
+
+        var gettingItemF = localStorage.getItem("Facebook");
+
+        if(gettingItemF){
+          checkVariable = 1;
+          SocialObject.Facebook = gettingItemF;
+        }
+
+        var gettingItemU = localStorage.getItem("Youtube");
+        if(gettingItemU){
+          checkVariable = 1;
+          SocialObject.Youtube = gettingItemU;
+        }
+
+        var gettingItemT = localStorage.getItem("Twitter");
+        if(gettingItemT){
+          checkVariable = 1;
+          SocialObject.Twitter = gettingItemT;
+        }
+
+        // for (const [key, value] of Object.entries(SocialObject)) {
+        //   console.log(`${key}: ${value}`);
+        // }
+
+        if(checkVariable == 1){
+          SocialObject.status = true;
+          return SocialObject;
+        }else{
+          SocialObject.status = false;
+          return SocialObject;
+        }
+
+      },
+      getUserSSN:() => {
+        //'SSN','ITIN','EIN'
+        var SocialObject = {};
+        var checkVariable = 0;
+
+        var gettingItem = localStorage.getItem("SSN");
+
+        if(gettingItem){
+          checkVariable = 1;
+          SocialObject.SSN = gettingItem;
+        }
+
+        var gettingItemF = localStorage.getItem("ITIN");
+
+        if(gettingItemF){
+          checkVariable = 1;
+          SocialObject.ITIN = gettingItemF;
+        }
+
+        var gettingItemU = localStorage.getItem("EIN");
+        if(gettingItemU){
+          checkVariable = 1;
+          SocialObject.EIN = gettingItemU;
+        }
+
+        // for (const [key, value] of Object.entries(SocialObject)) {
+        //   console.log(`${key}: ${value}`);
+        // }
+
+        if(checkVariable == 1){
+          SocialObject.status = true;
+          return SocialObject;
+        }else{
+          SocialObject.status = false;
+          return SocialObject;
         }
 
       },
