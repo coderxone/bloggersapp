@@ -85,10 +85,17 @@ const initSocket = (() => {
 //xx
    homeservice.listenSystemParams().subscribe(data => {
 
-
      var categories = data.categories;
      var string_categories = JSON.stringify(categories);
-     localStorage.setItem("categories",string_categories); 
+     localStorage.setItem("categories",string_categories);
+
+     var businessCategories = data.businessCategories;
+     var string_businessCategories = JSON.stringify(businessCategories);
+     localStorage.setItem("businessCategories",string_businessCategories);
+
+     var businessGoals = data.businessGoals;
+     var string_businessGoals = JSON.stringify(businessGoals);
+     localStorage.setItem("businessGoals",string_businessGoals);
 
      var famousPrice = data.alldata.famousPrice;
      localStorage.setItem("famousPrice",famousPrice);

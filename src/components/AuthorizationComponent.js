@@ -18,7 +18,8 @@ import Box from '@material-ui/core/Box';
 import { connect } from 'react-redux';
 import AuthService from '../services/AuthService';
 import DandelionComponent from '../components/dandelionComponent.js';
-import { increment, decrement,save_email } from '../actions/actions';
+import { increment, decrement,save_email,save_multiData } from '../actions/actions';
+import config from '../config/config.js';
 import {
   Link, Redirect
 } from "react-router-dom";
@@ -131,10 +132,28 @@ const AuthorizationComponent = (props) => {
   });
 
 
+  const checkUserAuthorization = () => {
 
-  const saveRole = ((role) => {
-    localStorage.setItem("role",role);
-  });
+    var checkUserAuthorization = config.getUserAutorization();
+
+      if(checkUserAuthorization !== false){
+
+          if(checkUserAuthorization.role == 1){
+              if(checkUserAuthorization.additionalData == "0"){
+                SetRoute("/blogger-answers");
+                Setredirect(true);
+              }else{
+                SetRoute("/blogger");
+                Setredirect(true);
+              }
+          }else if(checkUserAuthorization.role == 2){
+            SetRoute("/business");
+            Setredirect(true);
+          }
+
+      }
+
+  }
 
 
   useEffect(() => {
@@ -144,15 +163,23 @@ const AuthorizationComponent = (props) => {
           if((data.status === "olduser") && (data.password === true)){
 
 
-            //console.log(data);
             props.dispatch(save_email(storageData));
-            saveRole(data.role);
+            props.dispatch(save_multiData({_object:'role',name:data.role}));
+            props.dispatch(save_multiData({_object:'additionalData',name:data.additionalData}));
+            console.log(data);
             if(data.role === 2){
                 SetRoute("/business");
                 Setredirect(true);
             }else if(data.role === 1){
-              SetRoute("/blogger");
-              Setredirect(true);
+
+              if(data.additionalData == "0"){
+                SetRoute("/blogger-answers");
+                Setredirect(true);
+              }else{
+                SetRoute("/blogger");
+                Setredirect(true);
+              }
+
             }
 
 
@@ -185,6 +212,9 @@ const AuthorizationComponent = (props) => {
 
     },[props,setError,storageData]);
 
+    useEffect(() => {
+        checkUserAuthorization();
+    },[]);
 
   return (
 

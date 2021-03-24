@@ -21,6 +21,7 @@ $pushNotificationBackground:white;
 
 
 
+
 .BloggerProgress{
   width: 100% !important;
 }
@@ -629,7 +630,11 @@ ion-item {
 .MuiInputBase-input{
   /* color:white !important; */
   /* base styles */
+  font:initial !important;
+  letter-spacing:initial !important;
+  font-family: 'AppFont' !important;
   border-color: $base-app-color;
+  font-weight: normal;
 
 }
 
@@ -844,7 +849,7 @@ body {
   margin-top:7%;
   margin-left:4%;
   width:90%;
-  height: 30vh;
+  padding-bottom: 45px;
   border:2px solid $base-app-color;
   // border-radius: 5px;
 }

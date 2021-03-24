@@ -4,8 +4,8 @@ import Obfuscate from 'react-obfuscate';
 const deployMode = "development";//development//production
 const deployPlatform = "browser";//browser//android
 const routeUrl = "https://kazpoisk.kz";
-//const url = 'https://echohub.io:3004';//browser https
-const baseurl = 'https://localhost:3004';
+const baseurl = 'https://echohub.io:3004';//browser https
+//const baseurl = 'https://localhost:3004';
 //const userRole = "1"; blogger
 const userRole = "2"; //business owner
 //const userRole = "1"; //blogger
@@ -105,12 +105,59 @@ const newmodule = {
         }
 
       },
+      getBusinessCategories:() => {
+
+        var categories = localStorage.getItem("businessCategories");
+
+        if(categories){
+          var parsedData = JSON.parse(categories);
+          var array = [];
+          parsedData.map((item) => {
+              array.push(item.name);
+          });
+          return array;
+
+        }else{
+          return false;
+        }
+
+      },
+      getbusinessGoals:() => {
+
+        var categories = localStorage.getItem("businessGoals");
+
+        if(categories){
+          var parsedData = JSON.parse(categories);
+          var array = [];
+          parsedData.map((item) => {
+              var string = item.name.split(':');
+              var newString = "'" + string[0] + "':" + string[1];
+              array.push(newString);
+          });
+          return array;
+
+        }else{
+          return false;
+        }
+
+      },
+      getbusinessCategory:() => {
+
+        var category = localStorage.getItem("businessCategory");
+
+        if(category){
+          return JSON.parse(category);
+        }else{
+          return false;
+        }
+
+      },
       getUserCategory:() => {
 
         var category = localStorage.getItem("category");
 
         if(category){
-          return category;
+          return JSON.parse(category);
         }else{
           return false;
         }
@@ -222,6 +269,19 @@ const newmodule = {
 
       getUserRole:() => {
           return localStorage.getItem("role");
+      },
+
+      getUserAutorization:() => {
+          var additionalData = localStorage.getItem("additionalData");
+          var role = localStorage.getItem("role");
+          if(role){
+            return {
+              role:role,
+              additionalData:additionalData
+            };
+          }else{
+            return false;
+          }
       },
 
       getBaseUrl:() => {

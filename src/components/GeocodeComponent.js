@@ -90,7 +90,7 @@ const Combo = function ComboBox(props) {
       style={{ width: '100%',border:'#0083ff',borderColor:'#0083ff' }}
 
       renderInput={(params) => {
-        return <TextField {...params} label={LocalizeComponent.location_name} variant="outlined" />;
+        return <TextField {...params} label={LocalizeComponent.location_name}  />;
       }}
     />
   );

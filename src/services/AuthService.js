@@ -4,6 +4,7 @@ import config from '../config/config.js';
 import cryptLibrary from '../helpers/CryptLibrary';
 
 const observ_subject = new Subject();
+const observ_subjecttwo = new Subject();
 
 const authService = {
 
@@ -63,23 +64,7 @@ const authService = {
         return observ_subject;
       },
 
-      async_function: async function(){ //a function that returns a promise
-
-          return new Promise(function(resolve,reject){
-            resolve("async");
-          })
-
-
-        },
-
-      without_async: function(){ //a function that returns a promise
-
-          return new Promise(function(resolve,reject){
-            resolve("async");
-          })
-
-
-        },
+      
 
       }
 

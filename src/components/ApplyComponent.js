@@ -19,6 +19,10 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import DateFnsUtils from '@date-io/date-fns';
+import Stepper from '@material-ui/core/Stepper';
+import Step from '@material-ui/core/Step';
+import StepLabel from '@material-ui/core/StepLabel';
+import { save_multiData } from '../actions/actions';
 import {
   MuiPickersUtilsProvider,
   KeyboardTimePicker,
@@ -27,10 +31,14 @@ import {
 import { connect } from 'react-redux';
 import HomeService from '../services/Homeservice';
 import AlertDangerComponent from '../helperComponents/AlertDangerComponent';
-
+import AlertComponent from '../helperComponents/AlertBoxComponent';
+import Button from '@material-ui/core/Button';
 import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
 import AlarmIcon from '@material-ui/icons/Alarm';
 import ReactGeoCodeComponent from './GeocodeComponent';
+import DandelionComponent from '../components/dandelionComponent';
+import CategoriesComponent from '../helperComponents/businessCategories';
+import BusinessGoalComponent from '../helperComponents/businessGoalComponent';
 import config from '../config/config.js';
 import {
   Redirect
@@ -133,8 +141,11 @@ const schema = yup.object().shape({
   time: yup.string().required("Required"),
 });
 
+function getSteps() {
+  return ['1', '2', '3','4','5','6','7','8','9','10'];
+}
 
-const ApplyComponent = () => {
+const ApplyComponent = (props) => {
 
   const classes = useStyles();
   const { register, handleSubmit, errors,setError } = useForm({
@@ -142,14 +153,175 @@ const ApplyComponent = () => {
   });
 
   const [selectedDate, setSelectedDate] = React.useState(new Date());
+  const [selectedTime, setSelectedTime] = React.useState(new Date());
 
   const handleDateChange = (date) => {
     setSelectedDate(date);
+    props.dispatch(save_multiData({_object:'date',name:date}));
+  };
+  const handleTimeChange = (time) => {
+    setSelectedTime(time);
+    props.dispatch(save_multiData({_object:'time',name:time}));
   };
 
   const famousPrice = useMemo(() => {
       return parseInt(localStorage.getItem("famousPrice"));
-  },[])
+  },[]);
+
+  var QuestionsArray = ['What is the name of your business?','What is your website link to your business?',LocalizeComponent.description_placeholder,'Where is your business located?','Would like to work with only local creators','Would like to work only with famous creators','When would you like to start the campaign?','When would you like to start the campaign?','How much money do you want to pay?','Who is your buyer persona?','What is your goal for the campaign?'];
+  const [questions] = useState(QuestionsArray);
+
+  const [activeStep, setActiveStep] = React.useState(10);
+  const steps = getSteps();
+
+  const [error,SetError] = useState(false);
+  const [AlertText,SetAlertText] = useState('please fill in');
+  const [urlValidate,SeturlValidate] = useState(0);
+
+  const [name,setName] = useState('');
+
+  const handleNext = () => {
+    setName("");
+
+      var resultStep = true;
+
+      resultStep = checkForms();
+
+      console.log(resultStep);
+
+      if(resultStep == true){
+        var stepper = activeStep + 1;
+
+        if(stepper == 11){
+          onSubmit();
+        }else{
+          setActiveStep(stepper);
+          SetError(false);
+        }
+
+      }
+
+
+
+
+  };
+//xx
+  const checkForms = () => {
+    if(activeStep == 0){
+
+      if(config.getUserItemName("companyName") != false){
+        return true;
+      }else{
+        SetError(true);
+        return false;
+      }
+
+    }else if(activeStep == 1){
+      if(config.getUserItemName("companyUrl") != false){
+        return true;
+      }else{
+        SetError(true);
+        return false;
+      }
+    }else if(activeStep == 2){
+      if(config.getUserItemName("description") != false){
+        return true;
+      }else{
+        SetError(true);
+        return false;
+      }
+    }else if(activeStep === 3){
+      if(config.getUserCoordinates() != false){
+        return true;
+      }else{
+        SetError(true);
+        return false;
+      }
+    }else if(activeStep === 4){
+      return true;
+    }else if(activeStep === 5){
+      return true;
+    }else if(activeStep === 6){
+      if(config.getUserItemName("date") != false){
+        return true;
+      }else{
+        SetError(true);
+        return false;
+      }
+    }else if(activeStep === 7){
+      if(config.getUserItemName("time") != false){
+        return true;
+      }else{
+        SetError(true);
+        return false;
+      }
+    }else if(activeStep === 8){
+      return true;
+    }else if(activeStep === 9){
+      if(config.getUserItemName("category") != false){
+        return true;
+      }else{
+        SetError(true);
+        return false;
+      }
+    }else if(activeStep === 10){
+      if(config.getbusinessCategory() != false){
+        return true;
+      }else{
+        SetError(true);
+        return false;
+      }
+    }
+    //getUserSSN
+  }
+
+  const handleBack = () => {
+
+    var stepper = activeStep - 1;
+
+    setName("");
+    setActiveStep(stepper);
+  };
+
+  const handleReset = () => {
+    setName("");
+    setActiveStep(0);
+  };
+
+  const urlChecker = (url) => {
+    var regular = /((https?):\/\/)?(www.)?[a-z0-9]+(\.[a-z]{2,}){1,3}(#?\/?[a-zA-Z0-9#]+)*\/?(\?[a-zA-Z0-9-_]+=[a-zA-Z0-9-%]+&?)?$/;
+    var testUrl = regular.test(url);
+    if(testUrl === true){
+      SetError(false);
+      SeturlValidate(0);
+
+    }else{
+      SetAlertText("");
+      SetError(true);
+      SeturlValidate(1);
+    }
+  }
+//xx
+  const setMultiData = (event) => {
+
+    var firstName = event.target.value;
+
+    var objName = '';
+    if(activeStep == 0){
+      objName = "companyName";
+    }else if(activeStep == 1){
+      objName = "companyUrl";
+      urlChecker(firstName);
+    }else if(activeStep == 2){
+      objName = "description";
+    }
+
+    if(firstName.length > 0){
+      props.dispatch(save_multiData({_object:objName,name:firstName}));
+    }
+    setName(firstName);
+
+  }
 
 
   const [maxdefaultSliderValue] = useState(5000);
@@ -184,36 +356,58 @@ const ApplyComponent = () => {
         setAlertState(false);
     },3000)
   }
+//xx
+  const onSubmit = (() => {
 
-  const onSubmit = ((data) => {
 
-      var coord = config.getUserCoordinates();
-      //getUserCoordinates
 
-      if(coord === false){
-        setAlertText(LocalizeComponent.location_error);
-        setAlertState(true);
-        hideAlert();
+      const FinalLogic = async function(){
+         try {
 
-      }else{
-        data.coord = coord;
-        data.amount = defaultSliderValue;
-        data.peopleCount = peopleCount;
-        data.subscribers = subscribersor;
-        if(swithState == true){
-          data.gps = 1;
-        }else{
-          data.gps = 2;
-        }
+           var gps = 0;
+           if(swithState == true){
+             gps = 1;
+           }else{
+             gps = 2;
+           }
 
-        if(swithFamous == true){
-          data.famous = 1;
-        }else{
-          data.famous = 2;
-        }
+           var famous = 0;
+           if(swithFamous == true){
+             famous = 1;
+           }else{
+             famous = 2;
+           }
 
-        HomeService.sendApplyData(data);
-      }
+           var peopleCount = config.getUserItemName("people");
+
+           var finalObject = {
+             coord:config.getUserCoordinates(),
+             amount:config.getUserItemName("amount"),
+             peopleCount:peopleCount,
+             countvideo:peopleCount,
+             subscribers:config.getUserItemName("subscribers"),
+             gps:gps,
+             famous:famous,
+             url:config.getUserItemName("companyUrl"),
+             date:config.getUserItemName("date"),
+             time:config.getUserItemName("time"),
+             description:config.getUserItemName("description"),
+             companyName:config.getUserItemName("companyName"),
+             category:config.getUserItemName("category"),
+             businessAnswers:config.getbusinessCategory()
+
+           }
+
+           return finalObject;
+         }catch (e){
+             //handle errors as needed
+         }
+      };
+
+      FinalLogic().then(response => {
+        console.log(response);
+        HomeService.sendApplyData(response);
+      })
 
 
   });
@@ -226,6 +420,9 @@ const ApplyComponent = () => {
     setSubscribers(data.subscribersResult);
     setSubscribersor(data.originalNumber);
     setDefaultSliderValue(data.NewCheckingAmount);
+    props.dispatch(save_multiData({_object:'amount',name:data.NewCheckingAmount}));
+    props.dispatch(save_multiData({_object:'people',name:data.countOfBloggers}));
+    props.dispatch(save_multiData({_object:'subscribers',name:data.originalNumber}));
 
   });
 
@@ -304,157 +501,297 @@ const ApplyComponent = () => {
    	<div className={classes.root}>
         <Grid container >
 
-          <GoBackAbsoluteComponent/>
+          <div className="bloggerAWrap">
+            <div className="MainLCenterWrap">
 
-          <Grid item xs={12}>
-            <Paper className={classes.paper}>
+                <div className="MainLogoCenter"><DandelionComponent /></div>
 
-              <Box mt={2}>
-              <form onSubmit={handleSubmit(onSubmit)}   className={classes.margin}>
+              </div>
+          </div>
 
-                <CssTextField
+          <div className="askBox">
 
-                  inputRef={register}
-                  name="title"
-                  className="secondMargin"
-                  id="title"
-                  type="text"
-                  helperText={errors.title?.message}
-                  variant="outlined"
-                  label={LocalizeComponent.title_name} />
-                <CssTextField
-                  inputRef={register}
-                  name="description"
-                  className="textArea"
-                  id="description"
-                  type="text"
-                  multiline
-                  helperText={errors.description?.message}
-                  variant="outlined"
-                  placeholder={LocalizeComponent.description_placeholder}
-                  label={LocalizeComponent.description_name} />
+              <div className="askBoxText">
+                  {questions[activeStep]}
+              </div>
+
+              <div className="questionBox">
 
 
-                <Box mt={1} width={1}>
-                    <ReactGeoCodeComponent/>
-                </Box>
+                {
+                  activeStep == 0 && (
+                    <div>
+                        <TextField
+                            required
+                            onChange={setMultiData}
+                            value={name}
+                            className="textFieldAppStyle"
+                            label={LocalizeComponent.company_name}
+                          />
+                      <AlertComponent state={error} text={AlertText}/>
 
-                <div className="switchBox">
+                    </div>
+                  )
+                }
+                {
+                  activeStep == 1 && (
+                    <div>
+                        <TextField
+                            required
+                            onChange={setMultiData}
+                            value={name}
+                            className="textFieldAppStyle"
+                            label={LocalizeComponent.title_name}
+                          />
+                      <AlertComponent state={error} text={AlertText}/>
+                    </div>
+                  )
+                }
+                {
+                  activeStep == 2 && (
+                    <div>
+                        <TextField
+                            required
+                            onChange={setMultiData}
+                            value={name}
+                            multiline
+                            className="textFieldAppStyle"
+                            label={LocalizeComponent.description_name}
+                          />
+                      <AlertComponent state={error} text={AlertText}/>
+                    </div>
 
-                  <div className="lswitchBox">
-                    {LocalizeComponent.onlyLocal}
-                  </div>
-                  <div className="rswitchBox">
-                    <Switch
-                      checked={swithState}
-                      onChange={handleSwitch}
-                      color="primary"
-                      className="switchCheckbox"
-                      name="checkedB"
-                      inputProps={{ 'aria-label': 'primary checkbox' }}
-                    />
+                  )
+                }
+                {
 
-                  </div>
+                  activeStep == 3 && (
+                    <div>
+                        <ReactGeoCodeComponent/>
+                        <AlertComponent state={error} text={AlertText}/>
+                    </div>
+                  )
+                }
 
+                {
+                  activeStep == 4 && (
 
-                </div>
+                    <div>
+                      <div className="switchBox">
 
+                        <div className="lswitchBox">
+                          {LocalizeComponent.onlyLocal}
+                        </div>
+                        <div className="rswitchBox">
+                          <Switch
+                            checked={swithState}
+                            onChange={handleSwitch}
+                            color="primary"
+                            className="switchCheckbox"
+                            name="checkedB"
+                            inputProps={{ 'aria-label': 'primary checkbox' }}
+                          />
 
-                <div className="switchBoxIfl">
-
-                  <div className="lswitchBox">
-                    {LocalizeComponent.highRank}
-                  </div>
-                  <div className="rswitchBox">
-                    <Switch
-                      checked={swithFamous}
-                      onChange={handleSwitchInfl}
-                      color="primary"
-                      className="switchCheckbox"
-                      name="checkedB"
-                      inputProps={{ 'aria-label': 'primary checkbox' }}
-                    />
-
-                  </div>
-
-
-                </div>
-
-
-
-
-              <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                  <KeyboardDatePicker
-                    margin="normal"
-                    id="date-picker-dialog"
-                    inputRef={register}
-                    label={LocalizeComponent.date_name}
-                    className="datepickerColor"
-                    name="date"
-                    helperText={errors.date?.message}
-                    format="MM/dd/yyyy"
-                    value={selectedDate}
-                    onChange={handleDateChange}
-                    KeyboardButtonProps={{
-                      'aria-label': 'change date',
-                    }}
-                    keyboardIcon={<CalendarTodayIcon style={{color:"#0083ff"}} />}
-                  />
-
-                  <KeyboardTimePicker
-                    inputRef={register}
-                    margin="normal"
-                    id="time-picker"
-                    name="time"
-                    label={LocalizeComponent.time_name}
-                    value={selectedDate}
-
-                    format="HH:mm:ss"
-                    className="secondMargin"
-                    helperText={errors.time?.message}
-                    onChange={handleDateChange}
-                    KeyboardButtonProps={{
-                      'aria-label': 'change time',
-                    }}
-                    keyboardIcon={<AlarmIcon style={{color:"#0083ff"}} />}
-                  />
-                </MuiPickersUtilsProvider>
+                        </div>
 
 
-                <Typography align="left" className="appColor" gutterBottom>{LocalizeComponent.amount_name + " - $" + defaultSliderValue}</Typography>
-                <PrettoSlider
-                valueLabelDisplay="auto"
-                aria-label="pretto slider"
-                defaultValue={databasedefaultSliderValue}
-                max={maxdefaultSliderValue}
-                min={mindefaultSliderValue}
-                onChange={handleChangeSlider}
-                />
+                      </div>
+                      <AlertComponent state={error} text={AlertText}/>
+                    </div>
 
-                <Box>
-                  <div className="showText">{LocalizeComponent.count_of_bloggers} - {peopleCount} </div>
-                  <div className="showText">{LocalizeComponent.count_of_subscribers } - {subscribers}</div>
-                </Box>
+                  )
+                }
+                {
+                  activeStep == 5 && (
 
-                <div className="buttonDiv">
-                      <input  className="buttonStyle" type="submit" value={LocalizeComponent.continue_button}/>
-                </div>
-            </form>
+                    <div>
+                        <div className="switchBoxIfl">
 
-          </Box>
+                          <div className="lswitchBox">
+                            {LocalizeComponent.highRank}
+                          </div>
+                          <div className="rswitchBox">
+                            <Switch
+                              checked={swithFamous}
+                              onChange={handleSwitchInfl}
+                              color="primary"
+                              className="switchCheckbox"
+                              name="checkedB"
+                              inputProps={{ 'aria-label': 'primary checkbox' }}
+                            />
 
-            </Paper>
+                          </div>
 
-            {redirect === false ? (
-              <Box>
 
-              </Box>
-             ) : (
-               <Redirect to={route} />
-             )}
+                        </div>
+                        <AlertComponent state={error} text={AlertText}/>
+                    </div>
+
+                  )
+                }
+                {
+                  activeStep == 6 && (
+
+                    <div>
+                      <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                          <KeyboardDatePicker
+                            margin="normal"
+                            id="date-picker-dialog"
+                            inputRef={register}
+                            label={LocalizeComponent.date_name}
+                            className="datepickerColor"
+                            name="date"
+                            helperText={errors.date?.message}
+                            format="MM/dd/yyyy"
+                            value={selectedDate}
+                            onChange={handleDateChange}
+                            KeyboardButtonProps={{
+                              'aria-label': 'change date',
+                            }}
+                            keyboardIcon={<CalendarTodayIcon style={{color:"#0083ff"}} />}
+                          />
+
+                        </MuiPickersUtilsProvider>
+                      <AlertComponent state={error} text={AlertText}/>
+                    </div>
+
+                  )
+                }
+                {
+                  activeStep == 7 && (
+
+                    <div>
+                      <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                          <KeyboardTimePicker
+                            inputRef={register}
+                            margin="normal"
+                            id="time-picker"
+                            name="time"
+                            label={LocalizeComponent.time_name}
+                            value={selectedDate}
+
+                            format="HH:mm:ss"
+                            className="secondMargin"
+                            helperText={errors.time?.message}
+                            onChange={handleTimeChange}
+                            KeyboardButtonProps={{
+                              'aria-label': 'change time',
+                            }}
+                            keyboardIcon={<AlarmIcon style={{color:"#0083ff"}} />}
+                          />
+                        </MuiPickersUtilsProvider>
+                      <AlertComponent state={error} text={AlertText}/>
+                    </div>
+
+                  )
+                }
+                {
+                  activeStep == 8 && (
+
+                    <div>
+                      <Typography align="left" className="appColor" gutterBottom>{LocalizeComponent.amount_name + " - $" + defaultSliderValue}</Typography>
+                      <PrettoSlider
+                      valueLabelDisplay="auto"
+                      aria-label="pretto slider"
+                      defaultValue={databasedefaultSliderValue}
+                      max={maxdefaultSliderValue}
+                      min={mindefaultSliderValue}
+                      onChange={handleChangeSlider}
+                      />
+
+                      <Box>
+                        <div className="showText">{LocalizeComponent.count_of_bloggers} - {peopleCount} </div>
+                        <div className="showText">{LocalizeComponent.count_of_subscribers } - {subscribers}</div>
+                      </Box>
+                      <AlertComponent state={error} text={AlertText}/>
+                    </div>
+
+                  )
+                }
+
+                {
+                  activeStep == 9 && (
+
+                    <div>
+                      <CategoriesComponent/>
+                      <AlertComponent state={error} text={AlertText}/>
+                    </div>
+
+                  )
+                }
+                {
+                  activeStep == 10 && (
+
+                    <div>
+                      <BusinessGoalComponent/>
+                      <AlertComponent state={error} text={AlertText}/>
+                    </div>
+
+                  )
+                }
+
+
+              </div>
+
+
+          </div>
+
+
+
+            <div className="manageButtons">
+                <Button disabled={activeStep === 0} onClick={handleBack} className={classes.button}>
+                   Back
+                 </Button>
+                 {
+                   activeStep < steps.length && (
+                     <Button
+                       variant="contained"
+                       color="primary"
+                       onClick={handleNext}
+                       className={classes.button}
+                     >
+                       Next
+                     </Button>
+                     )
+                 }
+                 {
+                   activeStep === steps.length && (
+                     <Button
+                       variant="contained"
+                       color="primary"
+                       onClick={handleNext}
+                       className={classes.button}
+                     >
+                       {LocalizeComponent.continue_button}
+                     </Button>
+                     )
+                 }
+
+
+            </div>
+
+            <div className="stepperBox">
+                <Stepper alternativeLabel activeStep={activeStep}>
+                    {steps.map((label) => (
+                      <Step key={label}>
+                        <StepLabel>{label}</StepLabel>
+                      </Step>
+                    ))}
+                  </Stepper>
+              </div>
+
+              <GoBackAbsoluteComponent/>
+
+
+
+            {
+              redirect === true && (
+                <Redirect to={route} />
+              )
+            }
 
              <AlertDangerComponent state={alertState} text={alertText} />
-          </Grid>
+
 
 
           </Grid>

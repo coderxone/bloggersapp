@@ -131,7 +131,7 @@ const SelectRoleComponent = (props) => {
       saveRole(data.role);
 
       if(data.role == 1){
-        SetRoute("/blogger");
+        SetRoute("/blogger-answers");
         Setredirect(true);
       }else if(data.role == 2){
         SetRoute("/apply");

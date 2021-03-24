@@ -1,16 +1,15 @@
 import React, {useState,useEffect,useMemo} from 'react';
 import TextField from '@material-ui/core/TextField';
-import { save_category } from '../actions/actions';
+
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import config from '../config/config.js';
 import { connect } from 'react-redux';
+
+
+import { save_business_category } from '../actions/actions';
 import {
   Link,
 } from "react-router-dom";
-
-
-
-
 
 
 
@@ -18,8 +17,7 @@ const TaskComponent = (props) => {
 
   const categories = useMemo(() => {
 
-      var categ = config.getCategories();
-      console.log(categ);
+      var categ = config.getbusinessGoals();
       return categ;
 
   },[]);
@@ -33,10 +31,11 @@ const TaskComponent = (props) => {
       options={categories}
       multiple
       onChange={(event, newValue) => {
-        //console.log(newValue);
+        console.log(event);
         if(newValue){
+          console.log(newValue);
           SetCategory(newValue);
-          props.dispatch(save_category(newValue));
+          props.dispatch(save_business_category(newValue));
         }
 
       }}

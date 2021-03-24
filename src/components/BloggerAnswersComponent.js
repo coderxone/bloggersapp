@@ -128,10 +128,6 @@ const BloggerAnswersComponent = (props) => {
   const handleNext = () => {
     setName("");
 
-    if(activeStep == 10){
-      onSubmit();
-    }else{
-
       var resultStep = true;
 
       resultStep = checkForms();
@@ -140,11 +136,26 @@ const BloggerAnswersComponent = (props) => {
 
       if(resultStep == true){
         var stepper = activeStep + 1;
-        setActiveStep(stepper);
-        SetError(false);
+
+        if(stepper == 9){
+          var country = config.getUserCountry();
+          if(country){
+            if(country !== "US"){
+              stepper += 1;
+            }
+          }
+        }
+
+        if(stepper == 11){
+          onSubmit();
+        }else{
+          setActiveStep(stepper);
+          SetError(false);
+        }
+
       }
 
-    }
+
 
 
   };
@@ -226,8 +237,20 @@ const BloggerAnswersComponent = (props) => {
   }
 
   const handleBack = () => {
+
+    var stepper = activeStep - 1;
+
+    if(stepper == 9){
+      var country = config.getUserCountry();
+      if(country){
+        if(country !== "US"){
+          stepper -= 1;
+        }
+      }
+    }
+
     setName("");
-    setActiveStep((prevActiveStep) => prevActiveStep - 1);
+    setActiveStep(stepper);
   };
 
   const handleReset = () => {
@@ -240,8 +263,20 @@ const BloggerAnswersComponent = (props) => {
 
       const FinalLogic = async function(){
          try {
+
+           var SsnObject = {};
+
+           var country = config.getUserCountry();
+           if(country){
+             if(country !== "US"){
+               SsnObject.SSN = "not required";
+             }else{
+               SsnObject = config.getUserSSN();
+             }
+           }
+
            var finalObject = {
-             country:config.getUserCountry(),
+             country:country,
              category:config.getUserCategory(),
              age:config.getUserItemName("age"),
              firstName:config.getUserItemName("firstName"),
@@ -250,7 +285,7 @@ const BloggerAnswersComponent = (props) => {
              subscribers_count:config.getUserItemName("subscribers_count"),
              paypal:config.getUserItemName("paypal"),
              socialNetworks:config.getUserSocialNetworks(),
-             ssn:config.getUserSSN(),
+             ssn:SsnObject,
              photo:config.getUserItemName("photo"),
            }
            return finalObject;
