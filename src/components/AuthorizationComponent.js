@@ -166,7 +166,7 @@ const AuthorizationComponent = (props) => {
             props.dispatch(save_email(storageData));
             props.dispatch(save_multiData({_object:'role',name:data.role}));
             props.dispatch(save_multiData({_object:'additionalData',name:data.additionalData}));
-            console.log(data);
+          //  console.log(data);
             if(data.role === 2){
                 SetRoute("/business");
                 Setredirect(true);

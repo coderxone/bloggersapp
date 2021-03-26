@@ -171,7 +171,7 @@ const ApplyComponent = (props) => {
   var QuestionsArray = ['What is the name of your business?','What is your website link to your business?',LocalizeComponent.description_placeholder,'Where is your business located?','Would like to work with only local creators','Would like to work only with famous creators','When would you like to start the campaign?','When would you like to start the campaign?','How much money do you want to pay?','Who is your buyer persona?','What is your goal for the campaign?'];
   const [questions] = useState(QuestionsArray);
 
-  const [activeStep, setActiveStep] = React.useState(10);
+  const [activeStep, setActiveStep] = React.useState(0);
   const steps = getSteps();
 
   const [error,SetError] = useState(false);

@@ -10,7 +10,7 @@ const initialState = {
 const reduceexport = function reducer(state = initialState, action) {
 
   // const [reactState,setReactState] = useState(state);
-  console.log('reducer', state, action);
+  //console.log('reducer', state, action);
 
   switch(action.type) {
     case 'INCREMENT':
