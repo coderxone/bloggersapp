@@ -4,8 +4,8 @@ import Obfuscate from 'react-obfuscate';
 const deployMode = "development";//development//production
 const deployPlatform = "browser";//browser//android
 const routeUrl = "https://kazpoisk.kz";
-const baseurl = 'https://echohub.io:3004';//browser https
-//const baseurl = 'https://localhost:3004';
+//const baseurl = 'https://echohub.io:3004';//browser https
+const baseurl = 'https://localhost:3004';
 //const userRole = "1"; blogger
 const userRole = "2"; //business owner
 //const userRole = "1"; //blogger

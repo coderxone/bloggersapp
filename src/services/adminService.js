@@ -7,25 +7,25 @@ const observ_subject = new Subject();
 const observ_subject2 = new Subject();
 const timer10s = new Subject();
 
-const taskService = {
+const profileService = {
 
+          getAdminData:(comingData) => {
 
-          getTaskData:() => {
 
             var data = {
-              deviceId:config.getdeviceid(),
-              email:config.getUserEmail()
+              "deviceid":config.getdeviceid(),
+              "email":config.getUserEmail(),
             }
 
             //console.log(data);
 
             var encryptedData = cryptLibrary.encrypt(data);
 
-            socket.emit("getAllDataTask",encryptedData);
+            socket.emit("getAdminData",encryptedData);
           },
 
-          listenUserDataTask:() => {
-            socket.on("getAllDataTask",(data) => {
+          listenAdminData:() => {
+            socket.on("getAdminData",(data) => {
                 //console.log(data);
                 observ_subject.next(cryptLibrary.decrypt(data));
             });
@@ -33,22 +33,25 @@ const taskService = {
             return observ_subject;
           },
 
-          getUserInfo:() => {
+          ApproveUser:(id,action) => {
+
 
             var data = {
-              deviceId:config.getdeviceid(),
-              email:config.getUserEmail()
+              "deviceid":config.getdeviceid(),
+              "email":config.getUserEmail(),
+              "id":id,
+              "action":action
             }
 
-            //console.log(data);
+            console.log(data);
 
             var encryptedData = cryptLibrary.encrypt(data);
 
-            socket.emit("getUserStatus",encryptedData);
+            socket.emit("ApproveUser",encryptedData);
           },
 
-          listengetUserInfo:() => {
-            socket.on("getUserStatus",(data) => {
+          listenApproveUser:() => {
+            socket.on("ApproveUser",(data) => {
                 //console.log(data);
                 observ_subject2.next(cryptLibrary.decrypt(data));
             });
@@ -61,4 +64,4 @@ const taskService = {
       }
 
 
-export default taskService;
+export default profileService;

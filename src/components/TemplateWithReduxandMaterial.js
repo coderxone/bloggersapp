@@ -3,6 +3,7 @@ import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import config from '../config/config.js';
 import { connect } from 'react-redux';
+import Grid from '@material-ui/core/Grid';
 
 import { increment, decrement,save_email } from '../actions/actions';
 import {
@@ -11,26 +12,7 @@ import {
 
 
 
-function mapStateToProps(state,ownProps) {
-  return {
-    count: state.count,
-    email:state.email,
-    password:state.password
-  }
-}
-
-//const {regionsList: { data: list = [] } } = props;
-
-const mapDispatchToProps = dispatch => ({
-  increment,
-  decrement,
-  dispatch,
-  save_email
-});
-
-
-
-const TaskComponent = (props) => {
+const AdminComponent = (props) => {
 
   const [categories] = useMemo(() => {
 
@@ -42,17 +24,16 @@ const TaskComponent = (props) => {
 
   return (
 
-    <Autocomplete
-      id="combo-box-demo"
-      options={categories}
-      getOptionLabel={(option) => option.title}
-      style={{ width: 300 }}
-      renderInput={(params) => <TextField {...params} label="Combo box" variant="outlined" />}
-    />
+    <Grid container >
+
+
+
+
+    </Grid>
 
 
   );
 };
 
 
- export default connect(mapStateToProps,mapDispatchToProps)(TaskComponent);
+ export default connect()(AdminComponent);

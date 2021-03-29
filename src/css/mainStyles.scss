@@ -19,7 +19,18 @@ $pushNotificationBackground:white;
   touch-action:auto !important;
 }
 
+.approvalBysystem{
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+}
 
+.approvalText{
+  color:$base-app-color;
+  font-size: 20px;
+  text-align: center;
+  margin-top:20px;
+}
 
 
 .BloggerProgress{
@@ -1010,3 +1021,123 @@ body {
 }
 
 //images styles
+
+//admin
+
+.accordionStyle{
+  display: initial !important;
+}
+
+.accordeonTitle{
+  width: 100%;
+}
+.accordeonTitleOne{
+  margin-left: 10%;
+  width:60%;
+  color:$base-app-color;
+  float: left;
+}
+.accordeonTitleTwoNot{
+  width:30%;
+  float: left;
+  color:orange;
+}
+.accordeonTitleTwoBlocked{
+  width:30%;
+  float: left;
+  color:black;
+}
+.accordeonTitleTwoApproved{
+  width:30%;
+  float: left;
+  color:$base-app-color;
+}
+.adminSearchField{
+  width: 90%;
+  margin-left:5%;
+  margin-right:5%;
+  margin-top:5%;
+}
+
+.appContainer{
+  width: 90%;
+  margin-top:2%;
+  margin-left:5%;
+  margin-right:5%;
+  overflow: hidden;
+}
+
+.appPage{
+  width: 100%;
+}
+
+.appContainerOne{
+  width: 90%;
+  margin-top:2%;
+  margin-left:5%;
+  margin-right:5%;
+  overflow: hidden;
+}
+.approveButtonGroup{
+  width: 90%;
+  margin-left:5%;
+  margin-right:5%;
+  margin-top:1%;
+
+}
+
+.approveButtonGroupOne{
+  width:30%;
+  margin-top:5px;
+  color:$base-app-color;
+  float: left;
+}
+
+.approveButtonGroupTwo{
+  width:30%;
+  float: left;
+}
+.approveButtonGroupThree{
+  width:30%;
+  float: left;
+}
+
+.ButtonTextWhite span{
+  color:white !important;
+}
+
+.descriptionMargin{
+  margin-top:10px;
+  width: 70;
+  overflow: hidden;
+  margin-left:25%;
+}
+
+
+.appContainerDescribtion{
+  width: 100%;
+  overflow: hidden;
+  margin:5px;
+}
+.appContainerDescribtionOne{
+  width: 30%;
+  float: left;
+  color:$base-app-color;
+
+}
+.appContainerDescribtionTwo{
+  width: 30%;
+  float: left;
+  color:$base-app-color;
+}
+
+.appProfile{
+  color:black;
+  font-weight: bold;
+  text-align: center;
+  width: 100%;
+  margin-top:10px;
+  padding:10px;
+  font-size: 20px;
+}
+//admin

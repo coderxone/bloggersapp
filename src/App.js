@@ -39,7 +39,8 @@ import AnimationTwoFactory from './components/businessComponents/AnimationTwoFac
 import BloggerAnimationComponent from './components/bloggerComponents/BloggerAnimationComponent';
 import AnimationComponent from './components/AnimationComponent';
 import MainPageDandelion from './components/MainPageDandelion';
-import BloggerAnswersComponent from './components/BloggerAnswersComponent.js';
+import BloggerAnswersComponent from './components/BloggerAnswersComponent';
+import AdminComponent from './components/adminComponents/AdminComponent';
 
 
 
@@ -83,6 +84,7 @@ const App = () => {
                 <Route path="/animationtwof" component={AnimationTwoFactory } exact={true} />
                 <Route path="/animationblogger" component={BloggerAnimationComponent } exact={true} />
                 <Route path="/blogger-answers" component={BloggerAnswersComponent } exact={true} />
+                <Route path="/approve" component={AdminComponent } exact={true} />
 
 
                 <Route path="/follow/:id" component={RedirectComponent} exact={true} />

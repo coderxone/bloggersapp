@@ -18,7 +18,7 @@ import Geolocation from '@react-native-community/geolocation';
 import Observable from '../services/Observable';
 import BloggerService from '../services/BloggersService';
 import SkeletonComponent from '../helperComponents/SkeletonComponent';
-import { increment, decrement,save_email } from '../actions/actions';
+import { increment, decrement,save_email,save_multiData } from '../actions/actions';
 import {
   Link,useHistory,
 } from "react-router-dom";
@@ -51,23 +51,9 @@ import LinearProgress from '@material-ui/core/LinearProgress';
 import Homeservice from '../services/Homeservice';
 import PaymentIcon from '@material-ui/icons/Payment';
 import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
+import config from '../config/config';
 
-function mapStateToProps(state,ownProps) {
-  return {
-    count: state.count,
-    email:state.email,
-    password:state.password
-  }
-}
 
-//const {regionsList: { data: list = [] } } = props;
-
-const mapDispatchToProps = dispatch => ({
-  increment,
-  decrement,
-  dispatch,
-  save_email
-});
 
 
 const drawerWidth = 240;
@@ -305,6 +291,8 @@ const BloggerDashboardComponent = (props) => {
     email:""
   };
 
+  const [approveStatus,SetapproveStatus] = useState(0);
+
   // const TimeoutRequest = () => {
   //   setTimeout(function(){
   //       setRequestStatus(true);
@@ -377,11 +365,22 @@ const BloggerDashboardComponent = (props) => {
     }
   },[latitude,longitude,swithState]);
 
+  useMemo(() => {
+    var localApprove_status = config.getUserItemName("approvestatus");
+    if(localApprove_status != false){
+      if(localApprove_status == "1"){
+        SetapproveStatus(1);
+      }else if(localApprove_status == "0"){
+        SetapproveStatus(0);
+      }
+    }
+    //approvestatus
+  },[])
+
 
 
   const checkData = (() => {
         //console.log("1");
-//xx
         if(firstLoadStorage == true){
 
           if(ListStorageData !== false){
@@ -421,7 +420,7 @@ const BloggerDashboardComponent = (props) => {
       }
   },[]);
 
-//xx
+
   const RenderFunction = (data) => {
 
     //  return false;
@@ -510,11 +509,10 @@ const BloggerDashboardComponent = (props) => {
 
   }
 
-//xx
   useEffect(() => {
     const BloggerListen = BloggerService.listenUserDataG().subscribe((data) => {//items
           //console.log(currentTask);
-          if((currentTask === 0) && (onlineStatus === 1)){ //if user don't have current task
+          if((currentTask === 0) && (onlineStatus === 1) && (approveStatus == 1)){ //if user don't have current task
             RenderFunction(data);
           }else{
             SetStatus(false);
@@ -528,12 +526,10 @@ const BloggerDashboardComponent = (props) => {
       BloggerListen.unsubscribe();
     }
 
-  },[currentTask,onlineStatus]);
+  },[currentTask,onlineStatus,approveStatus]);
 
 
 
-
-//xx
 const SuccessLocationWatcher = (position) => {
       //checkData();
       setLatitude(position.coords.latitude);
@@ -597,10 +593,9 @@ useEffect(() => {
     //console.log(data);
   });
 
-//xx
 
   const TaskServiceListen = TaskService.listenUserDataTask().subscribe(data => {
-      //console.log(data);
+    //  console.log(data);
       if(data.status == "ok"){
         if(data.data.length > 0){
           //console.log(data.data[0].id);
@@ -608,6 +603,19 @@ useEffect(() => {
           SetcurrentItem(data.data[0]);
         }
 
+      }
+  });
+//xx
+  const TaskServiceListenUserInfo = TaskService.listengetUserInfo().subscribe(data => {
+    //console.log(data);
+      if(data.status == "ok"){
+        if(data.results[0].verified == 1){
+            SetapproveStatus(1);
+            props.dispatch(save_multiData({_object:'approvestatus',name:"1"}));
+        }else if(data.results[0].verified == 0){
+            SetapproveStatus(0);
+            props.dispatch(save_multiData({_object:'approvestatus',name:"0"}));
+        }
       }
   });
 
@@ -625,6 +633,10 @@ useEffect(() => {
       //go to page with id
     }
 
+  });
+
+  const checkTimer = Observable.subscribeByTimer_30_second().subscribe(sec => {
+    TaskService.getUserInfo();
   });
 
 
@@ -661,6 +673,8 @@ useEffect(() => {
         ListenlistenSetUrl.unsubscribe();
         listenSubmittedOrder.unsubscribe();
         TaskServiceListen.unsubscribe();
+        TaskServiceListenUserInfo.unsubscribe();
+        checkTimer.unsubscribe();
 
     }
 
@@ -742,6 +756,8 @@ const GoOffline = () => {
 //run to check services
 useEffect(() => {
 
+
+  TaskService.getUserInfo();
   TaskService.getTaskData();
 
 },[])
@@ -864,37 +880,48 @@ useEffect(() => {
           </div>
         </Toolbar>
       </AppBar>
-      <Drawer
-        className={classestwo.drawer + " leftDrawer"}
-        variant="persistent"
-        anchor="left"
-        open={open}
-        classes={{
-          paper: classestwo.drawerPaper,
-        }}
-      >
-        <div className={classestwo.drawerHeader}>
-          <IconButton onClick={handleDrawerClose}>
-            {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
-          </IconButton>
-        </div>
-        <Divider />
-        <List >
-          {['Contacts','MyTasks','Earning','Account'].map((text, index) => (
-            <ListItem button key={text} onClick={event => changePage(text)}>
-              <ListItemIcon className={classestwo.icon}>
-                {index == 0 && <InboxIcon />}
-                {index == 1 && <MailIcon />}
-                {index == 2 && <PaymentIcon />}
-                {index == 3 && <PersonOutlineIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
-        </List>
-        <Divider />
 
-      </Drawer>
+
+          <Drawer
+            className={classestwo.drawer + " leftDrawer"}
+            variant="persistent"
+            anchor="left"
+            open={open}
+            classes={{
+              paper: classestwo.drawerPaper,
+            }}
+          >
+            <div className={classestwo.drawerHeader}>
+              <IconButton onClick={handleDrawerClose}>
+                {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+              </IconButton>
+            </div>
+            <Divider />
+
+            {
+              approveStatus === 1 &&
+              (
+                <List >
+                  {['Contacts','MyTasks','Earning','Account'].map((text, index) => (
+                    <ListItem button key={text} onClick={event => changePage(text)}>
+                      <ListItemIcon className={classestwo.icon}>
+                        {index == 0 && <InboxIcon />}
+                        {index == 1 && <MailIcon />}
+                        {index == 2 && <PaymentIcon />}
+                        {index == 3 && <PersonOutlineIcon />}
+                      </ListItemIcon>
+                      <ListItemText primary={text} />
+                    </ListItem>
+                  ))}
+                </List>
+
+            )
+          }
+
+            <Divider />
+
+          </Drawer>
+
 
 
 
@@ -908,6 +935,9 @@ useEffect(() => {
 
 
 
+          {
+            approveStatus === 1 &&
+            (
 
                <Grid container className="withoutScroll">
 
@@ -1019,10 +1049,29 @@ useEffect(() => {
 
                </Grid>
 
+             )
+           }
+
+           {
+             approveStatus === 0 &&
+             (
+               <div className="approvalBysystem">
+                  <div className="approvalText">
+                      Profile checking in progress,usually taking max 4 hour. We will send you email notification.
+                  </div>
+
+               </div>
+             )
+           }
+
 
              <ConfirmDialogComponent status={dialogStatus} left={leftbutton} right={rightbutton} text={dialogText}/>
+
+
         </main>
        ) : (
+
+
          <Drawer
            className={classestwo.drawerRight + " leftDrawer"}
            variant="persistent"
@@ -1038,44 +1087,54 @@ useEffect(() => {
              </IconButton>
            </div>
            <Divider />
-             <div className="switchBoxTwo">
 
-               <div className="lswitchBoxTwo">
-                 {LocalizeComponent.searchLocal}
+             {
+               approveStatus === 1 &&
+               (
+                 <div>
+                 <div className="switchBoxTwo">
+
+                   <div className="lswitchBoxTwo">
+                     {LocalizeComponent.searchLocal}
+                   </div>
+                   <div className="rswitchBoxTwo">
+                     <Switch
+                       checked={swithState}
+                       onChange={handleSwitch}
+                       color="primary"
+                       className="switchCheckbox"
+                       name="checkedA"
+                       inputProps={{ 'aria-label': 'primary checkbox' }}
+                     />
+
+                   </div>
+
+
+                 </div>
+                 <div className="switchBoxTwo">
+
+                   <div className="lswitchBoxTwo">
+                     {LocalizeComponent.Go_offline}
+                   </div>
+                   <div className="rswitchBoxTwo">
+                     <Switch
+                       checked={onlineStatusSwitcher}
+                       onChange={handleSwitchOnlineStatusSwitcher}
+                       color="primary"
+                       className="switchCheckbox"
+                       name="checkedA"
+                       inputProps={{ 'aria-label': 'primary checkbox' }}
+                     />
+
+                   </div>
+
+
+                 </div>
+
                </div>
-               <div className="rswitchBoxTwo">
-                 <Switch
-                   checked={swithState}
-                   onChange={handleSwitch}
-                   color="primary"
-                   className="switchCheckbox"
-                   name="checkedA"
-                   inputProps={{ 'aria-label': 'primary checkbox' }}
-                 />
+               )
+             }
 
-               </div>
-
-
-             </div>
-             <div className="switchBoxTwo">
-
-               <div className="lswitchBoxTwo">
-                 {LocalizeComponent.Go_offline}
-               </div>
-               <div className="rswitchBoxTwo">
-                 <Switch
-                   checked={onlineStatusSwitcher}
-                   onChange={handleSwitchOnlineStatusSwitcher}
-                   color="primary"
-                   className="switchCheckbox"
-                   name="checkedA"
-                   inputProps={{ 'aria-label': 'primary checkbox' }}
-                 />
-
-               </div>
-
-
-             </div>
            <Divider />
 
          </Drawer>
@@ -1099,4 +1158,4 @@ useEffect(() => {
 };
 
 
- export default connect(mapStateToProps,mapDispatchToProps)(BloggerDashboardComponent);
+ export default connect()(BloggerDashboardComponent);

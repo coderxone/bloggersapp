@@ -65,7 +65,7 @@ const reduceexport = function reducer(state = initialState, action) {
     return action.category;
 
     case 'SAVE_MULTI_DATA':
-
+    //console.log(action);
     localStorage.setItem(action._object,action.name); //_object:firstName,name:firstName//firstName
     return {
       _object:action._object,
