@@ -36,27 +36,41 @@ const SocialNetworksRender = (props) => {
 
   const objM = props.m;
   //console.log(objM);
-  var Xcount = 0;
+  delete objM['status'];
 
-  const fullObject = Object.keys(objM).forEach((key) =>
+  const objectKeys = Object.keys(objM);
 
-      <div key={Xcount++} className="appContainerDescribtion">
+  const MapList = objectKeys.map((item,index) =>
+      <div key={index} className="appContainerDescribtion">
           <div className="appContainerDescribtionOne">
-            {key}
+            {item}
           </div>
 
-          <div className="appContainerDescribtionTwo">
-              {objM[key]}
-          </div>
+          {
+            item === "Instagram" && (
+              <a href={objM[item]} className="appContainerDescribtionTwo">
+                  {objM[item]}
+              </a>
+            )
+          }
 
+          {
+            item !== "Instagram" && (
+              <div className="appContainerDescribtionTwo">
+                  {objM[item]}
+              </div>
+            )
+          }
 
       </div>
+  )
 
-  );
+
+  //console.log(fullObject);
 
   return (
     <div className="appPage">
-      {fullObject}
+      {MapList}
     </div>
 
   );
@@ -200,8 +214,7 @@ const UserRender = (props) => {
                   </div>
 
                   {
-                    item.socialNetworks !== 0 &&
-                    item.socialNetworks  && (
+                    item.socialNetworks !== 0 && (
                       <SocialNetworksRender m={item.socialNetworks} />
                     )
                   }
@@ -246,7 +259,7 @@ const AdminComponent = (props) => {
   useEffect(() => {
 
     const serviceL = adminService.listenAdminData().subscribe(data => {
-        console.log(data);
+        //console.log(data);
         var usersLength = data.users.length;
         if(usersLength > 0){
             //if(userList.length < usersLength){

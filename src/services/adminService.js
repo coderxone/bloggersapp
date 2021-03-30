@@ -35,7 +35,6 @@ const profileService = {
 
           ApproveUser:(id,action) => {
 
-
             var data = {
               "deviceid":config.getdeviceid(),
               "email":config.getUserEmail(),
