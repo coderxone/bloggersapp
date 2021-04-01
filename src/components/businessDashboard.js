@@ -51,6 +51,8 @@ import Checkbox from '@material-ui/core/Checkbox';
 import FolderIcon from '@material-ui/icons/Folder';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import { increment, decrement,save_email } from '../actions/actions';
+import config from '../config/config.js';
+
 import {
   Link,useHistory,
 } from "react-router-dom";
@@ -408,6 +410,7 @@ const BusinessDashboard = (props) => {
   useEffect(() => {
     BusinesService.getBusinessData();
     BusinesService.RequestCheckTasks();
+    config.checkUserAuthorization(2);
   },[])
 
   var w = window.innerWidth / 2;

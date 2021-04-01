@@ -427,7 +427,7 @@ const SuggestComponent = (props) => {
     initMessageService();
     initMessageService();
     requestToCheckMessages();
-
+    config.checkUserAuthorization(2);
 
   }, []);
 

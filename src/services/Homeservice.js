@@ -8,6 +8,8 @@ import soundfileAccept from '../voice/sms.mp3';
 import soundfiletwo from '../voice/to-the-point.mp3';
 import soundfileReject from '../voice/notificationRej.mp3';
 import Observable from '../services/Observable';
+import { Plugins, PushNotification, PushNotificationToken, PushNotificationActionPerformed } from '@capacitor/core';
+const { PushNotifications } = Plugins;
 
 
 
@@ -15,6 +17,8 @@ const observ_subject = new Subject();
 const observ_subjectTwo = new Subject();
 const observ_subjectParams = new Subject();
 const observ_subjectFormData = new Subject();
+const observ_subjectFirebase = new Subject();
+const observ_saveTokenFirebase = new Subject();
 // const timer10s$ = new Subject<any>();
 // const timer60s = new Subject<any>();
 // const timer300000s$ = new Subject<any>();
@@ -105,6 +109,15 @@ const initSocket = (() => {
      //listenServices();
    });
 
+   homeservice.listenSubscribeToWebFirebaseToken().subscribe(data => {
+      console.log(data);
+   });
+   homeservice.listensaveWebFirebaseToken().subscribe(data => {
+      console.log(data);
+   });
+   homeservice.listenFirebaseToken();//listen firebase records
+   homeservice.registerCapacitor();
+   homeservice.ActivateCapacitorPush();
 
    homeservice.checkSystemParams();
    homeservice.joinUser();//connect as user
@@ -327,6 +340,110 @@ const homeservice = {
         })
 
         return observ_subjectTwo;
+      },
+
+      subscribeToWebFirebaseToken:(token) => {
+        var data = {
+          email:config.getUserEmail(),
+          deviceid:config.getdeviceid(),
+          token:token,
+          topicName:"people"
+        }
+
+        socket.emit("subscribeToTopic",cryptLibrary.encrypt(data));
+      },
+      listenSubscribeToWebFirebaseToken:(token) => {
+        socket.on("subscribeToTopic",data => {
+            observ_subjectFirebase.next(cryptLibrary.decrypt(data));
+        })
+
+        return observ_subjectFirebase;
+      },
+
+      saveWebFirebaseToken:(token) => {
+        var data = {
+          email:config.getUserEmail(),
+          deviceid:config.getdeviceid(),
+          token:token
+        }
+
+        socket.emit("setWebFirebaseToken",cryptLibrary.encrypt(data));
+      },
+      listensaveWebFirebaseToken:(token) => {
+        socket.on("setWebFirebaseToken",data => {
+            observ_saveTokenFirebase.next(cryptLibrary.decrypt(data));
+        })
+
+        return observ_saveTokenFirebase;
+      },
+
+      listenFirebaseToken:() => {
+        Observable.subscribeByTimer_10_second().subscribe(data => {
+          //check just token
+          var checkToken = localStorage.getItem("listenfirebaseToken");
+          var storageToken = localStorage.getItem("firebaseToken");
+
+          if(checkToken){
+              if(checkToken == "1"){
+                homeservice.saveWebFirebaseToken(storageToken);
+                localStorage.setItem("listenfirebaseToken","0");
+              }
+          }
+          //check just token
+          //listen web firebase token
+          var firebaseWebToken = localStorage.getItem("firebaseWebToken");
+          var listenfirebaseWebToken = localStorage.getItem("listenfirebaseWebToken");
+
+          if(listenfirebaseWebToken){
+              if(listenfirebaseWebToken == "1"){
+                homeservice.subscribeToWebFirebaseToken(firebaseWebToken);
+                localStorage.setItem("listenfirebaseWebToken","0");
+              }
+          }
+          //listen web firebase token
+
+        });
+      },
+
+      registerCapacitor:() => {
+        PushNotifications.register();
+      },
+
+      ActivateCapacitorPush:() => {
+        // Register with Apple / Google to receive push via APNS/FCM
+        PushNotifications.register();
+
+        // On succcess, we should be able to receive notifications
+        PushNotifications.addListener('registration',
+          (token) => {
+            console.log('Push registration success, token: ' + token.value);
+          }
+        );
+
+        // Some issue with your setup and push will not work
+        PushNotifications.addListener('registrationError',
+          (error) => {
+            console.log('Error on registration: ' + JSON.stringify(error));
+          }
+        );
+
+        // Show us the notification payload if the app is open on our device
+        PushNotifications.addListener('pushNotificationReceived',
+          (notification) => {
+            var notif = [];
+            notif.push({ id: notification.notification.data.id, title: notification.notification.data.title, body: notification.notification.data.body })
+            console.log(notif);
+          }
+        );
+
+        // Method called when tapping on a notification
+        PushNotifications.addListener('pushNotificationActionPerformed',
+          (notification) => {
+            var notif = [];
+            notif.push({ id: notification.notification.data.id, title: notification.notification.data.title, body: notification.notification.data.body })
+            console.log(notif);
+          }
+        );
       },
 
       async_function: async function(){ //a function that returns a promise

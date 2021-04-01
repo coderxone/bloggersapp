@@ -263,6 +263,7 @@ const TaskComponent = (props) => {
 
     //initiase functions
     TaskService.getTaskData();
+    config.checkUserAuthorization(1);
 
 
   }, []);

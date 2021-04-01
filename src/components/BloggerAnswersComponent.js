@@ -350,6 +350,8 @@ const BloggerAnswersComponent = (props) => {
 
     });
 
+    config.checkUserAuthorization(1);
+
     return () => {
       service.unsubscribe();
     }

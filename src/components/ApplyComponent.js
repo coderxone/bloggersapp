@@ -472,6 +472,8 @@ const ApplyComponent = (props) => {
     }
 
     ApplyService.checkSubscriberCore(obj);
+    config.checkUserAuthorization(2);
+
   },[]);
 
   const [swithState,SetswithState] = useState(false);

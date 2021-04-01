@@ -759,6 +759,7 @@ useEffect(() => {
 
   TaskService.getUserInfo();
   TaskService.getTaskData();
+  config.checkUserAuthorization(1);
 
 },[])
 //run to check services

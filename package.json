@@ -1,5 +1,5 @@
 {
-  "name": "myApp",
+  "name": "io.echohub.www",
   "version": "0.0.1",
   "private": true,
   "dependencies": {
@@ -87,5 +87,5 @@
     "@capacitor/cli": "2.4.2",
     "@types/react-redux": "^7.1.11"
   },
-  "description": "An Ionic project"
+  "description": "echohub.io"
 }

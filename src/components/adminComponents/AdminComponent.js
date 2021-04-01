@@ -265,7 +265,6 @@ const AdminComponent = (props) => {
             //if(userList.length < usersLength){
               InsertUsers(data.users);
           //  }
-
         }
     });
 
@@ -296,11 +295,76 @@ const AdminComponent = (props) => {
   useEffect(() => {
 
     adminService.getAdminData();
+    config.checkUserAuthorization(0);
 
   },[]);
 
 
+  const FindPerson = (event) => {
 
+      var list = [...userList];
+
+      var InputValue = event.target.value;
+
+      var SearchArray = [];
+
+      //find with 100% priority
+      for(var i = 0;i < list.length;i++){
+
+        var searchString = list[i].email;
+
+        var Position = [];
+        var FullSearchString = "";
+        var Priority = 0;
+
+
+        for(var b = 0;b < searchString.length;b++){
+
+          FullSearchString += searchString[b];
+
+          if(FullSearchString == InputValue){
+
+            var findedObj = 0;
+            for(var j = 0;j < Position.length;j++){
+              if((Position[j].position == b) && (Position[j].string == FullSearchString)){
+                findedObj = 1;
+              }
+            }
+
+            if(findedObj == 0){
+              var findObjectData = {
+                position:b,
+                string:FullSearchString,
+                selectString:searchString,
+                priority:Priority++,
+                mainPosition:i
+              }
+
+              Position.push(findObjectData);
+            }
+          }
+        }
+        //find with 100% priority
+
+        SearchArray.push(Position);
+
+      }
+
+      for(var n = 0;n < SearchArray.length;n++){
+        var currentArray = SearchArray[n];
+        for(var m = 0;m < currentArray.length;m++){
+            var copyElement = list[currentArray[m].mainPosition];
+            list.splice(currentArray[m].mainPosition, 1);
+            list.unshift(copyElement);
+        }
+      }
+
+      //console.log(list);
+      SetUserList([]);
+      SetUserList(list);
+
+
+  }
 
 
 
@@ -328,10 +392,8 @@ const AdminComponent = (props) => {
         <div className={classes.root}>
 
           <div className="adminSearchField">
-              <TextField width="100%" label="Search User" className="fullSelect" />
+              <TextField onChange={FindPerson} width="100%" label="Search User" className="fullSelect" />
           </div>
-
-
 
 
           <div className="appContainer">

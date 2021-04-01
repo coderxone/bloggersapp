@@ -2,13 +2,18 @@ import generateModule from '../helpers/GenerateNumber';
 import React from 'react';
 import Obfuscate from 'react-obfuscate';
 const deployMode = "development";//development//production
-const deployPlatform = "browser";//browser//android
+const deployPlatform = "android";//browser//android
 const routeUrl = "https://kazpoisk.kz";
+const baseurl = 'http://145.249.246.3:3002';//browser android
 //const baseurl = 'https://echohub.io:3004';//browser https
-const baseurl = 'https://localhost:3004';
+//const baseurl = 'https://localhost:3004';
+const redirectUrl = "http://145.249.246.3/main"; //android
+//const redirectUrl = "http://localhost:8080/main";
 //const userRole = "1"; blogger
 const userRole = "2"; //business owner
 //const userRole = "1"; //blogger
+
+
 //localStorage.setItem("role",action.email);
 
 const cryptKey = <Obfuscate element="cryptoGraph2020"/>;
@@ -269,6 +274,23 @@ const newmodule = {
 
       getUserRole:() => {
           return localStorage.getItem("role");
+      },
+//xx
+      checkUserAuthorization:(pageRole) => {
+          var role = localStorage.getItem("role");
+
+          if(role){
+            if(parseInt(role) === pageRole){
+
+            }else if(parseInt(role) === 0){
+
+            }else{
+              window.location.href = redirectUrl;
+            }
+          }else{
+            window.location.href = redirectUrl;
+          }
+
       },
 
       getUserAutorization:() => {

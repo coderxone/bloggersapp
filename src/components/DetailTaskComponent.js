@@ -24,6 +24,8 @@ import GoBackAbsoluteComponent from '../helperComponents/goBackAbsoluteComponent
 import ConfirmDialogComponent from '../helperComponents/ConfirmDialogComponent';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import EditListComponent from '../helperComponents/EditSocialNetworkComponent.js';
+import config from '../config/config.js';
+
 import {
   useHistory
 } from "react-router-dom";
@@ -559,6 +561,7 @@ useEffect(() => {
   //console.log(detailData.id);
   //console.log("checked");
   checkGenerateUrl();
+  config.checkUserAuthorization(1);
 
 
 

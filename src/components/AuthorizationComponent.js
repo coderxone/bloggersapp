@@ -149,6 +149,9 @@ const AuthorizationComponent = (props) => {
           }else if(checkUserAuthorization.role == 2){
             SetRoute("/business");
             Setredirect(true);
+          }else if(checkUserAuthorization.role == 0){
+            SetRoute("/approve");
+            Setredirect(true);
           }
 
       }
@@ -180,6 +183,9 @@ const AuthorizationComponent = (props) => {
                 Setredirect(true);
               }
 
+            }else if(data.role == 0){
+              SetRoute("/approve");
+              Setredirect(true);
             }
 
 

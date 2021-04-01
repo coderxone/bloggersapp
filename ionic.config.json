@@ -1,5 +1,5 @@
 {
-  "name": "EchoHub.io",
+  "name": "echohub.io",
   "integrations": {
     "capacitor": {
       "webDir": "build"

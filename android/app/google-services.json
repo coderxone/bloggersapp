@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "992987530913",
+    "project_id": "echohub",
+    "storage_bucket": "echohub.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:992987530913:android:5eef0b31d051270122d2e0",
+        "android_client_info": {
+          "package_name": "io.echohub.www"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "116287548350809036314",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC8PL9tOr9Rs5dTPM9-2knpQAoe_4jZF9o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "116287548350809036314",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

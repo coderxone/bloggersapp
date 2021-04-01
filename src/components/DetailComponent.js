@@ -667,6 +667,7 @@ const DetailComponent = (props) => {
 useEffect(() => {
   getDetailData();
   BusinesService.RequestCheckTasks();
+  config.checkUserAuthorization(2);
 },[])
 
 

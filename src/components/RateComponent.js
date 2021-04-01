@@ -18,6 +18,7 @@ import GoBack from '../helperComponents/goBackComponent';
 import RateService from '../services/RateService';
 import StarIcon from '@material-ui/icons/Star';
 import GoBackWithCenterComponent from '../helperComponents/goBackAbsoluteComponent';
+import config from '../config/config.js';
 
 import { increment, decrement,save_email } from '../actions/actions';
 import {
@@ -304,6 +305,7 @@ const RateComponent = (props) => {
       text:""
     }
     //RateService.setRate(sendData);
+    config.checkUserAuthorization(2);
 
   }, []);
 

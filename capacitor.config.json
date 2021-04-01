@@ -1,6 +1,6 @@
 {
 	"appId": "io.echohub.www",
-	"appName": "echohub",
+	"appName": "echohub.io",
 	"bundledWebRuntime": false,
 	"webDir": "build",
 	"npmClient": "npm",

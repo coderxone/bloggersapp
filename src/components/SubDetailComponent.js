@@ -26,7 +26,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
-
+import config from '../config/config.js';
 import { increment, decrement,save_email } from '../actions/actions';
 import {
   Link,
@@ -562,6 +562,7 @@ const DetailComponent = (props) => {
 
     //initiase functions
     getDetailData();
+    config.checkUserAuthorization(2);
 
 
   }, []);
