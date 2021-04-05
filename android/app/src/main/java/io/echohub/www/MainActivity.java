@@ -1,4 +1,4 @@
-package io.ionic.starter;
+package io.echohub.www;
 
 import android.os.Bundle;
 

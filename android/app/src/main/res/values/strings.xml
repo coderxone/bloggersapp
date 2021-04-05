@@ -2,6 +2,6 @@
 <resources>
     <string name="app_name">echohub.io</string>
     <string name="title_activity_main">echohub.io</string>
-    <string name="package_name">echohub.io</string>
+    <string name="package_name">io.echohub.www</string>
     <string name="custom_url_scheme">io.echohub.www</string>
 </resources>

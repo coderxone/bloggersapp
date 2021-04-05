@@ -1,4 +1,4 @@
-import React, { useCallback,useEffect,useState } from 'react';
+import React, { useCallback,useEffect,useState,useMemo } from 'react';
 import AnimationComponent from '../components/AnimationComponent';
 import MainPageDandelion from '../components/MainPageDandelion';
 import LocalizeComponent from '../localize/LocalizeComponent';
@@ -28,6 +28,9 @@ import BloggerAnimationComponent from '../components/bloggerComponents/BloggerAn
 import BloggerCopy2 from '../components/bloggerComponents/bloggerCopy2';
 import BloggerCopy3 from '../components/bloggerComponents/bloggerCopy3';
 import BloggerCopy4 from '../components/bloggerComponents/bloggerCopy4';
+import PushComponent from '../helperComponents/NativePushNotificationComponent';
+// import WebPushNotification from '../helperComponents/WebPushComponent';
+import { Capacitor } from '@capacitor/core';
 
 
 
@@ -47,6 +50,14 @@ const BottomFunc = () => {
     SetRoute("/login");
     Setredirect(true);
   };
+
+  const bottomTopSize = useMemo(() => {
+    if(Capacitor.platform === 'ios'){
+      return 'iosTop';
+    }else{
+      return 'normalTop';
+    }
+  });
 
 
   const [BusinessSwitcher,SetBusinessSwitcher] = useState(0);
@@ -111,7 +122,7 @@ const BottomFunc = () => {
 
     <Grid container className="businessContainer" >
 
-            <div className="Login_block"  onClick={goToLogin}>
+            <div className={"Login_block " + bottomTopSize}  onClick={goToLogin}>
               <div className="Login_image">
                   <div className="Login_image_text">Sign up</div>
               </div>
@@ -207,6 +218,10 @@ const BottomFunc = () => {
                  <Redirect to={route} />
                )
              }
+
+             <div>
+               <PushComponent/>
+             </div>
 
 
     </Grid>

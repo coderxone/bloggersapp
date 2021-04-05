@@ -16,6 +16,16 @@ import config from '../config/config';
 //private url = 'http://kazpoisk.kz:3002';
 //const socket = io(url);
 //browser
+// const socket = io.connect(config.getBaseDomainUrl(),{
+//                   reconnection: true,
+//                   reconnectionDelay: 1000,
+//                   reconnectionDelayMax : 5000,
+//                   reconnectionAttempts: Infinity,
+//                   //rememberUpgrade:true,
+//                     transports: ['websocket'],
+//                   //  rejectUnauthorized: false
+//                 });
+//browser https
 const socket = io.connect(config.getBaseDomainUrl(),{
                   reconnection: true,
                   reconnectionDelay: 1000,
@@ -23,19 +33,9 @@ const socket = io.connect(config.getBaseDomainUrl(),{
                   reconnectionAttempts: Infinity,
                   rememberUpgrade:true,
                   transports: ['websocket'],
+                  secure:true,
                   rejectUnauthorized: false
-                });
-//browser https
-// const socket = io.connect(config.getBaseDomainUrl(),{
-//                   reconnection: true,
-//                   reconnectionDelay: 1000,
-//                   reconnectionDelayMax : 5000,
-//                   reconnectionAttempts: Infinity,
-//                   rememberUpgrade:true,
-//                   transports: ['websocket'],
-//                   secure:true,
-//                   rejectUnauthorized: false
-//                 });;
+                });;
 
 
 

@@ -1,18 +1,30 @@
 {
-	"appId": "io.echohub.www",
-	"appName": "echohub.io",
-	"bundledWebRuntime": false,
-	"webDir": "build",
-	"npmClient": "npm",
-	"server": {
-		"allowNavigation": ["*.echohub.io","*.echohub.io/*", "http://145.249.246.3", "http://localhost","http://localhost/*","https://echohub.io:3004","https://echohub.io:3004/*"]
-	},
-	"plugins": {
-		"SplashScreen": {
-			"launchShowDuration": 0
-		}
-	},
-	"cordova": {}
-
-
+  "appId": "io.echohub.www",
+  "appName": "echohub",
+  "bundledWebRuntime": false,
+  "webDir": "build",
+  "npmClient": "npm",
+  "server": {
+    "allowNavigation": [
+      "*.echohub.io",
+      "*.echohub.io/*",
+      "http://145.249.246.3",
+      "http://145.249.246.3:3002/*",
+      "http://localhost",
+      "http://localhost/*",
+      "https://echohub.io:3004",
+      "https://echohub.io:3004/*",
+      "https://echohub.io:3002/*"
+    ],
+    "cleartext": true
+  },
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 0
+    },
+    "PushNotifications": {
+      "presentationOptions": ["badge", "sound", "alert"]
+    }
+  },
+  "cordova": {}
 }

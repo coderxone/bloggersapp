@@ -1058,7 +1058,7 @@ useEffect(() => {
              (
                <div className="approvalBysystem">
                   <div className="approvalText">
-                      Profile checking in progress,usually taking max 4 hour. We will send you email notification.
+                      verifying your email, you will receive an email notification within 4 hours. We will send you email notification.
                   </div>
 
                </div>

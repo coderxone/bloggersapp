@@ -42,7 +42,7 @@ const group = new THREE.Object3D();
 const scene = new THREE.Scene();
 const width = window.innerWidth;
 const height = window.innerHeight;
-const camera = new THREE.PerspectiveCamera(45,ASPECT_RATIO, 1, 2000);
+const camera = new THREE.PerspectiveCamera(45,ASPECT_RATIO, 1, 2400);
 //const renderer = new THREE.WebGLRenderer({ antialias: true,alpha: true })
 const renderer = new THREE.WebGLRenderer({ antialias: true })
 
@@ -67,11 +67,22 @@ var echoX = -262 + movingPointX;
 var hubX = 195 + movingPointX;
 var animX = 0 + movingPointX;
 var animY = 0 + movingPointY;
-var xViewMobile = 1650;
+var xViewMobile = 2000;
 
 if((width < 376) && (height > 650) && (height < 850)){
   xViewMobile = 2000;
   movingPointY = 400;
+  animY = 0 + movingPointY;
+}
+if((width < 376) && (height > 630) && (height < 650)){
+  xViewMobile = 1950;
+  movingPointY = 450;
+  animY = 0 + movingPointY;
+}
+
+if((width < 450) && (height > 850) && (height < 900)){
+  xViewMobile = 2200;
+  movingPointY = 450;
   animY = 0 + movingPointY;
 }
 
@@ -80,9 +91,9 @@ if((width < 376) && (height > 650) && (height < 850)){
 // }
 //var viewPosition = {x:0,y:-150,z:200};
 var viewPosition = {x:0,y:0,z:xViewMobile};//for mobiles
-if(config.getDeployData().deployPlatform == "android"){
-  //viewPosition = {x:0,y:50,z:xViewMobile};//for android
-}
+// if(config.getDeployData().deployPlatform == "android"){
+//   //viewPosition = {x:0,y:50,z:xViewMobile};//for android
+// }
 
 //console.log(viewPosition);
 var viewPositionAnimation = {x:0,y:0,z:0};

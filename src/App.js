@@ -8,7 +8,6 @@ import {
 } from "react-router-dom";
 import { LastLocationProvider } from 'react-router-last-location';
 
-
 import { IonApp, IonRouterOutlet } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import Home from './pages/Home';
@@ -43,8 +42,6 @@ import BloggerAnswersComponent from './components/BloggerAnswersComponent';
 import AdminComponent from './components/adminComponents/AdminComponent';
 
 
-
-
 const App = () => {
 
   useEffect(() => {
@@ -72,11 +69,9 @@ const App = () => {
                 <Route path="/role" component={SelectRoleComponent} exact={true} />
                 <Route path="/blogger" component={BloggerDashboardComponent} exact={true} />
                 <Route path="/detailtask" component={DetailTaskComponent} exact={true} />
-
                 <Route path="/suggest" component={SuggestComponent} exact={true} />
                 <Route path="/contactlist" component={ContactListComponent} exact={true} />
                 <Route path="/mytasks" component={TaskComponent} exact={true} />
-                <Route path="/main" component={MainComponent} exact={true} />
                 <Route path="/dandelion" component={DandelionComponent} exact={true} />
                 <Route path="/maindandelion" component={MainPageDandelion} exact={true} />
                 <Route path="/animation" component={AnimationComponent} exact={true} />
@@ -85,6 +80,7 @@ const App = () => {
                 <Route path="/animationblogger" component={BloggerAnimationComponent } exact={true} />
                 <Route path="/blogger-answers" component={BloggerAnswersComponent } exact={true} />
                 <Route path="/approve" component={AdminComponent } exact={true} />
+                <Route path="/main" component={MainComponent} exact={true} />
 
 
                 <Route path="/follow/:id" component={RedirectComponent} exact={true} />
