@@ -14,8 +14,6 @@ import { GeometryUtils } from '../../../node_modules/three/examples/jsm/utils/Ge
 import Logo_Echohub_1_part from '../../images/main/animationtwo/business.png';
 import Person from '../../images/main/animationtwo/person.png';
 import CloudImage from '../../images/main/animationtwo/cloud.png';
-import StripesImage from '../../images/main/animationtwo/stripes.png';
-import Lines3Image from '../../images/main/animationtwo/lines3.png';
 import Lines4Image from '../../images/main/animationtwo/lines4.png';
 import Lines5Image from '../../images/main/animationtwo/lines5.png';
 import Lines6Image from '../../images/main/animationtwo/lines6.png';
@@ -28,13 +26,22 @@ import JoinImage from '../../images/main/animationtwo/join.png';
 //import Lines7Image from '../images/main/animationtwo/lines7.png';
 import Lines7Image from '../../images/main/animationtwo/lines7.png';
 import Lines8Image from '../../images/main/animationtwo/lines8.png';
-import TextWindow1 from '../../images/main/animationtwo/textWindow1.png';
-import TextWindow2 from '../../images/main/animationtwo/textWindow2.png';
-import TextWindow3 from '../../images/main/animationtwo/textWindow3.png';
-import TextWindow4 from '../../images/main/animationtwo/textWindow4.png';
-import TextWindow5 from '../../images/main/animationtwo/textWindow5.png';
-import TextWindow6 from '../../images/main/animationtwo/textWindow6.png';
+import TextWindow1 from '../../images/main/newImages/Large.png';
+import TextWindow2 from '../../images/main/newImages/Various.png';
+import TextWindow3 from '../../images/main/newImages/macro.png';
+import TextWindow4 from '../../images/main/newImages/they_would.png';
+import TextWindow6 from '../../images/main/newImages/promote.png';
+import Arrows from '../../images/main/newImages/arrows.png';
+import CenterBlock from '../../images/main/newImages/40.png';
+import LeftBlock from '../../images/main/newImages/89.png';
+import RightBlock from '../../images/main/newImages/according.png';
+import NumbersOfSubscribers from '../../images/main/newImages/number_of_subscribers.png';
+import InterestLocation from '../../images/main/newImages/interests.png';
+import TargetAudienceLocation from '../../images/main/newImages/target_audience.png';
 import { Interaction } from 'three.interaction';
+import StripesImage from '../../images/main/newImages/scheme.png';
+import Lines3Image from '../../images/main/newImages/video_scheme.png';
+import TextWindow5 from '../../images/main/newImages/generates.png';
 import fontStylesD from '../../fonts/helvetiker_regular_typeface.json';
 import { MeshLine, MeshLineMaterial, MeshLineRaycast } from 'three.meshline'
 import {
@@ -61,16 +68,20 @@ const backgroundColor = "#ffffff";
 const orbit_control = 0;
 const ASPECT_RATIO = window.innerWidth / window.innerHeight;
 const WhiteTextColor = "#ffffff";
-const LinesColor = "rgb(3, 148, 252)";
+const LinesColor = "rgb(32, 144, 204)";//2090cc
+//const LinesColor = "rgb(3, 148, 252)";//2090cc
 // viewport
 let insetWidth;
 let insetHeight;
 const firstPagePosition = -150;
+//const firstPagePosition = -450;
 const secondPagePosition = -606;
-const thirdPagePosition = -1060;
+//const secondPagePosition = -650;
+//const thirdPagePosition = -1060;
+const thirdPagePosition = -960;
 const fourthPagePosition = -1515;
 
-const rightWindowPosition = 19;
+const rightWindowPosition = 0;
 const leftWindowPosition = -19;
 var circleA;
 var circleB;
@@ -86,6 +97,10 @@ const NewComponent = (props) => {
   const mount = useRef(null);
 
   const history = useHistory();
+
+  var props = {
+    page:3
+  }
 
   const goToLogin = useCallback(() => {
 
@@ -103,7 +118,7 @@ const NewComponent = (props) => {
 
 		scene = new THREE.Scene();
 		scene2 = new THREE.Scene();
-//xx
+
 		camera = new THREE.PerspectiveCamera( 45,ASPECT_RATIO, 1, 1000);
 		//camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 1000 );
     if(props.page == 1){
@@ -192,52 +207,139 @@ const NewComponent = (props) => {
           scene.add(cloud_mesh);
 
           //cloud
+          //three additional text
+          const NumbersOfSubscribersA = new THREE.MeshBasicMaterial({
+              map:new THREE.TextureLoader().load(NumbersOfSubscribers)
+          });
+          NumbersOfSubscribersA.map.needsUpdate = true; //ADDED
+          var NumbersOfSubscribers_mesh = new THREE.Mesh(new THREE.PlaneGeometry(400, 88),NumbersOfSubscribersA);
+          NumbersOfSubscribers_mesh.overdraw = true;
+          NumbersOfSubscribers_mesh.geometry.center();
+          // cloud_mesh.material.needsUpdate = true;
+          NumbersOfSubscribers_mesh.position.x = -80;
+          NumbersOfSubscribers_mesh.position.y = -87;
+          NumbersOfSubscribers_mesh.layers.set(1);
+          NumbersOfSubscribers_mesh.scale.set(0.232,0.232,0.232);
+          scene2.add(NumbersOfSubscribers_mesh);
 
+          const InterestLocationA = new THREE.MeshBasicMaterial({
+              map:new THREE.TextureLoader().load(InterestLocation)
+          });
+          InterestLocationA.map.needsUpdate = true; //ADDED
+          var InterestLocationA_mesh = new THREE.Mesh(new THREE.PlaneGeometry(213, 87),InterestLocationA);
+          InterestLocationA_mesh.overdraw = true;
+          InterestLocationA_mesh.geometry.center();
+          // cloud_mesh.material.needsUpdate = true;
+          InterestLocationA_mesh.position.x = 0;
+          InterestLocationA_mesh.position.y = -45;
+          InterestLocationA_mesh.layers.set(1);
+          InterestLocationA_mesh.scale.set(0.24,0.24,0.24);
+          scene2.add(InterestLocationA_mesh);
+
+          const TargetAudienceLocationA = new THREE.MeshBasicMaterial({
+              map:new THREE.TextureLoader().load(TargetAudienceLocation)
+          });
+          TargetAudienceLocationA.map.needsUpdate = true; //ADDED
+          var TargetAudienceLocationA_mesh = new THREE.Mesh(new THREE.PlaneGeometry(400, 88),TargetAudienceLocationA);
+          TargetAudienceLocationA_mesh.overdraw = true;
+          TargetAudienceLocationA_mesh.geometry.center();
+          // cloud_mesh.material.needsUpdate = true;
+          TargetAudienceLocationA_mesh.position.x = 80;
+          TargetAudienceLocationA_mesh.position.y = -87;
+          TargetAudienceLocationA_mesh.layers.set(1);
+          TargetAudienceLocationA_mesh.scale.set(0.232,0.232,0.232);
+          scene2.add(TargetAudienceLocationA_mesh);
+          //three additional text
           //TextWindow1
           const TextWindow1_a = new THREE.MeshBasicMaterial({
               map:new THREE.TextureLoader().load(TextWindow1)
           });
           TextWindow1_a.map.needsUpdate = true; //ADDED
-          var TextWindow1_mesh = new THREE.Mesh(new THREE.PlaneGeometry(1090, 269),TextWindow1_a);
+          var TextWindow1_mesh = new THREE.Mesh(new THREE.PlaneGeometry(1029, 172),TextWindow1_a);
           TextWindow1_mesh.overdraw = true;
           TextWindow1_mesh.geometry.center();
           // cloud_mesh.material.needsUpdate = true;
           TextWindow1_mesh.position.x = rightWindowPosition;
-          TextWindow1_mesh.position.y = 0;
+          TextWindow1_mesh.position.y = 10;
           TextWindow1_mesh.layers.set(1);
-          TextWindow1_mesh.scale.set(0.2,0.2,0.2);
+          TextWindow1_mesh.scale.set(0.24,0.24,0.24);
           scene2.add(TextWindow1_mesh);
           //TextWindow1
+
           //TextWindow2
           const TextWindow2_a = new THREE.MeshBasicMaterial({
               map:new THREE.TextureLoader().load(TextWindow2)
           });
           TextWindow2_a.map.needsUpdate = true; //ADDED
-          var TextWindow2_mesh = new THREE.Mesh(new THREE.PlaneGeometry(1090, 326),TextWindow2_a);
+          var TextWindow2_mesh = new THREE.Mesh(new THREE.PlaneGeometry(1029, 173),TextWindow2_a);
           TextWindow2_mesh.overdraw = true;
           TextWindow2_mesh.geometry.center();
           // cloud_mesh.material.needsUpdate = true;
           TextWindow2_mesh.position.x = rightWindowPosition;
-          TextWindow2_mesh.position.y = -235;
+          TextWindow2_mesh.position.y = -205;
           TextWindow2_mesh.layers.set(1);
-          TextWindow2_mesh.scale.set(0.2,0.2,0.2);
+          TextWindow2_mesh.scale.set(0.24,0.24,0.24);
           scene2.add(TextWindow2_mesh);
           //TextWindow2
-          //TextWindow3
-          const TextWindow3_a = new THREE.MeshBasicMaterial({
-              map:new THREE.TextureLoader().load(TextWindow3)
+          //arrows
+          const Arrows_a = new THREE.MeshBasicMaterial({
+              map:new THREE.TextureLoader().load(Arrows)
           });
-          TextWindow3_a.map.needsUpdate = true; //ADDED
-          var TextWindow3_mesh = new THREE.Mesh(new THREE.PlaneGeometry(1090, 388),TextWindow3_a);
-          TextWindow3_mesh.overdraw = true;
-          TextWindow3_mesh.geometry.center();
+          Arrows_a.map.needsUpdate = true; //ADDED
+          var Arrows_a_mesh = new THREE.Mesh(new THREE.PlaneGeometry(463, 42),Arrows_a);
+          Arrows_a_mesh.overdraw = true;
+          Arrows_a_mesh.geometry.center();
           // cloud_mesh.material.needsUpdate = true;
-          TextWindow3_mesh.position.x = leftWindowPosition;
-          TextWindow3_mesh.position.y = -315;
-          TextWindow3_mesh.layers.set(1);
-          TextWindow3_mesh.scale.set(0.2,0.2,0.2);
-          scene2.add(TextWindow3_mesh);
-          //TextWindow3
+          Arrows_a_mesh.position.x = rightWindowPosition;
+          Arrows_a_mesh.position.y = -230.5;
+          Arrows_a_mesh.layers.set(1);
+          Arrows_a_mesh.scale.set(0.24,0.24,0.24);
+          scene2.add(Arrows_a_mesh);
+          //arrows
+          //blocks
+          const CenterBlockA = new THREE.MeshBasicMaterial({
+              map:new THREE.TextureLoader().load(CenterBlock)
+          });
+          CenterBlockA.map.needsUpdate = true; //ADDED
+          var CenterBlockA_mesh = new THREE.Mesh(new THREE.PlaneGeometry(447, 415),CenterBlockA);
+          CenterBlockA_mesh.overdraw = true;
+          CenterBlockA_mesh.geometry.center();
+          // cloud_mesh.material.needsUpdate = true;
+          CenterBlockA_mesh.position.x = rightWindowPosition;
+          CenterBlockA_mesh.position.y = -281;
+          CenterBlockA_mesh.layers.set(1);
+          CenterBlockA_mesh.scale.set(0.22,0.22,0.22);
+          scene2.add(CenterBlockA_mesh);
+
+          const LeftBlockA = new THREE.MeshBasicMaterial({
+              map:new THREE.TextureLoader().load(LeftBlock)
+          });
+          LeftBlockA.map.needsUpdate = true; //ADDED
+          var LeftBlockA_mesh = new THREE.Mesh(new THREE.PlaneGeometry(330, 312),LeftBlockA);
+          LeftBlockA_mesh.overdraw = true;
+          LeftBlockA_mesh.geometry.center();
+          // cloud_mesh.material.needsUpdate = true;
+          LeftBlockA_mesh.position.x = rightWindowPosition - 88;
+          LeftBlockA_mesh.position.y = -281;
+          LeftBlockA_mesh.layers.set(1);
+          LeftBlockA_mesh.scale.set(0.22,0.22,0.22);
+          scene2.add(LeftBlockA_mesh);
+
+          const RightBlockA = new THREE.MeshBasicMaterial({
+              map:new THREE.TextureLoader().load(RightBlock)
+          });
+          RightBlockA.map.needsUpdate = true; //ADDED
+          var RightBlockA_mesh = new THREE.Mesh(new THREE.PlaneGeometry(330, 312),RightBlockA);
+          RightBlockA_mesh.overdraw = true;
+          RightBlockA_mesh.geometry.center();
+          // cloud_mesh.material.needsUpdate = true;
+          RightBlockA_mesh.position.x = rightWindowPosition + 88;
+          RightBlockA_mesh.position.y = -281;
+          RightBlockA_mesh.layers.set(1);
+          RightBlockA_mesh.scale.set(0.22,0.22,0.22);
+          scene2.add(RightBlockA_mesh);
+          //blocks
+
   }//page 1 close tag
     //persons
     const downloadperson = new THREE.MeshBasicMaterial({
@@ -403,7 +505,7 @@ const NewComponent = (props) => {
       	matLins[k] = new LineMaterial({
 
       		color: 0xffffff,
-      		linewidth: 3, // in pixels
+      		linewidth: 1, // in pixels
       		vertexColors: true,
       		dashed: false
       	});
@@ -462,7 +564,7 @@ const NewComponent = (props) => {
     var geometryTorusB = [];
     var materialTorusB = [];
     var torusB = [];
-//xx
+
     for(var j = 0;j < FinalPositionsOfLines.length;j++){
       const positions = [];
       const colors = [];
@@ -574,7 +676,7 @@ const NewComponent = (props) => {
         linessB[j].computeLineDistances();
         linessB[j].scale.set( 1, 1, 1 );
         linessB[j].layers.set(2);
-        scene.add( linessB[j] );
+        //scene.add( linessB[j] );
 
         geometryTorusB[j] = new THREE.TorusGeometry( 3, 0.7, 16, 100 );
         materialTorusB[j] = new THREE.MeshBasicMaterial( { color: LinesColor } );
@@ -583,7 +685,7 @@ const NewComponent = (props) => {
         torusB[j].position.y = FinalPositionsOfLinesB[j].y + 4;
         torusB[j].layers.set(2);
         if(props.page == 1){
-          scene.add(torusB[j]);
+          //scene.add(torusB[j]);
         }
 
     }
@@ -644,59 +746,75 @@ const NewComponent = (props) => {
         //scene.add(lineMeshZ);
 
 
-
+        var Moving = 0;
 
         if(props.page == 2){
+
+          //TextWindow3
+          const TextWindow3_a = new THREE.MeshBasicMaterial({
+              map:new THREE.TextureLoader().load(TextWindow3)
+          });
+          TextWindow3_a.map.needsUpdate = true; //ADDED
+          var TextWindow3_mesh = new THREE.Mesh(new THREE.PlaneGeometry(828, 133),TextWindow3_a);
+          TextWindow3_mesh.overdraw = true;
+          TextWindow3_mesh.geometry.center();
+          // cloud_mesh.material.needsUpdate = true;
+          TextWindow3_mesh.position.x = 0;
+          TextWindow3_mesh.position.y = -360;
+          TextWindow3_mesh.layers.set(1);
+          TextWindow3_mesh.scale.set(0.24,0.24,0.24);
+          scene2.add(TextWindow3_mesh);
+          //TextWindow3
+
+
         //Lines3Image
           const Stripes_a = new THREE.MeshBasicMaterial({
               map:new THREE.TextureLoader().load(StripesImage)
           });
           Stripes_a.map.needsUpdate = true; //ADDED
-          var Stripes_mesh = new THREE.Mesh(new THREE.PlaneGeometry(1110, 821),Stripes_a);
+          var Stripes_mesh = new THREE.Mesh(new THREE.PlaneGeometry(934, 668),Stripes_a);
           Stripes_mesh.overdraw = true;
           Stripes_mesh.geometry.center();
           // cloud_mesh.material.needsUpdate = true;
           Stripes_mesh.position.x = 0;
-          Stripes_mesh.position.y = -495;
-          Stripes_mesh.scale.set(0.2,0.2,0.2);
+          Stripes_mesh.position.y = -465;
+          Stripes_mesh.scale.set(0.24,0.24,0.24);
           scene.add(Stripes_mesh);
           //Lines3Image
         }
 
 
-//xx
-
-
         if(props.page == 2){
-          //Lines3Image
-          const Lines3_a = new THREE.MeshBasicMaterial({
-              map:new THREE.TextureLoader().load(Lines3Image)
-          });
-          Lines3_a.map.needsUpdate = true; //ADDED
-          var Lines3_a_mesh = new THREE.Mesh(new THREE.PlaneGeometry(968, 703),Lines3_a);
-          Lines3_a_mesh.overdraw = true;
-          Lines3_a_mesh.geometry.center();
-          // cloud_mesh.material.needsUpdate = true;
-          Lines3_a_mesh.position.x = 0;
-          Lines3_a_mesh.position.y = -687;
-          Lines3_a_mesh.scale.set(0.2,0.2,0.2);
-          scene.add(Lines3_a_mesh);
-          //Lines3Image
           //TextWindow4
           const TextWindow4_a = new THREE.MeshBasicMaterial({
               map:new THREE.TextureLoader().load(TextWindow4)
           });
           TextWindow4_a.map.needsUpdate = true; //ADDED
-          var TextWindow4_mesh = new THREE.Mesh(new THREE.PlaneGeometry(1090, 193),TextWindow4_a);
+          var TextWindow4_mesh = new THREE.Mesh(new THREE.PlaneGeometry(918, 274),TextWindow4_a);
           TextWindow4_mesh.overdraw = true;
           TextWindow4_mesh.geometry.center();
           // cloud_mesh.material.needsUpdate = true;
           TextWindow4_mesh.position.x = rightWindowPosition;
-          TextWindow4_mesh.position.y = -605;
+          TextWindow4_mesh.position.y = -590;
           TextWindow4_mesh.layers.set(0);
-          TextWindow4_mesh.scale.set(0.2,0.2,0.2);
+          TextWindow4_mesh.scale.set(0.24,0.24,0.24);
           scene.add(TextWindow4_mesh);
           //TextWindow4
+          //Lines3Image
+          const Lines3_a = new THREE.MeshBasicMaterial({
+              map:new THREE.TextureLoader().load(Lines3Image)
+          });
+          Lines3_a.map.needsUpdate = true; //ADDED
+          var Lines3_a_mesh = new THREE.Mesh(new THREE.PlaneGeometry(1018, 593),Lines3_a);
+          Lines3_a_mesh.overdraw = true;
+          Lines3_a_mesh.geometry.center();
+          // cloud_mesh.material.needsUpdate = true;
+          Lines3_a_mesh.position.x = 0;
+          Lines3_a_mesh.position.y = -703;
+          Lines3_a_mesh.scale.set(0.24,0.24,0.24);
+          scene.add(Lines3_a_mesh);
+          //Lines3Image
+
         }
 
 
@@ -707,14 +825,14 @@ const NewComponent = (props) => {
               map:new THREE.TextureLoader().load(TextWindow5)
           });
           TextWindow5_a.map.needsUpdate = true; //ADDED
-          var TextWindow5_mesh = new THREE.Mesh(new THREE.PlaneGeometry(1090, 298),TextWindow5_a);
+          var TextWindow5_mesh = new THREE.Mesh(new THREE.PlaneGeometry(828, 134),TextWindow5_a);
           TextWindow5_mesh.overdraw = true;
           TextWindow5_mesh.geometry.center();
           // cloud_mesh.material.needsUpdate = true;
-          TextWindow5_mesh.position.x = leftWindowPosition;
-          TextWindow5_mesh.position.y = -800;
+          TextWindow5_mesh.position.x = 0;
+          TextWindow5_mesh.position.y = -798;
           TextWindow5_mesh.layers.set(0);
-          TextWindow5_mesh.scale.set(0.2,0.2,0.2);
+          TextWindow5_mesh.scale.set(0.24,0.24,0.24);
           scene.add(TextWindow5_mesh);
           //TextWindow5
         }
@@ -730,7 +848,7 @@ const NewComponent = (props) => {
           Lines4_a_mesh.geometry.center();
           // cloud_mesh.material.needsUpdate = true;
           Lines4_a_mesh.position.x = 0;
-          Lines4_a_mesh.position.y = -874;
+          Lines4_a_mesh.position.y = -843;//-31
           Lines4_a_mesh.scale.set(0.22,0.22,0.22);
           scene.add(Lines4_a_mesh);
           //Lines4Image
@@ -745,14 +863,14 @@ const NewComponent = (props) => {
                   InstagramIcon_a_mesh.geometry.center();
                   // cloud_mesh.material.needsUpdate = true;
                   InstagramIcon_a_mesh.position.x = -78;
-                  InstagramIcon_a_mesh.position.y = -897;
+                  InstagramIcon_a_mesh.position.y = -866;
                   InstagramIcon_a_mesh.scale.set(0.22,0.22,0.22);
                   scene2.add(InstagramIcon_a_mesh);
 
                   InstagramIcon_a_mesh.on('click', function(ev) {
 
                     window.open(
-                      'https://www.instagram.com/echohub.io/',
+                      'https://instagram.com/echohub.io?igshid=fm0hdtx3u10y',
                       '_blank' // <- This is what makes it open in a new window.
                     );
 
@@ -767,7 +885,7 @@ const NewComponent = (props) => {
                   FacebookIcon_a_mesh.geometry.center();
                   // cloud_mesh.material.needsUpdate = true;
                   FacebookIcon_a_mesh.position.x = -38;
-                  FacebookIcon_a_mesh.position.y = -897;
+                  FacebookIcon_a_mesh.position.y = -866;
                   FacebookIcon_a_mesh.scale.set(0.22,0.22,0.22);
                   scene2.add(FacebookIcon_a_mesh);
 
@@ -789,14 +907,14 @@ const NewComponent = (props) => {
                   TiktokIcon_a_mesh.geometry.center();
                   // cloud_mesh.material.needsUpdate = true;
                   TiktokIcon_a_mesh.position.x = 0;
-                  TiktokIcon_a_mesh.position.y = -887;
+                  TiktokIcon_a_mesh.position.y = -856;
                   TiktokIcon_a_mesh.scale.set(0.22,0.22,0.22);
                   scene2.add(TiktokIcon_a_mesh);
 
                   TiktokIcon_a_mesh.on('click', function(ev) {
 
                     window.open(
-                      'https://www.tiktok.com/',
+                      'https://www.tiktok.com/@echohub.io?lang=en',
                       '_blank' // <- This is what makes it open in a new window.
                     );
 
@@ -811,13 +929,13 @@ const NewComponent = (props) => {
                   Twitter_a_mesh.geometry.center();
                   // cloud_mesh.material.needsUpdate = true;
                   Twitter_a_mesh.position.x = 38;
-                  Twitter_a_mesh.position.y = -897;
+                  Twitter_a_mesh.position.y = -866;
                   Twitter_a_mesh.scale.set(0.22,0.22,0.22);
                   scene2.add(Twitter_a_mesh);
                   Twitter_a_mesh.on('click', function(ev) {
 
                     window.open(
-                      'https://twitter.com/',
+                      'https://twitter.com/EchohubI',
                       '_blank' // <- This is what makes it open in a new window.
                     );
 
@@ -832,14 +950,14 @@ const NewComponent = (props) => {
                   youtube_a_mesh.geometry.center();
                   // cloud_mesh.material.needsUpdate = true;
                   youtube_a_mesh.position.x = 78;
-                  youtube_a_mesh.position.y = -897;
+                  youtube_a_mesh.position.y = -866;
                   youtube_a_mesh.scale.set(0.22,0.22,0.22);
                   scene2.add(youtube_a_mesh);
 
                   youtube_a_mesh.on('click', function(ev) {
 
                     window.open(
-                      'https://www.youtube.com/channel/UC-tvKHO66_pcfeOrh1n2YQg',
+                      'https://youtube.com/channel/UC-tvKHO66_pcfeOrh1n2YQg',
                       '_blank' // <- This is what makes it open in a new window.
                     );
 
@@ -861,20 +979,20 @@ const NewComponent = (props) => {
                     goToLogin();
 
                   });
-
+                  //xx
                   //TextWindow6
                   const TextWindow6_a = new THREE.MeshBasicMaterial({
                       map:new THREE.TextureLoader().load(TextWindow6)
                   });
                   TextWindow6_a.map.needsUpdate = true; //ADDED
-                  var TextWindow6_mesh = new THREE.Mesh(new THREE.PlaneGeometry(1185, 518),TextWindow6_a);
+                  var TextWindow6_mesh = new THREE.Mesh(new THREE.PlaneGeometry(1073, 411),TextWindow6_a);
                   TextWindow6_mesh.overdraw = true;
                   TextWindow6_mesh.geometry.center();
                   // cloud_mesh.material.needsUpdate = true;
                   TextWindow6_mesh.position.x = rightWindowPosition;
                   TextWindow6_mesh.position.y = -970;
                   TextWindow6_mesh.layers.set(0);
-                  TextWindow6_mesh.scale.set(0.2,0.2,0.2);
+                  TextWindow6_mesh.scale.set(0.24,0.24,0.24);
                   scene.add(TextWindow6_mesh);
                   //TextWindow6
                   //Lines5Image
@@ -919,7 +1037,7 @@ const NewComponent = (props) => {
                       function ( texture ) {
                         textureF.flipY = false;
                         //Earthtexture
-                //xx
+
                         var geometryEarth = new THREE.SphereGeometry(45, 32, 32);
                         var materialEarth = new THREE.MeshPhongMaterial( {
                             map: texture

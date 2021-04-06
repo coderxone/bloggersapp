@@ -1,4 +1,4 @@
-import React, { useCallback,useEffect,useState,useMemo } from 'react';
+import React, { useCallback,useEffect,useState,useMemo,useRef } from 'react';
 import AnimationComponent from '../components/AnimationComponent';
 import MainPageDandelion from '../components/MainPageDandelion';
 import LocalizeComponent from '../localize/LocalizeComponent';
@@ -29,6 +29,7 @@ import BloggerCopy2 from '../components/bloggerComponents/bloggerCopy2';
 import BloggerCopy3 from '../components/bloggerComponents/bloggerCopy3';
 import BloggerCopy4 from '../components/bloggerComponents/bloggerCopy4';
 import PushComponent from '../helperComponents/NativePushNotificationComponent';
+import BusinessPoster from '../images/businessPoster.png';
 // import WebPushNotification from '../helperComponents/WebPushComponent';
 import { Capacitor } from '@capacitor/core';
 
@@ -102,6 +103,30 @@ const BottomFunc = () => {
 
   }
 
+  const playVideo = useRef(null);
+  const playVideoBlog = useRef(null);
+  const [playState,SetPlayState] = useState(0);
+  const [playStateBlogger,SetPlayStateBlogger] = useState(0);
+
+  const Start = () => {
+    if(playState === 0){
+      playVideo.current.play();
+      SetPlayState(1);
+    }else{
+      SetPlayState(0);
+      playVideo.current.pause();
+    }
+  }
+
+  const StartBlogger = () => {
+    if(playStateBlogger === 0){
+      playVideoBlog.current.play();
+      SetPlayStateBlogger(1);
+    }else{
+      SetPlayStateBlogger(0);
+      playVideoBlog.current.pause();
+    }
+  }
 
 
   useEffect(() => {
@@ -192,6 +217,17 @@ const BottomFunc = () => {
                   <img className="BackgroundText_name" src={EchohubText}/> <span className="IO_size">.IO</span> - is a new, effective way of spreading information through a network of pooled bloggers.
                 </div>
             </div>
+
+
+            {BusinessSwitcher == 0 ? (
+              <div className="BusinessVideo" onClick={Start}>
+                <video width="100%" ref={playVideo} src="https://echohub.io/videos/EchohubForbusiness.mp4"  poster={BusinessPoster} type="video/mp4"/>
+              </div>
+             ) : (
+               <div className="BusinessVideo" onClick={StartBlogger}>
+                 <video width="100%" ref={playVideoBlog} src="https://echohub.io/videos/EchohubCreators.mp4"  poster={BusinessPoster} type="video/mp4"/>
+               </div>
+             )}
 
 
 
