@@ -1,6 +1,5 @@
 import React, { useRef,useEffect, useState,useCallback } from 'react';
 import * as THREE from 'three';
-import  Earthtexture from '../../3dmodels/earth_texture_two.png';
 import Stats from '../../../node_modules/three/examples/jsm/libs/stats.module.js';
 
 import { GUI } from '../../../node_modules/three/examples/jsm/libs/dat.gui.module.js';
@@ -10,38 +9,21 @@ import { LineMaterial } from '../../../node_modules/three/examples/jsm/lines/Lin
 import { LineGeometry } from '../../../node_modules/three/examples/jsm/lines/LineGeometry.js';
 import { GeometryUtils } from '../../../node_modules/three/examples/jsm/utils/GeometryUtils.js';
 
-//import { MeshLine, MeshLineMaterial, MeshLineRaycast } from 'three.meshline';
-import Logo_Echohub_1_part from '../../images/main/animationtwo/business.png';
-import Person from '../../images/main/animationtwo/person.png';
-import CloudImage from '../../images/main/animationtwo/cloud.png';
-import Lines4Image from '../../images/main/animationtwo/lines4.png';
-import Lines5Image from '../../images/main/animationtwo/lines5.png';
-import Lines6Image from '../../images/main/animationtwo/lines6.png';
-import instagramImage from '../../images/main/animationtwo/instagram.png';
-import facebookImage from '../../images/main/animationtwo/facebook.png';
-import tiktokImage from '../../images/main/animationtwo/tiktok.png';
-import twitterImage from '../../images/main/animationtwo/twitter.png';
-import youtubeImage from '../../images/main/animationtwo/youtube.png';
-import JoinImage from '../../images/main/animationtwo/join.png';
-//import Lines7Image from '../images/main/animationtwo/lines7.png';
-import Lines7Image from '../../images/main/animationtwo/lines7.png';
-import Lines8Image from '../../images/main/animationtwo/lines8.png';
+import { Interaction } from 'three.interaction';
+import NumbersOfSubscribers from '../../images/main/newImages/number_of_subscribers.png';
+import InterestLocation from '../../images/main/newImages/interests.png';
+import TargetAudienceLocation from '../../images/main/newImages/target_audience.png';
 import TextWindow1 from '../../images/main/newImages/Large.png';
 import TextWindow2 from '../../images/main/newImages/Various.png';
 import TextWindow3 from '../../images/main/newImages/macro.png';
-import TextWindow4 from '../../images/main/newImages/they_would.png';
-import TextWindow6 from '../../images/main/newImages/promote.png';
 import Arrows from '../../images/main/newImages/arrows.png';
 import CenterBlock from '../../images/main/newImages/40.png';
 import LeftBlock from '../../images/main/newImages/89.png';
 import RightBlock from '../../images/main/newImages/according.png';
-import NumbersOfSubscribers from '../../images/main/newImages/number_of_subscribers.png';
-import InterestLocation from '../../images/main/newImages/interests.png';
-import TargetAudienceLocation from '../../images/main/newImages/target_audience.png';
-import { Interaction } from 'three.interaction';
-import StripesImage from '../../images/main/newImages/scheme.png';
-import Lines3Image from '../../images/main/newImages/video_scheme.png';
-import TextWindow5 from '../../images/main/newImages/generates.png';
+import Logo_Echohub_1_part from '../../images/main/animationtwo/business.png';
+import Person from '../../images/main/animationtwo/person.png';
+import CloudImage from '../../images/main/animationtwo/cloud.png';
+
 import fontStylesD from '../../fonts/helvetiker_regular_typeface.json';
 import { MeshLine, MeshLineMaterial, MeshLineRaycast } from 'three.meshline'
 import {
@@ -74,12 +56,10 @@ const LinesColor = "rgb(32, 144, 204)";//2090cc
 let insetWidth;
 let insetHeight;
 const firstPagePosition = -150;
-//const firstPagePosition = -450;
 const secondPagePosition = -606;
-//const secondPagePosition = -650;
-//const thirdPagePosition = -1060;
-const thirdPagePosition = -960;
-const fourthPagePosition = -1515;
+const thirdPagePosition = -1061;
+const fourthPagePosition = -1435;
+const fifthPagePosition = -1890;
 
 const rightWindowPosition = 0;
 const leftWindowPosition = -19;
@@ -98,9 +78,9 @@ const NewComponent = (props) => {
 
   const history = useHistory();
 
-  var props = {
-    page:3
-  }
+  // var props = {
+  //   page:3
+  // }
 
   const goToLogin = useCallback(() => {
 
@@ -120,7 +100,19 @@ const NewComponent = (props) => {
 		scene2 = new THREE.Scene();
 
 		camera = new THREE.PerspectiveCamera( 45,ASPECT_RATIO, 1, 1000);
-		//camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 1000 );
+
+    var Deep = 550;
+    if((window.innerWidth < 376) && (window.innerHeight > 650) && (window.innerHeight < 850)){
+      Deep = 700;
+
+    }
+    if((window.innerWidth < 376) && (window.innerHeight > 630) && (window.innerHeight < 650)){
+        Deep = 550;
+    }
+
+    if((window.innerWidth < 450) && (window.innerHeight > 850) && (window.innerHeight < 900)){
+        Deep = 700;
+    }
     if(props.page == 1){
       camera.position.set( 0, firstPagePosition, 550 );
     }else if(props.page == 2){
@@ -129,6 +121,8 @@ const NewComponent = (props) => {
       camera.position.set( 0, thirdPagePosition, 550 );
     }else if(props.page == 4){
       camera.position.set( 0, fourthPagePosition, 550 );
+    }else if(props.page == 5){
+      camera.position.set( 0, fifthPagePosition, 550 );
     }else{
       camera.position.set( 0, firstPagePosition, 550 );
     }
@@ -281,6 +275,21 @@ const NewComponent = (props) => {
           TextWindow2_mesh.scale.set(0.24,0.24,0.24);
           scene2.add(TextWindow2_mesh);
           //TextWindow2
+          //TextWindow3
+          const TextWindow3_a = new THREE.MeshBasicMaterial({
+              map:new THREE.TextureLoader().load(TextWindow3)
+          });
+          TextWindow3_a.map.needsUpdate = true; //ADDED
+          var TextWindow3_mesh = new THREE.Mesh(new THREE.PlaneGeometry(828, 133),TextWindow3_a);
+          TextWindow3_mesh.overdraw = true;
+          TextWindow3_mesh.geometry.center();
+          // cloud_mesh.material.needsUpdate = true;
+          TextWindow3_mesh.position.x = 0;
+          TextWindow3_mesh.position.y = -360;
+          TextWindow3_mesh.layers.set(1);
+          TextWindow3_mesh.scale.set(0.24,0.24,0.24);
+          scene2.add(TextWindow3_mesh);
+          //TextWindow3
           //arrows
           const Arrows_a = new THREE.MeshBasicMaterial({
               map:new THREE.TextureLoader().load(Arrows)
@@ -686,6 +695,7 @@ const NewComponent = (props) => {
         torusB[j].layers.set(2);
         if(props.page == 1){
           //scene.add(torusB[j]);
+
         }
 
     }
@@ -746,448 +756,6 @@ const NewComponent = (props) => {
         //scene.add(lineMeshZ);
 
 
-        var Moving = 0;
-
-        if(props.page == 2){
-
-          //TextWindow3
-          const TextWindow3_a = new THREE.MeshBasicMaterial({
-              map:new THREE.TextureLoader().load(TextWindow3)
-          });
-          TextWindow3_a.map.needsUpdate = true; //ADDED
-          var TextWindow3_mesh = new THREE.Mesh(new THREE.PlaneGeometry(828, 133),TextWindow3_a);
-          TextWindow3_mesh.overdraw = true;
-          TextWindow3_mesh.geometry.center();
-          // cloud_mesh.material.needsUpdate = true;
-          TextWindow3_mesh.position.x = 0;
-          TextWindow3_mesh.position.y = -360;
-          TextWindow3_mesh.layers.set(1);
-          TextWindow3_mesh.scale.set(0.24,0.24,0.24);
-          scene2.add(TextWindow3_mesh);
-          //TextWindow3
-
-
-        //Lines3Image
-          const Stripes_a = new THREE.MeshBasicMaterial({
-              map:new THREE.TextureLoader().load(StripesImage)
-          });
-          Stripes_a.map.needsUpdate = true; //ADDED
-          var Stripes_mesh = new THREE.Mesh(new THREE.PlaneGeometry(934, 668),Stripes_a);
-          Stripes_mesh.overdraw = true;
-          Stripes_mesh.geometry.center();
-          // cloud_mesh.material.needsUpdate = true;
-          Stripes_mesh.position.x = 0;
-          Stripes_mesh.position.y = -465;
-          Stripes_mesh.scale.set(0.24,0.24,0.24);
-          scene.add(Stripes_mesh);
-          //Lines3Image
-        }
-
-
-        if(props.page == 2){
-          //TextWindow4
-          const TextWindow4_a = new THREE.MeshBasicMaterial({
-              map:new THREE.TextureLoader().load(TextWindow4)
-          });
-          TextWindow4_a.map.needsUpdate = true; //ADDED
-          var TextWindow4_mesh = new THREE.Mesh(new THREE.PlaneGeometry(918, 274),TextWindow4_a);
-          TextWindow4_mesh.overdraw = true;
-          TextWindow4_mesh.geometry.center();
-          // cloud_mesh.material.needsUpdate = true;
-          TextWindow4_mesh.position.x = rightWindowPosition;
-          TextWindow4_mesh.position.y = -590;
-          TextWindow4_mesh.layers.set(0);
-          TextWindow4_mesh.scale.set(0.24,0.24,0.24);
-          scene.add(TextWindow4_mesh);
-          //TextWindow4
-          //Lines3Image
-          const Lines3_a = new THREE.MeshBasicMaterial({
-              map:new THREE.TextureLoader().load(Lines3Image)
-          });
-          Lines3_a.map.needsUpdate = true; //ADDED
-          var Lines3_a_mesh = new THREE.Mesh(new THREE.PlaneGeometry(1018, 593),Lines3_a);
-          Lines3_a_mesh.overdraw = true;
-          Lines3_a_mesh.geometry.center();
-          // cloud_mesh.material.needsUpdate = true;
-          Lines3_a_mesh.position.x = 0;
-          Lines3_a_mesh.position.y = -703;
-          Lines3_a_mesh.scale.set(0.24,0.24,0.24);
-          scene.add(Lines3_a_mesh);
-          //Lines3Image
-
-        }
-
-
-
-        if((props.page == 2) || (props.page == 3)){
-          //TextWindow5
-          const TextWindow5_a = new THREE.MeshBasicMaterial({
-              map:new THREE.TextureLoader().load(TextWindow5)
-          });
-          TextWindow5_a.map.needsUpdate = true; //ADDED
-          var TextWindow5_mesh = new THREE.Mesh(new THREE.PlaneGeometry(828, 134),TextWindow5_a);
-          TextWindow5_mesh.overdraw = true;
-          TextWindow5_mesh.geometry.center();
-          // cloud_mesh.material.needsUpdate = true;
-          TextWindow5_mesh.position.x = 0;
-          TextWindow5_mesh.position.y = -798;
-          TextWindow5_mesh.layers.set(0);
-          TextWindow5_mesh.scale.set(0.24,0.24,0.24);
-          scene.add(TextWindow5_mesh);
-          //TextWindow5
-        }
-
-        if(props.page == 3){
-          //Lines4Image
-          const Lines4_a = new THREE.MeshBasicMaterial({
-              map:new THREE.TextureLoader().load(Lines4Image)
-          });
-          Lines4_a.map.needsUpdate = true; //ADDED
-          var Lines4_a_mesh = new THREE.Mesh(new THREE.PlaneGeometry(903, 266),Lines4_a);
-          Lines4_a_mesh.overdraw = true;
-          Lines4_a_mesh.geometry.center();
-          // cloud_mesh.material.needsUpdate = true;
-          Lines4_a_mesh.position.x = 0;
-          Lines4_a_mesh.position.y = -843;//-31
-          Lines4_a_mesh.scale.set(0.22,0.22,0.22);
-          scene.add(Lines4_a_mesh);
-          //Lines4Image
-
-
-                  const InstagramIcon_a = new THREE.MeshBasicMaterial({
-                      map:new THREE.TextureLoader().load(instagramImage)
-                  });
-                  InstagramIcon_a.map.needsUpdate = true; //ADDED
-                  var InstagramIcon_a_mesh = new THREE.Mesh(new THREE.PlaneGeometry(126, 126),InstagramIcon_a);
-                  InstagramIcon_a_mesh.overdraw = true;
-                  InstagramIcon_a_mesh.geometry.center();
-                  // cloud_mesh.material.needsUpdate = true;
-                  InstagramIcon_a_mesh.position.x = -78;
-                  InstagramIcon_a_mesh.position.y = -866;
-                  InstagramIcon_a_mesh.scale.set(0.22,0.22,0.22);
-                  scene2.add(InstagramIcon_a_mesh);
-
-                  InstagramIcon_a_mesh.on('click', function(ev) {
-
-                    window.open(
-                      'https://instagram.com/echohub.io?igshid=fm0hdtx3u10y',
-                      '_blank' // <- This is what makes it open in a new window.
-                    );
-
-                  });
-
-                  const FacebookIcon_a = new THREE.MeshBasicMaterial({
-                      map:new THREE.TextureLoader().load(facebookImage)
-                  });
-                  FacebookIcon_a.map.needsUpdate = true; //ADDED
-                  var FacebookIcon_a_mesh = new THREE.Mesh(new THREE.PlaneGeometry(126, 126),FacebookIcon_a);
-                  FacebookIcon_a_mesh.overdraw = true;
-                  FacebookIcon_a_mesh.geometry.center();
-                  // cloud_mesh.material.needsUpdate = true;
-                  FacebookIcon_a_mesh.position.x = -38;
-                  FacebookIcon_a_mesh.position.y = -866;
-                  FacebookIcon_a_mesh.scale.set(0.22,0.22,0.22);
-                  scene2.add(FacebookIcon_a_mesh);
-
-                  FacebookIcon_a_mesh.on('click', function(ev) {
-
-                    window.open(
-                      'https://www.facebook.com/permalink.php?story_fbid=2446311895515266&id=100004094374192',
-                      '_blank' // <- This is what makes it open in a new window.
-                    );
-
-                  });
-
-                  const TiktokIcon_a = new THREE.MeshBasicMaterial({
-                      map:new THREE.TextureLoader().load(tiktokImage)
-                  });
-                  TiktokIcon_a.map.needsUpdate = true; //ADDED
-                  var TiktokIcon_a_mesh = new THREE.Mesh(new THREE.PlaneGeometry(185, 273),TiktokIcon_a);
-                  TiktokIcon_a_mesh.overdraw = true;
-                  TiktokIcon_a_mesh.geometry.center();
-                  // cloud_mesh.material.needsUpdate = true;
-                  TiktokIcon_a_mesh.position.x = 0;
-                  TiktokIcon_a_mesh.position.y = -856;
-                  TiktokIcon_a_mesh.scale.set(0.22,0.22,0.22);
-                  scene2.add(TiktokIcon_a_mesh);
-
-                  TiktokIcon_a_mesh.on('click', function(ev) {
-
-                    window.open(
-                      'https://www.tiktok.com/@echohub.io?lang=en',
-                      '_blank' // <- This is what makes it open in a new window.
-                    );
-
-                  });
-
-                  const Twitter_a = new THREE.MeshBasicMaterial({
-                      map:new THREE.TextureLoader().load(twitterImage)
-                  });
-                  Twitter_a.map.needsUpdate = true; //ADDED
-                  var Twitter_a_mesh = new THREE.Mesh(new THREE.PlaneGeometry(126, 126),Twitter_a);
-                  Twitter_a_mesh.overdraw = true;
-                  Twitter_a_mesh.geometry.center();
-                  // cloud_mesh.material.needsUpdate = true;
-                  Twitter_a_mesh.position.x = 38;
-                  Twitter_a_mesh.position.y = -866;
-                  Twitter_a_mesh.scale.set(0.22,0.22,0.22);
-                  scene2.add(Twitter_a_mesh);
-                  Twitter_a_mesh.on('click', function(ev) {
-
-                    window.open(
-                      'https://twitter.com/EchohubI',
-                      '_blank' // <- This is what makes it open in a new window.
-                    );
-
-                  });
-
-                  const youtube_a = new THREE.MeshBasicMaterial({
-                      map:new THREE.TextureLoader().load(youtubeImage)
-                  });
-                  youtube_a.map.needsUpdate = true; //ADDED
-                  var youtube_a_mesh = new THREE.Mesh(new THREE.PlaneGeometry(126, 126),youtube_a);
-                  youtube_a_mesh.overdraw = true;
-                  youtube_a_mesh.geometry.center();
-                  // cloud_mesh.material.needsUpdate = true;
-                  youtube_a_mesh.position.x = 78;
-                  youtube_a_mesh.position.y = -866;
-                  youtube_a_mesh.scale.set(0.22,0.22,0.22);
-                  scene2.add(youtube_a_mesh);
-
-                  youtube_a_mesh.on('click', function(ev) {
-
-                    window.open(
-                      'https://youtube.com/channel/UC-tvKHO66_pcfeOrh1n2YQg',
-                      '_blank' // <- This is what makes it open in a new window.
-                    );
-
-                  });
-
-                  const JOIN_geom = new THREE.CircleGeometry( 18, 32 );
-                  const materialJOIN = new THREE.MeshBasicMaterial( { opacity:0.1,transparent:true } );
-
-                  const JOIN_a_mesh = new THREE.Mesh( JOIN_geom, materialJOIN );
-                  // cloud_mesh.material.needsUpdate = true;
-                  JOIN_a_mesh.position.x = 90;
-                  JOIN_a_mesh.position.y = -1267;
-                  JOIN_a_mesh.renderOrder = 1;
-                  //JOIN_a_mesh.scale.set(4,4,4);
-                  scene2.add(JOIN_a_mesh);
-
-                  JOIN_a_mesh.on('click', function(ev) {
-
-                    goToLogin();
-
-                  });
-                  //xx
-                  //TextWindow6
-                  const TextWindow6_a = new THREE.MeshBasicMaterial({
-                      map:new THREE.TextureLoader().load(TextWindow6)
-                  });
-                  TextWindow6_a.map.needsUpdate = true; //ADDED
-                  var TextWindow6_mesh = new THREE.Mesh(new THREE.PlaneGeometry(1073, 411),TextWindow6_a);
-                  TextWindow6_mesh.overdraw = true;
-                  TextWindow6_mesh.geometry.center();
-                  // cloud_mesh.material.needsUpdate = true;
-                  TextWindow6_mesh.position.x = rightWindowPosition;
-                  TextWindow6_mesh.position.y = -970;
-                  TextWindow6_mesh.layers.set(0);
-                  TextWindow6_mesh.scale.set(0.24,0.24,0.24);
-                  scene.add(TextWindow6_mesh);
-                  //TextWindow6
-                  //Lines5Image
-                  const Lines5_a = new THREE.MeshBasicMaterial({
-                      map:new THREE.TextureLoader().load(Lines5Image)
-                  });
-                  Lines5_a.map.needsUpdate = true; //ADDED
-                  var Lines5_a_mesh = new THREE.Mesh(new THREE.PlaneGeometry(1020, 513),Lines5_a);
-                  Lines5_a_mesh.overdraw = true;
-                  Lines5_a_mesh.geometry.center();
-                  // cloud_mesh.material.needsUpdate = true;
-                  Lines5_a_mesh.position.x = 0;
-                  Lines5_a_mesh.position.y = -1083;
-                  Lines5_a_mesh.scale.set(0.2,0.2,0.2);
-                  scene.add(Lines5_a_mesh);
-                  //Lines5Image
-                  //Lines6Image
-                  const Lines6_a = new THREE.MeshBasicMaterial({
-                      map:new THREE.TextureLoader().load(Lines6Image)
-                  });
-                  Lines6_a.map.needsUpdate = true; //ADDED
-                  var Lines6_a_mesh = new THREE.Mesh(new THREE.PlaneGeometry(1147, 732),Lines6_a);
-                  Lines6_a_mesh.overdraw = true;
-                  Lines6_a_mesh.geometry.center();
-                  // cloud_mesh.material.needsUpdate = true;
-                  Lines6_a_mesh.position.x = 0;
-                  Lines6_a_mesh.position.y = -1220;
-                  Lines6_a_mesh.scale.set(0.2,0.2,0.2);
-                  scene.add(Lines6_a_mesh);
-                  //Lines6Image
-
-                  //light for earth
-                  var ambLight = new THREE.AmbientLight(0x333333);
-                  scene2.add(ambLight);
-                  const light = new THREE.DirectionalLight( 0xffffff, 2 );
-                  light.position.set(-300,30,300);
-                  scene2.add(light);
-                  //for earth
-                  var textureLoader = new THREE.TextureLoader();
-
-                  const textureF = textureLoader.load(Earthtexture,
-                      function ( texture ) {
-                        textureF.flipY = false;
-                        //Earthtexture
-
-                        var geometryEarth = new THREE.SphereGeometry(45, 32, 32);
-                        var materialEarth = new THREE.MeshPhongMaterial( {
-                            map: texture
-                         });
-
-                        //materialEarth.map.needsUpdate = true; //ADDED
-                        earthmesh = new THREE.Mesh(geometryEarth, materialEarth);
-                        earthmesh.position.x = 0;
-                        earthmesh.position.y = -1088;
-                        earthmesh.geometry.center();
-                        earthmesh.rotation.z = 90;
-
-                        scene2.add( earthmesh );
-
-                        animate();
-                        planetAnimation = 1;
-                      }
-                  );
-
-
-        }
-
-
-
-
-        if(props.page == 4){
-          //Lines7Image
-          const Lines7_a = new THREE.MeshBasicMaterial({
-              map:new THREE.TextureLoader().load(Lines7Image)
-          });
-          Lines7_a.map.needsUpdate = true; //ADDED
-          var Lines7_a_mesh = new THREE.Mesh(new THREE.PlaneGeometry(1243, 1211),Lines7_a);
-          Lines7_a_mesh.overdraw = true;
-          Lines7_a_mesh.geometry.center();
-          // cloud_mesh.material.needsUpdate = true;
-          Lines7_a_mesh.position.x = 0;
-          Lines7_a_mesh.position.y = -1420;
-          Lines7_a_mesh.scale.set(0.2,0.2,0.2);
-          scene.add(Lines7_a_mesh);
-          //Lines7Image
-          //circle animation
-
-          const geometryA = new THREE.CircleGeometry( 10, 32 );
-          const materialA = new THREE.MeshBasicMaterial( { color: "#70dfbe" } );
-          circleA = new THREE.Mesh( geometryA, materialA );
-          circleA.position.x = 0;
-          circleA.position.y = -1389;
-          scene.add( circleA );
-
-          //text
-
-          const font = new THREE.FontLoader().parse(fontStylesD);
-
-          const textOptionsA = {
-            font,
-            size: 4, // font size
-            height: 2, // how much extrusion (how thick / deep are the letters)
-          };
-
-          var textGeometryA = new THREE.TextGeometry("Creator", textOptionsA);
-
-          var textMaterialA = new THREE.MeshBasicMaterial(
-            { color: WhiteTextColor }
-          );
-
-          var TextmeshA = new THREE.Mesh( textGeometryA, textMaterialA );
-          TextmeshA.geometry.center();
-          circleA.add(TextmeshA);
-
-          const geometryB = new THREE.CircleGeometry( 7.5, 32 );
-          const materialB = new THREE.MeshBasicMaterial( { color: "#0181c2" } );
-          circleB = new THREE.Mesh( geometryB, materialB );
-          circleB.position.x = 0;
-          circleB.position.y = -1389;
-          scene.add( circleB );
-
-          const textOptionsB = {
-            font,
-            size: 3, // font size
-            height: 2, // how much extrusion (how thick / deep are the letters)
-          };
-          var textGeometryB = new THREE.TextGeometry("Creator", textOptionsB);
-
-          var textMaterialB = new THREE.MeshBasicMaterial(
-            { color: WhiteTextColor }
-          );
-          var TextmeshB = new THREE.Mesh( textGeometryB, textMaterialB );
-          TextmeshB.geometry.center();
-          circleB.add(TextmeshB);
-
-          const geometryC = new THREE.CircleGeometry( 6.2, 32 );
-          const materialC = new THREE.MeshBasicMaterial( { color: "#00002f" } );
-          circleC = new THREE.Mesh( geometryC, materialC );
-          circleC.position.x = 0;
-          circleC.position.y = -1389;
-          scene.add( circleC );
-
-          var textGeometryC = new THREE.TextGeometry("Creator", textOptionsB);
-
-          var textMaterialC = new THREE.MeshBasicMaterial(
-            { color: WhiteTextColor }
-          );
-
-          var TextmeshC = new THREE.Mesh( textGeometryC, textMaterialC );
-          TextmeshC.geometry.center();
-          circleC.add(TextmeshC);
-
-          //circle animation
-
-
-
-          //Lines8Image
-          const Lines8_a = new THREE.MeshBasicMaterial({
-              map:new THREE.TextureLoader().load(Lines8Image)
-          });
-          Lines8_a.map.needsUpdate = true; //ADDED
-          var Lines8_a_mesh = new THREE.Mesh(new THREE.PlaneGeometry(1170, 510),Lines8_a);
-          Lines8_a_mesh.overdraw = true;
-          Lines8_a_mesh.geometry.center();
-          // cloud_mesh.material.needsUpdate = true;
-          Lines8_a_mesh.position.x = leftWindowPosition;
-          Lines8_a_mesh.position.y = -1605;
-          Lines8_a_mesh.scale.set(0.2,0.2,0.2);
-          scene.add(Lines8_a_mesh);
-          //Lines8Image
-
-          turnFourthAnimation = 1;
-        }
-
-
-
-
-
-
-
-        //ReadyBlock
-        // const Ready_a = new THREE.MeshBasicMaterial({
-        //     map:new THREE.TextureLoader().load(ReadyBlock)
-        // });
-        // Ready_a.map.needsUpdate = true; //ADDED
-        // var Ready_mesh = new THREE.Mesh(new THREE.PlaneGeometry(215, 1250),Ready_a);
-        // Ready_mesh.overdraw = true;
-        // Ready_mesh.geometry.center();
-        // // cloud_mesh.material.needsUpdate = true;
-        // Ready_mesh.position.x = 0;
-        // Ready_mesh.position.y = -1050;
-        // Ready_mesh.layers.set(0);
-        // scene.add(Ready_mesh);
-        //ReadyBlock
-
 
 
 		//
@@ -1206,9 +774,9 @@ const NewComponent = (props) => {
 
     init();
 
-    if(props.page != 3){
+    //if(props.page != 3){
       animate();
-    }
+    //}
 
 
     //document.body.appendChild( renderer.domElement );
@@ -1302,31 +870,8 @@ function animate() {
     item.resolution.set( insetWidth, insetHeight ); // resolution of the inset viewport
   })
 
-  if(planetAnimation == 1){
-    earthmesh.rotation.y += 0.02;
-  }
 
-  if(turnFourthAnimation == 1){
-    t += NearestRandomPoints(0.02);
-    t2 += NearestRandomPoints(0.022);
-    t3 += NearestRandomPoints(0.015);;
-    var yR = -1389;
-    var xR = 0;
-    var circleARadius = 54;
 
-    circleA.position.x =  xR + (circleARadius * Math.cos(t));
-    circleA.position.y = yR + (circleARadius * Math.sin(t));
-
-    var circleARadiusB = 69;
-
-    circleB.position.x =  xR + (circleARadiusB * Math.cos(t2));
-    circleB.position.y = yR + (circleARadiusB * Math.sin(t2));
-
-    var circleARadiusC = 37;
-
-    circleC.position.x =  xR + (circleARadiusC * Math.cos(t3));
-    circleC.position.y = yR + (circleARadiusC * Math.sin(t3));
-  }
 
 
 
@@ -1335,7 +880,7 @@ function animate() {
 //xx
   //console.log(matLins[0]);
 
-  lineMeshZ.material.dashOffset -= 0.002;
+
 
 
 

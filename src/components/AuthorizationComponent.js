@@ -21,28 +21,13 @@ import DandelionComponent from '../components/dandelionComponent.js';
 import { increment, decrement,save_email,save_multiData } from '../actions/actions';
 import config from '../config/config.js';
 import {
-  Link, Redirect
+  Link, Redirect,useHistory
 } from "react-router-dom";
 
 
 
 
-function mapStateToProps(state,ownProps) {
-  return {
-    count: state.count,
-    email:state.email,
-    password:state.password
-  }
-}
 
-//const {regionsList: { data: list = [] } } = props;
-
-const mapDispatchToProps = dispatch => ({
-  increment,
-  decrement,
-  dispatch,
-  save_email
-});
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -159,6 +144,19 @@ const AuthorizationComponent = (props) => {
   }
 
 
+
+  const BackButton = () => {
+    document.addEventListener('ionBackButton', (ev) => {
+      ev.detail.register(10, () => {
+        SetRoute("/main");
+        Setredirect(true);
+      });
+    });
+  }
+
+
+
+
   useEffect(() => {
 
         const authSubscribe = AuthService.getAuthData().subscribe(data => {
@@ -170,6 +168,35 @@ const AuthorizationComponent = (props) => {
             props.dispatch(save_multiData({_object:'role',name:data.role}));
             props.dispatch(save_multiData({_object:'additionalData',name:data.additionalData}));
           //  console.log(data);
+
+          var enablelogin = localStorage.getItem("enablelogin");
+
+          if(enablelogin){
+            if(enablelogin == "1"){
+              localStorage.setItem("enablelogin",2);
+              localStorage.setItem("role",2);
+              SetRoute("/payment");
+              Setredirect(true);
+            }else{
+              if(data.role === 2){
+                  SetRoute("/business");
+                  Setredirect(true);
+              }else if(data.role === 1){
+
+                if(data.additionalData == "0"){
+                  SetRoute("/blogger-answers");
+                  Setredirect(true);
+                }else{
+                  SetRoute("/blogger");
+                  Setredirect(true);
+                }
+
+              }else if(data.role == 0){
+                SetRoute("/approve");
+                Setredirect(true);
+              }
+            }
+          }else{
             if(data.role === 2){
                 SetRoute("/business");
                 Setredirect(true);
@@ -187,14 +214,33 @@ const AuthorizationComponent = (props) => {
               SetRoute("/approve");
               Setredirect(true);
             }
+          }
+
 
 
           }else if(data.status === "newuser"){
 
                 props.dispatch(save_email(storageData));
 
-                  SetRoute("/role");
-                  Setredirect(true);
+                var enablelogin = localStorage.getItem("enablelogin");
+
+                if(enablelogin){
+                  if(enablelogin == "1"){
+                    localStorage.setItem("enablelogin",2);
+                    localStorage.setItem("role",2);
+
+                    SetRoute("/payment");
+                    Setredirect(true);
+                  }else{
+                    SetRoute("/role");
+                    Setredirect(true);
+                  }
+              }else{
+                SetRoute("/role");
+                Setredirect(true);
+              }
+
+
 
 
           }else{
@@ -220,6 +266,7 @@ const AuthorizationComponent = (props) => {
 
     useEffect(() => {
         checkUserAuthorization();
+        BackButton();
     },[]);
 
   return (
@@ -321,4 +368,4 @@ const AuthorizationComponent = (props) => {
 };
 
 
- export default connect(mapStateToProps,mapDispatchToProps)(AuthorizationComponent);
+ export default connect()(AuthorizationComponent);

@@ -17,7 +17,18 @@ $pushNotificationBackground:white;
 
 .vis canvas{
   touch-action:auto !important;
+  display: block;
 }
+
+.vis{
+  display: block;
+}
+
+.blockClass{
+  display: block;
+}
+
+
 
 .approvalBysystem{
   width: 100%;
@@ -807,9 +818,7 @@ ion-item {
   color:$base-app-color !important;
 }
 
-.cs-chat-container{
-  color:$base-app-color !important;
-}
+
 
 .MuiAutocomplete-root{
    border-color: $base-app-color !important;
@@ -1180,4 +1189,92 @@ body {
   width: 100%;
   z-index: 50;
 }
+.BlogMinus{
+  margin-top:-5px;
+  display: block;
+}
+
+.fullChat{
+  width: 100%;
+}
+.chatstyles{
+  margin-bottom: 5px;
+}
+
+.JoinClass{
+  width: 100%;
+  text-align: center;
+  margin-top:20px;
+}
+
+.Echohub_policy{
+  margin-top:15px;
+  width:100%;
+  height: 90px;
+  background-color: #2C3D77;
+}
+
+.echohub_child{
+  float: left;
+  width: 30.5%;
+  height: 70px;
+  margin-left:7px;
+  margin-top:9px;
+  color: white;
+  font-family: AppFont;
+  font-size: 11px;
+  padding-bottom: 2px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.echohub_child_text_url{
+  color:white;
+  font-family: AppFont;
+}
+
+.echohub_child_text{
+  padding-bottom:5px;
+  color:white;
+  font-family: AppFont;
+}
+
+
+.textPadding{
+  padding-bottom:5px;
+  color:white;
+  font-family: AppFont;
+}
+
+.aboutUs{
+  margin-top:10px;
+  overflow: hidden;
+  width:100%;
+  padding-left:20px;
+  padding-top:7px;
+  padding-bottom:7px;
+}
+
+.aboutUs_child{
+  overflow: hidden;
+  width: 93%;
+  height: 40px;
+  background-color: white;
+  border:2px solid #2C3D77;
+}
+
+.aboutUs_child_text{
+  overflow: hidden;
+  margin-top:8px;
+  font-family: AppFont;
+  color:#2C3D77;
+  text-align: center;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.aboutUs_childTop{
+  margin-top:6px;
+}
+
 //admin

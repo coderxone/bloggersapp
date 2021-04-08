@@ -15,7 +15,6 @@ import TiktokIcon from '../images/tiktok.png';
 import Peoples from '../images/peoples.png';
 import '../css/MainComponent.scss';
 import fontStylesD from '../fonts/helvetiker_regular_typeface.json';
-import  Earthtexture from '../3dmodels/earth_texture_two.png';
 import VideocamIcon from '../images/camera.png';
 import config from '../config/config';
 
@@ -323,8 +322,9 @@ const NewHookComponent = () => {
         // SocialcircleObject.position.x = videoIconsCoordinates[0].x;
         // SocialcircleObject.position.y = YvideoIconPosition;
         //video icon
-        var VideoImg = new THREE.MeshBasicMaterial({
-            map:THREE.ImageUtils.loadTexture(VideocamIcon)
+
+        const VideoImg = new THREE.MeshBasicMaterial({
+            map:new THREE.TextureLoader().load(VideocamIcon)
         });
         VideoImg.map.needsUpdate = true; //ADDED
         var SocialcircleObject = new THREE.Mesh(new THREE.PlaneGeometry(21, 21),VideoImg);
@@ -420,8 +420,9 @@ const NewHookComponent = () => {
 
         //instagram image
 
-        var img = new THREE.MeshBasicMaterial({
-            map:THREE.ImageUtils.loadTexture(instagramIcon)
+
+        const img = new THREE.MeshBasicMaterial({
+            map:new THREE.TextureLoader().load(instagramIcon)
         });
         img.map.needsUpdate = true; //ADDED
         var image_mesh = new THREE.Mesh(new THREE.PlaneGeometry(20, 20),img);
@@ -433,8 +434,9 @@ const NewHookComponent = () => {
         //instagram image
 
         //youtube
-        var imgYoutube = new THREE.MeshBasicMaterial({
-            map:THREE.ImageUtils.loadTexture(YoutubeIcon)
+
+        const imgYoutube = new THREE.MeshBasicMaterial({
+            map:new THREE.TextureLoader().load(YoutubeIcon)
         });
         imgYoutube.map.needsUpdate = true; //ADDED
         var Youtube_image_mesh = new THREE.Mesh(new THREE.PlaneGeometry(20, 20),imgYoutube);
@@ -446,8 +448,9 @@ const NewHookComponent = () => {
         //youtube
 
         //facebook
-        var imgFacebook = new THREE.MeshBasicMaterial({
-            map:THREE.ImageUtils.loadTexture(FacebookIcon)
+
+        const imgFacebook = new THREE.MeshBasicMaterial({
+            map:new THREE.TextureLoader().load(FacebookIcon)
         });
         imgFacebook.map.needsUpdate = true; //ADDED
         var Facebook_image_mesh = new THREE.Mesh(new THREE.PlaneGeometry(14, 14),imgFacebook);
@@ -459,8 +462,8 @@ const NewHookComponent = () => {
         //facebook
 
         //tiktok
-        var imgTiktok = new THREE.MeshBasicMaterial({
-            map:THREE.ImageUtils.loadTexture(TiktokIcon)
+        const imgTiktok = new THREE.MeshBasicMaterial({
+            map:new THREE.TextureLoader().load(TiktokIcon)
         });
         imgTiktok.map.needsUpdate = true; //ADDED
         var Tiktok_image_mesh = new THREE.Mesh(new THREE.PlaneGeometry(20, 20),imgTiktok);
@@ -474,8 +477,9 @@ const NewHookComponent = () => {
         var PeoplePosition = {x:0,y:-300};
 
         //Peoples
-        var roundPeoples = new THREE.MeshBasicMaterial({
-            map:THREE.ImageUtils.loadTexture(Peoples)
+        
+        const roundPeoples = new THREE.MeshBasicMaterial({
+            map:new THREE.TextureLoader().load(Peoples)
         });
         roundPeoples.map.needsUpdate = true; //ADDED
         var roundPeoples_image_mesh = new THREE.Mesh(new THREE.PlaneGeometry(100, 100),roundPeoples);
@@ -489,7 +493,7 @@ const NewHookComponent = () => {
         //load 3d earth
         //
         var textureLoaderF = new THREE.TextureLoader();
-        var textureF = textureLoaderF.load(Earthtexture);
+        var textureF = textureLoaderF.load('https://echohub.io/videos/earth_texture_two.png');
         textureF.flipY = false;
         //Earthtexture
 //xx

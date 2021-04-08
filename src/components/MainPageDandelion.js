@@ -15,7 +15,6 @@ import TiktokIcon from '../images/tiktok.png';
 import Peoples from '../images/peoples.png';
 import '../css/MainComponent.scss';
 import fontStylesD from '../fonts/helvetiker_regular_typeface.json';
-import  Earthtexture from '../3dmodels/earth_texture_two.png';
 import VideocamIcon from '../images/camera.png';
 import config from '../config/config';
 
@@ -178,9 +177,8 @@ const NewHookComponent = () => {
     //scene.add(light);
 
 //xx
-      var imgEcho1 = new THREE.MeshBasicMaterial({
-          map:THREE.ImageUtils.loadTexture(Logo_Echohub_1_part, {}, function() {
-          })
+      const imgEcho1 = new THREE.MeshBasicMaterial({
+          map:new THREE.TextureLoader().load(Logo_Echohub_1_part)
       });
       imgEcho1.map.needsUpdate = true; //ADDED
       var imgEcho1_mesh = new THREE.Mesh(new THREE.PlaneGeometry(114, 189),imgEcho1);

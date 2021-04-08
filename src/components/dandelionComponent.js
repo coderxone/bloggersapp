@@ -1,22 +1,10 @@
 import React, { useRef,useEffect, useState,useMemo } from 'react';
-import { Canvas, useFrame } from 'react-three-fiber';
+import '../css/MainComponent.scss';
 import * as THREE from "three";
-
-// import {
-//   Mesh, Vector3, SplineCurve, Geometry, Color,
-// } from 'three';
-
 import { MeshLine, MeshLineMaterial, MeshLineRaycast } from 'three.meshline';
-
 import Logo_Echohub_1_part from '../icons/Logo_Echohub_1_part.png';
 import Logo_Echohub_2_part from '../icons/Logo_Echohub_2_part.png';
-import YoutubeIcon from '../images/youtube.png';
-import FacebookIcon from '../images/facebook.png';
-import TiktokIcon from '../images/tiktok.png';
-import Peoples from '../images/peoples.png';
-import '../css/MainComponent.scss';
 import fontStylesD from '../fonts/helvetiker_regular_typeface.json';
-import  Earthtexture from '../3dmodels/earth_texture_two.png';
 import VideocamIcon from '../images/camera.png';
 import config from '../config/config';
 
@@ -131,7 +119,7 @@ const NewHookComponent = () => {
     if(ManageStep == 5){
       WorldEnable = 1;
     }
-  },[ManageStep])
+  },[ManageStep]);
 
   const mount = useRef(null)
   const [isAnimating, setAnimating] = useState(true)
@@ -170,7 +158,7 @@ const NewHookComponent = () => {
   var randomIncreaser = [];
 
 
-  const Core = () => {
+  const Core = async () => {
 
 
     //circles
@@ -186,9 +174,10 @@ const NewHookComponent = () => {
     light.position.set(-40,10,100);
     //scene.add(light);
 
-
-      var imgEcho1 = new THREE.MeshBasicMaterial({
-          map:THREE.ImageUtils.loadTexture(Logo_Echohub_1_part, {}, function() {
+    const LoadImageOne = new Promise((resolve, reject) => {
+      const imgEcho1 = new THREE.MeshBasicMaterial({
+          map:new THREE.TextureLoader().load(Logo_Echohub_1_part,function(){
+            resolve(true);
           })
       });
       imgEcho1.map.needsUpdate = true; //ADDED
@@ -198,20 +187,25 @@ const NewHookComponent = () => {
       imgEcho1_mesh.position.x = echoX;;
       imgEcho1_mesh.position.y = 24 + movingPointY;
       scene.add(imgEcho1_mesh);
-
-
-
-    var imgEcho2 = new THREE.MeshBasicMaterial({
-        map:THREE.ImageUtils.loadTexture(Logo_Echohub_2_part)
     });
-    imgEcho2.map.needsUpdate = true; //ADDED
-    var imgEcho2_mesh = new THREE.Mesh(new THREE.PlaneGeometry(320, 420),imgEcho2);
-    imgEcho2_mesh.overdraw = true;
-    imgEcho2_mesh.position.x = hubX;
-    imgEcho2_mesh.position.y = 24 + movingPointY;
-    imgEcho2_mesh.material.needsUpdate = true;
 
-    scene.add(imgEcho2_mesh);
+    const LoadImageTwo = new Promise((resolve, reject) => {
+      const imgEcho2 = new THREE.MeshBasicMaterial({
+          map:new THREE.TextureLoader().load(Logo_Echohub_2_part,function(){
+            resolve(true);
+          })
+      });
+      imgEcho2.map.needsUpdate = true; //ADDED
+      var imgEcho2_mesh = new THREE.Mesh(new THREE.PlaneGeometry(320, 420),imgEcho2);
+      imgEcho2_mesh.overdraw = true;
+      imgEcho2_mesh.position.x = hubX;
+      imgEcho2_mesh.position.y = 24 + movingPointY;
+      imgEcho2_mesh.material.needsUpdate = true;
+      scene.add(imgEcho2_mesh);
+    });
+
+
+
 
     const plane = new THREE.Object3D();
     plane.position.x = animX;
@@ -509,130 +503,128 @@ const NewHookComponent = () => {
       return (Math.random() * (max - min) + min).toFixed(1);
     }
 
-if(fixSave == 0){
-var AnimationArrayOriginal = [ circle17, circle16, circle15, circle14, circle30, circle29, circle28, circle31, circle27, circle26, circle25, circle32, circle24, circle41, circle49, circle48, circle46, circle45, circle44, circle40, circle39, circle38, circle37, circle36, circle35, circle34, circle33, circle23, circle22, circle21, circle20, circle19, circle18, circle13, circle12 ];
-setFixSave(1);
+    if(fixSave == 0){
+        var AnimationArrayOriginal = [ circle17, circle16, circle15, circle14, circle30, circle29, circle28, circle31, circle27, circle26, circle25, circle32, circle24, circle41, circle49, circle48, circle46, circle45, circle44, circle40, circle39, circle38, circle37, circle36, circle35, circle34, circle33, circle23, circle22, circle21, circle20, circle19, circle18, circle13, circle12 ];
+        setFixSave(1);
 
-for(var c = 0;c < AnimationArrayOriginal.length;c++){
-  var obj = {
-    x:AnimationArrayOriginal[c].position.x,
-    y:AnimationArrayOriginal[c].position.y
-  }
+        for(var c = 0;c < AnimationArrayOriginal.length;c++){
+          var obj = {
+            x:AnimationArrayOriginal[c].position.x,
+            y:AnimationArrayOriginal[c].position.y
+          }
 
-  copyArray.push(obj);
-  var randomInc = getRandomFloat(0.1,0.4);
-  //console.log(randomInc);
-  randomIncreaser.push(parseFloat(randomInc));
-}
-
-}
-
-
-var period = 80;
-var IncreaseTimeCoeffisient = 1;
-var LongFly = 4;
-var periodTwo = period * (2 + IncreaseTimeCoeffisient);
-//console.log(periodTwo);
-var periodThree = period * (3 + IncreaseTimeCoeffisient);
-//console.log(periodThree);
-var periodFour = period * (4 + IncreaseTimeCoeffisient + LongFly);
-//console.log(periodFour);
-var updatePeriod = period * (5 + IncreaseTimeCoeffisient + LongFly);
-var increaseSpeed = 0.1;
-var ReStartAnimation = 0;
-
-const UpdateAnimationTime = () => {
-  setTimeout(function(){
-    ReStartAnimation = 0;
-  },4000);
-}
-
-
-AnimationArrayFlying = [...AnimationArrayOriginal];
-
-//console.log(AnimationArrayFlying);
-var stepperXY = 6;
-
-const AnimateDandelionAnimator = () => {
-
-
-    if((ReStartAnimation == 0) && (AnimationControl == 1)){
-
-
-    for(var i = 0;i < AnimationArrayOriginal.length;i++){
-
-      if(step < period){
-
-        if(i % 2 == 0){
-          AnimationArrayFlying[i].position.x += randomIncreaser[i];
-          AnimationArrayFlying[i].position.y += randomIncreaser[i];
+          copyArray.push(obj);
+          var randomInc = getRandomFloat(0.1,0.4);
+          //console.log(randomInc);
+          randomIncreaser.push(parseFloat(randomInc));
         }
-
-
-
-      }else if((step > period) && (step < periodTwo)){
-
-        if(i % 2 == 0){
-          AnimationArrayFlying[i].position.x += randomIncreaser[i];
-          AnimationArrayFlying[i].position.y += randomIncreaser[i];
-        }
-
-
-        // AnimationArrayFlying[i].position.x += randomIncreaser[i];
-        // AnimationArrayFlying[i].position.y -= randomIncreaser[i];
-
-      }else if((step > periodTwo) && (step < periodThree)){
-
-        if(i % 2 == 0){
-          AnimationArrayFlying[i].position.x += randomIncreaser[i];
-          AnimationArrayFlying[i].position.y += randomIncreaser[i];
-        }
-
-
-        // AnimationArrayFlying[i].position.x -= randomIncreaser[i];
-        // AnimationArrayFlying[i].position.y -= randomIncreaser[i];
-
-      }else if((step > periodThree) && (step < updatePeriod)){
-
-        if(i % 2 == 0){
-          AnimationArrayFlying[i].position.x += randomIncreaser[i];
-          AnimationArrayFlying[i].position.y += randomIncreaser[i];
-          AnimationArrayFlying[i].material.opacity -= 0.001;
-          AnimationArrayFlying[i].material.opacity -= 0.001;
-        }
-
-
-        // AnimationArrayFlying[i].position.x -= randomIncreaser[i];
-        // AnimationArrayFlying[i].position.y += randomIncreaser[i];
-        // AnimationArrayFlying[i].material.opacity -= 0.01;
-        // AnimationArrayFlying[i].material.opacity -= 0.01;
-
-      }
-
-      if(step > updatePeriod){
-        for(var j = 0;j < AnimationArrayOriginal.length;j++){
-          AnimationArrayFlying[j].position.x = copyArray[j].x;
-          AnimationArrayFlying[j].position.y = copyArray[j].y;
-          AnimationArrayFlying[j].material.opacity = 1;
-          AnimationArrayFlying[j].material.opacity = 1;
-        }
-
-        step = 0;
-        ReStartAnimation = 1;
-        UpdateAnimationTime();
-      }
-
-    }
-
-    step++;
-
     }
 
 
+    var period = 80;
+    var IncreaseTimeCoeffisient = 1;
+    var LongFly = 4;
+    var periodTwo = period * (2 + IncreaseTimeCoeffisient);
+    //console.log(periodTwo);
+    var periodThree = period * (3 + IncreaseTimeCoeffisient);
+    //console.log(periodThree);
+    var periodFour = period * (4 + IncreaseTimeCoeffisient + LongFly);
+    //console.log(periodFour);
+    var updatePeriod = period * (5 + IncreaseTimeCoeffisient + LongFly);
+    var increaseSpeed = 0.1;
+    var ReStartAnimation = 0;
+
+    const UpdateAnimationTime = () => {
+      setTimeout(function(){
+        ReStartAnimation = 0;
+      },4000);
+    }
+
+
+    AnimationArrayFlying = [...AnimationArrayOriginal];
+
+    var stepperXY = 6;
+
+    const AnimateDandelionAnimator = () => {
+
+
+        if((ReStartAnimation == 0) && (AnimationControl == 1)){
+
+
+        for(var i = 0;i < AnimationArrayOriginal.length;i++){
+
+          if(step < period){
+
+            if(i % 2 == 0){
+              AnimationArrayFlying[i].position.x += randomIncreaser[i];
+              AnimationArrayFlying[i].position.y += randomIncreaser[i];
+            }
 
 
 
-}
+          }else if((step > period) && (step < periodTwo)){
+
+            if(i % 2 == 0){
+              AnimationArrayFlying[i].position.x += randomIncreaser[i];
+              AnimationArrayFlying[i].position.y += randomIncreaser[i];
+            }
+
+
+            // AnimationArrayFlying[i].position.x += randomIncreaser[i];
+            // AnimationArrayFlying[i].position.y -= randomIncreaser[i];
+
+          }else if((step > periodTwo) && (step < periodThree)){
+
+            if(i % 2 == 0){
+              AnimationArrayFlying[i].position.x += randomIncreaser[i];
+              AnimationArrayFlying[i].position.y += randomIncreaser[i];
+            }
+
+
+            // AnimationArrayFlying[i].position.x -= randomIncreaser[i];
+            // AnimationArrayFlying[i].position.y -= randomIncreaser[i];
+
+          }else if((step > periodThree) && (step < updatePeriod)){
+
+            if(i % 2 == 0){
+              AnimationArrayFlying[i].position.x += randomIncreaser[i];
+              AnimationArrayFlying[i].position.y += randomIncreaser[i];
+              AnimationArrayFlying[i].material.opacity -= 0.001;
+              AnimationArrayFlying[i].material.opacity -= 0.001;
+            }
+
+
+            // AnimationArrayFlying[i].position.x -= randomIncreaser[i];
+            // AnimationArrayFlying[i].position.y += randomIncreaser[i];
+            // AnimationArrayFlying[i].material.opacity -= 0.01;
+            // AnimationArrayFlying[i].material.opacity -= 0.01;
+
+          }
+
+          if(step > updatePeriod){
+            for(var j = 0;j < AnimationArrayOriginal.length;j++){
+              AnimationArrayFlying[j].position.x = copyArray[j].x;
+              AnimationArrayFlying[j].position.y = copyArray[j].y;
+              AnimationArrayFlying[j].material.opacity = 1;
+              AnimationArrayFlying[j].material.opacity = 1;
+            }
+
+            step = 0;
+            ReStartAnimation = 1;
+            UpdateAnimationTime();
+          }
+
+        }
+
+        step++;
+
+        }
+
+
+
+
+
+    }
 
 
 
@@ -652,21 +644,29 @@ const AnimateDandelionAnimator = () => {
 
 
       }
-      animate();
 
 
+      const mainDownload = LoadImageOne.then((result) => {
+        if(result){
+          const res = LoadImageTwo.then((resultTwo) => {
+            if(resultTwo){
+              animate();
+              return true;
+            }
+          })
 
+          if(res){
+            return true;
+          }
+        }
+      });
 
-
-
-
-
-
-
+      return mainDownload;
 
 
 
   }
+
 
   const startAnimation = () => {
 
@@ -679,9 +679,11 @@ const AnimateDandelionAnimator = () => {
 
   useEffect(() => {
 
-    Core();
+    Core().then(result => {
+      startAnimation();
+    });
       //onWindowResize();
-    startAnimation();
+
       //window.addEventListener( 'resize', onWindowResize, false );
     //
     mount.current.appendChild(renderer.domElement)

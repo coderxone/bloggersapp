@@ -2,6 +2,7 @@ import React, { useCallback,useEffect,useState,useMemo,useRef } from 'react';
 import AnimationComponent from '../components/AnimationComponent';
 import MainPageDandelion from '../components/MainPageDandelion';
 import LocalizeComponent from '../localize/LocalizeComponent';
+import Join from '../images/main/newImages/join.png';
 import Grid from '@material-ui/core/Grid';
 import GroupAddIcon from '@material-ui/icons/GroupAdd';
 import DynamicFeedIcon from '@material-ui/icons/DynamicFeed';
@@ -23,14 +24,15 @@ import AnimationFComponent from '../components/businessComponents/AnimationTwoFa
 import AnimationFSecond from '../components/businessComponents/AnimationTwoFactorySecond';
 import AnimationFThird from '../components/businessComponents/AnimationTwoFactoryThird';
 import AnimationFFour from '../components/businessComponents/AnimationTwoFactoryFour';
+import AnimationFFifth from '../components/businessComponents/AnimationTwoFactoryFifth';
 import EchohubText from '../images/main/Background_text_name.png';
 import BloggerAnimationComponent from '../components/bloggerComponents/BloggerAnimationComponent';
 import BloggerCopy2 from '../components/bloggerComponents/bloggerCopy2';
 import BloggerCopy3 from '../components/bloggerComponents/bloggerCopy3';
 import BloggerCopy4 from '../components/bloggerComponents/bloggerCopy4';
-import PushComponent from '../helperComponents/NativePushNotificationComponent';
 import BusinessPoster from '../images/businessPoster.png';
-// import WebPushNotification from '../helperComponents/WebPushComponent';
+import PushComponent from '../helperComponents/NativePushNotificationComponent';
+import WebPushNotification from '../helperComponents/WebPushComponent';
 import { Capacitor } from '@capacitor/core';
 
 
@@ -51,6 +53,8 @@ const BottomFunc = () => {
     SetRoute("/login");
     Setredirect(true);
   };
+
+
 
   const bottomTopSize = useMemo(() => {
     if(Capacitor.platform === 'ios'){
@@ -232,7 +236,7 @@ const BottomFunc = () => {
 
 
             {BusinessSwitcher == 0 ? (
-              <div>
+              <div className="blockClass">
                 <AnimationFComponent page={1} />
                 <AnimationFSecond  page={2} />
                 <AnimationFThird page={3} />
@@ -240,7 +244,7 @@ const BottomFunc = () => {
 
               </div>
              ) : (
-               <div>
+               <div className="BlogMinus">
                   <BloggerAnimationComponent page={1} />
                   <BloggerCopy2 page={2} />
                   <BloggerCopy3 page={3} />
@@ -255,8 +259,83 @@ const BottomFunc = () => {
                )
              }
 
+             <div className="JoinClass">
+               <img src={Join} alt="Join echohub.io" width="100" height="35" onClick={goToLogin} />
+             </div>
+
+             <div className="Echohub_policy">
+               <div className="echohub_child">
+                  <div className="echohub_child_text">
+                      All rights reserved
+                  </div>
+                  <div className="echohub_child_text" >
+                    <a  className="echohub_child_text_url"  target="_blank" href="https://twitter.com/EchohubI">Follow us on Twitter</a>
+                  </div>
+
+                  <div className="echohub_child_text" >
+                    <a  className="echohub_child_text_url"  target="_blank" href="https://youtube.com/channel/UC-tvKHO66_pcfeOrh1n2YQg">Follow us on Youtube</a>
+                  </div>
+
+                  <div className="echohub_child_text" >
+                    <a  className="echohub_child_text_url"  target="_blank" href="https://www.tiktok.com/@echohub.io?lang=en">Follow us on TikTok</a>
+                  </div>
+               </div>
+
+               <div className="echohub_child">
+                 <div className="echohub_child_text">
+                   E-mail: <a className="echohub_child_text_url"  target="_blank" href="mailto:info@echohub.io">info@echohub.io</a>
+                 </div>
+
+                 <div className="echohub_child_text">
+                    <a  className="echohub_child_text_url"  target="_blank" href="https://www.facebook.com/permalink.php?story_fbid=2446311895515266&id=100004094374192">Follow us on Facebook</a>
+                 </div>
+
+                 <div className="echohub_child_text" >
+                   <a  className="echohub_child_text_url"  target="_blank" href="https://instagram.com/echohub.io?igshid=fm0hdtx3u10y">Follow us on Instagram</a>
+                 </div>
+
+
+
+
+               </div>
+               <div className="echohub_child">
+                 <div className="echohub_child_text">
+                   <div className="textPadding">
+                     <a  className="echohub_child_text_url"  target="_blank" href="http://echohub.io/echohub_documents/PrivacyPolicy.docx">Privacy policy</a>
+                   </div>
+
+                   <div className="textPadding">
+                     <a  className="echohub_child_text_url"  target="_blank" href="http://echohub.io/echohub_documents/PrivacyPolicy.docx">Denial of responsibility</a>
+                   </div>
+
+                   <div className="textPadding">
+                     Subscribe to news
+                   </div>
+
+                   <div className="textPadding">
+                     <a  className="echohub_child_text_url"  target="_blank" href="http://echohub.io/echohub_documents/PrivacyPolicy.docx">Reviews</a>
+                   </div>
+
+                 </div>
+               </div>
+             </div>
+
+             <div className="aboutUs">
+               <div className="aboutUs_child">
+                 <div className="aboutUs_child_text">
+                   About Us, Connect
+                 </div>
+               </div>
+               <div className="aboutUs_child aboutUs_childTop">
+                 <div className="aboutUs_child_text">
+                   Patent - 1141, USA
+                 </div>
+               </div>
+             </div>
+
              <div>
                <PushComponent/>
+               <WebPushNotification/>
              </div>
 
 

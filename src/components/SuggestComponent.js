@@ -148,13 +148,15 @@ const MessageListComponent = ((props) => {
     });
 
     return (
+      <div className="fullChat">
       <ChatContainer>
       <MessageList >
           {returnList}
       </MessageList>
-      <MessageInput className="chatstyles" onChange={event => SetMessage(event)}  onSend={event => sendMessage()} placeholder="Type message here" />
-      </ChatContainer>
 
+      </ChatContainer>
+      <MessageInput className="chatstyles" onChange={event => SetMessage(event)}  onSend={event => sendMessage()} placeholder="Type message here" />
+      </div>
 
     )
 })
@@ -427,7 +429,7 @@ const SuggestComponent = (props) => {
     initMessageService();
     initMessageService();
     requestToCheckMessages();
-    config.checkUserAuthorization(2);
+
 
   }, []);
 

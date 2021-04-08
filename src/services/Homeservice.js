@@ -89,7 +89,7 @@ const initSocket = (() => {
    });
 //xx
    homeservice.listenSystemParams().subscribe(data => {
-
+     //console.log(data);
      var categories = data.categories;
      var string_categories = JSON.stringify(categories);
      localStorage.setItem("categories",string_categories);
@@ -104,6 +104,8 @@ const initSocket = (() => {
 
      var famousPrice = data.alldata.famousPrice;
      localStorage.setItem("famousPrice",famousPrice);
+     var minPrice = data.alldata.pricevideo;
+     localStorage.setItem("minPrice",minPrice);
       var s = JSON.stringify(data.socialNetworkList);
       //console.log(s);
       localStorage.setItem("soc",s);
@@ -450,7 +452,7 @@ const homeservice = {
 
 
 
-      
+
 
 
       },

@@ -11,23 +11,39 @@ var firebaseConfig = {
   measurementId: "G-871R9F8N2F"
 };
 
-firebase.initializeApp(firebaseConfig);
-const messaging = firebase.messaging();
+export const checkSupport = () => {
+  try{
+    if(firebase.messaging.isSupported()){
+      firebase.initializeApp(firebaseConfig);
+      const messaging = firebase.messaging();
+      return messaging;
+    }else{
+      return false;
+    }
+  }catch(e){
+    return false;
+  }
 
-export const getToken = () => {
+}
+
+
+
+export const getToken = (messaging) => {
   return new Promise((resolve,reject) => {
-        messaging.getToken({vapidKey: 'BCphRjWwa3N4Uqoovx-dPSy9uWqMSM_16OWGjO7ouvQQ-8vJsPQOfbjTqitsOoLd_HDjFz5Zro31ZrsLY4rk86M'}).then((currentToken) => {
-          if (currentToken) {
-            localStorage.setItem("firebaseWebToken",currentToken);
-            localStorage.setItem("listenfirebaseWebToken","1");
-            resolve(currentToken);
-          } else {
-            resolve(false);
-          }
-        }).catch((err) => {
-          console.log('An error occurred while retrieving token. ', err);
-          // catch error while creating client token
-        });
+
+          messaging.getToken({vapidKey: 'BCphRjWwa3N4Uqoovx-dPSy9uWqMSM_16OWGjO7ouvQQ-8vJsPQOfbjTqitsOoLd_HDjFz5Zro31ZrsLY4rk86M'}).then((currentToken) => {
+            if (currentToken) {
+              localStorage.setItem("firebaseWebToken",currentToken);
+              localStorage.setItem("listenfirebaseWebToken","1");
+              resolve(currentToken);
+            } else {
+              resolve(false);
+            }
+          }).catch((err) => {
+            console.log('An error occurred while retrieving token. ', err);
+            // catch error while creating client token
+          });
+
     });
   };
 
@@ -49,10 +65,12 @@ export const GetPermission = () => {
 
 
 
-export const onMessageListener =() => {
+export const onMessageListener =(messaging) => {
   return new Promise((resolve) => {
+
       messaging.onMessage((payload) => {
         resolve(payload);
       });
+
   });
 };

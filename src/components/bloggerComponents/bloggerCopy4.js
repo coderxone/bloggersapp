@@ -1,6 +1,5 @@
 import React, { useRef,useEffect, useState,useCallback } from 'react';
 import * as THREE from 'three';
-import  Earthtexture from '../../3dmodels/earth_texture_two.png';
 import Stats from '../../../node_modules/three/examples/jsm/libs/stats.module.js';
 
 import { GUI } from '../../../node_modules/three/examples/jsm/libs/dat.gui.module.js';

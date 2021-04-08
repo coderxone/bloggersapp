@@ -1,6 +1,6 @@
 import React, { useEffect,useState } from 'react'
 import Observable from '../services/Observable';
-import { getToken,onMessageListener,GetPermission }  from '../helperComponents/pushNotification';
+import { checkSupport,getToken,onMessageListener,GetPermission }  from '../helperComponents/pushNotification';
 import {
   useHistory,
   Redirect,
@@ -18,27 +18,37 @@ const RemotePushController = () => {
 
 
     const webPush = () => {
-      const observRequest = Observable.subscribeByTimer_15_second().subscribe(timer => {
-        GetPermission().then((status => {
-          console.log(status);
-          if(status === true){
 
-            getToken().then(result => {
-              //console.log(result);
-              localStorage.setItem("firebaseToken",result);
-              localStorage.setItem("listenfirebaseToken","1");
-            });
+      var messaging = checkSupport();
+      if(messaging !== false){
+        const observRequest = Observable.subscribeByTimer_15_second().subscribe(timer => {
+          GetPermission().then((status => {
+            console.log(status);
+            if(status === true){
 
-            observRequest.unsubscribe();
+              getToken(messaging).then(result => {
+                //console.log(result);
+                if(result !== false){
+                  localStorage.setItem("firebaseToken",result);
+                  localStorage.setItem("listenfirebaseToken","1");
+                }
+
+              });
+
+              observRequest.unsubscribe();
+            }
+          }));
+
+        });
+
+
+        onMessageListener(messaging).then(result => {
+          if(result !== false){
+            console.log(result);
           }
-        }));
+        });
+      }
 
-      });
-
-
-      onMessageListener().then(result => {
-        console.log(result);
-      });
     }
 
   useEffect(() => {

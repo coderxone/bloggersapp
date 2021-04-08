@@ -1,4 +1,4 @@
-import React, {useState,useEffect} from 'react';
+import React, {useState,useEffect,useMemo} from 'react';
 import { PayPalButton } from "react-paypal-button-v2";
 // import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonInput, IonItem, IonLabel, IonList, IonItemDivider } from '@ionic/react';
 import '../css/mainStyles.scss';
@@ -78,6 +78,15 @@ const PaymentComponent = (props) => {
     password:""
   };
 
+  const amountSum = useMemo(() => {
+      var amount = localStorage.getItem("amount");
+      if(amount){
+        return parseInt(amount);
+      }else{
+        return 300;
+      }
+  });
+
   const [count,setCount] = useState(0);
   const [storageData,setStorageData] = useState(obj);
 
@@ -95,8 +104,15 @@ const PaymentComponent = (props) => {
         const PaymentServiceSubscribe = PaymentService.listenSendPayment().subscribe(data => {
           console.log(data);
           if(data.status == "ok"){
-            SetRoute("/business");
-            Setredirect(true);
+            var promotion = localStorage.getItem("promotion");
+            if(promotion){
+              SetRoute("/apply");
+              Setredirect(true);
+            }else{
+              SetRoute("/business");
+              Setredirect(true);
+            }
+
           }
         });
 
@@ -116,8 +132,14 @@ const PaymentComponent = (props) => {
           if(data.status == "false"){
 
           }else if(data.status == "ok"){
-            SetRoute("/business");
-            Setredirect(true);
+            var promotion = localStorage.getItem("promotion");
+            if(promotion){
+              SetRoute("/apply");
+              Setredirect(true);
+            }else{
+              SetRoute("/business");
+              Setredirect(true);
+            }
           }
 
           // SetRoute("/business");
@@ -126,7 +148,7 @@ const PaymentComponent = (props) => {
           //   console.log("date verified");
           // }
         });
-
+        // shippingPreference="NO_SHIPPING" // default is "GET_FROM_FILE"
         //unsibscribe
         return () => {
             PaymentServiceSubscribe.unsubscribe();
@@ -159,8 +181,8 @@ const PaymentComponent = (props) => {
 
               <Box mt={1} className="mainCentralDiv">
               <PayPalButton
-                    amount="0.01"
-                    // shippingPreference="NO_SHIPPING" // default is "GET_FROM_FILE"
+                    amount={amountSum}
+
                     onSuccess={(details, data) => {
 
                        console.log(details);

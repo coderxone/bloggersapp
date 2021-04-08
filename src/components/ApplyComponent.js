@@ -168,6 +168,10 @@ const ApplyComponent = (props) => {
       return parseInt(localStorage.getItem("famousPrice"));
   },[]);
 
+  const minDatabasePrice = useMemo(() => {
+      return parseInt(localStorage.getItem("minPrice"));
+  },[]);
+
   var QuestionsArray = ['What is the name of your business?','What is your website link to your business?',LocalizeComponent.description_placeholder,'Where is your business located?','Would like to work with only local creators','Would like to work only with famous creators','When would you like to start the campaign?','When would you like to start the campaign?','How much money do you want to pay?','Who is your buyer persona?','What is your goal for the campaign?'];
   const [questions] = useState(QuestionsArray);
 
@@ -188,9 +192,22 @@ const ApplyComponent = (props) => {
       resultStep = checkForms();
 
       console.log(resultStep);
+      console.log(activeStep);
 
       if(resultStep == true){
         var stepper = activeStep + 1;
+
+        if(stepper === 8){
+          var promotion = localStorage.getItem("promotion");
+          if(promotion){
+            stepper = 9;
+          }
+        }else if(stepper === 5){
+          var promotion = localStorage.getItem("promotion");
+          if(promotion){
+            stepper = 6;
+          }
+        }
 
         if(stepper == 11){
           onSubmit();
@@ -279,6 +296,18 @@ const ApplyComponent = (props) => {
 
     var stepper = activeStep - 1;
 
+    if(stepper === 8){
+      var promotion = localStorage.getItem("promotion");
+      if(promotion){
+        stepper = 7;
+      }
+    }else if(stepper === 5){
+      var promotion = localStorage.getItem("promotion");
+      if(promotion){
+        stepper = 4;
+      }
+    }
+
     setName("");
     setActiveStep(stepper);
   };
@@ -325,10 +354,10 @@ const ApplyComponent = (props) => {
 
 
   const [maxdefaultSliderValue] = useState(5000);
-  const [mindefaultSliderValue] = useState(200);
-  const [defaultSliderValue,setDefaultSliderValue] = useState(200);
-  const [defaultSliderValueStore,setdefaultSliderValueStore] = useState(200);
-  var databasedefaultSliderValue = 200;
+  const [mindefaultSliderValue] = useState(minDatabasePrice);
+  const [defaultSliderValue,setDefaultSliderValue] = useState(minDatabasePrice);
+  const [defaultSliderValueStore,setdefaultSliderValueStore] = useState(minDatabasePrice);
+  var databasedefaultSliderValue = 300;
   const [peopleCount,setPeopleCount] = useState(6);
   const [subscribers,setSubscribers] = useState(500);
   const [subscribersor,setSubscribersor] = useState(500);
@@ -371,12 +400,23 @@ const ApplyComponent = (props) => {
              gps = 2;
            }
 
+
            var famous = 0;
            if(swithFamous == true){
              famous = 1;
            }else{
              famous = 2;
            }
+
+           var promotion = localStorage.getItem("promotion");
+           if(promotion){
+             if((promotion === "1") || (promotion === "3")){
+               famous = 1;
+             }
+
+           }
+
+
 
            var peopleCount = config.getUserItemName("people");
 
@@ -448,8 +488,15 @@ const ApplyComponent = (props) => {
               //data.insertId
               localStorage.setItem("insertId",data.insertId);
 
-              SetRoute("/payment");
-              Setredirect(true);
+              var promotion = localStorage.getItem("promotion");
+              if(promotion){
+                SetRoute("/business");
+                Setredirect(true);
+              }else{
+                SetRoute("/payment");
+                Setredirect(true);
+              }
+
 
               //console.log(data);
           }
