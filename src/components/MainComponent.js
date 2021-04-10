@@ -38,6 +38,7 @@ import { Capacitor } from '@capacitor/core';
 
 
 
+
 import {
   useHistory,
   Redirect,
@@ -145,6 +146,9 @@ const BottomFunc = () => {
 
 
     },3000)
+
+
+
   },[]);
 
   return (
