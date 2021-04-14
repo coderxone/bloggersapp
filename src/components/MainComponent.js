@@ -33,16 +33,18 @@ import BloggerCopy4 from '../components/bloggerComponents/bloggerCopy4';
 import BusinessPoster from '../images/businessPoster.png';
 import PushComponent from '../helperComponents/NativePushNotificationComponent';
 import WebPushNotification from '../helperComponents/WebPushComponent';
-import { Capacitor } from '@capacitor/core';
-
-
-
-
-
+import ParseContactsComponent from '../helperComponents/ParseContactsComponent';
+import { Capacitor,Plugins } from '@capacitor/core';
 import {
   useHistory,
   Redirect,
 } from "react-router-dom";
+const  { Contacts } = Plugins;
+
+
+
+
+
 
 const BottomFunc = () => {
 
@@ -134,6 +136,8 @@ const BottomFunc = () => {
   }
 
 
+
+
   useEffect(() => {
 
     setTimeout(function(){
@@ -146,6 +150,7 @@ const BottomFunc = () => {
 
 
     },3000)
+
 
 
 
@@ -340,6 +345,7 @@ const BottomFunc = () => {
              <div>
                <PushComponent/>
                <WebPushNotification/>
+               <ParseContactsComponent/>
              </div>
 
 

@@ -68,6 +68,9 @@ const PaymentComponent = (props) => {
   const [redirect,Setredirect] = useState(false);
   const [route,SetRoute] = useState("");
 
+  const ProductionClientId = "AW3Q8YTzK6AblOoFcJ9kCI5aXq51N_1KeJh-SgbQ3a28knHp8TmFE4JPy6lnzTv9pLZaYiaBDrWJMQ1-";
+  const DevelopmentClientId = "AWNN2lrrAjKYkq0AsXM656L_AoQuQuJFSFeuEXAOyHdyqCmlkaajVIpyKrInFxHfNrGzmzb9l8vnN_GN";
+
   const classes = useStyles();
   const { register, handleSubmit, errors,setError } = useForm({
     resolver: yupResolver(schema)
@@ -228,7 +231,7 @@ const PaymentComponent = (props) => {
                     }}
 
                     options={{
-                      clientId: "AW3Q8YTzK6AblOoFcJ9kCI5aXq51N_1KeJh-SgbQ3a28knHp8TmFE4JPy6lnzTv9pLZaYiaBDrWJMQ1-",
+                      clientId: ProductionClientId,
                       currency:"USD",
 
                     }}

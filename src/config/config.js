@@ -4,8 +4,7 @@ import Obfuscate from 'react-obfuscate';
 const deployMode = "development";//development//production
 const deployPlatform = "browser";//browser//android
 const routeUrl = "https://kazpoisk.kz";
-//const baseurl = 'http://localhost:3002';//browser android
-//const baseurl = 'http://145.249.246.3:3002';//browser android
+
 const baseurl = 'https://echohub.io:3004';//browser https
 //const baseurl = 'https://localhost:3004';
 const redirectUrl = "https://echohub.io/main"; //android

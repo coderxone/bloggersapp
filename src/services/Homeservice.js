@@ -412,6 +412,7 @@ const homeservice = {
               var emailStatus = config.getUserEmail();
               if(emailStatus !== false){
                 homeservice.saveNativeFirebaseToken(SavedNativeToken);
+                homeservice.subscribeToWebFirebaseToken(SavedNativeToken);
                 localStorage.setItem("saveNativeFirebaseTokenActive","0");
               }
             }

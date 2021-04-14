@@ -33,7 +33,7 @@ const TaskComponent = (props) => {
       onChange={(event, newValue) => {
         console.log(event);
         if(newValue){
-          console.log(newValue);
+          //console.log(newValue);
           SetCategory(newValue);
           props.dispatch(save_business_category(newValue));
         }

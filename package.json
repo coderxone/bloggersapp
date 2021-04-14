@@ -1,8 +1,9 @@
 {
   "name": "io.echohub.www",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "private": true,
   "dependencies": {
+    "@capacitor-community/contacts": "^0.1.1",
     "@capacitor/android": "^2.4.7",
     "@capacitor/core": "^2.4.7",
     "@capacitor/ios": "^2.4.7",
@@ -89,7 +90,7 @@
     ]
   },
   "devDependencies": {
-    "@capacitor/cli": "^2.4.2",
+    "@capacitor/cli": "^2.4.7",
     "@types/react-redux": "^7.1.11"
   },
   "description": "echohub.io"

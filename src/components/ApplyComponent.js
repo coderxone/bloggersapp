@@ -37,7 +37,6 @@ import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
 import AlarmIcon from '@material-ui/icons/Alarm';
 import ReactGeoCodeComponent from './GeocodeComponent';
 import DandelionComponent from '../components/dandelionComponent';
-import CategoriesComponent from '../helperComponents/businessCategories';
 import BusinessGoalComponent from '../helperComponents/businessGoalComponent';
 import config from '../config/config.js';
 import {
@@ -343,6 +342,8 @@ const ApplyComponent = (props) => {
       urlChecker(firstName);
     }else if(activeStep == 2){
       objName = "description";
+    }else if(activeStep == 9){
+      objName = "category";
     }
 
     if(firstName.length > 0){
@@ -445,7 +446,7 @@ const ApplyComponent = (props) => {
       };
 
       FinalLogic().then(response => {
-        console.log(response);
+        //console.log(response);
         HomeService.sendApplyData(response);
       })
 
@@ -468,7 +469,6 @@ const ApplyComponent = (props) => {
 
   useEffect(() => {
     const listenSubscriberCore = ApplyService.listenSubscriberCore().subscribe(data => {
-
         CorrectPrice(data);
     });
 
@@ -490,6 +490,8 @@ const ApplyComponent = (props) => {
 
               var promotion = localStorage.getItem("promotion");
               if(promotion){
+                localStorage.removeItem("promotion");
+                localStorage.setItem("enablelogin",0);
                 SetRoute("/business");
                 Setredirect(true);
               }else{
@@ -762,7 +764,14 @@ const ApplyComponent = (props) => {
                   activeStep == 9 && (
 
                     <div>
-                      <CategoriesComponent/>
+                      <TextField
+                          required
+                          onChange={setMultiData}
+                          value={name}
+                          multiline
+                          className="textFieldAppStyle"
+                          label={LocalizeComponent.who_is}
+                        />
                       <AlertComponent state={error} text={AlertText}/>
                     </div>
 
