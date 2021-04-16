@@ -39,7 +39,7 @@ import {
   useHistory,
   Redirect,
 } from "react-router-dom";
-const  { Contacts } = Plugins;
+const  { Contacts,StatusBar } = Plugins;
 
 
 
@@ -136,6 +136,10 @@ const BottomFunc = () => {
     }
   }
 
+  const hideStatusBar = () => {
+    StatusBar.hide();
+  }
+
 
 
 
@@ -144,13 +148,15 @@ const BottomFunc = () => {
     setTimeout(function(){
 
       try {
-         //fullScreenCheck();
+         fullScreenCheck();
       } catch (err) {
         console.error(err);
       }
 
 
-    },3000)
+    },3000);
+
+    hideStatusBar();
 
 
 
