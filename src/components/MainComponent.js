@@ -65,6 +65,7 @@ const BottomFunc = () => {
     }else{
       return 'normalTop';
     }
+    //return 'iosTop';
   });
 
 
