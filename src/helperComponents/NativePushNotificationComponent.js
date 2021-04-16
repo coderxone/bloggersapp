@@ -38,7 +38,7 @@ const RemotePushController = () => {
           localStorage.setItem("saveNativeFirebaseToken",tokenValue);
           localStorage.setItem("saveNativeFirebaseTokenActive","1");
 
-          console.log('Push registration success, token: ' + JSON.stringify(token));
+          //console.log('Push registration success, token: ' + JSON.stringify(token));
         }
       );
 
