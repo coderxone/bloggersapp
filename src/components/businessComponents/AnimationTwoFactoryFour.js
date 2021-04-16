@@ -131,19 +131,24 @@ const NewComponent = (props) => {
     if((window.innerWidth < 450) && (window.innerHeight > 850) && (window.innerHeight < 900)){
         Deep = 700;
     }
+
+    if((window.innerWidth < 450) && (window.innerHeight > 850) && (window.innerHeight < 930)){
+        Deep = 700;
+    }
+    //console.log(Deep);
     if(props.page == 1){
       camera.position.set( 0, firstPagePosition, Deep );
+      //camera.position.set( 0, firstPagePosition, 550 );
     }else if(props.page == 2){
-      camera.position.set( 0, secondPagePosition, 550 );
+      camera.position.set( 0, secondPagePosition, Deep );
     }else if(props.page == 3){
-      camera.position.set( 0, thirdPagePosition, 550 );
+      camera.position.set( 0, thirdPagePosition, Deep );
     }else if(props.page == 4){
-      camera.position.set( 0, fourthPagePosition, 550 );
-      //camera.position.set( 80, fourthPagePosition, 550 );
+      camera.position.set( 0, fourthPagePosition, Deep );
     }else if(props.page == 5){
-      camera.position.set( 0, fifthPagePosition, 550 );
+      camera.position.set( 0, fifthPagePosition, Deep );
     }else{
-      camera.position.set( 0, firstPagePosition, Deep );
+      camera.position.set( 0, firstPagePosition, 550 );
     }
 
     const interaction = new Interaction(renderer, scene2, camera);

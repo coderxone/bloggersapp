@@ -110,18 +110,24 @@ const NewComponent = (props) => {
     if((window.innerWidth < 450) && (window.innerHeight > 850) && (window.innerHeight < 900)){
         Deep = 700;
     }
+
+    if((window.innerWidth < 450) && (window.innerHeight > 850) && (window.innerHeight < 930)){
+        Deep = 700;
+    }
+    //console.log(Deep);
     if(props.page == 1){
       camera.position.set( 0, firstPagePosition, Deep );
+      //camera.position.set( 0, firstPagePosition, 550 );
     }else if(props.page == 2){
-      camera.position.set( 0, secondPagePosition, 550 );
+      camera.position.set( 0, secondPagePosition, Deep );
     }else if(props.page == 3){
-      camera.position.set( 0, thirdPagePosition, 550 );
+      camera.position.set( 0, thirdPagePosition, Deep );
     }else if(props.page == 4){
-      camera.position.set( 0, fourthPagePosition, 550 );
+      camera.position.set( 0, fourthPagePosition, Deep );
     }else if(props.page == 5){
-      camera.position.set( 0, fifthPagePosition, 550 );
+      camera.position.set( 0, fifthPagePosition, Deep );
     }else{
-      camera.position.set( 0, firstPagePosition, Deep );
+      camera.position.set( 0, firstPagePosition, 550 );
     }
 
     const interaction = new Interaction(renderer, scene2, camera);
@@ -209,35 +215,37 @@ const NewComponent = (props) => {
 
 
         if((props.page == 2) || (props.page == 3)){
-          //TextWindow5
-          const TextWindow5_a = new THREE.MeshBasicMaterial({
-              map:new THREE.TextureLoader().load(TextWindow5)
-          });
-          TextWindow5_a.map.needsUpdate = true; //ADDED
-          var TextWindow5_mesh = new THREE.Mesh(new THREE.PlaneGeometry(828, 134),TextWindow5_a);
-          TextWindow5_mesh.overdraw = true;
-          TextWindow5_mesh.geometry.center();
-          // cloud_mesh.material.needsUpdate = true;
-          TextWindow5_mesh.position.x = 0;
-          TextWindow5_mesh.position.y = -813;
-          TextWindow5_mesh.layers.set(0);
-          TextWindow5_mesh.scale.set(0.24,0.24,0.24);
-          scene.add(TextWindow5_mesh);
-          //TextWindow5
-          //Lines4Image
-          const Lines4_a = new THREE.MeshBasicMaterial({
-              map:new THREE.TextureLoader().load(Lines4Image)
-          });
-          Lines4_a.map.needsUpdate = true; //ADDED
-          var Lines4_a_mesh = new THREE.Mesh(new THREE.PlaneGeometry(903, 266),Lines4_a);
-          Lines4_a_mesh.overdraw = true;
-          Lines4_a_mesh.geometry.center();
-          // cloud_mesh.material.needsUpdate = true;
-          Lines4_a_mesh.position.x = 0;
-          Lines4_a_mesh.position.y = -858;//-31
-          Lines4_a_mesh.scale.set(0.22,0.22,0.22);
-          scene.add(Lines4_a_mesh);
-          //Lines4Image
+              if(Deep <= 550){
+                      //TextWindow5
+                      const TextWindow5_a = new THREE.MeshBasicMaterial({
+                          map:new THREE.TextureLoader().load(TextWindow5)
+                      });
+                      TextWindow5_a.map.needsUpdate = true; //ADDED
+                      var TextWindow5_mesh = new THREE.Mesh(new THREE.PlaneGeometry(828, 134),TextWindow5_a);
+                      TextWindow5_mesh.overdraw = true;
+                      TextWindow5_mesh.geometry.center();
+                      // cloud_mesh.material.needsUpdate = true;
+                      TextWindow5_mesh.position.x = 0;
+                      TextWindow5_mesh.position.y = -813;
+                      TextWindow5_mesh.layers.set(0);
+                      TextWindow5_mesh.scale.set(0.24,0.24,0.24);
+                      scene.add(TextWindow5_mesh);
+                      //TextWindow5
+                      //Lines4Image
+                      const Lines4_a = new THREE.MeshBasicMaterial({
+                          map:new THREE.TextureLoader().load(Lines4Image)
+                      });
+                      Lines4_a.map.needsUpdate = true; //ADDED
+                      var Lines4_a_mesh = new THREE.Mesh(new THREE.PlaneGeometry(903, 266),Lines4_a);
+                      Lines4_a_mesh.overdraw = true;
+                      Lines4_a_mesh.geometry.center();
+                      // cloud_mesh.material.needsUpdate = true;
+                      Lines4_a_mesh.position.x = 0;
+                      Lines4_a_mesh.position.y = -858;//-31
+                      Lines4_a_mesh.scale.set(0.22,0.22,0.22);
+                      scene.add(Lines4_a_mesh);
+                      //Lines4Image
+            }
         }
 
 
