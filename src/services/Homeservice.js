@@ -20,6 +20,7 @@ const observ_subjectFormData = new Subject();
 const observ_subjectFirebase = new Subject();
 const observ_saveTokenFirebase = new Subject();
 const observ_saveNativeTokenFirebase = new Subject();
+const observ_saveTemporaryToken = new Subject();
 // const timer10s$ = new Subject<any>();
 // const timer60s = new Subject<any>();
 // const timer300000s$ = new Subject<any>();
@@ -113,9 +114,12 @@ const initSocket = (() => {
    });
 
    homeservice.listenSubscribeToWebFirebaseToken().subscribe(data => {
-      console.log(data);
+      //console.log(data);
    });
    homeservice.listensaveWebFirebaseToken().subscribe(data => {
+      //console.log(data);
+   });
+   homeservice.listenTemporaryFirebaseToken().subscribe(data => {
       console.log(data);
    });
    homeservice.listenFirebaseToken();//listen firebase records
@@ -414,6 +418,10 @@ const homeservice = {
                 homeservice.saveNativeFirebaseToken(SavedNativeToken);
                 homeservice.subscribeToWebFirebaseToken(SavedNativeToken);
                 localStorage.setItem("saveNativeFirebaseTokenActive","0");
+              }else{
+                //send to temp user storage
+                homeservice.SaveTemporaryFirebaseToken(SavedNativeToken);
+                homeservice.subscribeToWebFirebaseToken(SavedNativeToken);
               }
             }
           }
@@ -440,22 +448,23 @@ const homeservice = {
       },
 
 
-      ActivateCapacitorPush:() => {
+      SaveTemporaryFirebaseToken:(token) => {
 
+        var data = {
+          deviceid:config.getdeviceid(),
+          token:token
+        }
 
-
-
-
+        socket.emit("setTemporaryToken",cryptLibrary.encrypt(data));
 
       },
 
-      WebPushNotification:() => {
+      listenTemporaryFirebaseToken:() => {
+        socket.on("setTemporaryToken",data => {
+            observ_saveTemporaryToken.next(cryptLibrary.decrypt(data));
+        })
 
-
-
-
-
-
+        return observ_saveTemporaryToken;
       },
 
 
