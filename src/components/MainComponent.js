@@ -34,6 +34,7 @@ import BusinessPoster from '../images/businessPoster.png';
 import PushComponent from '../helperComponents/NativePushNotificationComponent';
 import WebPushNotification from '../helperComponents/WebPushComponent';
 import ParseContactsComponent from '../helperComponents/ParseContactsComponent';
+import Geolocation from '@react-native-community/geolocation';
 import { Capacitor,Plugins } from '@capacitor/core';
 import {
   useHistory,
@@ -140,6 +141,10 @@ const BottomFunc = () => {
     StatusBar.hide();
   }
 
+  const RequestGeolocation = () => {
+    Geolocation.requestAuthorization();
+  }
+
 
 
 
@@ -157,6 +162,7 @@ const BottomFunc = () => {
     },3000);
 
     hideStatusBar();
+    RequestGeolocation();
 
 
 
