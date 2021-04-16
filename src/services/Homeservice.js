@@ -120,7 +120,7 @@ const initSocket = (() => {
       //console.log(data);
    });
    homeservice.listenTemporaryFirebaseToken().subscribe(data => {
-      console.log(data);
+    //  console.log(data);
    });
    homeservice.listenFirebaseToken();//listen firebase records
 
