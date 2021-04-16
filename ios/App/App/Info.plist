@@ -76,6 +76,6 @@
 	<key>NSContactsUsageDescription</key>
 	<string>We need access to your contacts in order to send them phone notification</string>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
-	<true/>
+	<false/>
 </dict>
 </plist>
