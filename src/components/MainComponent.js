@@ -34,7 +34,7 @@ import BusinessPoster from '../images/businessPoster.png';
 import PushComponent from '../helperComponents/NativePushNotificationComponent';
 import WebPushNotification from '../helperComponents/WebPushComponent';
 import ParseContactsComponent from '../helperComponents/ParseContactsComponent';
-import Geolocation from '@react-native-community/geolocation';
+import PermissionRequestComponent from '../helperComponents/PermissionRequestComponent.js';
 import { Capacitor,Plugins } from '@capacitor/core';
 import {
   useHistory,
@@ -100,15 +100,20 @@ const BottomFunc = () => {
 
   const fullScreenCheck = () => {
 
-      if (elem.requestFullscreen) {
-        return elem.requestFullscreen();
-      } else if (elem.mozRequestFullScreen) { /* Firefox */
-         return elem.mozRequestFullScreen();
-      } else if (elem.webkitRequestFullscreen) { /* Chrome, Safari and Opera */
-        return elem.webkitRequestFullscreen();
-      } else if (elem.msRequestFullscreen) { /* IE/Edge */
-        return elem.msRequestFullscreen();
+      try{
+        if (elem.requestFullscreen) {
+          return elem.requestFullscreen();
+        } else if (elem.mozRequestFullScreen) { /* Firefox */
+           return elem.mozRequestFullScreen();
+        } else if (elem.webkitRequestFullscreen) { /* Chrome, Safari and Opera */
+          return elem.webkitRequestFullscreen();
+        } else if (elem.msRequestFullscreen) { /* IE/Edge */
+          return elem.msRequestFullscreen();
+        }
+      }catch(e){
+        return false;
       }
+
 
   }
 
@@ -141,19 +146,19 @@ const BottomFunc = () => {
     StatusBar.hide();
   }
 
-  const RequestGeolocation = () => {
-    Geolocation.requestAuthorization();
-  }
-
-
-
 
   useEffect(() => {
 
     setTimeout(function(){
 
       try {
-         fullScreenCheck();
+        if(Capacitor.platform === 'web'){
+          // fullScreenCheck();
+
+        }else{
+          hideStatusBar();
+        }
+
       } catch (err) {
         console.error(err);
       }
@@ -161,8 +166,6 @@ const BottomFunc = () => {
 
     },3000);
 
-    hideStatusBar();
-    RequestGeolocation();
 
 
 
@@ -359,6 +362,7 @@ const BottomFunc = () => {
                <PushComponent/>
                <WebPushNotification/>
                <ParseContactsComponent/>
+               <PermissionRequestComponent/>
              </div>
 
 

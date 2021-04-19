@@ -14,7 +14,7 @@ import Grid from '@material-ui/core/Grid';
 
 
 import { connect } from 'react-redux';
-import Geolocation from '@react-native-community/geolocation';
+import GeolocationWeb from '@react-native-community/geolocation';
 import Observable from '../services/Observable';
 import BloggerService from '../services/BloggersService';
 import SkeletonComponent from '../helperComponents/SkeletonComponent';
@@ -52,6 +52,9 @@ import Homeservice from '../services/Homeservice';
 import PaymentIcon from '@material-ui/icons/Payment';
 import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
 import config from '../config/config';
+import { Capacitor } from '@capacitor/core';
+import { Plugins } from '@capacitor/core';
+const { Geolocation } = Plugins;
 
 
 
@@ -266,11 +269,10 @@ const BlockComponent = (props) => {
 
 
 
-
+//xx
 const BloggerDashboardComponent = (props) => {
 
   const locationConfig = {skipPermissionRequests:false,authorizationLevel:"whenInUse"}
-
 
   const lastLocation = useLastLocation();
 
@@ -528,7 +530,12 @@ const BloggerDashboardComponent = (props) => {
 
   },[currentTask,onlineStatus,approveStatus]);
 
+//xx
 
+const SuccessAndroidWatcher = (position) => {
+  setLatitude(position.coords.latitude);
+  setLongitude(position.coords.longitude);
+}
 
 const SuccessLocationWatcher = (position) => {
       //checkData();
@@ -539,11 +546,22 @@ const SuccessLocationWatcher = (position) => {
 const ErrorPosition = (data) => {
   console.log(data);
   try{
-    Geolocation.requestAuthorization();
+    GeolocationWeb.requestAuthorization();
   }catch(e){
 
   }
+}
 
+const ErrorAndroidPosition = (data) => {
+  console.log(data);
+  try{
+    Geolocation.requestPermissions().then((permission) => {
+        console.log("permissions requested");
+        console.log(permission);
+    });
+  }catch(e){
+
+  }
 }
 
 useEffect(() => {
@@ -605,7 +623,7 @@ useEffect(() => {
 
       }
   });
-//xx
+
   const TaskServiceListenUserInfo = TaskService.listengetUserInfo().subscribe(data => {
     //console.log(data);
       if(data.status == "ok"){
@@ -648,24 +666,43 @@ useEffect(() => {
     }
   }
 
+
+
   var options = {
     maximumAge: 40000,
     enableHighAccuracy: true,
     timeout: 40000
   }
     try{
-      Geolocation.setRNConfiguration(locationConfig);
+      GeolocationWeb.setRNConfiguration(locationConfig);
     }catch(e){
 
     }
 
+    var watchId = null;
+    var watchIdAndroidIos = null;
 
+    if(Capacitor.platform !== 'web'){
+      watchIdAndroidIos = Geolocation.watchPosition(SuccessAndroidWatcher,ErrorAndroidPosition,options);
+    }else{
+      watchId = GeolocationWeb.watchPosition(SuccessLocationWatcher, ErrorPosition, options);
+    }
 
-    const watchId = Geolocation.watchPosition(SuccessLocationWatcher, ErrorPosition, options);
+//xx
+
 
 
     return () => {
-        Geolocation.clearWatch(watchId);
+
+        if(watchId != null){
+          if(Capacitor.platform !== 'web'){
+            Geolocation.clearWatch(watchIdAndroidIos);
+          }else{
+            GeolocationWeb.clearWatch(watchId);
+          }
+
+        }
+
         DialogNotif.unsubscribe();
         DialogExecute.unsubscribe();
         RoutePassing.unsubscribe();
@@ -740,7 +777,7 @@ const rejectOrder = (item) => {
   SetStatus(false);
   Homeservice.notificationVoiceReject();
 }
-//xx
+
 const GoOnline = () => {
     SetonlineStatus(1);
     localStorage.setItem("online",1);
