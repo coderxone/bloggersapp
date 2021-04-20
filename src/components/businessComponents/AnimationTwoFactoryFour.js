@@ -72,7 +72,7 @@ let insetHeight;
 const firstPagePosition = -150;
 const secondPagePosition = -606;
 const thirdPagePosition = -1061;
-const fourthPagePosition = -1435;
+const fourthPagePosition = -1485;
 const fifthPagePosition = -1890;
 
 const rightWindowPosition = 0;
@@ -119,22 +119,22 @@ const NewComponent = (props) => {
 
 		camera = new THREE.PerspectiveCamera( 45,ASPECT_RATIO, 1, 1000);
 		//camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 1000 );
-    var Deep = 550;
-    if((window.innerWidth < 376) && (window.innerHeight > 650) && (window.innerHeight < 850)){
-      Deep = 700;
-
-    }
-    if((window.innerWidth < 376) && (window.innerHeight > 630) && (window.innerHeight < 650)){
-        Deep = 550;
-    }
-
-    if((window.innerWidth < 450) && (window.innerHeight > 850) && (window.innerHeight < 900)){
-        Deep = 700;
-    }
-
-    if((window.innerWidth < 450) && (window.innerHeight > 850) && (window.innerHeight < 930)){
-        Deep = 700;
-    }
+    var Deep = 700;
+    // if((window.innerWidth < 376) && (window.innerHeight > 650) && (window.innerHeight < 850)){
+    //   Deep = 700;
+    //
+    // }
+    // if((window.innerWidth < 376) && (window.innerHeight > 630) && (window.innerHeight < 650)){
+    //     Deep = 550;
+    // }
+    //
+    // if((window.innerWidth < 450) && (window.innerHeight > 850) && (window.innerHeight < 900)){
+    //     Deep = 700;
+    // }
+    //
+    // if((window.innerWidth < 450) && (window.innerHeight > 850) && (window.innerHeight < 930)){
+    //     Deep = 700;
+    // }
     //console.log(Deep);
     if(props.page == 1){
       camera.position.set( 0, firstPagePosition, Deep );
@@ -684,7 +684,7 @@ const NewComponent = (props) => {
   }, [])
 
 
-  return <div className="vis scrollChange"  ref={mount}/>;
+  return <div className="vis scrollChange secondFourth"  ref={mount}/>;
 }
 
 

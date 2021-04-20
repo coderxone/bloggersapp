@@ -31,11 +31,11 @@ const RequestPermissionComponent = () => {
   }
 
   const SuccessAndroidWatcher = (position) => {
-    console.log(JSON.stringify(position));
+
   }
 
   const ErrorAndroidPosition = (data) => {
-    console.log(data);
+
   }
 
   var options = {
