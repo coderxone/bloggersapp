@@ -303,6 +303,94 @@ const DetailTaskComponent = (props) => {
 
   });
 
+//xx
+  const ReplaceLinks = (() => {
+
+      if(inputtext.length > 0){
+          var find = inputtext;
+          var validate = 0;
+
+          for(var i = 0;i < checkLinksValidationsArray.length;i++){
+            if(find.indexOf(checkLinksValidationsArray[i]) >= 0){
+                validate = 1;
+            }
+          }
+
+          var uploadedNotice = 0;
+          var findUploadSocialNetworksText = "";
+
+          for(var k = 0;k < findArrayState.length;k++){
+              if(find.indexOf(findArrayState[k]) >= 0){
+                uploadedNotice = 1;
+                findUploadSocialNetworksText = findArrayState[k];
+              }
+          }
+
+          for(var j = 0;j < permitControlArray.length;j++){
+            //console.log(permitControlArray[j].url);
+            if(inputtext === permitControlArray[j].url){
+              uploadedNotice = 2;
+              findUploadSocialNetworksText = permitControlArray[j].type;
+            }
+          }
+
+          var checkSocialString = "";
+          var findObj = null;
+          var findSocialId = null;
+
+          for(var n = 0;n < banVideo.length;n++){
+            //console.log(banVideo[n].url);
+            for(var l = 0;l < checkLinksValidationsArray.length;l++){
+              if(banVideo[n].url.indexOf(checkLinksValidationsArray[l]) >= 0){
+                //console.log(originalNetWorkArrayState[l]);
+                checkSocialString = originalNetWorkArrayState[l];
+                findObj = banVideo[n];
+                findSocialId = l;
+              }
+            }
+
+            //console.log(banVideo[n]);
+          }
+
+          //console.log(inputtext.indexOf(checkLinksValidationsArray[findSocialId]));
+          if(inputtext.indexOf(checkLinksValidationsArray[findSocialId]) < 0){
+            //warning
+            uploadedNotice = 3;
+          }
+
+
+          if(uploadedNotice === 1){
+            SetdangerText("video for " + findUploadSocialNetworksText + " already uploaded ");
+            SetdangerState(true);
+            hideAlert();
+          }else if(uploadedNotice === 2){
+            SetdangerText("video for " + findUploadSocialNetworksText + " already uploaded for this project ");
+            SetdangerState(true);
+            hideAlert();
+          }else if(uploadedNotice === 3){
+            SetdangerText("Link should be for " + originalNetWorkArrayState[findSocialId] + " ");
+            SetdangerState(true);
+            hideAlert();
+          }else{
+            if(validate === 1){
+
+
+
+                var obj = {
+                  id:findObj.id,
+                  videotype:checkSocialString,
+                  url:find,
+                  set:"set"
+                }
+                console.log(obj);
+                DetailTaskService.ReplaceUrl(obj);
+              }
+          }
+
+      }
+
+  });
+
   const [currentStatus,SetCurrentStatus] = useState(LocalizeComponent.doneTask);
 
   const CheckVideos = ((id) => {
@@ -354,11 +442,14 @@ const CountTaskFunction = (data) => {
         for(var j = 0;j < netWorkArrayState.length;j++){
             for(var k = 0;k < findArray.length;k++){
                 var searchString = netWorkArrayState[j];
-                //console.log(searchString);
-                if(searchString.indexOf(findArray[k]) >= 0){
-                  replaceArray.splice(j, 1);
+                console.log(searchString);
+                if(searchString){
+                    if(searchString.indexOf(findArray[k]) >= 0){
+                      replaceArray.splice(j, 1);
+                    }
                 }
-            }
+                }
+
         }
 
     //console.log(replaceArray);
@@ -514,7 +605,7 @@ useEffect(() => {
         SetCurrentNetworkTwo(data);
 
     });
-
+//xx
     const listenEditUrl = DetailTaskService.listenEditUrl().subscribe(data => {
 
       if(data.status == "updated"){
@@ -533,6 +624,25 @@ useEffect(() => {
 
     });
 
+    const listenReplaceUrl = DetailTaskService.listenReplaceUrl().subscribe(data => {
+
+      if(data.status == "updated"){
+        SetInputText("");
+        SetalertText(LocalizeComponent.successAction);
+        SetSucessState(true);
+        seteditFormStatus(false);
+        hideAlert();
+        CheckVideos(detailData.id);
+      }else if(data.status == "already"){
+        SetInputText("");
+        SetdangerText(LocalizeComponent.replace_confirmation);
+        SetdangerState(true);
+        seteditFormStatus(false);
+        hideAlert();
+      }
+
+    });
+
     //unsubscribe
 
     return () => {
@@ -542,6 +652,7 @@ useEffect(() => {
         unsub.unsubscribe();
         ListenEditObserv.unsubscribe();
         listenEditUrl.unsubscribe();
+        listenReplaceUrl.unsubscribe();
     }
 
     //unsubscribe
@@ -741,14 +852,26 @@ const EditNetwork = (data) => {
                           )}
 
 
-
-                         <div className="buttonBoxSet">
-                             <div className="generateButtonSet" onClick={Share}>
-                                 <div className="generateButtonTextSet"  >
-                                     {LocalizeComponent.next_x}
+                          {banVideo.length > 0 ? (
+                            <div className="buttonBoxSet">
+                                <div className="generateButtonSet" onClick={ReplaceLinks}>
+                                    <div className="generateButtonTextSet"  >
+                                        {LocalizeComponent.next_x}
+                                    </div>
+                                </div>
+                            </div>
+                           ) : (
+                             <div className="buttonBoxSet">
+                                 <div className="generateButtonSet" onClick={Share}>
+                                     <div className="generateButtonTextSet"  >
+                                         {LocalizeComponent.next_x}
+                                     </div>
                                  </div>
                              </div>
-                         </div>
+                           )}
+
+
+
                    </div>
                   ) : (
                     <div className="DoneTask">

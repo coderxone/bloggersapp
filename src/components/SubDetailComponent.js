@@ -436,22 +436,13 @@ const DetailComponent = (props) => {
 
             if(modifiedArray.length > newArray.length){
 
-                for(var b = 0;b < modifiedArray.length;b++){
-                  var found = 0;
+              setListArray([]);
 
-                  for(var  i = 0;i < newArray.length;i++){
-                    if(newArray[i].id == modifiedArray[b].id){
-                      found = 1;
-                    }
-                  }
+              for(var j = 0;j < modifiedArray.length;j++){
+                newArray.push(modifiedArray[j]);
+              }
 
-                  if(found == 0){
-                    newArray.push(modifiedArray[b]);
-                  }
-
-                }
-
-                setListArray(newArray);
+              setListArray(newArray);
 
             }else if(modifiedArray.length < newArray.length){
 
