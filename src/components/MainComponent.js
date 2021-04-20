@@ -40,7 +40,7 @@ import {
   useHistory,
   Redirect,
 } from "react-router-dom";
-const  { Contacts,StatusBar } = Plugins;
+const  { StatusBar } = Plugins;
 
 
 
@@ -156,7 +156,7 @@ const BottomFunc = () => {
           // fullScreenCheck();
 
         }else{
-          hideStatusBar();
+          //hideStatusBar();
         }
 
       } catch (err) {
