@@ -8,6 +8,7 @@ const observ_subject3 = new Subject();
 const observ_subject4 = new Subject();
 const observ_subject5 = new Subject();
 const observ_subject6 = new Subject();
+const observ_subject7 = new Subject();
 
 const DetailTaskService = {
 
@@ -104,6 +105,33 @@ const DetailTaskService = {
             });
 
             return observ_subject5;
+          },
+
+          ReplaceUrl:(obj) => {
+
+            var data = {
+              deviceid:config.getdeviceid(),
+              email:config.getUserEmail(),
+              id: obj.id,
+              videotype:obj.videotype,
+              url:obj.url,
+              status:obj.set //check
+            }
+
+            //console.log(data);
+
+            var encryptedData = cryptLibrary.encrypt(data);
+
+            socket.emit("replacevideo",encryptedData);
+          },
+
+          listenReplaceUrl:() => {
+            socket.on("replacevideo",(data) => {
+                //console.log(data);
+                observ_subject7.next(cryptLibrary.decrypt(data));
+            });
+
+            return observ_subject7;
           },
 
 //xx

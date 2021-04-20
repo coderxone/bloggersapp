@@ -93,5 +93,5 @@ const App = () => {
 
 
 };
-
+//0 - under consideration by business,1 confirmed,2 rejected, 3 Suggest to update things
 export default App;
