@@ -55,7 +55,8 @@ const LinesColor = "rgb(32, 144, 204)";//2090cc
 // viewport
 let insetWidth;
 let insetHeight;
-const firstPagePosition = -150;
+const firstPagePosition = -210;
+//const firstPagePosition = -150;
 const secondPagePosition = -606;
 const thirdPagePosition = -1061;
 const fourthPagePosition = -1435;
@@ -101,22 +102,23 @@ const NewComponent = (props) => {
 
 		camera = new THREE.PerspectiveCamera( 45,ASPECT_RATIO, 1, 1000);
 
-    var Deep = 550;
-    if((window.innerWidth < 376) && (window.innerHeight > 650) && (window.innerHeight < 850)){
-      Deep = 700;
-
-    }
-    if((window.innerWidth < 376) && (window.innerHeight > 630) && (window.innerHeight < 650)){
-        Deep = 550;
-    }
-
-    if((window.innerWidth < 450) && (window.innerHeight > 850) && (window.innerHeight < 900)){
-        Deep = 700;
-    }
-
-    if((window.innerWidth < 450) && (window.innerHeight > 850) && (window.innerHeight < 930)){
-        Deep = 700;
-    }
+    var Deep = 700;
+    //var Deep = 550;
+    // if((window.innerWidth < 376) && (window.innerHeight > 650) && (window.innerHeight < 850)){
+    //   Deep = 700;
+    //
+    // }
+    // if((window.innerWidth < 376) && (window.innerHeight > 630) && (window.innerHeight < 650)){
+    //     Deep = 550;
+    // }
+    //
+    // if((window.innerWidth < 450) && (window.innerHeight > 850) && (window.innerHeight < 900)){
+    //     Deep = 700;
+    // }
+    //
+    // if((window.innerWidth < 450) && (window.innerHeight > 850) && (window.innerHeight < 930)){
+    //     Deep = 700;
+    // }
     //console.log(Deep);
     if(props.page == 1){
       camera.position.set( 0, firstPagePosition, Deep );
