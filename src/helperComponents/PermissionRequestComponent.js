@@ -30,14 +30,43 @@ const RequestPermissionComponent = () => {
 
   }
 
+  const SuccessAndroidWatcher = (position) => {
+    console.log(JSON.stringify(position));
+  }
+
+  const ErrorAndroidPosition = (data) => {
+    console.log(data);
+  }
+
+  var options = {
+    maximumAge: 40000,
+    enableHighAccuracy: true,
+    timeout: 40000
+  }
+
 
 
 
   useEffect(() => {
 
-      if(Capacitor.platform !== "web"){
+      if(Capacitor.platform === "android"){
         requestPermissions();
       }
+
+      //ios functions
+      var watchIdAndroidIos = null;
+      if(Capacitor.platform === 'ios'){
+        watchIdAndroidIos = Geolocation.watchPosition(SuccessAndroidWatcher,ErrorAndroidPosition,options);
+      }
+
+      return () => {
+          if(watchIdAndroidIos != null){
+            if(Capacitor.platform === 'ios'){
+              Geolocation.clearWatch(watchIdAndroidIos);
+            }
+          }
+      }
+        //ios functions
 
 
   }, []);

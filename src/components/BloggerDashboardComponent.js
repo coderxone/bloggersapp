@@ -694,14 +694,17 @@ useEffect(() => {
 
     return () => {
 
-        if(watchId != null){
+
           if(Capacitor.platform !== 'web'){
-            Geolocation.clearWatch(watchIdAndroidIos);
+            if((watchIdAndroidIos != null)){
+              Geolocation.clearWatch(watchIdAndroidIos);
+            }
           }else{
-            GeolocationWeb.clearWatch(watchId);
+            if((watchId != null)){
+              GeolocationWeb.clearWatch(watchId);
+            }
           }
 
-        }
 
         DialogNotif.unsubscribe();
         DialogExecute.unsubscribe();
