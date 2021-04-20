@@ -40,7 +40,7 @@ import {
   useHistory,
   Redirect,
 } from "react-router-dom";
-// const  { StatusBar } = Plugins;
+ const  { StatusBar } = Plugins;
 
 
 
@@ -142,9 +142,9 @@ const BottomFunc = () => {
     }
   }
 
-  // const hideStatusBar = () => {
-  //   StatusBar.hide();
-  // }
+  const hideStatusBar = () => {
+    StatusBar.hide();
+  }
 
 
   useEffect(() => {
@@ -153,10 +153,10 @@ const BottomFunc = () => {
 
       try {
         if(Capacitor.platform === 'web'){
-          // fullScreenCheck();
+           //fullScreenCheck();
 
         }else{
-          //hideStatusBar();
+          hideStatusBar();
         }
 
       } catch (err) {
