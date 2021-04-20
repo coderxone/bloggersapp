@@ -74,9 +74,7 @@ const MyComponent = (props) => {
     var origin = newLat + ", " + newLng;
     ChangeOriginRoute(origin);
 
-    //const newContainerStyle = {...containerStyle};
-    //newContainerStyle.height = '45vh';
-    //SetContainerStyle(newContainerStyle);
+
 
   }
 
@@ -91,7 +89,20 @@ const MyComponent = (props) => {
       SetContainerStyle(newContainerStyletwo);
     }else if(status === true){
       const newContainerStyleOne = {...containerStyle};
-      newContainerStyleOne.height = '45vh';
+      var height = window.innerHeight;
+      if((height >= 892) && (height < 920)){
+        newContainerStyleOne.height = '58vh';
+      }else if((height >= 850) && (height < 892)){
+        newContainerStyleOne.height = '55vh';
+      }else if((height >= 830) && (height < 850)){
+        newContainerStyleOne.height = '55vh';
+      }else if((height >= 800) && (height < 830)){
+        newContainerStyleOne.height = '55vh';
+      }else{
+        newContainerStyleOne.height = '45vh';
+      }
+      console.log(window.innerHeight);//892
+
       SetContainerStyle(newContainerStyleOne);
     }
   },[status])

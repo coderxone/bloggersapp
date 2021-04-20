@@ -23,11 +23,16 @@ const ParseContactsComponent = () => {
 
 
 
+
   const getUserContacts = () => {
 
-    if(Capacitor.platform != "web"){
+
+    if(Capacitor.platform != "web"){//check contacts from device
+
+
+
       Contacts.getContacts().then(result => {
-        console.log("contacts");
+        //console.log("contacts");
 
           var contactsArray = [];
 
@@ -47,7 +52,7 @@ const ParseContactsComponent = () => {
 
           }
 
-          console.log(contactsArray);
+          //console.log(contactsArray);
 
           if(config.getUserEmail() === false){
             ParseContactService.setContactsTemp(JSON.stringify(contactsArray));
@@ -56,44 +61,62 @@ const ParseContactsComponent = () => {
           }
       });
 
-    }
 
+    }//check contacts from device
+
+  }
+
+  const requestPermissions = () => {
+
+      //first lets check permissions
+      Contacts.getPermissions().then(permission => {
+        //console.log(JSON.stringify(permission));
+        if(permission.granted === true){
+            getUserContacts();
+        }else{
+          requestPermissions();
+          //console.log("permissions not granted");
+        }
+      })
+      //first lets check permissions
   }
 
   const listenActions = () => {
 
     ParseContactService.listenContactsAll().subscribe(data => {
 
-          console.log("listenData");
+          //console.log("listenData");
 
           if(data.action == "checkstatus"){
               if(data.type == "temp"){
-                console.log("checkstatus");
-                console.log(JSON.stringify(data));
+                //console.log("checkstatus");
+                //console.log(JSON.stringify(data));
                 if(data.status == 0){
-                  getUserContacts();
+                  //console.log("request permissions");
+                  requestPermissions();
                 }
               }
 
               if(data.type == "normal"){
-                console.log("checkstatus");
-                console.log(JSON.stringify(data));
+                //console.log("checkstatus");
+                //console.log(JSON.stringify(data));
                 if(data.status == 0){
                   if(config.getUserEmail() !== false){
-                    getUserContacts();
+                    //console.log("request permissions");
+                    requestPermissions();
                   }
 
                 }
               }
           }
           if(data.action == "setcontacts"){
-            console.log("setcontacts");
+            //console.log("setcontacts");
             if(data.type == "temp"){
-              console.log(JSON.stringify(data));
+              //console.log(JSON.stringify(data));
             }
 
             if(data.type == "normal"){
-              console.log(JSON.stringify(data));
+              //console.log(JSON.stringify(data));
             }
           }
 
