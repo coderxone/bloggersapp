@@ -74,6 +74,12 @@ if((width < 450) && (height > 850) && (height < 900)){
   animY = 0 + movingPointY;
 }
 
+if((width < 450) && (height > 900) && (height < 950)){
+  xViewMobile = 2200;
+  movingPointY = 450;
+  animY = 0 + movingPointY;
+}
+
 // if(height < 1200){
 //   animY = 0;
 // }
