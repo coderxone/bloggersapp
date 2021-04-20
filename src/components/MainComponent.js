@@ -153,7 +153,7 @@ const BottomFunc = () => {
 
       try {
         if(Capacitor.platform === 'web'){
-           fullScreenCheck();
+           //fullScreenCheck();
 
         }else{
           hideStatusBar();
