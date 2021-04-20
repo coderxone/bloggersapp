@@ -90,7 +90,9 @@ const MyComponent = (props) => {
     }else if(status === true){
       const newContainerStyleOne = {...containerStyle};
       var height = window.innerHeight;
-      if((height >= 892) && (height < 920)){
+      if((height >= 920) && (height < 1000)){
+        newContainerStyleOne.height = '58vh';
+      }else if((height >= 892) && (height < 920)){
         newContainerStyleOne.height = '58vh';
       }else if((height >= 850) && (height < 892)){
         newContainerStyleOne.height = '55vh';
