@@ -1,1 +1,1 @@
-sergey@powr.io
+developer email 2clickorg@gmail.com
