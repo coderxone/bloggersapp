@@ -104,12 +104,13 @@ const detailservice = {
         return observ_subjectthree;
       },
 
-      setBan:(id) => {
+      setBan:(id,Project_id) => {
         var datas = {
           "deviceid":config.getdeviceid(),
           "email":config.getUserEmail(),
           "role":config.getUserRole(),
-          "id":id
+          "id":id,
+          "projectId":Project_id
         }
 
         var encryptedData = cryptLibrary.encrypt(datas);

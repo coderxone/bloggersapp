@@ -78,11 +78,13 @@ let strings = new LocalizedStrings({
    searchLocal:"Search only local business",
    newCompletedUser:"1 user completed task",
    PleaseCheckThisTask:"Please check this task ",
+   PleaseImprove:"Please improve video ",
    Confirm_task:"Confirm task",
    UncorfimedTask:"You Have new unconfirmed task",
    Confirmed_task:"Task Confirmed",
    Go_offline:"Go offline",
-   who_is:"please type"
+   who_is:"please type",
+   change_video_text:"Change video",
 
  },
  it: {

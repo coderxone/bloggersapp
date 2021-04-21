@@ -11,8 +11,6 @@ import {
   useTheme,
 } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-
-
 import { connect } from 'react-redux';
 import GeolocationWeb from '@react-native-community/geolocation';
 import Observable from '../services/Observable';
@@ -544,7 +542,7 @@ const SuccessLocationWatcher = (position) => {
 }
 
 const ErrorPosition = (data) => {
-  console.log(data);
+  //console.log(data);
   try{
     GeolocationWeb.requestAuthorization();
   }catch(e){
@@ -553,29 +551,87 @@ const ErrorPosition = (data) => {
 }
 
 const ErrorAndroidPosition = (data) => {
-  console.log(data);
+  //console.log(data);
   try{
     Geolocation.requestPermissions().then((permission) => {
-        console.log("permissions requested");
-        console.log(permission);
+        //console.log("permissions requested");
+        //console.log(permission);
     });
   }catch(e){
 
   }
 }
 
+const OneTimeNotification = (data) => {
+
+      var task_id = data.data[0].project_id;
+      var count = 0;
+
+      var StorageId = localStorage.getItem("taskId");
+      var taskId = parseInt(localStorage.getItem("taskId"));
+      var taskCount = parseInt(localStorage.getItem("taskCount"));
+
+//xx
+      if(taskId !== task_id){
+        localStorage.setItem("taskCount",0);
+        taskCount = 0;
+      }
+
+        if((taskCount < 1) && (StorageId)){
+          taskCount++;
+          count = taskCount;
+
+          setLeftbutton(LocalizeComponent.cancel);
+          setRightbutton(LocalizeComponent.check);
+          setDialogText(LocalizeComponent.UncorfimedTask);
+          setDetailProjectId(data.data[0].project_id);
+          SetdialogSwitcher(1);
+          setDetailMessage(LocalizeComponent.PleaseImprove);
+          setDialogStatus(true);
+          Homeservice.notificationVoice();
+          localStorage.setItem("taskCount",count);
+
+        }
+
+        localStorage.setItem("taskId",task_id);
+
+}
+
+const [dialogSwitcher,SetdialogSwitcher] = useState(0);
+
+useEffect(() => {
+  //xx
+    const DialogNotif = Observable.getData_subject().subscribe(data => {
+
+      if(dialogSwitcher === 0){
+        if(data == "confirm"){
+          goToContacts();
+          //go to page with id
+        }else if(data == "cancel"){
+          setDialogStatus(false);
+        }
+      }else if(dialogSwitcher === 1){
+        if(data == "confirm"){
+          GoToTask();
+          //go to page with id
+        }else if(data == "cancel"){
+          setDialogStatus(false);
+        }
+      }
+
+
+    });
+
+
+    return () => {
+      DialogNotif.unsubscribe();
+    }
+
+},[dialogSwitcher]);
+
 useEffect(() => {
 
 
-  const DialogNotif = Observable.getData_subject().subscribe(data => {
-    if(data == "confirm"){
-      goToContacts();
-      //go to page with id
-    }else if(data == "cancel"){
-      setDialogStatus(false);
-    }
-
-  });
 
   const RoutePassing = Observable.getRoute().subscribe(data => {
 
@@ -638,7 +694,7 @@ useEffect(() => {
   });
 
 
-
+//xx
   const DialogExecute = Observable.getData_subjectDialog().subscribe(data => {
     if(data.alert == "opendialog"){
       //console.log(data);
@@ -648,6 +704,7 @@ useEffect(() => {
       setDetailProjectId(data.projectId);
       setDetailMessage(data.message);
       setDialogStatus(true);
+      SetdialogSwitcher(0);
       //go to page with id
     }
 
@@ -655,6 +712,24 @@ useEffect(() => {
 
   const checkTimer = Observable.subscribeByTimer_30_second().subscribe(sec => {
     TaskService.getUserInfo();
+  });
+
+  //xx
+  const checkTimer10Sec = Observable.subscribeByTimer_10_second().subscribe(sec => {
+    Homeservice.CheckAllBanVideos();
+  });
+
+  const listenBanVideos = Homeservice.listenCheckAllBanVideos().subscribe(data => {
+      //console.log(data);
+      if(data.status == "ok"){
+
+        //localStorage.setItem("taskCount",0);
+        OneTimeNotification(data);
+
+
+      }else{
+        localStorage.setItem("taskCount",0);
+      }
   });
 
 
@@ -706,7 +781,7 @@ useEffect(() => {
           }
 
 
-        DialogNotif.unsubscribe();
+
         DialogExecute.unsubscribe();
         RoutePassing.unsubscribe();
         AnyDataCommunicate.unsubscribe();
@@ -715,6 +790,9 @@ useEffect(() => {
         TaskServiceListen.unsubscribe();
         TaskServiceListenUserInfo.unsubscribe();
         checkTimer.unsubscribe();
+        checkTimer10Sec.unsubscribe();
+        listenBanVideos.unsubscribe();
+
 
     }
 

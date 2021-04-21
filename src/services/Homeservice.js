@@ -21,6 +21,7 @@ const observ_subjectFirebase = new Subject();
 const observ_saveTokenFirebase = new Subject();
 const observ_saveNativeTokenFirebase = new Subject();
 const observ_saveTemporaryToken = new Subject();
+const observ_saveAllBan = new Subject();
 // const timer10s$ = new Subject<any>();
 // const timer60s = new Subject<any>();
 // const timer300000s$ = new Subject<any>();
@@ -465,6 +466,26 @@ const homeservice = {
         })
 
         return observ_saveTemporaryToken;
+      },
+//xx
+
+      CheckAllBanVideos:() => {
+
+        var data = {
+          deviceid:config.getdeviceid(),
+          email:config.getUserEmail(),
+        }
+
+        socket.emit("checkAllBannedvideo",cryptLibrary.encrypt(data));
+
+      },
+
+      listenCheckAllBanVideos:() => {
+        socket.on("checkAllBannedvideo",data => {
+            observ_saveAllBan.next(cryptLibrary.decrypt(data));
+        })
+
+        return observ_saveAllBan;
       },
 
 

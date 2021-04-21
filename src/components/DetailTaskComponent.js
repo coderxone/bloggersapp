@@ -393,6 +393,7 @@ const DetailTaskComponent = (props) => {
 
   const [currentStatus,SetCurrentStatus] = useState(LocalizeComponent.doneTask);
 
+  //xx
   const CheckVideos = ((id) => {
 
     var checkObj = {
@@ -442,7 +443,7 @@ const CountTaskFunction = (data) => {
         for(var j = 0;j < netWorkArrayState.length;j++){
             for(var k = 0;k < findArray.length;k++){
                 var searchString = netWorkArrayState[j];
-                console.log(searchString);
+                //console.log(searchString);
                 if(searchString){
                     if(searchString.indexOf(findArray[k]) >= 0){
                       replaceArray.splice(j, 1);
@@ -540,6 +541,8 @@ const ExecutelistencheckBannedVideo = (data) => {
             SetBanVideo(bannedVideoArray);
           }
 
+          SetcompletedTask(false);
+
       }else if(data.status == "false"){
         if(banVideo.length > 0){
           SetBanVideo([]);
@@ -551,6 +554,8 @@ const ExecutelistencheckBannedVideo = (data) => {
 useEffect(() => {
   const listencheckBannedVideo = DetailTaskService.listencheckBannedVideo().subscribe(data => {
 
+      //xx
+      console.log(data);
       ExecutelistencheckBannedVideo(data);
 
   });
@@ -582,6 +587,8 @@ useEffect(() => {
     const obs = Observable.subscribeByTimer_10_second().subscribe(data => {
         //SubmittedTask(detailData.id);
         //console.log(detailData.id);
+        //xx
+        console.log("request send");
         CheckVideos(detailData.id);
         CheckcheckBannedVideoF(detailData.id);
 
