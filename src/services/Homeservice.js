@@ -91,7 +91,12 @@ const initSocket = (() => {
    });
 //xx
    homeservice.listenSystemParams().subscribe(data => {
-     //console.log(data);
+
+    //console.log(appStatuses);
+     var appStatuses = data.appstatus;
+     var string_appStatuses = JSON.stringify(appStatuses);
+     localStorage.setItem("appstatus",string_appStatuses);
+
      var categories = data.categories;
      var string_categories = JSON.stringify(categories);
      localStorage.setItem("categories",string_categories);

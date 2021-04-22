@@ -45,24 +45,24 @@ import {
 
     const QontoConnector = withStyles({
         alternativeLabel: {
-        top: 10,
+        top: 2,
         left: 'calc(-50% + 16px)',
         right: 'calc(50% + 16px)',
         },
         active: {
         '& $line': {
-          borderColor: '#784af4',
+          borderColor: '#0083ff',
         },
         },
         completed: {
         '& $line': {
-          borderColor: '#784af4',
+          borderColor: '#0083ff',
         },
         },
         line: {
         borderColor: '#eaeaf0',
         borderTopWidth: 3,
-        borderRadius: 1,
+        borderRadius: 1
         },
         })(StepConnector);
 
@@ -85,11 +85,11 @@ import {
             root: {
               color: '#eaeaf0',
               display: 'flex',
-              height: 22,
+              height: 10,
               alignItems: 'center',
             },
             active: {
-              color: '#784af4',
+              color: '#0083ff',
             },
             circle: {
               width: 8,
@@ -98,9 +98,9 @@ import {
               backgroundColor: 'currentColor',
             },
             completed: {
-              color: '#784af4',
+              color: '#0083ff',
               zIndex: 1,
-              fontSize: 18,
+              fontSize: 10,
             },
           });
 
@@ -289,13 +289,14 @@ const BlockComponent = (props) => {
 const CompleteBlockComponent = (props) => {
 
   const [activeStep, setActiveStep] = React.useState(1);
-  const steps = getSteps();
-  function getSteps() {
-    return ['Select campaign settings', 'Create an ad group', 'Create an ad'];
-  }
-
+  const statusArray = useMemo(() => {
+    var rData = config.getJSONFromMemory("appstatus");
+    return rData;
+  },[])
 
   const items = props.items;
+
+  //console.log(items);
 
   const content = useMemo(() => {
 
@@ -307,38 +308,21 @@ const CompleteBlockComponent = (props) => {
             data: item // your data array of objects
           }}
           >
-            <div  className="MainBlock withoutScroll">
-              <div  className="firstLevel">
-                  <div className="firstLevelText">
-                      {item.url} - {item.description}
+            <div  className="MainBlockStepper withoutScroll">
+              <div  className="firstLevelStepper">
+                  <div className="firstLevelTextStepper">
+                      {item.url}
                   </div>
               </div>
-              <div className="secondLevel">
-                <div className="secondLevelShare">
-                  <Stepper alternativeLabel activeStep={activeStep} connector={<QontoConnector />}>
-                    {steps.map((label) => (
-                      <Step key={label}>
-                        <StepLabel StepIconComponent={QontoStepIcon}>{label}</StepLabel>
-                      </Step>
-                    ))}
-                  </Stepper>
-                </div>
-                <div className="secondLevelShareThree">
-                  <div className="secondLevelThree">
-                    <div className="shouldButtonThree">
-                        <div className="shouldButtonText">
-                              {item.date} - {item.time}
-                        </div>
-                    </div>
-                  </div>
-                  <div className="secondLevelThreeTwo">
-                    <div className="shareButtonThree">
-                        <div className="shareButtonText">
-                              {item.sum} $
-                        </div>
-                    </div>
-                  </div>
-                </div>
+              <div className="secondLevelStepper">
+
+                <Stepper className="StepperAppStyles" alternativeLabel activeStep={item.status - 1} connector={<QontoConnector />}>
+                  {statusArray.map((label) => (
+                    <Step key={label.id}>
+                      <StepLabel StepIconComponent={QontoStepIcon}>{label.text}</StepLabel>
+                    </Step>
+                  ))}
+                </Stepper>
               </div>
             </div>
         </Link>
@@ -405,7 +389,7 @@ const TaskComponent = (props) => {
   useEffect(() => {
 
     const TaskServiceUnsub = TaskService.listenUserDataTask().subscribe(data => {
-      console.log(data);
+      //console.log(data);
 
       if(data.status == "ok"){
 
@@ -449,7 +433,7 @@ const TaskComponent = (props) => {
           }
 
           //console.log(newlistArray);
-
+//xx
           setListArrayComplete(newlistArray);
 
 

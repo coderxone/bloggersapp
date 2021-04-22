@@ -11,6 +11,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 
 import {
+  withStyles,
   makeStyles,
 } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
@@ -26,11 +27,79 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import EditListComponent from '../helperComponents/EditSocialNetworkComponent.js';
 import config from '../config/config.js';
 
+import Stepper from '@material-ui/core/Stepper';
+import Step from '@material-ui/core/Step';
+import StepLabel from '@material-ui/core/StepLabel';
+import StepConnector from '@material-ui/core/StepConnector';
+import clsx from 'clsx';
+import Check from '@material-ui/icons/Check';
+
 import {
   useHistory
 } from "react-router-dom";
 
 import { increment, decrement,save_email } from '../actions/actions';
+
+const QontoConnector = withStyles({
+    alternativeLabel: {
+    top: 2,
+    left: 'calc(-50% + 16px)',
+    right: 'calc(50% + 16px)',
+    },
+    active: {
+    '& $line': {
+      borderColor: '#0083ff',
+    },
+    },
+    completed: {
+    '& $line': {
+      borderColor: '#0083ff',
+    },
+    },
+    line: {
+    borderColor: '#eaeaf0',
+    borderTopWidth: 3,
+    borderRadius: 1
+    },
+    })(StepConnector);
+
+    const useQontoStepIconStyles = makeStyles({
+      root: {
+        color: '#eaeaf0',
+        display: 'flex',
+        height: 10,
+        alignItems: 'center',
+      },
+      active: {
+        color: '#0083ff',
+      },
+      circle: {
+        width: 8,
+        height: 8,
+        borderRadius: '50%',
+        backgroundColor: 'currentColor',
+      },
+      completed: {
+        color: '#0083ff',
+        zIndex: 1,
+        fontSize: 10,
+      },
+    });
+
+    function QontoStepIcon(props) {
+        const classes = useQontoStepIconStyles();
+        const { active, completed } = props;
+
+        return (
+          <div
+            className={clsx(classes.root, {
+              [classes.active]: active,
+            })}
+          >
+            {completed ? <Check className={classes.completed} /> : <div className={classes.circle} />}
+          </div>
+        );
+      }
 
 
 function mapStateToProps(state,ownProps) {
@@ -105,6 +174,50 @@ const BannedList = ((props) => {
 
 
 
+const CompleteBlockComponent = (props) => {
+
+  const [activeStep, setActiveStep] = React.useState(1);
+  const statusArray = useMemo(() => {
+    var rData = config.getJSONFromMemory("appstatus");
+    return rData;
+  },[])
+
+  const items = props.items;
+
+  //console.log(items);
+
+  const content = useMemo(() => {
+
+    return items.map((item,index) =>
+
+      <div key={item.id} >
+            <div  className="MainBlockStepperWithoutFrame withoutScroll">
+              <div className="secondLevelStepper">
+
+                <Stepper className="StepperAppStyles" alternativeLabel activeStep={item.status - 1} connector={<QontoConnector />}>
+                  {statusArray.map((label) => (
+                    <Step key={label.id}>
+                      <StepLabel StepIconComponent={QontoStepIcon}>{label.text}</StepLabel>
+                    </Step>
+                  ))}
+                </Stepper>
+              </div>
+            </div>
+        </div>
+
+      );
+
+  },[props.items]);
+
+
+
+  return (
+    <div className="fullWidth withoutScroll" >
+      {content}
+    </div>
+  );
+
+}
 
 
 
@@ -303,7 +416,7 @@ const DetailTaskComponent = (props) => {
 
   });
 
-//xx
+
   const ReplaceLinks = (() => {
 
       if(inputtext.length > 0){
@@ -393,7 +506,7 @@ const DetailTaskComponent = (props) => {
 
   const [currentStatus,SetCurrentStatus] = useState(LocalizeComponent.doneTask);
 
-  //xx
+
   const CheckVideos = ((id) => {
 
     var checkObj = {
@@ -402,6 +515,15 @@ const DetailTaskComponent = (props) => {
     }
 
     DetailTaskService.checkUrl(checkObj);
+  });
+  //xx
+  const checkCurrentStatus = ((id) => {
+
+    var checkObj = {
+      id:id,
+    }
+
+    DetailTaskService.checkCurrentStatus(checkObj);
   });
 
   const SubmittedTask = (id) => {
@@ -471,20 +593,63 @@ const CountTaskFunction = (data) => {
   }
 };
 
+const [listArrayComplete,setListArrayComplete] = useState([]);
+const [currentTaskStatus,setCurrentTaskStatus] = useState(0);
 
 useEffect(() => {
   const ListenlistenCheckUrl = DetailTaskService.listenCheckUrl().subscribe(data => {
 
-    //console.log(data);
       CountTaskFunction(data);
 
 
     //SetStep(stepper => stepper + 1);
   });
+//xx
+  const listenCurrentStatusL = DetailTaskService.listenCurrentStatus().subscribe(data => {
+
+    //console.log(data);
+
+    if(data.data.length > 0){
+
+      const newlistArray = [...listArrayComplete];
+
+      for(var i = 0;i < data.data.length;i++){
+
+          //change status
+          if(data.data[i].status !== 1){
+            setCurrentTaskStatus(1);
+          }else{
+            setCurrentTaskStatus(0);
+          }
+          //change status
+          var found = 0;
+          for(var j = 0;j < newlistArray.length;j++){
+
+            if(newlistArray[j].id == data.data[i].id){
+              found = 1;
+            }
+          }
+          if(found == 0){
+
+            newlistArray.push(data.data[i]);
+          }
+
+      }
+
+      //console.log(newlistArray);
+//xx
+      setListArrayComplete(newlistArray);
+
+
+    }
+
+
+  });
 
 
   return () => {
     ListenlistenCheckUrl.unsubscribe();
+    listenCurrentStatusL.unsubscribe();
   }
 
 },[]);
@@ -492,7 +657,7 @@ useEffect(() => {
 
 
 
-//xx
+
 const [banVideo,SetBanVideo] = useState([]);
 
 const CheckcheckBannedVideoF = ((id) => {
@@ -553,9 +718,7 @@ const ExecutelistencheckBannedVideo = (data) => {
 
 useEffect(() => {
   const listencheckBannedVideo = DetailTaskService.listencheckBannedVideo().subscribe(data => {
-
-      //xx
-      console.log(data);
+      //console.log(data);
       ExecutelistencheckBannedVideo(data);
 
   });
@@ -587,10 +750,10 @@ useEffect(() => {
     const obs = Observable.subscribeByTimer_10_second().subscribe(data => {
         //SubmittedTask(detailData.id);
         //console.log(detailData.id);
-        //xx
-        console.log("request send");
+
         CheckVideos(detailData.id);
         CheckcheckBannedVideoF(detailData.id);
+        checkCurrentStatus(detailData.id);
 
     });
 
@@ -612,7 +775,7 @@ useEffect(() => {
         SetCurrentNetworkTwo(data);
 
     });
-//xx
+
     const listenEditUrl = DetailTaskService.listenEditUrl().subscribe(data => {
 
       if(data.status == "updated"){
@@ -669,12 +832,13 @@ useEffect(() => {
 
 
 
-
+//xx
 //run 1 time
 useEffect(() => {
 
   SethowManySteps(netWorkArrayState.length + 1);
   CheckVideos(detailData.id);
+  checkCurrentStatus(detailData.id);
   CheckcheckBannedVideoF(detailData.id);
   //console.log(detailData.id);
   //console.log("checked");
@@ -815,6 +979,8 @@ const EditNetwork = (data) => {
                   </div>
               </div>
 
+              <CompleteBlockComponent items={listArrayComplete} />
+
               {swithbutton === false ? (
                 <div className="buttonBox">
                     <div className="generateButton" onClick={GenerateUrl}>
@@ -833,6 +999,11 @@ const EditNetwork = (data) => {
                  </div>
                )}
 
+
+
+               {
+                 currentTaskStatus === 0 &&
+                 (
 
                <div className="setBox">
                  {completedTask === false ? (
@@ -887,9 +1058,14 @@ const EditNetwork = (data) => {
                   )}
 
 
-
                </div>
 
+             )
+           }
+
+            {
+              currentTaskStatus === 0 && (
+                <div className="fullSize">
                {editFormStatus === true ? (
                  <div className="setBoxTwo">
 
@@ -934,6 +1110,11 @@ const EditNetwork = (data) => {
                       </div>
                   </div>
                 )}
+              </div>
+              )
+            }
+
+
 
 
                <div className="buttonBoxSet">
@@ -943,6 +1124,8 @@ const EditNetwork = (data) => {
                        </div>
                    </div>
                </div>
+
+
 
 
 

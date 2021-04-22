@@ -10,6 +10,7 @@ const observ_subjectfour = new Subject();
 const observ_subjectfive = new Subject();
 const observ_subjectfive44 = new Subject();
 const observ_subjectfive45 = new Subject();
+const observ_subjectfive46 = new Subject();
 
 const detailservice = {
 

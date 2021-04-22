@@ -9,6 +9,7 @@ const observ_subject4 = new Subject();
 const observ_subject5 = new Subject();
 const observ_subject6 = new Subject();
 const observ_subject7 = new Subject();
+const observ_subjectfive46 = new Subject();
 
 const DetailTaskService = {
 
@@ -78,6 +79,27 @@ const DetailTaskService = {
             });
 
             return observ_subject2;
+          },
+
+          checkCurrentStatus:(project_id) => {
+            var datas = {
+              "deviceid":config.getdeviceid(),
+              "email":config.getUserEmail(),
+              "project_id":project_id,
+            }
+
+            var encryptedData = cryptLibrary.encrypt(datas);
+
+            socket.emit("checkcurrentStatus",encryptedData);
+          },
+
+          listenCurrentStatus:() => {
+            socket.on("checkcurrentStatus",(data) => {
+                //console.log(data);
+                observ_subjectfive46.next(cryptLibrary.decrypt(data));
+            });
+
+            return observ_subjectfive46;
           },
 
           EditUrl:(obj) => {

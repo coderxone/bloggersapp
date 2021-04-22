@@ -211,9 +211,6 @@ const SubComponent = (props) => {
       id:id
     }
     ObservableService.sendData_subject(sendObject);
-
-
-
     //DetailService.setBan(id);
 
   }
@@ -420,48 +417,45 @@ const DetailComponent = (props) => {
   const [ viewsCount,setViewsCount ] = useState(0);
   const [banId,setBanId] = useState(0);
 
+  const SetListX = (data,listArray) => {
+    if(data.status == "ok"){
+
+          var modifiedArray = data.data;
+
+          const newArray = [...listArray];
+
+
+          if(modifiedArray.length > newArray.length){
+
+            setListArray([]);
+
+            for(var j = 0;j < modifiedArray.length;j++){
+              newArray.push(modifiedArray[j]);
+            }
+
+            setListArray(newArray);
+
+          }else if(modifiedArray.length < newArray.length){
+
+
+            setListArray([]);
+
+            for(var j = 0;j < modifiedArray.length;j++){
+              newArray.push(modifiedArray[j]);
+            }
+
+            setListArray(newArray);
+          }
+
+    }else if(data.status == "false"){
+        setListArray([]);
+    }
+  }
+
   useEffect(() => {
     const listenDetailService = DetailService.listenCheckvideosByUser().subscribe(data => {
 
-      //console.log(data);
-      //console.log(historyId);
-//xx
-
-
-      if(data.status == "ok"){
-
-            var modifiedArray = data.data;
-
-            const newArray = [...listArray];
-
-
-            if(modifiedArray.length > newArray.length){
-
-              setListArray([]);
-
-              for(var j = 0;j < modifiedArray.length;j++){
-                newArray.push(modifiedArray[j]);
-              }
-
-              setListArray(newArray);
-
-            }else if(modifiedArray.length < newArray.length){
-
-
-              setListArray([]);
-
-              for(var j = 0;j < modifiedArray.length;j++){
-                newArray.push(modifiedArray[j]);
-              }
-
-              setListArray(newArray);
-            }
-
-      }else if(data.status == "false"){
-          setListArray([]);
-      }
-
-
+      SetListX(data,listArray);
 
     });
 
