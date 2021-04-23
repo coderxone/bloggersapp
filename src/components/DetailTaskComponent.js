@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
 import InputLabel from '@material-ui/core/InputLabel';
+import ListIcon from '@material-ui/icons/List';
 
 import FormControl from '@material-ui/core/FormControl';
 
@@ -33,6 +34,16 @@ import StepLabel from '@material-ui/core/StepLabel';
 import StepConnector from '@material-ui/core/StepConnector';
 import clsx from 'clsx';
 import Check from '@material-ui/icons/Check';
+
+import Drawer from '@material-ui/core/Drawer';
+import Button from '@material-ui/core/Button';
+import List from '@material-ui/core/List';
+import Divider from '@material-ui/core/Divider';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import HighlightOffIcon from '@material-ui/icons/HighlightOff';
+import FormDialogComponent from '../helperComponents/FormDialogComponent';
 
 import {
   useHistory
@@ -134,6 +145,13 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(1),
     minWidth: 120,
     width:"100%",
+  },
+  list: {
+    width: 250,
+  },
+  fullList: {
+    width: 'auto',
+    height:'200px',
   },
 }));
 
@@ -516,7 +534,7 @@ const DetailTaskComponent = (props) => {
 
     DetailTaskService.checkUrl(checkObj);
   });
-  //xx
+
   const checkCurrentStatus = ((id) => {
 
     var checkObj = {
@@ -604,7 +622,7 @@ useEffect(() => {
 
     //SetStep(stepper => stepper + 1);
   });
-//xx
+
   const listenCurrentStatusL = DetailTaskService.listenCurrentStatus().subscribe(data => {
 
     //console.log(data);
@@ -637,7 +655,7 @@ useEffect(() => {
       }
 
       //console.log(newlistArray);
-//xx
+
       setListArrayComplete(newlistArray);
 
 
@@ -776,6 +794,29 @@ useEffect(() => {
 
     });
 
+//xx
+    const ListenRejectObserver = Observable.getReject_subject().subscribe(data => {
+
+        if(data.action === 1){
+          var text = data.text;
+
+          DetailTaskService.DeclineOrder(text,detailData.id);
+        }else if(data.action === "close"){
+          SetformDialogStatus(false);
+        }
+
+    });
+
+    const ListenDeclineOrder = DetailTaskService.listenDeclineOrder().subscribe(data => {
+
+        console.log(data);
+        if(data.status == "ok"){
+          console.log("goBack");
+          goBackEvent();
+        }
+
+    });
+
     const listenEditUrl = DetailTaskService.listenEditUrl().subscribe(data => {
 
       if(data.status == "updated"){
@@ -823,6 +864,8 @@ useEffect(() => {
         ListenEditObserv.unsubscribe();
         listenEditUrl.unsubscribe();
         listenReplaceUrl.unsubscribe();
+        ListenRejectObserver.unsubscribe();
+        ListenDeclineOrder.unsubscribe();
     }
 
     //unsubscribe
@@ -832,7 +875,7 @@ useEffect(() => {
 
 
 
-//xx
+
 //run 1 time
 useEffect(() => {
 
@@ -860,6 +903,12 @@ const goToContacts = useCallback((Contacts) => {
 const goToChat = useCallback((Contacts) => {
 
     return history.push({pathname: '/suggest',projectId:detailData.id,email:detailData.email}), [history];
+
+});
+
+const goBackEvent = useCallback(() => {
+
+    return history.goBack();
 
 });
 
@@ -962,24 +1011,96 @@ const EditNetwork = (data) => {
 
 }
 
+    const [state, setState] = React.useState({
+      top: false
+    });
+
+    const toggleDrawer = (anchor, open) => (event) => {
+      if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+        return;
+      }
+      setState({ ...state, [anchor]: open });
+    };
+
+    const [formDialogStatus,SetformDialogStatus] = useState(false);
+//xx
+    const OpenTaskWindow = () => {
+
+        const newState = {...state};
+        newState.open = false;
+        setState(newState);
+
+        SetformDialogStatus(true);
+    }
+
+    const list = (anchor) => (
+      <div
+        className={clsx(classes.list, {
+          [classes.fullList]: anchor === 'top',
+        })}
+        role="presentation"
+        onClick={toggleDrawer(anchor, false)}
+        onKeyDown={toggleDrawer(anchor, false)}
+      >
+        <div className="MainMunuBlock" onClick={OpenTaskWindow}>
+          <div className="MenuList">
+            <div className="ListDivider"></div>
+            <HighlightOffIcon className="LeftMenuList"/>
+            <div className="RightMenuList">{LocalizeComponent.Decline}</div>
+            <div className="ListDivider"></div>
+          </div>
+
+        </div>
+
+
+
+      </div>
+    );
+
 
 
   return (
 
    	<div className={classes.root}>
+
+      <div className="menuAbsolute" onClick={toggleDrawer("top", true)}>
+        <ListIcon className="menuButtonstyle"/>
+      </div>
+
+
+      <div>
+
+          <React.Fragment key={"top"}>
+            <Drawer anchor={"top"} open={state["top"]} onClose={toggleDrawer("top", false)}>
+              {list("top")}
+            </Drawer>
+          </React.Fragment>
+
+      </div>
         <Grid container >
               <GoBackAbsoluteComponent/>
+
+              <div className="TaskTitleBox">
+                  <div className="TaskTitle">
+                      {detailData.url}
+                  </div>
+              </div>
+
+              <div className="TitleDivider"></div>
+
               <div className="descriptBox">
                   <div className="descriptionText">
-                      Name of business: {detailData.url}
-                      <br/>
                       Description: {detailData.description}
                       <br/>
                       Location: {detailData.location_name}
                   </div>
               </div>
 
+              <div className="BlockDivider"></div>
+
               <CompleteBlockComponent items={listArrayComplete} />
+
+            <div className="BlockDivider"></div>
 
               {swithbutton === false ? (
                 <div className="buttonBox">
@@ -999,7 +1120,7 @@ const EditNetwork = (data) => {
                  </div>
                )}
 
-
+               <div className="BlockDivider"></div>
 
                {
                  currentTaskStatus === 0 &&
@@ -1057,11 +1178,14 @@ const EditNetwork = (data) => {
                     </div>
                   )}
 
-
                </div>
+
 
              )
            }
+
+           <div className="BlockDivider"></div>
+
 
             {
               currentTaskStatus === 0 && (
@@ -1072,8 +1196,10 @@ const EditNetwork = (data) => {
                    <div>
                        <div className="ShareNameBoxEdit" onClick={DisableEditBox}>
 
-                          <div className="ShareNameTextB">
-                                {LocalizeComponent.edit_social}
+                          <div className="ShareNameTextFrame">
+                              <div className="ShareNameTextB">
+                                  {LocalizeComponent.edit_social}
+                              </div>
                           </div>
                        </div>
 
@@ -1114,6 +1240,8 @@ const EditNetwork = (data) => {
               )
             }
 
+            <div className="BlockDivider"></div>
+
 
 
 
@@ -1125,6 +1253,8 @@ const EditNetwork = (data) => {
                    </div>
                </div>
 
+               <div className="BlockDivider"></div>
+
 
 
 
@@ -1132,7 +1262,7 @@ const EditNetwork = (data) => {
                <AlertSuccessComponent state={sucessState} text={alertText}/>
                <AlertDangerComponent state={dangerState} text={dangerText}/>
                <ConfirmDialogComponent status={dialogStatus} left={leftbutton} right={rightbutton} text={dialogText}/>
-
+               <FormDialogComponent status={formDialogStatus} action={1} />
 
           </Grid>
       </div>

@@ -259,16 +259,17 @@ const BlockComponent = (props) => {
           }}
           >
             <div  className="MainBlock withoutScroll">
-              <div  className="firstLevel">
+              <div  className="firstLevelG">
                   <div className="firstLevelText">
                       {item.url} - {item.description}
                   </div>
               </div>
-              <div className="secondLevel">
+              <div className="BlockDividerTinLine"></div>
+              <div className="secondLevelG">
                 <div className="secondLevelShare">
                   <div className="secondLevelOne">
-                    <div className="shouldButton">
-                        <div className="shouldButtonText">
+                    <div className="shouldButtonG">
+                        <div className="shouldButtonTextG">
                               limit: {item.peoplecount} infl.
                         </div>
                     </div>
@@ -279,8 +280,8 @@ const BlockComponent = (props) => {
                 </div>
                 <div className="secondLevelShareThree">
                   <div className="secondLevelThree">
-                    <div className="shouldButtonThree">
-                        <div className="shouldButtonText">
+                    <div className="shouldButtonThreeG">
+                        <div className="shouldButtonTextG">
                               {item.date} - {item.time}
                         </div>
                     </div>

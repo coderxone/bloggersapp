@@ -1021,7 +1021,7 @@ useEffect(() => {
               approveStatus === 1 &&
               (
                 <List >
-                  {['Contacts','MyTasks','Earning','Account'].map((text, index) => (
+                  {['Contacts','MyTasks'].map((text, index) => (
                     <ListItem button key={text} onClick={event => changePage(text)}>
                       <ListItemIcon className={classestwo.icon}>
                         {index == 0 && <InboxIcon />}

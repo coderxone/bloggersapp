@@ -10,6 +10,7 @@ const observ_subject5 = new Subject();
 const observ_subject6 = new Subject();
 const observ_subject7 = new Subject();
 const observ_subjectfive46 = new Subject();
+const observ_subjectDecline = new Subject();
 
 const DetailTaskService = {
 
@@ -232,6 +233,31 @@ const DetailTaskService = {
             });
 
             return observ_subject4;
+          },
+
+          DeclineOrder:(text,project_id) => {
+
+            var data = {
+              deviceid:config.getdeviceid(),
+              email:config.getUserEmail(),
+              text:text,
+              project_id:project_id,
+            }
+
+            //console.log(data);
+
+            var encryptedData = cryptLibrary.encrypt(data);
+            //emit("closeorders",data);
+            socket.emit("declineorder",encryptedData);
+          },
+
+          listenDeclineOrder:() => {
+            socket.on("declineorder",(data) => {
+                //console.log(data);
+                observ_subjectDecline.next(cryptLibrary.decrypt(data));
+            });
+
+            return observ_subjectDecline;
           },
 
 

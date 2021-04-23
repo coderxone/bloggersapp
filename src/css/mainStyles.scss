@@ -1161,7 +1161,8 @@ ion-item {
   width: 55px;
   height: 55px;
   z-index: 2000 !important;
-  background-color: rgba(4, 16, 47, 0.4);
+  background-color: rgba(0,132,255,0.41);
+  // background-color: rgba(4, 16, 47, 0.4);
   border-radius: 5px;
 }
 
@@ -1652,7 +1653,6 @@ body {
   margin-top:7px;
   margin-left:5px;
   border-radius: 7px;
-
 }
 
 .secondLevelStepper{
@@ -1712,6 +1712,101 @@ body {
 .MuiTypography-body2{
   font-family:AppFont !important;
 }
+
+
+.menuAbsolute{
+  position: absolute;
+  right:0px;
+  top:0px;
+  width: 55px;
+  height: 55px;
+  z-index: 2000 !important;
+  background-color: rgba(0,132,255,0.41);
+  // background-color: rgba(4, 16, 47, 0.4);
+  border-radius: 5px;
+}
+
+.menuButtonstyle{
+  margin-top:12px;
+  margin-left:12px;
+  font-size: 30px !important;
+  color:white !important;
+}
+
+.MainMunuBlock{
+  margin-top:158px;
+  width: 100%;
+  height: 39px;
+
+  padding-top:2px;
+  padding-bottom:2px;
+   // background-color: blue;
+}
+.MenuList{
+  width:90%;
+  height: 37px;
+  margin-left:5%;
+   //background-color: red;
+}
+
+.LeftMenuList{
+  float: left;
+  width: 30%;
+  font-size: 30px !important;
+  margin-top:3px;
+  color:$base-app-color;
+  margin-left:4px;
+}
+.RightMenuList{
+  float:left;
+  width: 70%;
+  margin-top:8px;
+  margin-left:7px;
+  font-family: AppFont;
+  font-weight: bolder;
+  color:$base-app-color;
+}
+
+.TitleDivider{
+  // margin-top:25px;
+  background-color:$base-app-color !important;
+  width:60%;
+  height: 2px;
+  margin-left:20%;
+  float: left;
+}
+.ListDivider{
+  // margin-top:25px;
+  background-color:$base-app-color !important;
+  width: 80%;
+  height: 2px;
+  margin-left:10%;
+  float: left;
+}
+
+.BlockDivider{
+  // margin-top:25px;
+  margin-top:10px;
+  margin-bottom:10px;
+  background-color:$base-app-color !important;
+  width: 90%;
+  height: 2px;
+  margin-left:5%;
+  float: left;
+}
+
+.BlockDividerTinLine{
+  // margin-top:25px;
+
+  margin-bottom:2px;
+  background-color:white;
+  width: 91%;
+  height: 1px;
+  margin-left:4%;
+  float: left;
+}
+
+
 
 
 // TaskComponent

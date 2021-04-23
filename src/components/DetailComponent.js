@@ -810,14 +810,18 @@ useEffect(() => {
           <GoBackAbsoluteComponent/>
 
           <div className="project_title">
-              {LocalizeComponent.request}{ItemData.id}
+              {ItemData.url}
           </div>
+
+          <div className="TitleDivider"></div>
 
           <div className="project_description">
 
               {ItemData.description}
 
           </div>
+
+          <div className="BlockDivider"></div>
 
           <div className="project_double">
               <div className="line1">
@@ -853,11 +857,15 @@ useEffect(() => {
               <SocialNetworkComponent list={SocialNetworkList} />
           </div>
 
+          <div className="BlockDivider"></div>
+
           <div className="list_of_bloggers">
                 {LocalizeComponent.list_of_bloggers}
           </div>
 
           <BlogListComponent items={listArray}/>
+
+        <div className="BlockDivider"></div>
 
           <div className="completitionBlock">
               <div className="left_childCompletitionBlock">
@@ -877,6 +885,9 @@ useEffect(() => {
 
               </div>
           </div>
+
+          <div className="BlockDivider"></div>
+          
           <ConfirmDialogComponent status={dialogStatus} left={leftbutton} right={rightbutton} text={dialogText}/>
         </Grid>
     </div>

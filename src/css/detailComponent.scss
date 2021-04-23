@@ -4,6 +4,13 @@ $fontSize:#0083ff;
 $buttonColor:white;
 $successColor:#7dec62;
 
+@font-face {
+  font-family: 'AppFont';
+  src: url('../fonts/AVA_LL.TTF') format('ttf'),
+       url('../fonts/AVA_LL.TTF') format('ttf'),
+       url('../fonts/AVA_LL.TTF') format('truetype');
+}
+
 .MuiBox-root-19{
   padding:0px !important;
 }
@@ -25,7 +32,7 @@ $successColor:#7dec62;
   margin-top:5px;
   margin-bottom: 7px;
   font-size: 18px;
-  font-family:"Times New Roman", Times, serif;
+  font-family:AppFont;
 }
 
 .item_url_name{
@@ -63,7 +70,7 @@ $successColor:#7dec62;
   height: 100%;
   float: left;
   font-size: 18px;
-  font-family:"Times New Roman", Times, serif;
+  font-family:AppFont;
 
 }
 .rightSideList{
@@ -120,7 +127,7 @@ $successColor:#7dec62;
   margin-left:8px;
   margin-top:4px;
   text-align: center;
-  font-family:"Times New Roman", Times, serif;
+  font-family:AppFont;
   font-size: 16px;
   color:$base-app-color;
 }
@@ -130,7 +137,7 @@ $successColor:#7dec62;
   margin-left:8px;
   margin-top:2px;
   text-align: center;
-  font-family:"Times New Roman", Times, serif;
+  font-family:AppFont;
   font-size: 12px;
   color:$base-app-color;
 }
@@ -192,7 +199,7 @@ $successColor:#7dec62;
   margin-left:8px;
   margin-top:5px;
   text-align: center;
-  font-family:"Times New Roman", Times, serif;
+  font-family:AppFont;
   font-size: 16px;
 }
 
@@ -200,24 +207,22 @@ $successColor:#7dec62;
   width:100%;
   height: 30px;
   text-align:center;
-  font-family:"Times New Roman", Times, serif;
+  font-family:AppFont;
   font-size: 1.5em;
   color:$base-app-color;
   margin-top:20px;
+  margin-bottom:10px;
 }
 .project_description{
-  width:100%;
+  width:90%;
 
-  font-family:"Times New Roman", Times, serif;
+  font-family:AppFont;
   font-size: 1em;
-
-  padding-left:4%;
-  padding-right:4%;
-  padding-top:4%;
-  padding-bottom: 4%;
+  padding-top:10px;
   margin:5px;
-  margin-bottom: 20px;
-  border:2px solid $base-app-color;
+  margin-left:5%;
+
+  // border:2px solid $base-app-color;
   color:$base-app-color;
   font-size: $fontSize;
   border-radius: 10px;
@@ -225,14 +230,14 @@ $successColor:#7dec62;
 
 .project_double{
   width:100%;
-  font-family:"Times New Roman", Times, serif;
+  font-family:AppFont;
   height: 30px;
   color:$base-app-color;
 
 }
 .project_double_l{
   width:100%;
-  font-family:"Times New Roman", Times, serif;
+  font-family:AppFont;
   height: 90px;
   color:$base-app-color;
 
@@ -262,7 +267,7 @@ $successColor:#7dec62;
 }
 
 .list_of_bloggers{
-  font-family:"Times New Roman", Times, serif;
+  font-family:AppFont;
   width:100%;
   text-align: center;
   color:$base-app-color;
@@ -274,7 +279,7 @@ $successColor:#7dec62;
 
 .blogger_block{
   width:100%;
-  font-family:"Times New Roman", Times, serif;
+  font-family:AppFont;
   height: 50px;
   margin-left: 15px;
   margin-top: 10px;
@@ -312,7 +317,7 @@ $successColor:#7dec62;
 
 .blogger_block_two{
   width:100%;
-  font-family:"Times New Roman", Times, serif;
+  font-family:AppFont;
   height: 80px;
   margin-left: 15px;
   margin-top: 10px;
@@ -421,7 +426,7 @@ $successColor:#7dec62;
 .completitionBlock{
   width: 100%;
   height: 30px;
-  font-family:"Times New Roman", Times, serif;
+  font-family:AppFont;
   margin-left: 2px;
   margin-top:10px;
   margin-bottom: 10px;

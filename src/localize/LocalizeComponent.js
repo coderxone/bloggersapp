@@ -85,6 +85,7 @@ let strings = new LocalizedStrings({
    Go_offline:"Go offline",
    who_is:"please type",
    change_video_text:"Change video",
+   Decline:"Decline task",
 
  },
  it: {
