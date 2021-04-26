@@ -6,6 +6,7 @@ const observ_subjectD = new Subject();
 const observ_subjectEdit = new Subject();
 const observ_subjectRoute = new Subject();
 const observ_subjectAny = new Subject();
+const observ_Reject = new Subject();
 
 const observ_f = {
 
@@ -16,6 +17,15 @@ const observ_f = {
       getData_subject:() => {
         return observ_subject;
       },
+
+      reject_subject: data => {
+        return observ_Reject.next(data);
+      },
+
+      getReject_subject:() => {
+        return observ_Reject;
+      },
+
       sendData_subjectDilog: data => {
         return observ_subjectD.next(data);
       },

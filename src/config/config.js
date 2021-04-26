@@ -179,6 +179,17 @@ const newmodule = {
         }
 
       },
+      getJSONFromMemory:(name) => {
+
+        var gettingItem = localStorage.getItem(name);
+
+        if(gettingItem){
+          return JSON.parse(gettingItem);
+        }else{
+          return false;
+        }
+
+      },
       getUserSocialNetworks:() => {
 
         var SocialObject = {};

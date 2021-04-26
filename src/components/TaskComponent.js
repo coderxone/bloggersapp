@@ -24,11 +24,119 @@ import TaskService from '../services/TaskService';
 import DialogComponent from '../components/DialogComponent';
 import config from '../config/config.js';
 
+import PropTypes from 'prop-types';
+import AppBar from '@material-ui/core/AppBar';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
+import Typography from '@material-ui/core/Typography';
+import Stepper from '@material-ui/core/Stepper';
+import Step from '@material-ui/core/Step';
+import StepLabel from '@material-ui/core/StepLabel';
+import StepConnector from '@material-ui/core/StepConnector';
+import clsx from 'clsx';
+import Check from '@material-ui/icons/Check';
+
+
 
 import { increment, decrement,save_email } from '../actions/actions';
 import {
   Link,
 } from "react-router-dom";
+
+    const QontoConnector = withStyles({
+        alternativeLabel: {
+        top: 2,
+        left: 'calc(-50% + 16px)',
+        right: 'calc(50% + 16px)',
+        },
+        active: {
+        '& $line': {
+          borderColor: '#0083ff',
+        },
+        },
+        completed: {
+        '& $line': {
+          borderColor: '#0083ff',
+        },
+        },
+        line: {
+        borderColor: '#eaeaf0',
+        borderTopWidth: 3,
+        borderRadius: 1
+        },
+        })(StepConnector);
+
+        function QontoStepIcon(props) {
+            const classes = useQontoStepIconStyles();
+            const { active, completed } = props;
+
+            return (
+              <div
+                className={clsx(classes.root, {
+                  [classes.active]: active,
+                })}
+              >
+                {completed ? <Check className={classes.completed} /> : <div className={classes.circle} />}
+              </div>
+            );
+          }
+
+          const useQontoStepIconStyles = makeStyles({
+            root: {
+              color: '#eaeaf0',
+              display: 'flex',
+              height: 10,
+              alignItems: 'center',
+            },
+            active: {
+              color: '#0083ff',
+            },
+            circle: {
+              width: 8,
+              height: 8,
+              borderRadius: '50%',
+              backgroundColor: 'currentColor',
+            },
+            completed: {
+              color: '#0083ff',
+              zIndex: 1,
+              fontSize: 10,
+            },
+          });
+
+
+    function TabPanel(props) {
+        const { children, value, index, ...other } = props;
+
+        return (
+          <div
+            role="tabpanel"
+            hidden={value !== index}
+            id={`simple-tabpanel-${index}`}
+            aria-labelledby={`simple-tab-${index}`}
+            {...other}
+          >
+            {value === index && (
+              <Box>
+                {children}
+              </Box>
+            )}
+          </div>
+        );
+      }
+
+    TabPanel.propTypes = {
+    children: PropTypes.node,
+    index: PropTypes.any.isRequired,
+    value: PropTypes.any.isRequired,
+    };
+
+    function a11yProps(index) {
+      return {
+        id: `simple-tab-${index}`,
+        'aria-controls': `simple-tabpanel-${index}`,
+      };
+    }
 
 
 
@@ -177,6 +285,62 @@ const BlockComponent = (props) => {
 
 }
 
+//xx
+const CompleteBlockComponent = (props) => {
+
+  const [activeStep, setActiveStep] = React.useState(1);
+  const statusArray = useMemo(() => {
+    var rData = config.getJSONFromMemory("appstatus");
+    return rData;
+  },[])
+
+  const items = props.items;
+
+  //console.log(items);
+
+  const content = useMemo(() => {
+
+    return items.map((item,index) =>
+
+      <Link key={item.id} className="deleteUrlClass"
+          to={{
+            pathname: "/detailtask",
+            data: item // your data array of objects
+          }}
+          >
+            <div  className="MainBlockStepper withoutScroll">
+              <div  className="firstLevelStepper">
+                  <div className="firstLevelTextStepper">
+                      {item.url}
+                  </div>
+              </div>
+              <div className="secondLevelStepper">
+
+                <Stepper className="StepperAppStyles" alternativeLabel activeStep={item.status - 1} connector={<QontoConnector />}>
+                  {statusArray.map((label) => (
+                    <Step key={label.id}>
+                      <StepLabel StepIconComponent={QontoStepIcon}>{label.text}</StepLabel>
+                    </Step>
+                  ))}
+                </Stepper>
+              </div>
+            </div>
+        </Link>
+
+      );
+
+  },[props.items]);
+
+
+
+  return (
+    <div className="fullWidth withoutScroll" >
+      {content}
+    </div>
+  );
+
+}
+
 
 const TaskComponent = (props) => {
 
@@ -218,6 +382,7 @@ const TaskComponent = (props) => {
   });
 
   const [listArray,setListArray] = useState([]);
+  const [listArrayComplete,setListArrayComplete] = useState([]);
 
 
 
@@ -228,22 +393,52 @@ const TaskComponent = (props) => {
 
       if(data.status == "ok"){
 
-        const newlistArray = [...listArray];
 
-        for(var i = 0;i < data.data.length;i++){
-            var found = 0;
-            for(var j = 0;j < newlistArray.length;j++){
-              if(newlistArray[j].id == data.data[i].id){
-                found = 1;
+
+        if(data.data.length > 0){
+
+          const newlistArray = [...listArray];
+
+          for(var i = 0;i < data.data.length;i++){
+              var found = 0;
+              for(var j = 0;j < newlistArray.length;j++){
+                if(newlistArray[j].id == data.data[i].id){
+                  found = 1;
+                }
               }
-            }
-            if(found == 0){
-              newlistArray.push(data.data[i]);
-            }
+              if(found == 0){
+                newlistArray.push(data.data[i]);
+              }
+
+          }
+
+          setListArray(newlistArray);
+        }
+
+        if(data.completedata.length > 0){
+
+          const newlistArray = [...listArrayComplete];
+
+          for(var i = 0;i < data.completedata.length;i++){
+              var found = 0;
+              for(var j = 0;j < newlistArray.length;j++){
+                if(newlistArray[j].id == data.completedata[i].id){
+                  found = 1;
+                }
+              }
+              if(found == 0){
+                newlistArray.push(data.completedata[i]);
+              }
+
+          }
+
+          //console.log(newlistArray);
+//xx
+          setListArrayComplete(newlistArray);
+
 
         }
 
-        setListArray(newlistArray);
 
       }
 
@@ -256,7 +451,7 @@ const TaskComponent = (props) => {
 
     //unsubscribe
 
-  }, [listArray]);
+  }, [listArray,listArrayComplete]);
 
 
   useEffect(() => {
@@ -269,6 +464,17 @@ const TaskComponent = (props) => {
   }, []);
 
 
+  const [value, setValue] = React.useState(1);
+
+  const tabsChange = (event, newValue) => {
+    setValue(newValue);
+  };
+
+
+
+
+
+
 
 
 
@@ -276,8 +482,23 @@ const TaskComponent = (props) => {
 
    	<div className={classes.root}>
         <Grid container >
-            <GoBackAbsoluteComponent/>
+          <AppBar position="static">
+          <Tabs value={value} onChange={tabsChange} aria-label="simple tabs example">
+              <Tab label="Current Tasks" {...a11yProps(0)} />
+              <Tab label="Task Progress" {...a11yProps(1)} />
+            </Tabs>
+          </AppBar>
+          <TabPanel value={value} index={0}>
             <BlockComponent items={listArray} />
+          </TabPanel>
+          <TabPanel value={value} index={1}>
+            <CompleteBlockComponent items={listArrayComplete} />
+          </TabPanel>
+
+            <GoBackAbsoluteComponent/>
+
+
+
           </Grid>
       </div>
 

@@ -274,7 +274,7 @@ const SubDetail = (item,e) => {
 
 
 
-//xx
+
 const BlogListComponent = (props) => {
 
   const items = props.items;
@@ -489,7 +489,7 @@ const DetailComponent = (props) => {
     }
   },[]);
 
-//xx
+
   const SocialNetworkList = useMemo(function(){
 
       return JSON.parse(localStorage.getItem("soc"));
@@ -572,7 +572,7 @@ const DetailComponent = (props) => {
   }
 
   useEffect(() => {
-//xx
+
     const listenDetailService = DetailService.listenDetailData().subscribe(data => {
 
       //console.log(data);
@@ -711,7 +711,42 @@ useEffect(() => {
      DialogNotif.unsubscribe();
    }
 
- },[dialogAction])
+ },[dialogAction]);
+
+ const OneTimeNotification = (data) => {
+
+       var task_id = data.result[0].task_id;
+       var count = 0;
+
+       var StorageId = localStorage.getItem("taskId");
+       var taskId = parseInt(localStorage.getItem("taskId"));
+       var taskCount = parseInt(localStorage.getItem("taskCount"));
+
+
+       if(taskId !== task_id){
+         localStorage.setItem("taskCount",0);
+         taskCount = 0;
+       }
+
+         if((taskCount < 1) && (StorageId)){
+           taskCount++;
+           count = taskCount;
+
+           setLeftbutton(LocalizeComponent.cancel);
+           setRightbutton(LocalizeComponent.check);
+           setDialogText(LocalizeComponent.UncorfimedTask);
+           setDetailMessage(data.PleaseCheckThisTask);
+           SetDialogAction(1);
+           setDialogStatus(true);
+           HomeService.notificationVoice();
+
+           localStorage.setItem("taskCount",count);
+
+         }
+
+         localStorage.setItem("taskId",task_id);
+
+ }
 
  useEffect(() => {
 
@@ -735,20 +770,20 @@ useEffect(() => {
 
    });
 
+
+//xx
    //done tasks from each enfluencer
    const ListenCheckTasks = BusinesService.ListenCheckTasks().subscribe(data => {
      if(data.status == "ok"){
-       var task_id = data.result[0].task_id;
-       //console.log(task_id);
 
-       setLeftbutton(LocalizeComponent.cancel);
-       setRightbutton(LocalizeComponent.check);
-       setDialogText(LocalizeComponent.UncorfimedTask);
-       setDetailMessage(data.PleaseCheckThisTask);
-       SetDialogAction(1);
-       setDialogStatus(true);
-       HomeService.notificationVoice();
+       OneTimeNotification(data);
+
+     }else{
+       localStorage.setItem("taskCount",0);
      }
+
+
+
 
    });
 
@@ -775,14 +810,18 @@ useEffect(() => {
           <GoBackAbsoluteComponent/>
 
           <div className="project_title">
-              {LocalizeComponent.request}{ItemData.id}
+              {ItemData.url}
           </div>
+
+          <div className="TitleDivider"></div>
 
           <div className="project_description">
 
               {ItemData.description}
 
           </div>
+
+          <div className="BlockDivider"></div>
 
           <div className="project_double">
               <div className="line1">
@@ -818,11 +857,15 @@ useEffect(() => {
               <SocialNetworkComponent list={SocialNetworkList} />
           </div>
 
+          <div className="BlockDivider"></div>
+
           <div className="list_of_bloggers">
                 {LocalizeComponent.list_of_bloggers}
           </div>
 
           <BlogListComponent items={listArray}/>
+
+        <div className="BlockDivider"></div>
 
           <div className="completitionBlock">
               <div className="left_childCompletitionBlock">
@@ -842,6 +885,9 @@ useEffect(() => {
 
               </div>
           </div>
+
+          <div className="BlockDivider"></div>
+          
           <ConfirmDialogComponent status={dialogStatus} left={leftbutton} right={rightbutton} text={dialogText}/>
         </Grid>
     </div>

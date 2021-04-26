@@ -15,8 +15,9 @@ import Box from '@material-ui/core/Box';
 import { connect } from 'react-redux';
 import ObservableService from '../services/Observable';
 import DetailService from '../services/DetailService';
-import DoneOutlineIcon from '@material-ui/icons/DoneOutline';
+import CachedIcon from '@material-ui/icons/Cached';
 import VisibilityIcon from '@material-ui/icons/Visibility';
+import ChatIcon from '@material-ui/icons/Chat';
 import List from '@material-ui/core/List';
 import GoBackComponent from '../helperComponents/goBackAbsoluteComponent';
 import PropTypes from 'prop-types';
@@ -210,9 +211,6 @@ const SubComponent = (props) => {
       id:id
     }
     ObservableService.sendData_subject(sendObject);
-
-
-
     //DetailService.setBan(id);
 
   }
@@ -226,7 +224,7 @@ const SubComponent = (props) => {
     console.log(projectid);
     console.log(email);
   }
-
+//xx
 
   return (
     <div className="itemButtons">
@@ -234,9 +232,9 @@ const SubComponent = (props) => {
        <div className="subComponentDownC">
 
           <div className="centrDivone" onClick={(e) => setBan(id)}>
-              <DoneOutlineIcon className="leftSide"/>
-              <div className="rightSide">
-                  Ban {LocalizeComponent.ban}
+              <CachedIcon className="leftSide"/>
+              <div className="rightSideSmall">
+                  {LocalizeComponent.change_video_text}
               </div>
           </div>
           <Link className="centrDivCopyC deleteUrlClass"
@@ -246,7 +244,7 @@ const SubComponent = (props) => {
               email: email, // your data array of objects
             }}
           >
-          <VisibilityIcon className="leftSide"/>
+          <ChatIcon className="leftSide"/>
           <div className="rightSide">
               Suggest
           </div>
@@ -419,48 +417,45 @@ const DetailComponent = (props) => {
   const [ viewsCount,setViewsCount ] = useState(0);
   const [banId,setBanId] = useState(0);
 
+  const SetListX = (data,listArray) => {
+    if(data.status == "ok"){
+
+          var modifiedArray = data.data;
+
+          const newArray = [...listArray];
+
+
+          if(modifiedArray.length > newArray.length){
+
+            setListArray([]);
+
+            for(var j = 0;j < modifiedArray.length;j++){
+              newArray.push(modifiedArray[j]);
+            }
+
+            setListArray(newArray);
+
+          }else if(modifiedArray.length < newArray.length){
+
+
+            setListArray([]);
+
+            for(var j = 0;j < modifiedArray.length;j++){
+              newArray.push(modifiedArray[j]);
+            }
+
+            setListArray(newArray);
+          }
+
+    }else if(data.status == "false"){
+        setListArray([]);
+    }
+  }
+
   useEffect(() => {
     const listenDetailService = DetailService.listenCheckvideosByUser().subscribe(data => {
 
-      //console.log(data);
-      //console.log(historyId);
-//xx
-
-
-      if(data.status == "ok"){
-
-            var modifiedArray = data.data;
-
-            const newArray = [...listArray];
-
-
-            if(modifiedArray.length > newArray.length){
-
-              setListArray([]);
-
-              for(var j = 0;j < modifiedArray.length;j++){
-                newArray.push(modifiedArray[j]);
-              }
-
-              setListArray(newArray);
-
-            }else if(modifiedArray.length < newArray.length){
-
-
-              setListArray([]);
-
-              for(var j = 0;j < modifiedArray.length;j++){
-                newArray.push(modifiedArray[j]);
-              }
-
-              setListArray(newArray);
-            }
-
-      }else if(data.status == "false"){
-          setListArray([]);
-      }
-
-
+      SetListX(data,listArray);
 
     });
 
@@ -536,7 +531,7 @@ const DetailComponent = (props) => {
       }else if(data == "confirm"){
 //xx
           //console.log(banId);
-          DetailService.setBan(banId);
+          DetailService.setBan(banId,Project_id);
 
       }
     });

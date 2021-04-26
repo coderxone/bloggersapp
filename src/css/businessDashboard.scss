@@ -1,5 +1,14 @@
 $base-app-color:#0083ff;
 $fontSize:18px;
+
+@font-face {
+  font-family: 'AppFont';
+  src: url('../fonts/AVA_LL.TTF') format('ttf'),
+       url('../fonts/AVA_LL.TTF') format('ttf'),
+       url('../fonts/AVA_LL.TTF') format('truetype');
+}
+
+
 .makeStyles-drawerHeader-9{
   background-color: $base-app-color;
 }
@@ -48,14 +57,14 @@ $fontSize:18px;
   overflow: hidden;
 }
 
-.firstLevel{
+.firstLevelG{
   width:96.5%;
   height: 44%;
   /* background-color: blue; */
   margin-top:7px;
   margin-left:5px;
   border-radius: 7px;
-  border:1px solid white;
+  // border:1px solid white;
 }
 
 .firstLevelText{
@@ -65,7 +74,7 @@ $fontSize:18px;
   overflow: hidden;
   height: 80%;
   width: 100%;
-  font-family:"Times New Roman", Times, serif;
+  font-family:AppFont;
   color:white;
   font-size: $fontSize;
   font-weight: bold;
@@ -73,13 +82,13 @@ $fontSize:18px;
   /* white-space: nowrap; */
 }
 
-.secondLevel{
+.secondLevelG{
   width:96.5%;
   height: 43%;
   margin-top:5px;
   margin-left:5px;
   border-radius: 7px;
-  border:1px solid white;
+  // border:1px solid white;
 
 }
 
@@ -102,22 +111,22 @@ $fontSize:18px;
   float: left;
 }
 
-.shouldButton{
+.shouldButtonG{
   width:80%;
   height: 80%;
   /* background-color: white; */
-  margin-left:10%;
+  margin-left:9px;
   margin-top:2px;
   border-radius: 5px;
-  border:1px solid white;
+  // border:1px solid white;
 }
 
-.shouldButtonText{
+.shouldButtonTextG{
   width: 100%;
   height: 100%;
-  font-family:"Times New Roman", Times, serif;
+  font-family:AppFont;
   color:white;
-  text-align: center;
+  // text-align: center;
   font-size: $fontSize;
   font-weight: bold;
   padding-top:1px;
@@ -136,7 +145,7 @@ $fontSize:18px;
 .shareButtonText{
   width: 100%;
   height: 100%;
-  font-family:"Times New Roman", Times, serif;
+  font-family:AppFont;
   color:white;
   text-align: center;
   font-size: 18px;
@@ -171,18 +180,18 @@ $fontSize:18px;
   float: left;
 }
 
-.shouldButtonThree{
+.shouldButtonThreeG{
   width:80%;
   height: 80%;
-  border:1px solid white;
-  /* background-color: white; */
-  margin-left:10%;
+  margin-left:9px;
   margin-top:2px;
   border-radius: 5px;
+  text-overflow: ellipsis;
+  white-space:nowrap;
 }
 
 .shareButtonThree{
-  border:1px solid white;
+  // border:1px solid white;
   width:80%;
   height: 80%;
   /* background-color: white; */

@@ -259,16 +259,17 @@ const BlockComponent = (props) => {
           }}
           >
             <div  className="MainBlock withoutScroll">
-              <div  className="firstLevel">
+              <div  className="firstLevelG">
                   <div className="firstLevelText">
                       {item.url} - {item.description}
                   </div>
               </div>
-              <div className="secondLevel">
+              <div className="BlockDividerTinLine"></div>
+              <div className="secondLevelG">
                 <div className="secondLevelShare">
                   <div className="secondLevelOne">
-                    <div className="shouldButton">
-                        <div className="shouldButtonText">
+                    <div className="shouldButtonG">
+                        <div className="shouldButtonTextG">
                               limit: {item.peoplecount} infl.
                         </div>
                     </div>
@@ -279,8 +280,8 @@ const BlockComponent = (props) => {
                 </div>
                 <div className="secondLevelShareThree">
                   <div className="secondLevelThree">
-                    <div className="shouldButtonThree">
-                        <div className="shouldButtonText">
+                    <div className="shouldButtonThreeG">
+                        <div className="shouldButtonTextG">
                               {item.date} - {item.time}
                         </div>
                     </div>
@@ -435,7 +436,7 @@ const BusinessDashboard = (props) => {
       return history.push({pathname: '/contactlist'}), [history];
 
   });
-
+//xx
   const goToTaskIdPage = useCallback(() => {
 
       var findItem = {};
@@ -451,6 +452,8 @@ const BusinessDashboard = (props) => {
 
   });
 
+
+
 const [dialogSwitcher,SetdialogSwitcher] = useState(0);
 
   useEffect(() => {
@@ -465,7 +468,7 @@ const [dialogSwitcher,SetdialogSwitcher] = useState(0);
         }
       }else if(dialogSwitcher == 1){
         if(data == "confirm"){
-
+//xx
           goToTaskIdPage();
           //go to page with id
         }else if(data == "cancel"){
@@ -480,17 +483,54 @@ const [dialogSwitcher,SetdialogSwitcher] = useState(0);
       DialogNotif.unsubscribe();
     }
   },[dialogSwitcher]);
-//xx
+
+ const [dialogAction,SetDialogAction] = useState(0);
+
+  const OneTimeNotification = (data) => {
+
+        var task_id = data.result[0].task_id;
+        var count = 0;
+
+        var StorageId = localStorage.getItem("taskId");
+        var taskId = parseInt(localStorage.getItem("taskId"));
+        var taskCount = parseInt(localStorage.getItem("taskCount"));
+
+        if(taskId !== task_id){
+          localStorage.setItem("taskCount",0);
+          taskCount = 0;
+        }
+
+          if((taskCount < 1) && (StorageId)){
+            taskCount++;
+            count = taskCount;
+
+            setLeftbutton(LocalizeComponent.cancel);
+            setRightbutton(LocalizeComponent.check);
+            setDialogText(LocalizeComponent.UncorfimedTask);
+            setDetailProjectId(data.result[0].task_id);
+            SetdialogSwitcher(1);
+            setDetailMessage(data.PleaseCheckThisTask);
+            setDialogStatus(true);
+            HomeService.notificationVoice();
+
+            localStorage.setItem("taskCount",count);
+
+          }
+
+          localStorage.setItem("taskId",task_id);
+
+  }
+
   useEffect(() => {
 
     const DialogExecute = Observable.getData_subjectDialog().subscribe(data => {
       if(data.alert == "opendialog"){
-        //console.log(data);
+      //  console.log(data);
         setLeftbutton(LocalizeComponent.cancel);
         setRightbutton(LocalizeComponent.check);
         setDialogText(LocalizeComponent.dialogCheckMessage);
         setDetailProjectId(data.projectId);
-        SetdialogSwitcher(0);
+        SetdialogSwitcher(2);
         setDetailMessage(data.message);
         setDialogStatus(true);
         HomeService.notificationVoice();
@@ -501,18 +541,15 @@ const [dialogSwitcher,SetdialogSwitcher] = useState(0);
 
     //done tasks from each enfluencer
     const ListenCheckTasks = BusinesService.ListenCheckTasks().subscribe(data => {
-      if(data.status == "ok"){
-        var task_id = data.result[0].task_id;
-        //console.log(task_id);
 
-        setLeftbutton(LocalizeComponent.cancel);
-        setRightbutton(LocalizeComponent.check);
-        setDialogText(LocalizeComponent.newCompletedUser);
-        setDetailProjectId(task_id);
-        SetdialogSwitcher(1);
-        setDetailMessage(data.PleaseCheckThisTask);
-        setDialogStatus(true);
-        HomeService.notificationVoice();
+      //console.log(data);
+      if(data.status == "ok"){
+
+        OneTimeNotification(data);
+
+
+      }else{
+        localStorage.setItem("taskCount",0);
       }
 
     });
