@@ -1,12 +1,13 @@
 import React, { useEffect,useState } from 'react'
 import config from '../config/config.js';
 import { Capacitor,Plugins } from '@capacitor/core';
+import { Response } from 'capacitor-ios-app-tracking';
 import {
   useHistory,
   Redirect,
 } from "react-router-dom";
 const { Geolocation } = Plugins;
-
+const { IOSAppTracking } = Plugins;
 
 const RequestPermissionComponent = () => {
 
@@ -43,6 +44,8 @@ const RequestPermissionComponent = () => {
     enableHighAccuracy: true,
     timeout: 40000
   }
+  //ios permissions
+  const [ response, setResponse ] = useState(null);
 
 
 
@@ -56,20 +59,42 @@ const RequestPermissionComponent = () => {
       //ios functions
       var watchIdAndroidIos = null;
       if(Capacitor.platform === 'ios'){
-        watchIdAndroidIos = Geolocation.watchPosition(SuccessAndroidWatcher,ErrorAndroidPosition,options);
+
+        IOSAppTracking.getTrackingStatus().then((res) => {
+          console.log("tracking response");
+          setResponse(res);
+          console.log(res);
+        });
+
+        //watchIdAndroidIos = Geolocation.watchPosition(SuccessAndroidWatcher,ErrorAndroidPosition,options);
       }
 
       return () => {
-          if(watchIdAndroidIos != null){
-            if(Capacitor.platform === 'ios'){
-              Geolocation.clearWatch(watchIdAndroidIos);
-            }
-          }
+          // if(watchIdAndroidIos != null){
+          //   if(Capacitor.platform === 'ios'){
+          //     Geolocation.clearWatch(watchIdAndroidIos);
+          //   }
+          // }
       }
         //ios functions
 
 
   }, []);
+
+  useEffect(() => {
+
+    if(Capacitor.platform === 'ios'){
+        if(response.status === 'unrequested') {
+          console.log("tracking unrequested");
+          IOSAppTracking.requestPermission().then((res) => console.log(res))
+        }else{
+          console.log("tracking response");
+          console.log(response);
+        }
+    }
+  },[response]);
+
+
 
 return (
   <div>
