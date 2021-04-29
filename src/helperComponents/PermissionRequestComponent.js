@@ -45,7 +45,7 @@ const RequestPermissionComponent = () => {
     timeout: 40000
   }
   //ios permissions
-  const [ response, setResponse ] = useState(null);
+  const [ response, setResponse ] = useState(0);
 
 
 
@@ -62,7 +62,11 @@ const RequestPermissionComponent = () => {
 
         IOSAppTracking.getTrackingStatus().then((res) => {
           console.log("tracking response");
-          setResponse(res);
+          setResponse(1);
+          console.log(res);
+        });
+
+        IOSAppTracking.requestPermission().then((res) => {
           console.log(res);
         });
 
@@ -81,18 +85,18 @@ const RequestPermissionComponent = () => {
 
   }, []);
 
-  useEffect(() => {
-
-    if(Capacitor.platform === 'ios'){
-        if(response.status === 'unrequested') {
-          console.log("tracking unrequested");
-          IOSAppTracking.requestPermission().then((res) => console.log(res))
-        }else{
-          console.log("tracking response");
-          console.log(response);
-        }
-    }
-  },[response]);
+  // useEffect(() => {
+  //
+  //   if(Capacitor.platform === 'ios'){
+  //       if(response.status === 'unrequested') {
+  //         console.log("tracking unrequested");
+  //
+  //       }else{
+  //         console.log("tracking response");
+  //         console.log(response);
+  //       }
+  //   }
+  // },[response]);
 
 
 
