@@ -40,6 +40,8 @@ import AnimationComponent from './components/AnimationComponent';
 import MainPageDandelion from './components/MainPageDandelion';
 import BloggerAnswersComponent from './components/BloggerAnswersComponent';
 import AdminComponent from './components/adminComponents/AdminComponent';
+import BusinessMailComponent from './components/emailTemplates/businessActivation';
+import TestComponent from './components/testComponents/TestComponents';
 
 
 const App = () => {
@@ -80,7 +82,10 @@ const App = () => {
                 <Route path="/animationblogger" component={BloggerAnimationComponent } exact={true} />
                 <Route path="/blogger-answers" component={BloggerAnswersComponent } exact={true} />
                 <Route path="/approve" component={AdminComponent } exact={true} />
+                <Route path="/emailtemplate" component={BusinessMailComponent } exact={true} />
+                <Route path="/test" component={TestComponent} exact={true} />
                 <Route path="/main" component={MainComponent} exact={true} />
+
 
 
                 <Route path="/follow/:id" component={RedirectComponent} exact={true} />
