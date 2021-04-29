@@ -1,7 +1,6 @@
 import React, { useEffect,useState } from 'react'
 import config from '../config/config.js';
 import { Capacitor,Plugins } from '@capacitor/core';
-import { Response } from 'capacitor-ios-app-tracking';
 import {
   useHistory,
   Redirect,
@@ -45,9 +44,6 @@ const RequestPermissionComponent = () => {
     timeout: 40000
   }
   //ios permissions
-  const [ response, setResponse ] = useState(0);
-
-
 
 
   useEffect(() => {
@@ -61,42 +57,31 @@ const RequestPermissionComponent = () => {
       if(Capacitor.platform === 'ios'){
 
         IOSAppTracking.getTrackingStatus().then((res) => {
-          console.log("tracking response");
-          setResponse(1);
-          console.log(res);
+          //console.log("tracking response");
+          //setResponse(1);
+          //console.log(res);
         });
 
         IOSAppTracking.requestPermission().then((res) => {
-          console.log(res);
+          //console.log(res);
         });
 
-        //watchIdAndroidIos = Geolocation.watchPosition(SuccessAndroidWatcher,ErrorAndroidPosition,options);
+        watchIdAndroidIos = Geolocation.watchPosition(SuccessAndroidWatcher,ErrorAndroidPosition,options);
       }
 
       return () => {
-          // if(watchIdAndroidIos != null){
-          //   if(Capacitor.platform === 'ios'){
-          //     Geolocation.clearWatch(watchIdAndroidIos);
-          //   }
-          // }
+          if(watchIdAndroidIos != null){
+            if(Capacitor.platform === 'ios'){
+              Geolocation.clearWatch(watchIdAndroidIos);
+            }
+          }
       }
         //ios functions
 
 
   }, []);
 
-  // useEffect(() => {
-  //
-  //   if(Capacitor.platform === 'ios'){
-  //       if(response.status === 'unrequested') {
-  //         console.log("tracking unrequested");
-  //
-  //       }else{
-  //         console.log("tracking response");
-  //         console.log(response);
-  //       }
-  //   }
-  // },[response]);
+
 
 
 
