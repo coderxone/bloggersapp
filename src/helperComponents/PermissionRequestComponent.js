@@ -57,13 +57,14 @@ const RequestPermissionComponent = () => {
       if(Capacitor.platform === 'ios'){
 
         IOSAppTracking.getTrackingStatus().then((res) => {
-          //console.log("tracking response");
-          //setResponse(1);
-          //console.log(res);
+          console.log("tracking response");
+          setResponse(1);
+          console.log(res);
         });
 
         IOSAppTracking.requestPermission().then((res) => {
-          //console.log(res);
+          console.log("tracking permission");
+          console.log(res);
         });
 
         watchIdAndroidIos = Geolocation.watchPosition(SuccessAndroidWatcher,ErrorAndroidPosition,options);
