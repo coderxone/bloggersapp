@@ -11,7 +11,6 @@ def capacitor_pods
   pod 'Capacitor', :path => '../../node_modules/@capacitor/ios'
   pod 'CapacitorCordova', :path => '../../node_modules/@capacitor/ios'
   pod 'CapacitorCommunityContacts', :path => '../../node_modules/@capacitor-community/contacts'
-  pod 'CapacitorGeolocation', :path => '../../node_modules/@capacitor/geolocation'
   # Do not delete
 end
 
