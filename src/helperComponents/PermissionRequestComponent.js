@@ -58,7 +58,7 @@ const RequestPermissionComponent = () => {
 
         IOSAppTracking.getTrackingStatus().then((res) => {
           console.log("tracking response");
-          setResponse(1);
+          //setResponse(1);
           console.log(res);
         });
 
