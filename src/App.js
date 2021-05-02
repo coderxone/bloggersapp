@@ -42,6 +42,7 @@ import BloggerAnswersComponent from './components/BloggerAnswersComponent';
 import AdminComponent from './components/adminComponents/AdminComponent';
 import BusinessMailComponent from './components/emailTemplates/businessActivation';
 import TestComponent from './components/testComponents/TestComponents';
+import AboutUsComponent from './components/AboutUsComponent';
 
 
 const App = () => {
@@ -85,6 +86,7 @@ const App = () => {
                 <Route path="/emailtemplate" component={BusinessMailComponent } exact={true} />
                 <Route path="/test" component={TestComponent} exact={true} />
                 <Route path="/main" component={MainComponent} exact={true} />
+                <Route path="/about" component={AboutUsComponent} exact={true} />
 
 
 

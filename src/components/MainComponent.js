@@ -35,9 +35,11 @@ import PushComponent from '../helperComponents/NativePushNotificationComponent';
 import WebPushNotification from '../helperComponents/WebPushComponent';
 import ParseContactsComponent from '../helperComponents/ParseContactsComponent';
 import PermissionRequestComponent from '../helperComponents/PermissionRequestComponent.js';
+import MobileAppComponent from '../helperComponents/mobileAppComponent';
+import Observable from '../services/Observable';
 import { Capacitor,Plugins } from '@capacitor/core';
 import {
-  useHistory,
+  Link,useHistory,
   Redirect,
 } from "react-router-dom";
  const  { StatusBar } = Plugins;
@@ -55,6 +57,11 @@ const BottomFunc = () => {
 
   const goToLogin = () => {
     SetRoute("/login");
+    Setredirect(true);
+  };
+
+  const goToAbout = () => {
+    SetRoute("/about");
     Setredirect(true);
   };
 
@@ -146,6 +153,7 @@ const BottomFunc = () => {
     StatusBar.hide();
   }
 
+  const [mobileDialogStatus,SetMobileDialogStatus] = useState(false);
 
   useEffect(() => {
 
@@ -165,6 +173,35 @@ const BottomFunc = () => {
 
 
     },3000);
+
+    var ObservableMobileListener = Observable.getData_subjectMob().subscribe(data => {
+      //console.log(data);
+      if(data == "closeMobileDialog"){
+        SetMobileDialogStatus(false);
+      }
+      if(data == "openMobileDialog"){
+        SetMobileDialogStatus(true);
+      }
+    })
+
+    if(Capacitor.platform === 'web'){
+
+      var mobile = localStorage.getItem("mobile");
+
+      if((!mobile) && (mobile !== "1")){
+        setTimeout(function(){
+          SetMobileDialogStatus(true);
+          localStorage.setItem("mobile","1");
+        },6000);
+      }
+
+    }
+
+
+
+    return () => {
+      ObservableMobileListener.unsubscribe();
+    }
 
 
 
@@ -288,7 +325,7 @@ const BottomFunc = () => {
                <img src={Join} alt="Join echohub.io" width="100" height="35" onClick={goToLogin} />
              </div>
 
-             <div className="Echohub_policy">
+             <div className="Echohub_policy DivAppBackground">
                <div className="echohub_child">
                   <div className="echohub_child_text">
                       All rights reserved
@@ -345,12 +382,20 @@ const BottomFunc = () => {
                </div>
              </div>
 
-             <div className="aboutUs">
-               <div className="aboutUs_child">
-                 <div className="aboutUs_child_text">
-                   About Us, Connect
-                 </div>
+             <div className="aboutUs" >
+               <div  className="aboutUs_child">
+                 <Link  className="deleteUrlClass"
+                     to={{
+                       pathname: "/about"
+                     }}
+                     >
+                       <div className="aboutUs_child_text">
+                         About Us, Connect
+                       </div>
+                 </Link>
                </div>
+
+
                <div className="aboutUs_child aboutUs_childTop">
                  <div className="aboutUs_child_text">
                    Patent - 1141, USA
@@ -364,6 +409,15 @@ const BottomFunc = () => {
                <ParseContactsComponent/>
                <PermissionRequestComponent/>
              </div>
+
+             {
+               Capacitor.platform === 'web' && (
+                 <div className="imgCenter">
+                    <MobileAppComponent status={mobileDialogStatus}/>
+                 </div>
+               )
+             }
+
 
 
     </Grid>
