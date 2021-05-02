@@ -7,6 +7,9 @@ const observ_subjectEdit = new Subject();
 const observ_subjectRoute = new Subject();
 const observ_subjectAny = new Subject();
 const observ_Reject = new Subject();
+const observ_RejectMob = new Subject();
+const observ_RejectTimOut = new Subject();
+
 
 const observ_f = {
 
@@ -16,6 +19,13 @@ const observ_f = {
 
       getData_subject:() => {
         return observ_subject;
+      },
+      sendData_subjectMob: data => {
+        return observ_RejectMob.next(data);
+      },
+
+      getData_subjectMob:() => {
+        return observ_RejectMob;
       },
 
       reject_subject: data => {
@@ -115,6 +125,25 @@ const observ_f = {
 
         return timer5000min;
       },
+
+      // listenerByTimeOut_sec:() => {
+      //
+      //   Observable.of(true).pipe(
+      //       delay(3000),
+      //       tap(() => {
+      //           observ_RejectTimOut.next("3s");
+      //       }),
+      //       // delay(6000),
+      //       // tap(() => {
+      //       //     observ_RejectTimOut.next("6s");
+      //       // })
+      //   );
+      //
+      //   return observ_RejectTimOut;
+      // },
+
+
+
 
       test:(test => {
         return "test";

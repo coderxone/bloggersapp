@@ -17,7 +17,7 @@ import LogoTwo from '../icons/Logo_Echohub_2_part.png';
 import Box from '@material-ui/core/Box';
 import { connect } from 'react-redux';
 import AuthService from '../services/AuthService';
-import DandelionComponent from '../components/dandelionComponent.js';
+import DandelionComponent from '../components/dandelionComponent';
 import { increment, decrement,save_email,save_multiData } from '../actions/actions';
 import config from '../config/config.js';
 import {
@@ -277,7 +277,7 @@ const AuthorizationComponent = (props) => {
           <Grid item xs={12}>
             <Paper className={classes.paper}>
 
-              <div className="MainLCenterWrap">
+                <div className="MainLCenterWrap">
 
                   <div className="MainLogoCenter"><DandelionComponent /></div>
 

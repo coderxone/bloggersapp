@@ -79,7 +79,11 @@ const initSocket = (() => {
            message:data.details[data.details.length - 1].message
          }
          Observable.sendData_subjectDilog(messageObj);
-         homeservice.notificationVoice();
+         //xx
+         if(config.getUserEmail() !== false){
+           homeservice.notificationVoice();
+         }
+
          config.turnOffNotification();
          config.saveNotificationCount(data.count);
        }

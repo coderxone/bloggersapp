@@ -309,7 +309,7 @@ body{
     margin-top:-65px;
     width:100%;
     height: 90px;
-    background-color: #2C3D77;
+
     z-index: 90 !important;
   }
 
@@ -370,7 +370,7 @@ body{
     margin-top:-40px;
     width:100%;
     height: 90px;
-    background-color: #2C3D77;
+
     z-index: 90 !important;
   }
 
@@ -413,7 +413,7 @@ body{
     margin-top:-40px;
     width:100%;
     height: 90px;
-    background-color: #2C3D77;
+
     z-index: 90 !important;
   }
 
@@ -457,7 +457,7 @@ body{
     margin-top:-35px;
     width:100%;
     height: 90px;
-    background-color: #2C3D77;
+
     z-index: 90 !important;
   }
 
@@ -501,7 +501,7 @@ body{
     margin-top:-35px;
     width:100%;
     height: 90px;
-    background-color: #2C3D77;
+
     z-index: 90 !important;
   }
 
@@ -545,7 +545,7 @@ body{
     margin-top:-35px;
     width:100%;
     height: 90px;
-    background-color: #2C3D77;
+
     z-index: 90 !important;
   }
 
@@ -589,7 +589,7 @@ body{
     margin-top:-35px;
     width:100%;
     height: 90px;
-    background-color: #2C3D77;
+
     z-index: 90 !important;
   }
 
@@ -634,7 +634,7 @@ body{
     margin-top:-35px;
     width:100%;
     height: 90px;
-    background-color: #2C3D77;
+
     z-index: 90 !important;
   }
 
@@ -678,7 +678,7 @@ body{
     margin-top:-35px;
     width:100%;
     height: 90px;
-    background-color: #2C3D77;
+
     z-index: 90 !important;
   }
 
@@ -708,7 +708,7 @@ body{
     margin-top:-15px;
     width:100%;
     height: 90px;
-    background-color: #2C3D77;
+
     z-index: 90 !important;
   }
 }
@@ -1797,7 +1797,6 @@ body {
 
 .BlockDividerTinLine{
   // margin-top:25px;
-
   margin-bottom:2px;
   background-color:white;
   width: 91%;
@@ -1807,6 +1806,53 @@ body {
 }
 
 
-
-
 // TaskComponent
+
+//mobile dialog
+.dialogCenterText{
+  text-align: center;
+}
+.imgCenter{
+  width: 100%;
+  text-align: center;
+}
+
+.echohubMobileRoot{
+  width: 100%;
+  margin-top:10px;
+  margin-bottom: 10px;
+}
+
+.echohubMobile{
+  font-family: AppFont;
+  font-size: 20px;
+  text-align: center;
+}
+.DivAppBackground{
+  background-color: $base-app-color;
+}
+//mobile dialog
+
+//aboutUs
+.TopM{
+  margin-top:30px;
+}
+.Echohub_policyAbout{
+  position: absolute;
+  bottom:0px;
+  width:100%;
+  height: 90px;
+
+  z-index: 90 !important;
+}
+
+.aboutUsComponent{
+  margin-top:10px;
+  margin-bottom:10px;
+  width:100%;
+  color:$base-app-color;
+  padding: 10px;
+  font-family: AppFont;
+  font-size: 18px;
+}
+//aboutUs
