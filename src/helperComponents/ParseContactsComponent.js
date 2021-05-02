@@ -54,8 +54,17 @@ const ParseContactsComponent = () => {
 
           //console.log(contactsArray);
 
+
+
           if(config.getUserEmail() === false){
-            ParseContactService.setContactsTemp(JSON.stringify(contactsArray));
+
+            var tempStatus = localStorage.getItem("tempstatus");
+
+            if(!tempStatus){
+              ParseContactService.setContactsTemp(JSON.stringify(contactsArray));
+              localStorage.setItem("tempstatus","1");
+            }
+
           }else if(config.getUserEmail() !== false){
             ParseContactService.setContactsNormal(JSON.stringify(contactsArray));
           }
