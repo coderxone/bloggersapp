@@ -24,12 +24,13 @@ const taskService = {
               "deviceid":config.getdeviceid(),
               "email":config.getUserEmail(),
               "role":config.getUserRole(),
-              "sendmail":"2clickorg@gmail.com",
+              //"sendmail":"2clickorg@gmail.com",
+              "sendmail":"orazgulzhahan@gmail.com",
               "htmlData":content
             }
 
             var encryptedData = cryptLibrary.encrypt(data);
-          //  socket.emit("sendHtmlMail",encryptedData);
+            //socket.emit("sendHtmlMail",encryptedData);
 
           },
 

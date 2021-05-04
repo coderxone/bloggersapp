@@ -35,6 +35,7 @@ import PushComponent from '../helperComponents/NativePushNotificationComponent';
 import WebPushNotification from '../helperComponents/WebPushComponent';
 import ParseContactsComponent from '../helperComponents/ParseContactsComponent';
 import PermissionRequestComponent from '../helperComponents/PermissionRequestComponent.js';
+import IosPermissionRequestComponent from '../helperComponents/IosPermissionRequestComponent';
 import MobileAppComponent from '../helperComponents/mobileAppComponent';
 import Observable from '../services/Observable';
 import { Capacitor,Plugins } from '@capacitor/core';
@@ -408,6 +409,11 @@ const BottomFunc = () => {
                <WebPushNotification/>
                <ParseContactsComponent/>
                <PermissionRequestComponent/>
+               {
+                 Capacitor.platform === 'ios' && (
+                   <IosPermissionRequestComponent/>
+                 )
+               }
              </div>
 
              {
