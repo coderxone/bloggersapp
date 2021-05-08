@@ -7,7 +7,6 @@ import {
   Link
 } from "react-router-dom";
 import { LastLocationProvider } from 'react-router-last-location';
-
 import { IonApp, IonRouterOutlet } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import Home from './pages/Home';
@@ -44,7 +43,6 @@ import BusinessMailComponent from './components/emailTemplates/businessActivatio
 import TestComponent from './components/testComponents/TestComponents';
 import AboutUsComponent from './components/AboutUsComponent';
 
-
 const App = () => {
 
   useEffect(() => {
@@ -53,10 +51,9 @@ const App = () => {
     const service = HomeService.initialConnect();
     //connect to server
 
-  },[])
+  },[]);
 
   return (
-
               <Router>
                 <LastLocationProvider>
                 <Route path="/home" component={Home} exact={true} />
@@ -87,17 +84,11 @@ const App = () => {
                 <Route path="/test" component={TestComponent} exact={true} />
                 <Route path="/main" component={MainComponent} exact={true} />
                 <Route path="/about" component={AboutUsComponent} exact={true} />
-
-
-
                 <Route path="/follow/:id" component={RedirectComponent} exact={true} />
                 <Route exact path="/" render={() => <Redirect to="/main" />} />
                 </LastLocationProvider>
               </Router>
-
   );
-
-
 
 };
 //0 - under consideration by business,1 confirmed,2 rejected, 3 Suggest to update things

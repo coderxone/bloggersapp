@@ -154,6 +154,20 @@ const BottomFunc = () => {
     StatusBar.hide();
   }
 
+  const DetectLanguage = () => {
+    var lang = LocalizeComponent.getInterfaceLanguage();
+    if(lang.indexOf("en") >= 0){
+
+    }
+    if(lang.indexOf("ru") >= 0){
+      LocalizeComponent.setLanguage("ru");
+    }
+    if(lang.indexOf("es") >= 0){
+      LocalizeComponent.setLanguage("es");
+    }
+
+  }
+
   const [mobileDialogStatus,SetMobileDialogStatus] = useState(false);
 
   useEffect(() => {
@@ -198,6 +212,8 @@ const BottomFunc = () => {
 
     }
 
+    DetectLanguage();
+
 
 
     return () => {
@@ -216,12 +232,12 @@ const BottomFunc = () => {
 
             <div className={"Login_block " + bottomTopSize}  onClick={goToLogin}>
               <div className="Login_image">
-                  <div className="Login_image_text">Sign up</div>
+                  <div className="Login_image_text">{LocalizeComponent.Sign_up}</div>
               </div>
 
               <div className="Login_sign_in" >
                 <div className="Login_sign_in_text" onClick={goToLogin}>
-                  Sign in
+                  {LocalizeComponent.Sign}
                 </div>
               </div>
 
@@ -246,13 +262,13 @@ const BottomFunc = () => {
               {BusinessSwitcher == 0 ? (
                 <div className="creatorButtonDisabled" onClick={goToBloggerPage}>
                   <div className="textCreatorDisabled">
-                    Creator
+                    {LocalizeComponent.Creator}
                   </div>
                 </div>
                ) : (
                  <div className="creatorButtonActive" onClick={goToBloggerPage}>
                    <div className="textCreatorActiv">
-                     Creator
+                     {LocalizeComponent.Creator}
                    </div>
                  </div>
                )}
@@ -262,13 +278,13 @@ const BottomFunc = () => {
               {BusinessSwitcher == 0 ? (
                 <div className="creatorButtonTwoActiv" onClick={goToBusinessPage}>
                   <div className="textCreatorTwoActiv">
-                    Business
+                    {LocalizeComponent.Business}
                   </div>
                 </div>
                ) : (
                  <div className="creatorButtonTwoDisabled" onClick={goToBusinessPage}>
                    <div className="textCreatorTwoDisabled">
-                     Business
+                     {LocalizeComponent.Business}
                    </div>
                  </div>
                )}
@@ -281,7 +297,7 @@ const BottomFunc = () => {
 
             <div className="BackgroundText">
                 <div className="BackgroundTextV">
-                  <img className="BackgroundText_name" src={EchohubText}/> <span className="IO_size">.IO</span> - is a new, effective way of spreading information through a network of pooled bloggers.
+                  <img className="BackgroundText_name" src={EchohubText}/> <span className="IO_size">.IO</span> - {LocalizeComponent.echohub_title}.
                 </div>
             </div>
 
@@ -329,18 +345,18 @@ const BottomFunc = () => {
              <div className="Echohub_policy DivAppBackground">
                <div className="echohub_child">
                   <div className="echohub_child_text">
-                      All rights reserved
+                      {LocalizeComponent.All_rights_reserved}
                   </div>
                   <div className="echohub_child_text" >
-                    <a  className="echohub_child_text_url"  target="_blank" href="https://twitter.com/EchohubI">Follow us on Twitter</a>
-                  </div>
-
-                  <div className="echohub_child_text" >
-                    <a  className="echohub_child_text_url"  target="_blank" href="https://youtube.com/channel/UC-tvKHO66_pcfeOrh1n2YQg">Follow us on Youtube</a>
+                    <a  className="echohub_child_text_url"  target="_blank" href="https://twitter.com/EchohubI">{LocalizeComponent.Follow_Twitter}</a>
                   </div>
 
                   <div className="echohub_child_text" >
-                    <a  className="echohub_child_text_url"  target="_blank" href="https://www.tiktok.com/@echohub.io?lang=en">Follow us on TikTok</a>
+                    <a  className="echohub_child_text_url"  target="_blank" href="https://youtube.com/channel/UC-tvKHO66_pcfeOrh1n2YQg">{LocalizeComponent.Follow_Youtube}</a>
+                  </div>
+
+                  <div className="echohub_child_text" >
+                    <a  className="echohub_child_text_url"  target="_blank" href="https://www.tiktok.com/@echohub.io?lang=en">{LocalizeComponent.Follow_TikTok}</a>
                   </div>
                </div>
 
@@ -350,11 +366,11 @@ const BottomFunc = () => {
                  </div>
 
                  <div className="echohub_child_text">
-                    <a  className="echohub_child_text_url"  target="_blank" href="https://www.facebook.com/permalink.php?story_fbid=2446311895515266&id=100004094374192">Follow us on Facebook</a>
+                    <a  className="echohub_child_text_url"  target="_blank" href="https://www.facebook.com/permalink.php?story_fbid=2446311895515266&id=100004094374192">{LocalizeComponent.Follow_Facebook}</a>
                  </div>
 
                  <div className="echohub_child_text" >
-                   <a  className="echohub_child_text_url"  target="_blank" href="https://instagram.com/echohub.io?igshid=fm0hdtx3u10y">Follow us on Instagram</a>
+                   <a  className="echohub_child_text_url"  target="_blank" href="https://instagram.com/echohub.io?igshid=fm0hdtx3u10y">{LocalizeComponent.Follow_Instagram}</a>
                  </div>
 
 
@@ -364,19 +380,19 @@ const BottomFunc = () => {
                <div className="echohub_child">
                  <div className="echohub_child_text">
                    <div className="textPadding">
-                     <a  className="echohub_child_text_url"  target="_blank" href="http://echohub.io/echohub_documents/PrivacyPolicy.docx">Privacy policy</a>
+                     <a  className="echohub_child_text_url"  target="_blank" href="http://echohub.io/echohub_documents/PrivacyPolicy.docx">{LocalizeComponent.Privacy_policy}</a>
                    </div>
 
                    <div className="textPadding">
-                     <a  className="echohub_child_text_url"  target="_blank" href="http://echohub.io/echohub_documents/PrivacyPolicy.docx">Denial of responsibility</a>
+                     <a  className="echohub_child_text_url"  target="_blank" href="http://echohub.io/echohub_documents/PrivacyPolicy.docx">{LocalizeComponent.Denial_responsibility}</a>
                    </div>
 
                    <div className="textPadding">
-                     Subscribe to news
+                     {LocalizeComponent.Subscribe_to_news}
                    </div>
 
                    <div className="textPadding">
-                     <a  className="echohub_child_text_url"  target="_blank" href="http://echohub.io/echohub_documents/PrivacyPolicy.docx">Reviews</a>
+                     <a  className="echohub_child_text_url"  target="_blank" href="http://echohub.io/echohub_documents/PrivacyPolicy.docx">{LocalizeComponent.Reviews}</a>
                    </div>
 
                  </div>
@@ -391,7 +407,7 @@ const BottomFunc = () => {
                      }}
                      >
                        <div className="aboutUs_child_text">
-                         About Us, Connect
+                          {LocalizeComponent.About_Connect}
                        </div>
                  </Link>
                </div>
@@ -399,7 +415,7 @@ const BottomFunc = () => {
 
                <div className="aboutUs_child aboutUs_childTop">
                  <div className="aboutUs_child_text">
-                   Patent - 1141, USA
+                    {LocalizeComponent.Patent_USA}
                  </div>
                </div>
              </div>
