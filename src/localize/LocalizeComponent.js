@@ -128,6 +128,12 @@ let strings = new LocalizedStrings({
    marketers4:"comparable to or better",
    marketers5:"than other marketing",
    marketers6:"channels",
+   according:"According to a study by",
+   according2:"Tomson, influencer",
+   according3:"marketing yields a $ 6.50",
+   according4:"return on investment for",
+   according5:"every dollar spent",
+
 
  },
  it: {

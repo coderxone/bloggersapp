@@ -561,7 +561,7 @@ const NewComponent = (props) => {
           TextmeshCenter7.position.y = -150;
           CenterBlockA_mesh.add(TextmeshCenter7);
           //CenterBlockA side text
-//xx
+
           const LeftBlockA = new THREE.MeshBasicMaterial({
               map:new THREE.TextureLoader().load(LeftBlock)
           });
@@ -636,9 +636,41 @@ const NewComponent = (props) => {
           RightBlockA_mesh.layers.set(1);
           RightBlockA_mesh.scale.set(0.22,0.22,0.22);
           scene2.add(RightBlockA_mesh);
+
+
+          var textGeometryRight = new THREE.TextGeometry(LocalizeComponent.according, textOptionsLeft);
+          var TextmeshRight = new THREE.Mesh( textGeometryRight, textMaterialLeft );
+          TextmeshRight.geometry.center();
+          TextmeshRight.position.y = 30;
+          RightBlockA_mesh.add(TextmeshRight);
+
+          var textGeometryRight2 = new THREE.TextGeometry(LocalizeComponent.according2, textOptionsLeft);
+          var TextmeshRight2 = new THREE.Mesh( textGeometryRight2, textMaterialLeft );
+          TextmeshRight2.geometry.center();
+          TextmeshRight2.position.y = 0;
+          RightBlockA_mesh.add(TextmeshRight2);
+
+          var textGeometryRight3 = new THREE.TextGeometry(LocalizeComponent.according3, textOptionsLeft);
+          var TextmeshRight3 = new THREE.Mesh( textGeometryRight3, textMaterialLeft );
+          TextmeshRight3.geometry.center();
+          TextmeshRight3.position.y = -30;
+          RightBlockA_mesh.add(TextmeshRight3);
+
+          var textGeometryRight4 = new THREE.TextGeometry(LocalizeComponent.according4, textOptionsLeft);
+          var TextmeshRight4 = new THREE.Mesh( textGeometryRight4, textMaterialLeft );
+          TextmeshRight4.geometry.center();
+          TextmeshRight4.position.y = -60;
+          RightBlockA_mesh.add(TextmeshRight4);
+
+          var textGeometryRight5 = new THREE.TextGeometry(LocalizeComponent.according5, textOptionsLeft);
+          var TextmeshRight5 = new THREE.Mesh( textGeometryRight5, textMaterialLeft );
+          TextmeshRight5.geometry.center();
+          TextmeshRight5.position.y = -90;
+          RightBlockA_mesh.add(TextmeshRight5);
           //blocks
 
   }//page 1 close tag
+
     //persons
     const downloadperson = new THREE.MeshBasicMaterial({
         map:new THREE.TextureLoader().load(Person)
