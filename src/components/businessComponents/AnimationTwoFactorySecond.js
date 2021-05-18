@@ -23,6 +23,8 @@ import TextWindow5 from '../../images/main/newImages/generates.png';
 
 import fontStylesD from '../../fonts/helvetiker_regular_typeface.json';
 import { MeshLine, MeshLineMaterial, MeshLineRaycast } from 'three.meshline'
+import LocalizeComponent from '../../localize/LocalizeComponent';
+
 import {
   useHistory,
 } from "react-router-dom";
@@ -48,6 +50,8 @@ const orbit_control = 0;
 const ASPECT_RATIO = window.innerWidth / window.innerHeight;
 const WhiteTextColor = "#ffffff";
 const LinesColor = "rgb(32, 144, 204)";//2090cc
+const BlackTextColor = "#000000";
+const BlueTextColor = "#54b0dc";
 //const LinesColor = "rgb(3, 148, 252)";//2090cc
 // viewport
 let insetWidth;
@@ -85,6 +89,8 @@ const NewComponent = (props) => {
     return history.push('/login'), [history]
 
   });
+
+  const font = new THREE.FontLoader().parse(fontStylesD);
 
   function init() {
 
@@ -177,6 +183,26 @@ const NewComponent = (props) => {
           Stripes_mesh.scale.set(0.24,0.24,0.24);
           scene.add(Stripes_mesh);
           //Lines3Image
+          //text
+
+
+          const textOptionsBelow = {
+            font,
+            size: 36, // font size
+            height: 5, // how much extrusion (how thick / deep are the letters)
+          };
+
+          var textMaterialBelow = new THREE.MeshBasicMaterial(
+            { color: BlackTextColor }
+          );
+
+          var textGeometryBelow = new THREE.TextGeometry(LocalizeComponent.followers, textOptionsBelow);
+          var TextmeshBelow = new THREE.Mesh( textGeometryBelow, textMaterialBelow );
+          TextmeshBelow.geometry.center();
+          TextmeshBelow.position.y = -380;
+          TextmeshBelow.position.x = 280;
+          Stripes_mesh.add(TextmeshBelow);
+          //text
         }
 
 
@@ -196,13 +222,38 @@ const NewComponent = (props) => {
           TextWindow4_mesh.layers.set(0);
           TextWindow4_mesh.scale.set(0.24,0.24,0.24);
           scene.add(TextWindow4_mesh);
+
+          //text
+          const textOptionsThey = {
+            font,
+            size: 28, // font size
+            height: 5, // how much extrusion (how thick / deep are the letters)
+          };
+
+
+
+          var textGeometryThey = new THREE.TextGeometry(LocalizeComponent.they_would, textOptionsThey);
+          var TextmeshThey = new THREE.Mesh( textGeometryThey, textMaterialBelow );
+          TextmeshThey.geometry.center();
+          TextmeshThey.position.y = 15;
+          TextmeshThey.position.x = -15;
+          TextWindow4_mesh.add(TextmeshThey);
+
+          var textGeometryIn = new THREE.TextGeometry(LocalizeComponent.in_a, textOptionsThey);
+          var TextmeshIn = new THREE.Mesh( textGeometryIn, textMaterialBelow );
+          TextmeshIn.geometry.center();
+          TextmeshIn.position.y = -38;
+          TextmeshIn.position.x = -15;
+          TextWindow4_mesh.add(TextmeshIn);
+          //text
           //TextWindow4
+
           //Lines3Image
           const Lines3_a = new THREE.MeshBasicMaterial({
               map:new THREE.TextureLoader().load(Lines3Image)
           });
           Lines3_a.map.needsUpdate = true; //ADDED
-          var Lines3_a_mesh = new THREE.Mesh(new THREE.PlaneGeometry(1018, 593),Lines3_a);
+          var Lines3_a_mesh = new THREE.Mesh(new THREE.PlaneGeometry(1018, 568),Lines3_a);
           Lines3_a_mesh.overdraw = true;
           Lines3_a_mesh.geometry.center();
           // cloud_mesh.material.needsUpdate = true;
@@ -210,12 +261,57 @@ const NewComponent = (props) => {
           Lines3_a_mesh.position.y = -713;
           Lines3_a_mesh.scale.set(0.24,0.24,0.24);
           scene.add(Lines3_a_mesh);
+          //text
+          var textMaterialY_R = new THREE.MeshBasicMaterial(
+            { color: BlueTextColor }
+          );
+
+          const textOptionsContent = {
+            font,
+            size: 28, // font size
+            height: 5, // how much extrusion (how thick / deep are the letters)
+          };
+
+          var textGeometryContent = new THREE.TextGeometry(LocalizeComponent.you_r, textOptionsContent);
+          var TextmeshContent = new THREE.Mesh( textGeometryContent, textMaterialY_R );
+          TextmeshContent.geometry.center();
+          TextmeshContent.position.y = 282;
+          TextmeshContent.position.x = 0;
+          Lines3_a_mesh.add(TextmeshContent);
+          //Content Quality
+          const textOptionsCont = {
+            font,
+            size: 29, // font size
+            height: 5, // how much extrusion (how thick / deep are the letters)
+          };
+
+          var textGeometryCon = new THREE.TextGeometry(LocalizeComponent.content, textOptionsCont);
+          var TextmeshCont = new THREE.Mesh( textGeometryCon, textMaterialY_R );
+          TextmeshCont.geometry.center();
+          TextmeshCont.position.y = 170;
+          TextmeshCont.position.x = -345;
+          Lines3_a_mesh.add(TextmeshCont);
+
+          var textGeometryF = new THREE.TextGeometry(LocalizeComponent.f_reach, textOptionsCont);
+          var TextmeshF = new THREE.Mesh( textGeometryF, textMaterialY_R );
+          TextmeshF.geometry.center();
+          TextmeshF.position.y = 170;
+          TextmeshF.position.x = 0;
+          Lines3_a_mesh.add(TextmeshF);
+
+          var textGeometryE = new THREE.TextGeometry(LocalizeComponent.eng, textOptionsCont);
+          var TextmeshE = new THREE.Mesh( textGeometryE, textMaterialY_R );
+          TextmeshE.geometry.center();
+          TextmeshE.position.y = 170;
+          TextmeshE.position.x = 345;
+          Lines3_a_mesh.add(TextmeshE);
+          //text
           //Lines3Image
 
         }
 
 
-
+//xx
         if((props.page == 2) || (props.page == 3)){
               if(Deep <= 550){
                       //TextWindow5
@@ -232,6 +328,27 @@ const NewComponent = (props) => {
                       TextWindow5_mesh.layers.set(0);
                       TextWindow5_mesh.scale.set(0.24,0.24,0.24);
                       scene.add(TextWindow5_mesh);
+                      //text
+
+
+                      const textOptionsVideo = {
+                        font,
+                        size: 60, // font size
+                        height: 15, // how much extrusion (how thick / deep are the letters)
+                      };
+
+                      var textMaterialY_Video = new THREE.MeshBasicMaterial(
+                        { color: BlackTextColor }
+                      );
+
+                      var textGeometryV = new THREE.TextGeometry(LocalizeComponent.video_g, textOptionsVideo);
+                      var TextmeshV = new THREE.Mesh( textGeometryV, textMaterialY_Video );
+                      TextmeshV.geometry.center();
+                      TextmeshV.position.y = -10;
+                      TextmeshV.position.x = 0;
+                      TextWindow5_mesh.add(TextmeshV);
+
+                      //text
                       //TextWindow5
                       //Lines4Image
                       const Lines4_a = new THREE.MeshBasicMaterial({

@@ -25,7 +25,7 @@ import JoinImage from '../../images/main/animationtwo/join.png';
 //import Lines7Image from '../images/main/animationtwo/lines7.png';
 
 import TextWindow6 from '../../images/main/newImages/promote.png';
-
+import Observable from '../../services/Observable';
 
 
 import StripesImage from '../../images/main/newImages/scheme.png';
@@ -39,6 +39,7 @@ import { MeshLine, MeshLineMaterial, MeshLineRaycast } from 'three.meshline'
 import {
   useHistory,
 } from "react-router-dom";
+import LocalizeComponent from '../../localize/LocalizeComponent';
 
 
 
@@ -61,6 +62,10 @@ const orbit_control = 0;
 const ASPECT_RATIO = window.innerWidth / window.innerHeight;
 const WhiteTextColor = "#ffffff";
 const LinesColor = "rgb(32, 144, 204)";//2090cc
+const BlackTextColor = "#000000";
+const BlueTextColor = "#54b0dc";
+const DarkBlueTextColor = "#0181C2";
+const IndicatorColorGreen = "#10e364";
 //const LinesColor = "rgb(3, 148, 252)";//2090cc
 // viewport
 let insetWidth;
@@ -87,16 +92,26 @@ const NewComponent = (props) => {
   const mount = useRef(null);
 
   const history = useHistory();
-
+  const font = new THREE.FontLoader().parse(fontStylesD);
   // var props = {
   //   page:3
   // }
+  const [millionViews,setMillionViews] = useState(1.6);
+  const [millionTwoViews,setMillionTwoViews] = useState(8.1);
+  const [millionThreeViews,setMillionThreeViews] = useState(122.931);
 
   const goToLogin = useCallback(() => {
 
     return history.push('/login'), [history]
 
   });
+
+
+  var randV = 0.0001;
+  const GenerateRandomN = (mainpoint) => {
+    var randomValue = mainpoint + (Math.random() * (randV * mainpoint)) + turbulence;
+    return randomValue;
+  }
 
   function init() {
 
@@ -189,6 +204,26 @@ const NewComponent = (props) => {
           TextWindow5_mesh.scale.set(0.24,0.24,0.24);
           scene.add(TextWindow5_mesh);
           //TextWindow5
+
+          //text
+          const textOptionsVideo = {
+            font,
+            size: 30, // font size
+            height: 15, // how much extrusion (how thick / deep are the letters)
+          };
+
+          var textMaterialY_Video = new THREE.MeshBasicMaterial(
+            { color: WhiteTextColor }
+          );
+
+          var textGeometryV = new THREE.TextGeometry(LocalizeComponent.video_g, textOptionsVideo);
+          var TextmeshV = new THREE.Mesh( textGeometryV, textMaterialY_Video );
+          TextmeshV.geometry.center();
+          TextmeshV.position.y = -10;
+          TextmeshV.position.x = 0;
+          TextWindow5_mesh.add(TextmeshV);
+          //text
+
           //Lines4Image
           const Lines4_a = new THREE.MeshBasicMaterial({
               map:new THREE.TextureLoader().load(Lines4Image)
@@ -199,7 +234,7 @@ const NewComponent = (props) => {
           Lines4_a_mesh.geometry.center();
           // cloud_mesh.material.needsUpdate = true;
           Lines4_a_mesh.position.x = 0;
-          Lines4_a_mesh.position.y = -858;//-31
+          Lines4_a_mesh.position.y = -858;//
           Lines4_a_mesh.scale.set(0.22,0.22,0.22);
           scene.add(Lines4_a_mesh);
           //Lines4Image
@@ -317,12 +352,12 @@ const NewComponent = (props) => {
                   });
 
 
-                  //TextWindow6
+                  //TextWindow6 Cross promote image
                   const TextWindow6_a = new THREE.MeshBasicMaterial({
                       map:new THREE.TextureLoader().load(TextWindow6)
                   });
                   TextWindow6_a.map.needsUpdate = true; //ADDED
-                  var TextWindow6_mesh = new THREE.Mesh(new THREE.PlaneGeometry(1073, 411),TextWindow6_a);
+                  var TextWindow6_mesh = new THREE.Mesh(new THREE.PlaneGeometry(1073, 387),TextWindow6_a);
                   TextWindow6_mesh.overdraw = true;
                   TextWindow6_mesh.geometry.center();
                   // cloud_mesh.material.needsUpdate = true;
@@ -331,6 +366,82 @@ const NewComponent = (props) => {
                   TextWindow6_mesh.layers.set(0);
                   TextWindow6_mesh.scale.set(0.22,0.22,0.22);
                   scene.add(TextWindow6_mesh);
+
+                  const textOptionsCr = {
+                    font,
+                    size: 28, // font size
+                    height:10, // how much extrusion (how thick / deep are the letters)
+                  };
+
+                  var textMaterialCr = new THREE.MeshBasicMaterial(
+                    { color: BlueTextColor }
+                  );
+
+                  var textGeometryCr = new THREE.TextGeometry(LocalizeComponent.cross_pr, textOptionsCr);
+                  var TextmeshCr = new THREE.Mesh( textGeometryCr, textMaterialCr );
+                  TextmeshCr.geometry.center();
+                  TextmeshCr.position.y = 185;
+                  TextWindow6_mesh.add(TextmeshCr);
+
+                  var textGeometryCrTwo = new THREE.TextGeometry(LocalizeComponent.cross_two, textOptionsCr);
+                  var TextmeshCrTwo = new THREE.Mesh( textGeometryCrTwo, textMaterialCr );
+                  TextmeshCrTwo.geometry.center();
+                  TextmeshCrTwo.position.y = 130;
+                  TextWindow6_mesh.add(TextmeshCrTwo);
+
+                  var textGeometryCrThree = new THREE.TextGeometry(LocalizeComponent.cross_three, textOptionsCr);
+                  var TextmeshCrThree = new THREE.Mesh( textGeometryCrThree, textMaterialCr );
+                  TextmeshCrThree.geometry.center();
+                  TextmeshCrThree.position.y = 80;
+                  TextWindow6_mesh.add(TextmeshCrThree);
+
+                  const textOptionsFour = {
+                    font,
+                    size: 25, // font size
+                    height:10, // how much extrusion (how thick / deep are the letters)
+                  };
+
+                  var textGeometryFour = new THREE.TextGeometry(LocalizeComponent.define, textOptionsFour);
+                  var TextmeshFour = new THREE.Mesh( textGeometryFour, textMaterialCr );
+                  TextmeshFour.geometry.center();
+                  TextmeshFour.position.y = -120;
+                  TextmeshFour.position.x = -370;
+                  TextWindow6_mesh.add(TextmeshFour);
+
+                  var textGeometryFour2 = new THREE.TextGeometry(LocalizeComponent.defineTwo, textOptionsFour);
+                  var TextmeshFour2 = new THREE.Mesh( textGeometryFour2, textMaterialCr );
+                  TextmeshFour2.geometry.center();
+                  TextmeshFour2.position.y = -165;
+                  TextmeshFour2.position.x = -370;
+                  TextWindow6_mesh.add(TextmeshFour2);
+
+                  var textGeometryFour3 = new THREE.TextGeometry(LocalizeComponent.send, textOptionsFour);
+                  var TextmeshFour3 = new THREE.Mesh( textGeometryFour3, textMaterialCr );
+                  TextmeshFour3.geometry.center();
+                  TextmeshFour3.position.y = -125;
+                  TextmeshFour3.position.x = 0;
+                  TextWindow6_mesh.add(TextmeshFour3);
+
+                  var textGeometryFour4 = new THREE.TextGeometry(LocalizeComponent.sendTwo, textOptionsFour);
+                  var TextmeshFour4 = new THREE.Mesh( textGeometryFour4, textMaterialCr );
+                  TextmeshFour4.geometry.center();
+                  TextmeshFour4.position.y = -165;
+                  TextmeshFour4.position.x = 0;
+                  TextWindow6_mesh.add(TextmeshFour4);
+
+                  var textGeometryFour5 = new THREE.TextGeometry(LocalizeComponent.cross, textOptionsFour);
+                  var TextmeshFour5 = new THREE.Mesh( textGeometryFour5, textMaterialCr );
+                  TextmeshFour5.geometry.center();
+                  TextmeshFour5.position.y = -125;
+                  TextmeshFour5.position.x = 375;
+                  TextWindow6_mesh.add(TextmeshFour5);
+
+                  var textGeometryFour6 = new THREE.TextGeometry(LocalizeComponent.crossTwo, textOptionsFour);
+                  var TextmeshFour6 = new THREE.Mesh( textGeometryFour6, textMaterialCr );
+                  TextmeshFour6.geometry.center();
+                  TextmeshFour6.position.y = -165;
+                  TextmeshFour6.position.x = 375;
+                  TextWindow6_mesh.add(TextmeshFour6);
                   //TextWindow6
 
                   //Lines5Image
@@ -355,14 +466,188 @@ const NewComponent = (props) => {
                       map:new THREE.TextureLoader().load(Lines6Image)
                   });
                   Lines6_a.map.needsUpdate = true; //ADDED
+
                   var Lines6_a_mesh = new THREE.Mesh(new THREE.PlaneGeometry(1082, 409),Lines6_a);
                   Lines6_a_mesh.overdraw = true;
                   Lines6_a_mesh.geometry.center();
-                  // cloud_mesh.material.needsUpdate = true;
                   Lines6_a_mesh.position.x = 0;
                   Lines6_a_mesh.position.y = -1185;
                   Lines6_a_mesh.scale.set(0.2,0.2,0.2);
+                  Lines6_a_mesh.needsUpdate = true;
+                  Lines6_a_mesh.material.needsUpdate = true;
                   scene.add(Lines6_a_mesh);
+                  //text
+                  const textOptionsV = {
+                    font,
+                    size: 28, // font size
+                    height: 15, // how much extrusion (how thick / deep are the letters)
+                  };
+
+                  var textMaterialV = new THREE.MeshBasicMaterial(
+                    { color: BlueTextColor }
+                  );
+
+                  var textGeometryV = new THREE.TextGeometry(LocalizeComponent.views, textOptionsV);
+                  var TextmeshVj = new THREE.Mesh( textGeometryV, textMaterialV );
+                  TextmeshVj.geometry.center();
+                  TextmeshVj.position.y = 150;
+                  TextmeshVj.position.x = -370;
+                  Lines6_a_mesh.add(TextmeshVj);
+
+                  var textGeometryV2 = new THREE.TextGeometry(LocalizeComponent.viewsTwo, textOptionsV);
+                  var TextmeshVj2 = new THREE.Mesh( textGeometryV2, textMaterialV );
+                  TextmeshVj2.geometry.center();
+                  TextmeshVj2.position.y = 150;
+                  TextmeshVj2.position.x = 0;
+                  Lines6_a_mesh.add(TextmeshVj2);
+
+                  var textGeometryV3 = new THREE.TextGeometry(LocalizeComponent.viewsThree, textOptionsV);
+                  var TextmeshVj3 = new THREE.Mesh( textGeometryV3, textMaterialV );
+                  TextmeshVj3.geometry.center();
+                  TextmeshVj3.position.y = 150;
+                  TextmeshVj3.position.x = 370;
+                  Lines6_a_mesh.add(TextmeshVj3);
+//xx
+                  var textMaterialVD = new THREE.MeshBasicMaterial(
+                    { color: DarkBlueTextColor }
+                  );
+                  //DarkBlueTextColor
+                  const textOptionsV2 = {
+                    font,
+                    size: 88, // font size
+                    height: 15, // how much extrusion (how thick / deep are the letters)
+                  };
+
+                  // var textGeometryMillion = new THREE.TextGeometry(String(millionViews), textOptionsV2);
+                  // var TextmeshMillion = new THREE.Mesh( textGeometryMillion, textMaterialVD );
+                  // TextmeshMillion.geometry.center();
+                  // TextmeshMillion.position.y = -20;
+                  // TextmeshMillion.position.x = -370;
+                  // Lines6_a_mesh.add(TextmeshMillion);
+
+                  var millionViewsC = millionViews;
+                  var textGeometryMillionUp = new THREE.TextGeometry(String(millionViewsC), textOptionsV2);
+                  millionViewsC = millionViewsC + 0.1;
+                  var TextmeshMillionUp = new THREE.Mesh( textGeometryMillionUp, textMaterialVD );
+                  TextmeshMillionUp.geometry.center();
+                  TextmeshMillionUp.position.y = -20;
+                  TextmeshMillionUp.position.x = -370;
+                  Lines6_a_mesh.add(TextmeshMillionUp);
+
+
+
+                  var textGeometryMillion2 = new THREE.TextGeometry(String(millionTwoViews), textOptionsV2);
+                  var TextmeshMillion2 = new THREE.Mesh( textGeometryMillion2, textMaterialVD );
+                  TextmeshMillion2.geometry.center();
+                  TextmeshMillion2.position.y = -20;
+                  TextmeshMillion2.position.x = 0;
+                  TextmeshMillion2.material.needsUpdate = true;
+                  TextmeshMillion2.needsUpdate = true;
+                  Lines6_a_mesh.add(TextmeshMillion2);
+
+                  const textOptionsV3 = {
+                    font,
+                    size: 65, // font size
+                    height: 15, // how much extrusion (how thick / deep are the letters)
+                  };
+
+                  var textGeometryMillion3 = new THREE.TextGeometry(String(millionThreeViews), textOptionsV3);
+                  var TextmeshMillion3 = new THREE.Mesh( textGeometryMillion3, textMaterialVD );
+                  TextmeshMillion3.geometry.center();
+                  TextmeshMillion3.position.y = -60;
+                  TextmeshMillion3.position.x = 370;
+                  TextmeshMillion3.material.needsUpdate = true;
+                  TextmeshMillion3.needsUpdate = true;
+                  Lines6_a_mesh.add(TextmeshMillion3);
+
+                  var millionViewsCC = millionTwoViews;
+                  var millionViewsCCC = millionThreeViews;
+
+                  var geometryCC = new THREE.CircleGeometry( 15, 32 );
+                  var materialCC = new THREE.MeshBasicMaterial( { color: IndicatorColorGreen } );
+                  var circleCC = new THREE.Mesh( geometryCC, materialCC );
+                  circleCC.position.y = 70;
+                  circleCC.position.x = 580;
+                  circleCC.material.needsUpdate = true;
+                  circleCC.needsUpdate = true;
+                  circleCC.material.transparent = true;
+                  Lines6_a_mesh.add( circleCC );
+                  var indicatorOpacity = 1;
+      //xx
+                  const obsSubsc = Observable.subscribeByTimer_4_second().subscribe(item => {
+                    //delete variables
+                    Lines6_a_mesh.remove(TextmeshMillionUp);
+                    Lines6_a_mesh.remove(TextmeshMillion2);
+                    Lines6_a_mesh.remove(TextmeshMillion3);
+                    // Lines6_a_mesh.remove( circleCC );
+                    //delete variables
+                    textGeometryMillionUp = new THREE.TextGeometry(String(millionViewsC.toFixed(3)), textOptionsV2);
+                    TextmeshMillionUp = new THREE.Mesh( textGeometryMillionUp, textMaterialVD );
+                    TextmeshMillionUp.position.y = -60;
+                    TextmeshMillionUp.position.x = -530;
+                    Lines6_a_mesh.add(TextmeshMillionUp);
+
+                    //
+                    textGeometryMillion2 = new THREE.TextGeometry(String(millionViewsCC.toFixed(3)), textOptionsV2);
+                    TextmeshMillion2 = new THREE.Mesh( textGeometryMillion2, textMaterialVD );
+                    TextmeshMillion2.geometry.center();
+                    TextmeshMillion2.position.y = -20;
+                    TextmeshMillion2.position.x = 0;
+                    TextmeshMillion2.material.needsUpdate = true;
+                    TextmeshMillion2.needsUpdate = true;
+                    Lines6_a_mesh.add(TextmeshMillion2);
+                    //
+                    textGeometryMillion3 = new THREE.TextGeometry(String(millionViewsCCC.toFixed(3)), textOptionsV3);
+                    TextmeshMillion3 = new THREE.Mesh( textGeometryMillion3, textMaterialVD );
+                    TextmeshMillion3.geometry.center();
+                    TextmeshMillion3.position.y = -60;
+                    TextmeshMillion3.position.x = 370;
+                    TextmeshMillion3.material.needsUpdate = true;
+                    TextmeshMillion3.needsUpdate = true;
+                    Lines6_a_mesh.add(TextmeshMillion3);
+
+                    millionViewsC = millionViewsC + GenerateRandomN(0.001);
+                    millionViewsCC = millionViewsCC + GenerateRandomN(0.0001);
+                    millionViewsCCC = millionViewsCCC + GenerateRandomN(0.0001);
+
+
+                  });
+
+                  const obsSubscTwo = Observable.subscribeByTimer_2_second().subscribe(item => {
+
+
+
+                    circleCC.material.opacity = indicatorOpacity;
+
+
+                    if(indicatorOpacity == 0){
+                      indicatorOpacity = 1;
+                    }else{
+                      indicatorOpacity = 0;
+                    }
+
+
+
+                  });
+
+                  const textOptionsMillionText = {
+                    font,
+                    size: 70, // font size
+                    height: 10, // how much extrusion (how thick / deep are the letters)
+                  };
+
+                  var textGeometryMillionText = new THREE.TextGeometry(LocalizeComponent.millionN, textOptionsMillionText);
+                  var TextmeshMillionText = new THREE.Mesh( textGeometryMillionText, textMaterialVD );
+                  TextmeshMillionText.geometry.center();
+                  TextmeshMillionText.position.y = -140;
+                  TextmeshMillionText.position.x = -370;
+                  TextmeshMillionText.material.needsUpdate = true;
+                  Lines6_a_mesh.add(TextmeshMillionText);
+                  var TextmeshMillionTextC = TextmeshMillionText.clone();
+                  TextmeshMillionTextC.position.y = -140;
+                  TextmeshMillionTextC.position.x = 0;
+                  Lines6_a_mesh.add(TextmeshMillionTextC);
+                  //text
                   //Lines6Image
                   //views
 
@@ -418,6 +703,8 @@ const NewComponent = (props) => {
 	}
 
 
+
+
   useEffect(() => {
 
     init();
@@ -450,6 +737,8 @@ const NearestRandomPoints = (mainpoint) => {
   var randomValue = mainpoint + (Math.random() * (turbulence * mainpoint)) - turbulence;
   return randomValue;
 }
+
+
 
 
 function onWindowResize() {
@@ -529,6 +818,9 @@ function animate() {
     var yR = -1299;
     var xR = 0;
     var circleARadius = 54;
+
+
+
 
     circleA.position.x =  xR + (circleARadius * Math.cos(t));
     circleA.position.y = yR + (circleARadius * Math.sin(t));
