@@ -169,6 +169,18 @@ let strings = new LocalizedStrings({
    acceptT:"Accept the visual content",
    acceptTwo:"proposal or recommend a",
    acceptThree:"change. Chat with influencer",
+   SubscP:"Subscribtion plans",
+   p1:"Quick start",
+   p2:"6 compaign",
+   p3:"6 influencers",
+   p4:"$300",
+   p5:"Massive spreading",
+   p6:"12 compaigns",
+   p7:"$3000",
+   p8:"Popular",
+   p9:"$350",
+   p10:"National",
+   p11:"$2700",
 
 
 

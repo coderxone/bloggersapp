@@ -94,7 +94,7 @@ const NewComponent = (props) => {
   const mount = useRef(null);
   const history = useHistory();
   //xx
-  const [topPosition,SetTopPosition] = useState(3);
+  const [topPosition,SetTopPosition] = useState(0);
 
   // var props = {
   //   page:3
@@ -351,6 +351,13 @@ const NewComponent = (props) => {
 
           const FirstPartOfText = () => {
             //1 part
+            Lines8_a_mesh.remove(TextmeshAn);
+            Lines8_a_mesh.remove(TextmeshAn2);
+            Lines8_a_mesh.remove(TextmeshAn3);
+            Lines8_a_mesh.remove(TextmeshAn4);
+            Lines8_a_mesh.remove(TextmeshAn5);
+            Lines8_a_mesh.remove(TextmeshAn6);
+
             textGeometryAn = new THREE.TextGeometry(LocalizeComponent.analyzeOne, textOptionsAn);
             TextmeshAn = new THREE.Mesh( textGeometryAn, textMaterialLeft );
             TextmeshAn.geometry.center();
@@ -395,6 +402,14 @@ const NewComponent = (props) => {
           }
 
           const SecondPartOfText = () => {
+
+            Lines8_a_mesh.remove(TextmeshAn);
+            Lines8_a_mesh.remove(TextmeshAn2);
+            Lines8_a_mesh.remove(TextmeshAn3);
+            Lines8_a_mesh.remove(TextmeshAn4);
+            Lines8_a_mesh.remove(TextmeshAn5);
+            Lines8_a_mesh.remove(TextmeshAn6);
+
             const textOptionsS = {
               font,
               size: 27, // font size
@@ -410,6 +425,12 @@ const NewComponent = (props) => {
           }
 
           const ThirdPartOfText = () => {
+
+            Lines8_a_mesh.remove(TextmeshAn);
+            Lines8_a_mesh.remove(TextmeshAn);
+            Lines8_a_mesh.remove(TextmeshAn2);
+
+
             const textOptionsS = {
               font,
               size: 27, // font size
@@ -423,8 +444,13 @@ const NewComponent = (props) => {
             Lines8_a_mesh.add(TextmeshAn);
               //1 part
           }
-//xx
+
           const FourPartOfText = () => {
+
+            Lines8_a_mesh.remove(TextmeshAn);
+            Lines8_a_mesh.remove(TextmeshAn2);
+            Lines8_a_mesh.remove(TextmeshAn3);
+
             const textOptionsS = {
               font,
               size: 27, // font size
@@ -439,20 +465,25 @@ const NewComponent = (props) => {
             //1 part
             //2 part
             textGeometryAn2 = new THREE.TextGeometry(LocalizeComponent.acceptTwo, textOptionsS);
-            TextmeshTwo = new THREE.Mesh( textGeometryAn2, textMaterialLeft );
-            TextmeshTwo.geometry.center();
-            TextmeshTwo.position.y = 0;
-            Lines8_a_mesh.add(TextmeshTwo);
+            TextmeshAn2 = new THREE.Mesh( textGeometryAn2, textMaterialLeft );
+            TextmeshAn2.geometry.center();
+            TextmeshAn2.position.y = 0;
+            Lines8_a_mesh.add(TextmeshAn2);
             //2 part
             //3 part
             textGeometryAn3 = new THREE.TextGeometry(LocalizeComponent.acceptThree, textOptionsS);
-            TextmeshThree = new THREE.Mesh( textGeometryAn3, textMaterialLeft );
-            TextmeshThree.geometry.center();
-            TextmeshThree.position.y = -40;
-            Lines8_a_mesh.add(TextmeshThree);
+            TextmeshAn3 = new THREE.Mesh( textGeometryAn3, textMaterialLeft );
+            TextmeshAn3.geometry.center();
+            TextmeshAn3.position.y = -40;
+            Lines8_a_mesh.add(TextmeshAn3);
             //3 part
           }
-          var TextsArray = [FirstPartOfText(),SecondPartOfText(),ThirdPartOfText(),FourPartOfText()];
+          var TextsArray = [
+            FirstPartOfText,
+            SecondPartOfText,
+            ThirdPartOfText,
+            FourPartOfText
+          ];
 
 
           //text
@@ -466,8 +497,12 @@ const NewComponent = (props) => {
                 currentPosition = 0;
               }
 
+
+
             Lines8_a.map.dispose();
             Lines8_a.map = new THREE.TextureLoader().load(OnTopArray[currentPosition]);
+            const callingFunc = TextsArray[currentPosition];
+            callingFunc();
           }
 
           const changeBack = () => {
@@ -476,10 +511,14 @@ const NewComponent = (props) => {
                 currentPosition--;
                 Lines8_a.map.dispose();
                 Lines8_a.map = new THREE.TextureLoader().load(OnTopArray[currentPosition]);
+                const callingFunc = TextsArray[currentPosition];
+                callingFunc();
               }
 
 
           }
+          const callingFunc = TextsArray[currentPosition];
+          callingFunc();
 
           //onTopLeft
           const onTopLeft_a = new THREE.MeshBasicMaterial({
@@ -523,7 +562,7 @@ const NewComponent = (props) => {
           });
           //onTopRight
 
-
+//xx
           //pricing
           const Pricing_a = new THREE.MeshBasicMaterial({
               map:new THREE.TextureLoader().load(Pricing)
@@ -537,6 +576,89 @@ const NewComponent = (props) => {
           Pricing_a_mesh.position.y = -1563;
           Pricing_a_mesh.scale.set(0.24,0.24,0.24);
           scene2.add(Pricing_a_mesh);
+
+          const textOptionsSp = {
+            font,
+            size: 37, // font size
+            height: 15, // how much extrusion (how thick / deep are the letters)
+          };
+
+          var textMaterialLeft = new THREE.MeshBasicMaterial(
+            { color: BlueTextColor }
+          );
+
+          var textGeometrySP = new THREE.TextGeometry(LocalizeComponent.SubscP, textOptionsSp);
+          var TextmeshSp = new THREE.Mesh( textGeometrySP, textMaterialLeft );
+          TextmeshSp.geometry.center();
+          TextmeshSp.position.y = 5;
+          Pricing_a_mesh.add(TextmeshSp);
+//xx
+          var priceArray = [
+            {
+              name:LocalizeComponent.p1,
+              compaign:LocalizeComponent.p2,
+              count:LocalizeComponent.p3,
+              price:LocalizeComponent.p4,
+              index:1,
+              s0:120,
+              s1:45,
+              s2:-5,
+              s3:-50,
+              s4:-100,
+              b1:50,
+              b2:-5,
+              b3:-55,
+              b4:-105,
+            },
+            {
+              name:LocalizeComponent.p5,
+              compaign:LocalizeComponent.p6,
+              count:LocalizeComponent.p3,
+              price:LocalizeComponent.p7,
+              index:2,
+              s0:120,
+              s1:45,
+              s2:-5,
+              s3:-50,
+              s4:-100,
+              b1:50,
+              b2:-5,
+              b3:-55,
+              b4:-105,
+            },
+            {
+              name:LocalizeComponent.p8,
+              compaign:LocalizeComponent.p6,
+              count:LocalizeComponent.p3,
+              price:LocalizeComponent.p9,
+              index:3,
+              s0:120,
+              s1:45,
+              s2:-5,
+              s3:-50,
+              s4:-100,
+              b1:50,
+              b2:-5,
+              b3:-55,
+              b4:-105,
+            },
+            {
+              name:LocalizeComponent.p10,
+              compaign:LocalizeComponent.p2,
+              count:LocalizeComponent.p3,
+              price:LocalizeComponent.p11,
+              index:4,
+              s0:120,
+              s1:45,
+              s2:-5,
+              s3:-50,
+              s4:-100,
+              b1:50,
+              b2:-5,
+              b3:-55,
+              b4:-105,
+            }
+          ]
           //pricing
 
           var smallPlansArray = [Plans1_small,Plans2_small,Plans3_small,Plans4_small];
@@ -560,6 +682,86 @@ const NewComponent = (props) => {
           Plans1_a_mesh.scale.set(0.21,0.21,0.21);
           scene2.add(Plans1_a_mesh);
 
+          var textOptionsBn = {
+            font,
+            size: 50, // font size
+            height: 5, // how much extrusion (how thick / deep are the letters)
+          };
+          var textOptionsQ = {
+            font,
+            size: 27, // font size
+            height: 5, // how much extrusion (how thick / deep are the letters)
+          };
+          var textMaterialQ = new THREE.MeshBasicMaterial(
+            { color: BlueTextColor }
+          );
+
+          var textGeometryindex = new THREE.TextGeometry("", textOptionsBn);
+          var TextmeshI = new THREE.Mesh( textGeometryindex, textMaterialQ );
+
+          var textGeometryQ = new THREE.TextGeometry("", textOptionsQ);
+          var TextmeshQ = new THREE.Mesh( textGeometryQ, textMaterialQ );
+
+          var textGeometryQ2 = new THREE.TextGeometry("", textOptionsQ);
+          var TextmeshQ2 = new THREE.Mesh( textGeometryQ2, textMaterialQ );
+
+          var textGeometryQ3 = new THREE.TextGeometry("", textOptionsQ);
+          var TextmeshQ3 = new THREE.Mesh( textGeometryQ3, textMaterialQ );
+
+          var textGeometryQ4 = new THREE.TextGeometry("", textOptionsQ);
+          var TextmeshQ4 = new THREE.Mesh( textGeometryQ4, textMaterialQ );
+
+          const setMesh = (mesh,meshObj,option) => {
+
+              mesh.remove(TextmeshI);
+              mesh.remove(TextmeshQ);
+              mesh.remove(TextmeshQ2);
+              mesh.remove(TextmeshQ3);
+              mesh.remove(TextmeshQ4);
+
+              var textMaterialQ = new THREE.MeshBasicMaterial(
+                { color: BlueTextColor }
+              );
+
+              if(option == 2){
+                textMaterialQ = new THREE.MeshBasicMaterial(
+                  { color: WhiteTextColor }
+                );
+              }
+
+              textGeometryindex = new THREE.TextGeometry(String(meshObj.index), textOptionsBn);
+              TextmeshI = new THREE.Mesh( textGeometryindex, textMaterialQ );
+              TextmeshI.geometry.center();
+              TextmeshI.position.y = meshObj.s0;
+              mesh.add(TextmeshI);
+
+              textGeometryQ = new THREE.TextGeometry(meshObj.name, textOptionsQ);
+              TextmeshQ = new THREE.Mesh( textGeometryQ, textMaterialQ );
+              TextmeshQ.geometry.center();
+              TextmeshQ.position.y = meshObj.s1;
+              mesh.add(TextmeshQ);
+
+              textGeometryQ2 = new THREE.TextGeometry(meshObj.compaign, textOptionsQ);
+              TextmeshQ2 = new THREE.Mesh( textGeometryQ2, textMaterialQ );
+              TextmeshQ2.geometry.center();
+              TextmeshQ2.position.y = meshObj.s2;
+              mesh.add(TextmeshQ2);
+
+              textGeometryQ3 = new THREE.TextGeometry(meshObj.count, textOptionsQ);
+              TextmeshQ3 = new THREE.Mesh( textGeometryQ3, textMaterialQ );
+              TextmeshQ3.geometry.center();
+              TextmeshQ3.position.y = meshObj.s3;
+              mesh.add(TextmeshQ3);
+
+              textGeometryQ4 = new THREE.TextGeometry(meshObj.price, textOptionsQ);
+              TextmeshQ4 = new THREE.Mesh( textGeometryQ4, textMaterialQ );
+              TextmeshQ4.geometry.center();
+              TextmeshQ4.position.y = meshObj.s4;
+              mesh.add(TextmeshQ4);
+          }
+          setMesh(Plans1_a_mesh,priceArray[0],1);
+
+
           PlansArray.push(Plans1_a);
           MeshArrays.push(Plans1_a_mesh);
           //Plans1
@@ -577,6 +779,8 @@ const NewComponent = (props) => {
           Plans2_a_mesh.position.y = objectPositions[1].y;
           Plans2_a_mesh.scale.set(0.27,0.27,0.27);
           scene2.add(Plans2_a_mesh);
+
+          setMesh(Plans2_a_mesh,priceArray[1],2);
 
           PlansArray.push(Plans2_a);
           MeshArrays.push(Plans2_a_mesh);
@@ -596,6 +800,8 @@ const NewComponent = (props) => {
           Plans3_a_mesh.scale.set(0.21,0.21,0.21);
           scene2.add(Plans3_a_mesh);
 
+          setMesh(Plans3_a_mesh,priceArray[2],1);
+
           PlansArray.push(Plans3_a);
           MeshArrays.push(Plans3_a_mesh);
           //Plans3
@@ -614,6 +820,8 @@ const NewComponent = (props) => {
           Plans4_a_mesh.position.y = objectPositions[3].y;
           Plans4_a_mesh.scale.set(0.21,0.21,0.21);
           scene2.add(Plans4_a_mesh);
+
+          setMesh(Plans4_a_mesh,priceArray[3],1);
 
           PlansArray.push(Plans4_a);
           MeshArrays.push(Plans4_a_mesh);
@@ -713,7 +921,9 @@ const NewComponent = (props) => {
                         PlansArray[i].map.dispose();
                         PlansArray[i].map = new THREE.TextureLoader().load(bigPlansArray[i]);
                         MeshArrays[i].scale.set(0.27,0.27,0.27);
+                        setMesh(MeshArrays[i],priceArray[i],2);
                         MeshArrays[i].position.y = objectPositions[i].y - 20;
+
                         //console.log("current Position " + i);
                         lastFixed = i;
 
@@ -722,7 +932,9 @@ const NewComponent = (props) => {
                             PlansArray[j].map.dispose();
                             PlansArray[j].map = new THREE.TextureLoader().load(smallPlansArray[j]);
                             MeshArrays[j].scale.set(0.21,0.21,0.21);
+                            setMesh(MeshArrays[j],priceArray[j],1);
                             MeshArrays[i].position.y = objectPositions[i].y;
+
                             //Plans2_a_mesh.scale.set(0.27,0.27,0.27);
                           }
                         }
