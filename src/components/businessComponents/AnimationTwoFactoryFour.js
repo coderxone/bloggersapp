@@ -43,6 +43,7 @@ import { MeshLine, MeshLineMaterial, MeshLineRaycast } from 'three.meshline'
 import {
   useHistory,
 } from "react-router-dom";
+import LocalizeComponent from '../../localize/LocalizeComponent';
 
 
 
@@ -64,6 +65,8 @@ const backgroundColor = "#ffffff";
 const orbit_control = 0;
 const ASPECT_RATIO = window.innerWidth / window.innerHeight;
 const WhiteTextColor = "#ffffff";
+const BlackTextColor = "#000000";
+const BlueTextColor = "#54b0dc";
 const LinesColor = "rgb(32, 144, 204)";//2090cc
 //const LinesColor = "rgb(3, 148, 252)";//2090cc
 // viewport
@@ -89,9 +92,9 @@ var planetAnimation = 0;
 
 const NewComponent = (props) => {
   const mount = useRef(null);
-
   const history = useHistory();
-  const [topPosition,SetTopPosition] = useState(0);
+  //xx
+  const [topPosition,SetTopPosition] = useState(3);
 
   // var props = {
   //   page:3
@@ -102,6 +105,8 @@ const NewComponent = (props) => {
     return history.push('/login'), [history];
 
   });
+
+  const font = new THREE.FontLoader().parse(fontStylesD);
 
 
 
@@ -176,12 +181,7 @@ const NewComponent = (props) => {
     var businessPosition = {x:0,y:60};
 
 
-
-
-
-
           if(props.page == 4){
-
             //Lines7Image
             const Lines7_a = new THREE.MeshBasicMaterial({
                 map:new THREE.TextureLoader().load(Lines7Image)
@@ -196,6 +196,52 @@ const NewComponent = (props) => {
             Lines7_a_mesh.scale.set(0.2,0.2,0.2);
             scene.add(Lines7_a_mesh);
             //Lines7Image
+            //text
+            const textOptionsGps = {
+              font,
+              size: 45, // font size
+              height: 5, // how much extrusion (how thick / deep are the letters)
+            };
+
+            var textMaterialGps = new THREE.MeshBasicMaterial(
+              { color: BlackTextColor }
+            );
+
+            var textGeometryGps = new THREE.TextGeometry(LocalizeComponent.gpsIn, textOptionsGps);
+            var TextmeshGps = new THREE.Mesh( textGeometryGps, textMaterialGps );
+            TextmeshGps.geometry.center();
+            TextmeshGps.position.y = -320;
+            TextmeshGps.position.x = -320;
+            Lines7_a_mesh.add(TextmeshGps);
+
+            const textOptionsGpsTwo = {
+              font,
+              size: 29, // font size
+              height: 5, // how much extrusion (how thick / deep are the letters)
+            };
+
+            var textGeometryGpsTwo = new THREE.TextGeometry(LocalizeComponent.gpsInTwo, textOptionsGpsTwo);
+            var TextmeshGpsT = new THREE.Mesh( textGeometryGpsTwo, textMaterialGps );
+            TextmeshGpsT.geometry.center();
+            TextmeshGpsT.position.y = -440;
+            TextmeshGpsT.position.x = 0;
+            Lines7_a_mesh.add(TextmeshGpsT);
+
+            var textGeometryGps3 = new THREE.TextGeometry(LocalizeComponent.gpsInThree, textOptionsGpsTwo);
+            var TextmeshGps3 = new THREE.Mesh( textGeometryGps3, textMaterialGps );
+            TextmeshGps3.geometry.center();
+            TextmeshGps3.position.y = -485;
+            TextmeshGps3.position.x = 0;
+            Lines7_a_mesh.add(TextmeshGps3);
+
+            var textGeometryGps4 = new THREE.TextGeometry(LocalizeComponent.gpsInFour, textOptionsGpsTwo);
+            var TextmeshGps4 = new THREE.Mesh( textGeometryGps4, textMaterialGps );
+            TextmeshGps4.geometry.center();
+            TextmeshGps4.position.y = -535;
+            TextmeshGps4.position.x = 0;
+            Lines7_a_mesh.add(TextmeshGps4);
+
+            //text
           //circle animation
 
           const geometryA = new THREE.CircleGeometry( 10, 32 );
@@ -206,8 +252,6 @@ const NewComponent = (props) => {
           scene.add( circleA );
 
           //text
-
-          const font = new THREE.FontLoader().parse(fontStylesD);
 
           const textOptionsA = {
             font,
@@ -265,7 +309,7 @@ const NewComponent = (props) => {
 
           //circle animation
 
-
+//xx
           var OnTopArray = [Lines8Image,Lines8_1Image,Lines8_2Image,Lines8_3Image];
           //onTop
           const Lines8_a = new THREE.MeshBasicMaterial({
@@ -281,6 +325,137 @@ const NewComponent = (props) => {
           Lines8_a_mesh.scale.set(0.27,0.27,0.27);
           scene.add(Lines8_a_mesh);
           //onTop
+          //text
+          const textOptionsAn = {
+            font,
+            size: 25, // font size
+            height: 5, // how much extrusion (how thick / deep are the letters)
+          };
+
+          var textMaterialLeft = new THREE.MeshBasicMaterial(
+            { color: BlackTextColor }
+          );
+
+          var textGeometryAn = new THREE.TextGeometry(LocalizeComponent.analyzeOne, textOptionsAn);
+          var textGeometryAn2 = new THREE.TextGeometry(LocalizeComponent.analyzeOne, textOptionsAn);
+          var textGeometryAn3 = new THREE.TextGeometry(LocalizeComponent.analyzeOne, textOptionsAn);
+          var textGeometryAn4 = new THREE.TextGeometry(LocalizeComponent.analyzeOne, textOptionsAn);
+          var textGeometryAn5 = new THREE.TextGeometry(LocalizeComponent.analyzeOne, textOptionsAn);
+          var textGeometryAn6 = new THREE.TextGeometry(LocalizeComponent.analyzeOne, textOptionsAn);
+          var TextmeshAn = new THREE.Mesh( textGeometryAn, textMaterialLeft );
+          var TextmeshAn2 = new THREE.Mesh( textGeometryAn, textMaterialLeft );
+          var TextmeshAn3 = new THREE.Mesh( textGeometryAn, textMaterialLeft );
+          var TextmeshAn4 = new THREE.Mesh( textGeometryAn, textMaterialLeft );
+          var TextmeshAn5 = new THREE.Mesh( textGeometryAn, textMaterialLeft );
+          var TextmeshAn6 = new THREE.Mesh( textGeometryAn, textMaterialLeft );
+
+          const FirstPartOfText = () => {
+            //1 part
+            textGeometryAn = new THREE.TextGeometry(LocalizeComponent.analyzeOne, textOptionsAn);
+            TextmeshAn = new THREE.Mesh( textGeometryAn, textMaterialLeft );
+            TextmeshAn.geometry.center();
+            TextmeshAn.position.y = 110;
+            Lines8_a_mesh.add(TextmeshAn);
+              //1 part
+              //2 part
+            textGeometryAn2 = new THREE.TextGeometry(LocalizeComponent.analyzeTwo, textOptionsAn);
+            TextmeshAn2 = new THREE.Mesh( textGeometryAn2, textMaterialLeft );
+            TextmeshAn2.geometry.center();
+            TextmeshAn2.position.y = 70;
+            Lines8_a_mesh.add(TextmeshAn2);
+            //2 part
+              //3 part
+            textGeometryAn3 = new THREE.TextGeometry(LocalizeComponent.analyzeThree, textOptionsAn);
+            TextmeshAn3 = new THREE.Mesh( textGeometryAn3, textMaterialLeft );
+            TextmeshAn3.geometry.center();
+            TextmeshAn3.position.y = 30;
+            Lines8_a_mesh.add(TextmeshAn3);
+            //3 part
+              //4 part
+            textGeometryAn4 = new THREE.TextGeometry(LocalizeComponent.analyzeFour, textOptionsAn);
+            TextmeshAn4 = new THREE.Mesh( textGeometryAn4, textMaterialLeft );
+            TextmeshAn4.geometry.center();
+            TextmeshAn4.position.y = -10;
+            Lines8_a_mesh.add(TextmeshAn4);
+            //4part
+            //5 part
+            textGeometryAn5 = new THREE.TextGeometry(LocalizeComponent.analyzeFive, textOptionsAn);
+            TextmeshAn5 = new THREE.Mesh( textGeometryAn5, textMaterialLeft );
+            TextmeshAn5.geometry.center();
+            TextmeshAn5.position.y = -50;
+            Lines8_a_mesh.add(TextmeshAn5);
+            //5 part
+            //6 part
+            textGeometryAn6 = new THREE.TextGeometry(LocalizeComponent.analyzeSix, textOptionsAn);
+            TextmeshAn6 = new THREE.Mesh( textGeometryAn6, textMaterialLeft );
+            TextmeshAn6.geometry.center();
+            TextmeshAn6.position.y = -90;
+            Lines8_a_mesh.add(TextmeshAn6);
+            //6 part
+          }
+
+          const SecondPartOfText = () => {
+            const textOptionsS = {
+              font,
+              size: 27, // font size
+              height: 5, // how much extrusion (how thick / deep are the letters)
+            };
+            //1 part
+            textGeometryAn = new THREE.TextGeometry(LocalizeComponent.manageAd, textOptionsS);
+            TextmeshAn = new THREE.Mesh( textGeometryAn, textMaterialLeft );
+            TextmeshAn.geometry.center();
+            TextmeshAn.position.y = 0;
+            Lines8_a_mesh.add(TextmeshAn);
+              //1 part
+          }
+
+          const ThirdPartOfText = () => {
+            const textOptionsS = {
+              font,
+              size: 27, // font size
+              height: 5, // how much extrusion (how thick / deep are the letters)
+            };
+            //1 part
+            textGeometryAn = new THREE.TextGeometry(LocalizeComponent.control, textOptionsS);
+            TextmeshAn = new THREE.Mesh( textGeometryAn, textMaterialLeft );
+            TextmeshAn.geometry.center();
+            TextmeshAn.position.y = 0;
+            Lines8_a_mesh.add(TextmeshAn);
+              //1 part
+          }
+//xx
+          const FourPartOfText = () => {
+            const textOptionsS = {
+              font,
+              size: 27, // font size
+              height: 5, // how much extrusion (how thick / deep are the letters)
+            };
+            //1 part
+            textGeometryAn = new THREE.TextGeometry(LocalizeComponent.acceptT, textOptionsS);
+            TextmeshAn = new THREE.Mesh( textGeometryAn, textMaterialLeft );
+            TextmeshAn.geometry.center();
+            TextmeshAn.position.y = 40;
+            Lines8_a_mesh.add(TextmeshAn);
+            //1 part
+            //2 part
+            textGeometryAn2 = new THREE.TextGeometry(LocalizeComponent.acceptTwo, textOptionsS);
+            TextmeshTwo = new THREE.Mesh( textGeometryAn2, textMaterialLeft );
+            TextmeshTwo.geometry.center();
+            TextmeshTwo.position.y = 0;
+            Lines8_a_mesh.add(TextmeshTwo);
+            //2 part
+            //3 part
+            textGeometryAn3 = new THREE.TextGeometry(LocalizeComponent.acceptThree, textOptionsS);
+            TextmeshThree = new THREE.Mesh( textGeometryAn3, textMaterialLeft );
+            TextmeshThree.geometry.center();
+            TextmeshThree.position.y = -40;
+            Lines8_a_mesh.add(TextmeshThree);
+            //3 part
+          }
+          var TextsArray = [FirstPartOfText(),SecondPartOfText(),ThirdPartOfText(),FourPartOfText()];
+
+
+          //text
           var currentPosition = 0;
 
           const changeNext = () => {
@@ -325,7 +500,7 @@ const NewComponent = (props) => {
 
           });
           //onTopLeft
-          //xx
+
 
           //onTopRight
           const onTopRight_a = new THREE.MeshBasicMaterial({
@@ -792,7 +967,7 @@ function animate() {
 
 
 	renderer.setScissorTest( false );
-//xx
+
   //console.log(matLins[0]);
 
 

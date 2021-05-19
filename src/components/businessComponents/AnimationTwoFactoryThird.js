@@ -807,9 +807,9 @@ function animate() {
     item.resolution.set( insetWidth, insetHeight ); // resolution of the inset viewport
   })
 
-  // if(planetAnimation == 1){
-  //   earthmesh.rotation.y += 0.02;
-  // }
+  if(planetAnimation == 1){
+    earthmesh.rotation.y += 0.02;
+  }
 
   if(turnFourthAnimation == 1){
     t += NearestRandomPoints(0.02);
