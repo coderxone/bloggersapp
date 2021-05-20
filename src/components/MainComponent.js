@@ -2,7 +2,6 @@ import React, { useCallback,useEffect,useState,useMemo,useRef } from 'react';
 import AnimationComponent from '../components/AnimationComponent';
 import MainPageDandelion from '../components/MainPageDandelion';
 import LocalizeComponent from '../localize/LocalizeComponent';
-import Join from '../images/main/newImages/join.png';
 import Grid from '@material-ui/core/Grid';
 import GroupAddIcon from '@material-ui/icons/GroupAdd';
 import DynamicFeedIcon from '@material-ui/icons/DynamicFeed';
@@ -38,15 +37,37 @@ import PermissionRequestComponent from '../helperComponents/PermissionRequestCom
 import IosPermissionRequestComponent from '../helperComponents/IosPermissionRequestComponent';
 import MobileAppComponent from '../helperComponents/mobileAppComponent';
 import Observable from '../services/Observable';
+import LiveService from '../services/LiveService';
 import { Capacitor,Plugins } from '@capacitor/core';
 import {
   Link,useHistory,
   Redirect,
 } from "react-router-dom";
  const  { StatusBar } = Plugins;
+ //LocalizeComponent.setLanguage("ru");
+
+ const DetectLanguage = () => {
+
+   var lang = LocalizeComponent.getInterfaceLanguage();
+
+   console.log(lang);
+   
+    if(lang.indexOf("en") >= 0){
+
+    }
+    if(lang.indexOf("ru") >= 0){
+      console.log(lang);
+      LocalizeComponent.setLanguage("ru");
+    }
+    if(lang.indexOf("es") >= 0){
+      LocalizeComponent.setLanguage("es");
+    }
+  //  LocalizeComponent.setLanguage("ru");
+
+ }
 
 
-
+DetectLanguage();
 
 
 
@@ -55,6 +76,8 @@ const BottomFunc = () => {
   const history = useHistory();
   const [route,SetRoute] = useState("");
   const [redirect,Setredirect] = useState(false);
+//xx
+  const [bloggerCount,setBloggerCount] = useState(0);
 
   const goToLogin = () => {
     SetRoute("/login");
@@ -154,21 +177,23 @@ const BottomFunc = () => {
     StatusBar.hide();
   }
 
-  const DetectLanguage = () => {
-    var lang = LocalizeComponent.getInterfaceLanguage();
-    if(lang.indexOf("en") >= 0){
 
-    }
-    if(lang.indexOf("ru") >= 0){
-      LocalizeComponent.setLanguage("ru");
-    }
-    if(lang.indexOf("es") >= 0){
-      LocalizeComponent.setLanguage("es");
-    }
-
-  }
 
   const [mobileDialogStatus,SetMobileDialogStatus] = useState(false);
+//xx
+  useEffect(() => {
+    const listenLive = LiveService.listenUserDataTask().subscribe(data => {
+      //console.log(data);
+      var bloggerCount = data.results.length;
+      //console.log(bloggerCount);
+      setBloggerCount(bloggerCount);
+      //LiveService
+    });
+
+    const obs = Observable.subscribeByTimer_4_second().subscribe(data => {
+        LiveService.getTaskData();
+    })
+  },[])
 
   useEffect(() => {
 
@@ -212,7 +237,7 @@ const BottomFunc = () => {
 
     }
 
-    DetectLanguage();
+
 
 
 
@@ -316,7 +341,7 @@ const BottomFunc = () => {
 
             {BusinessSwitcher == 0 ? (
               <div className="blockClass">
-                <AnimationFComponent page={1} />
+                <AnimationFComponent bloggercount={bloggerCount} page={1} />
                 <AnimationFSecond  page={2} />
                 <AnimationFThird page={3} />
                 <AnimationFFour  page={4} />
@@ -339,7 +364,11 @@ const BottomFunc = () => {
              }
 
              <div className="JoinClass">
-               <img src={Join} alt="Join echohub.io" width="100" height="35" onClick={goToLogin} />
+               <div className="LoginButtonFrame" onClick={goToLogin} >
+                 <div className="LoginButtonName">
+                    {LocalizeComponent.login_button}
+                 </div>
+               </div>
              </div>
 
              <div className="Echohub_policy DivAppBackground">

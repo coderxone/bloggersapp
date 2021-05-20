@@ -34,7 +34,7 @@ import TextWindow5 from '../../images/main/newImages/generates.png';
 import Lines6Image from '../../images/main/newImages/views.png';
 
 import Lines7Image from '../../images/main/newImages/gps.png';
-import fontStylesD from '../../fonts/helvetiker_regular_typeface.json';
+import fontStylesD from '../../fonts/a_AvanteLt_Light.json';
 import { MeshLine, MeshLineMaterial, MeshLineRaycast } from 'three.meshline'
 import {
   useHistory,
@@ -568,7 +568,6 @@ const NewComponent = (props) => {
                   var circleCC = new THREE.Mesh( geometryCC, materialCC );
                   circleCC.position.y = 70;
                   circleCC.position.x = 580;
-                  circleCC.material.needsUpdate = true;
                   circleCC.needsUpdate = true;
                   circleCC.material.transparent = true;
                   Lines6_a_mesh.add( circleCC );

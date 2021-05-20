@@ -1,4 +1,4 @@
-import React, { useRef,useEffect, useState,useCallback } from 'react';
+import React, { useRef,useEffect,useMemo, useState,useCallback } from 'react';
 import * as THREE from 'three';
 import Stats from '../../../node_modules/three/examples/jsm/libs/stats.module.js';
 import LocalizeComponent from '../../localize/LocalizeComponent';
@@ -8,7 +8,6 @@ import { Line2 } from '../../../node_modules/three/examples/jsm/lines/Line2.js';
 import { LineMaterial } from '../../../node_modules/three/examples/jsm/lines/LineMaterial.js';
 import { LineGeometry } from '../../../node_modules/three/examples/jsm/lines/LineGeometry.js';
 import { GeometryUtils } from '../../../node_modules/three/examples/jsm/utils/GeometryUtils.js';
-
 import { Interaction } from 'three.interaction';
 import NumbersOfSubscribers from '../../images/main/newImages/number_of_subscribers.png';
 import InterestLocation from '../../images/main/newImages/interests.png';
@@ -23,8 +22,9 @@ import RightBlock from '../../images/main/newImages/according.png';
 import Logo_Echohub_1_part from '../../images/main/animationtwo/business.png';
 import Person from '../../images/main/animationtwo/person.png';
 import CloudImage from '../../images/main/animationtwo/cloud_wT.png';
-
-import fontStylesD from '../../fonts/helvetiker_regular_typeface.json';
+import Observable from '../../services/Observable';
+import fontStylesD from '../../fonts/a_AvanteLt_Light.json';
+//import fontStylesD from '../../fonts/a_AvanteLt_DemiBold.json';
 import { MeshLine, MeshLineMaterial, MeshLineRaycast } from 'three.meshline'
 import {
   useHistory,
@@ -52,6 +52,7 @@ const ASPECT_RATIO = window.innerWidth / window.innerHeight;
 const WhiteTextColor = "#ffffff";
 const BlueTextColor = "#54b0dc";
 const BlackTextColor = "#000000";
+const IndicatorColorGreen = "#10e364";
 const LinesColor = "rgb(32, 144, 204)";//2090cc
 //const LinesColor = "rgb(3, 148, 252)";//2090cc
 // viewport
@@ -79,8 +80,10 @@ var planetAnimation = 0;
 const NewComponent = (props) => {
   const mount = useRef(null);
 
+
   const history = useHistory();
 
+  const bloggercount = props.bloggercount;
   // var props = {
   //   page:3
   // }
@@ -178,10 +181,12 @@ const NewComponent = (props) => {
           //text
           const font = new THREE.FontLoader().parse(fontStylesD);
 
+          //fontTTF
+
           const textOptions = {
             font,
             size: 9, // font size
-            height: 5, // how much extrusion (how thick / deep are the letters)
+            height: 10, // how much extrusion (how thick / deep are the letters)
           };
 
           var textGeometry = new THREE.TextGeometry(LocalizeComponent.Business, textOptions);
@@ -218,18 +223,64 @@ const NewComponent = (props) => {
             size: 110, // font size
             height: 110, // how much extrusion (how thick / deep are the letters)
           };
+//xx
+          var currentCountOfBloggers = 0;
+          var textGeometryg = new THREE.TextGeometry(String("--"), textOptions6);
 
-          var textGeometry = new THREE.TextGeometry(LocalizeComponent.Six, textOptions6);
-
-          var textMaterial = new THREE.MeshBasicMaterial(
+          var textMaterialG = new THREE.MeshBasicMaterial(
             { color: BlackTextColor }
           );
 
-          var Textmesh = new THREE.Mesh( textGeometry, textMaterial );
-          Textmesh.geometry.center();
-          Textmesh.position.y = 30;
-          cloud_mesh.add(Textmesh);
+          var TextmeshG = new THREE.Mesh( textGeometryg, textMaterialG );
+          TextmeshG.geometry.center();
+          TextmeshG.position.y = 30;
+          cloud_mesh.add(TextmeshG);
           //number 6
+
+          var geometryCC = new THREE.CircleGeometry( 15, 32 );
+          var materialCC = new THREE.MeshBasicMaterial( { color: IndicatorColorGreen } );
+          var circleCC = new THREE.Mesh( geometryCC, materialCC );
+          circleCC.position.y = -60;
+          circleCC.position.x = 540;
+          circleCC.needsUpdate = true;
+          circleCC.material.transparent = true;
+          cloud_mesh.add( circleCC );
+          var indicatorOpacity = 1;
+
+          const updateBlogString = (number) => {
+            cloud_mesh.remove(TextmeshG);
+            textGeometryg = new THREE.TextGeometry(String(number), textOptions6);
+
+            TextmeshG = new THREE.Mesh( textGeometryg, textMaterialG );
+            TextmeshG.geometry.center();
+            TextmeshG.position.y = 30;
+            cloud_mesh.add(TextmeshG);
+          }
+
+          const obs = Observable.subscribeByTimer_4_second().subscribe(data => {
+              var bloggerCount = localStorage.getItem("bloggercount");
+              if(bloggerCount){
+                if(bloggerCount > currentCountOfBloggers){
+                  currentCountOfBloggers = parseInt(bloggerCount);
+                  updateBlogString(currentCountOfBloggers);
+                }
+              }
+          });
+
+          const obsSubscTwo = Observable.subscribeByTimer_2_second().subscribe(item => {
+
+            circleCC.material.opacity = indicatorOpacity;
+
+            if(indicatorOpacity == 0){
+              indicatorOpacity = 1;
+            }else{
+              indicatorOpacity = 0;
+            }
+
+
+          });
+
+
           //bloggers
           const textOptionsCloud = {
             font,
@@ -242,6 +293,8 @@ const NewComponent = (props) => {
           var textMaterial = new THREE.MeshBasicMaterial(
             { color: BlackTextColor }
           );
+
+
 
           var Textmesh = new THREE.Mesh( textGeometry, textMaterial );
           Textmesh.geometry.center();
@@ -268,7 +321,7 @@ const NewComponent = (props) => {
 
           const textOptionsNumb = {
             font,
-            size: 24, // font size
+            size: 25.5, // font size
             height: 15, // how much extrusion (how thick / deep are the letters)
           };
           var textGeometry = new THREE.TextGeometry(LocalizeComponent.number_of_subscribersM, textOptionsNumb);
@@ -320,9 +373,18 @@ const NewComponent = (props) => {
           TextmeshI.geometry.center();
           TextmeshI.position.y = 15;
           InterestLocationA_mesh.add(TextmeshI);
-          var LocationClone = TextmeshM.clone();
-          LocationClone.position.y = -20;
-          InterestLocationA_mesh.add(LocationClone);
+
+//--
+          var textGeometryNN = new THREE.TextGeometry(LocalizeComponent.locationMN, textOptionsNumb);
+
+          var textMaterialNN = new THREE.MeshBasicMaterial(
+            { color: WhiteTextColor }
+          );
+
+          var TextmeshNN = new THREE.Mesh( textGeometryNN, textMaterialNN );
+          TextmeshNN.geometry.center();
+          TextmeshNN.position.y = -20;
+          InterestLocationA_mesh.add(TextmeshNN);
 
 
           //InterestLocationA_mesh text
@@ -351,10 +413,19 @@ const NewComponent = (props) => {
           TextmeshN.geometry.center();
           TextmeshN.position.y = 15;
           TargetAudienceLocationA_mesh.add(TextmeshN);
-          var LocationCloneTwo = LocationClone.clone();
-          LocationCloneTwo.position.y = -20;
-          TargetAudienceLocationA_mesh.add(LocationCloneTwo);
 
+
+
+
+          var textGeometryNNN = new THREE.TextGeometry(LocalizeComponent.locationMNN, textOptionsNumb);
+          var textMaterialNNN = new THREE.MeshBasicMaterial(
+            { color: WhiteTextColor }
+          );
+
+          var TextmeshNNN = new THREE.Mesh( textGeometryNNN, textMaterialNNN );
+          TextmeshNNN.geometry.center();
+          TextmeshNNN.position.y = -20;
+          TargetAudienceLocationA_mesh.add(TextmeshNNN);
 
           //three additional text
           //TextWindow1
@@ -1091,6 +1162,10 @@ const NewComponent = (props) => {
 	}
 
 
+  useMemo(() => {
+    localStorage.setItem("bloggercount",bloggercount);
+  },[bloggercount])
+
   useEffect(() => {
 
     init();
@@ -1098,6 +1173,8 @@ const NewComponent = (props) => {
     //if(props.page != 3){
       animate();
     //}
+    //xx
+
 
 
     //document.body.appendChild( renderer.domElement );

@@ -21,7 +21,7 @@ import Lines3Image from '../../images/main/newImages/video_scheme.png';
 import TextWindow5 from '../../images/main/newImages/generates.png';
 
 
-import fontStylesD from '../../fonts/helvetiker_regular_typeface.json';
+import fontStylesD from '../../fonts/a_AvanteLt_Light.json';
 import { MeshLine, MeshLineMaterial, MeshLineRaycast } from 'three.meshline'
 import LocalizeComponent from '../../localize/LocalizeComponent';
 

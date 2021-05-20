@@ -38,7 +38,8 @@ import Plans3_big from '../../images/main/newImages/plans3_big.png';
 import Plans4_big from '../../images/main/newImages/plans4_big.png';
 
 import Lines7Image from '../../images/main/newImages/gps.png';
-import fontStylesD from '../../fonts/helvetiker_regular_typeface.json';
+import fontStylesD from '../../fonts/a_AvanteLt_Light.json';
+
 import { MeshLine, MeshLineMaterial, MeshLineRaycast } from 'three.meshline'
 import {
   useHistory,
