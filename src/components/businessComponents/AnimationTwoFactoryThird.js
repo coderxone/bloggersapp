@@ -614,17 +614,13 @@ const NewComponent = (props) => {
 
                   const obsSubscTwo = Observable.subscribeByTimer_2_second().subscribe(item => {
 
-
-
                     circleCC.material.opacity = indicatorOpacity;
-
 
                     if(indicatorOpacity == 0){
                       indicatorOpacity = 1;
                     }else{
                       indicatorOpacity = 0;
                     }
-
 
 
                   });
