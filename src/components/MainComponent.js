@@ -50,19 +50,19 @@ import {
 
    var lang = LocalizeComponent.getInterfaceLanguage();
 
-   console.log(lang);
-   
-    if(lang.indexOf("en") >= 0){
-
-    }
-    if(lang.indexOf("ru") >= 0){
-      console.log(lang);
-      LocalizeComponent.setLanguage("ru");
-    }
-    if(lang.indexOf("es") >= 0){
-      LocalizeComponent.setLanguage("es");
-    }
-  //  LocalizeComponent.setLanguage("ru");
+   // console.log(lang);
+   //
+   //  if(lang.indexOf("en") >= 0){
+   //
+   //  }
+   //  if(lang.indexOf("ru") >= 0){
+   //    console.log(lang);
+   //    LocalizeComponent.setLanguage("ru");
+   //  }
+   //  if(lang.indexOf("es") >= 0){
+   //    LocalizeComponent.setLanguage("es");
+   //  }
+    //LocalizeComponent.setLanguage("ru");
 
  }
 

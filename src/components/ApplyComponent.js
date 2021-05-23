@@ -171,7 +171,7 @@ const ApplyComponent = (props) => {
       return parseInt(localStorage.getItem("minPrice"));
   },[]);
 
-  var QuestionsArray = ['What is the name of your business?','What is your website link to your business?',LocalizeComponent.description_placeholder,'Where is your business located?','Would like to work with only local creators','Would like to work only with famous creators','When would you like to start the campaign?','When would you like to start the campaign?','How much money do you want to pay?','Who is your buyer persona?','What is your goal for the campaign?'];
+  var QuestionsArray = [LocalizeComponent.q1,LocalizeComponent.q2,LocalizeComponent.description_placeholder,LocalizeComponent.q3,LocalizeComponent.q4,LocalizeComponent.q5,LocalizeComponent.q6,LocalizeComponent.q6,LocalizeComponent.q7,LocalizeComponent.q8,LocalizeComponent.q9];
   const [questions] = useState(QuestionsArray);
 
   const [activeStep, setActiveStep] = React.useState(0);
@@ -798,7 +798,7 @@ const ApplyComponent = (props) => {
 
             <div className="manageButtons">
                 <Button disabled={activeStep === 0} onClick={handleBack} className={classes.button}>
-                   Back
+                   {LocalizeComponent.q11}
                  </Button>
                  {
                    activeStep < steps.length && (
@@ -808,7 +808,7 @@ const ApplyComponent = (props) => {
                        onClick={handleNext}
                        className={classes.button}
                      >
-                       Next
+                       {LocalizeComponent.q10}
                      </Button>
                      )
                  }

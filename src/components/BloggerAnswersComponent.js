@@ -112,7 +112,7 @@ function getSteps() {
 
 const BloggerAnswersComponent = (props) => {
 
-  var QuestionsArray = ['Where are you located?','Please choose your audience interest','How old are you?','Please Enter your First Name','Please Enter your Last Name','Please Enter your Username','please inter Social Network Account Link','How many subscribers do you currently have ?','Enter your PayPal email for withdrawal','Enter SSN,ITIN or EIN for background verification','upload at least 1 document to proof identity'];
+  var QuestionsArray = [LocalizeComponent.bl1,LocalizeComponent.bl2,LocalizeComponent.bl3,LocalizeComponent.bl4,LocalizeComponent.bl5,LocalizeComponent.bl6,LocalizeComponent.bl7,'How many subscribers do you currently have?','Enter your PayPal email for withdrawal','Enter SSN,ITIN or EIN for background verification','upload at least 1 document to proof identity'];
   const [questions] = useState(QuestionsArray);
 
   const classes = useStyles();
