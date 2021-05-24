@@ -112,7 +112,7 @@ function getSteps() {
 
 const BloggerAnswersComponent = (props) => {
 
-  var QuestionsArray = [LocalizeComponent.bl1,LocalizeComponent.bl2,LocalizeComponent.bl3,LocalizeComponent.bl4,LocalizeComponent.bl5,LocalizeComponent.bl6,LocalizeComponent.bl7,'How many subscribers do you currently have?','Enter your PayPal email for withdrawal','Enter SSN,ITIN or EIN for background verification','upload at least 1 document to proof identity'];
+  var QuestionsArray = [LocalizeComponent.bl1,LocalizeComponent.bl2,LocalizeComponent.bl3,LocalizeComponent.bl4,LocalizeComponent.bl5,LocalizeComponent.bl6,LocalizeComponent.bl7,LocalizeComponent.bl8,LocalizeComponent.bl9,LocalizeComponent.bl10,LocalizeComponent.bl10];
   const [questions] = useState(QuestionsArray);
 
   const classes = useStyles();
@@ -500,7 +500,7 @@ const BloggerAnswersComponent = (props) => {
 
               <div className="manageButtons">
                   <Button disabled={activeStep === 0} onClick={handleBack} className={classes.button}>
-                     Back
+                     {LocalizeComponent.q11}
                    </Button>
                    {
                      activeStep < steps.length && (
@@ -510,7 +510,7 @@ const BloggerAnswersComponent = (props) => {
                          onClick={handleNext}
                          className={classes.button}
                        >
-                         Next
+                         {LocalizeComponent.q10}
                        </Button>
                        )
                    }
@@ -522,7 +522,7 @@ const BloggerAnswersComponent = (props) => {
                          onClick={handleNext}
                          className={classes.button}
                        >
-                         Finish
+                         {LocalizeComponent.Finish1}
                        </Button>
                        )
                    }

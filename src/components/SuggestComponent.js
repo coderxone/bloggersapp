@@ -212,7 +212,7 @@ const SuggestComponent = (props) => {
 
 
 
-  const eliotIco = "https://www.daily-sun.com/assets/news_images/2017/08/14/thumbnails/Daily-Sun-38-01-14-08-2017.jpg";
+  const eliotIco = "https://echohub.io/newimages/no-image.png";
 
 
   const classes = useStyles();
@@ -278,7 +278,7 @@ const SuggestComponent = (props) => {
 
   }
 
-  const demoUrl = "https://www.daily-sun.com/assets/news_images/2017/08/14/thumbnails/Daily-Sun-38-01-14-08-2017.jpg";
+  const demoUrl = "https://echohub.io/newimages/no-image.png";
 
   const [lastMessageId,setLastMessageId] = useState(0);
 

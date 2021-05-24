@@ -291,6 +291,20 @@ const CompleteBlockComponent = (props) => {
   const [activeStep, setActiveStep] = React.useState(1);
   const statusArray = useMemo(() => {
     var rData = config.getJSONFromMemory("appstatus");
+    for(var i = 0;i < rData.length;i++){
+      if(rData[i].text == "open task"){
+        rData[i].text = LocalizeComponent.open_task;
+      }
+      if(rData[i].text == "under consideration by business"){
+        rData[i].text = LocalizeComponent.under_consideration;
+      }
+      if(rData[i].text == "approved by business"){
+        rData[i].text = LocalizeComponent.approved_b;
+      }
+      if(rData[i].text == "waiting system approval"){
+        rData[i].text = LocalizeComponent.waiting_system_appr;
+      }
+    }
     return rData;
   },[])
 
@@ -484,8 +498,8 @@ const TaskComponent = (props) => {
         <Grid container >
           <AppBar position="static">
           <Tabs value={value} onChange={tabsChange} aria-label="simple tabs example">
-              <Tab label="Current Tasks" {...a11yProps(0)} />
-              <Tab label="Task Progress" {...a11yProps(1)} />
+              <Tab label={LocalizeComponent.currentTasks} {...a11yProps(0)} />
+              <Tab label={LocalizeComponent.taskProgress} {...a11yProps(1)} />
             </Tabs>
           </AppBar>
           <TabPanel value={value} index={0}>

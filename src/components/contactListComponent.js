@@ -68,7 +68,7 @@ const MapList = ((props) => {
 
   const list = props.list;
 
-  const eliotIco = "https://www.daily-sun.com/assets/news_images/2017/08/14/thumbnails/Daily-Sun-38-01-14-08-2017.jpg";
+  const eliotIco = "https://echohub.io/newimages/no-image.png";
 
   const [messageCount,setMessageCount] = useState(3);
   const [online,setOnline] = useState(1);

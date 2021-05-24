@@ -246,14 +246,14 @@ const SubComponent = (props) => {
           >
           <ChatIcon className="leftSide"/>
           <div className="rightSide">
-              Suggest
+              {LocalizeComponent.suggest_one}
           </div>
         </Link>
 
           <div className="centrDivCopyCtree" onClick={(e) => View(url)}>
               <VisibilityIcon className="leftSide"/>
-              <div className="rightSide">
-                  View
+              <div className="rightSideM">
+                  {LocalizeComponent.suggest_two}
               </div>
           </div>
 

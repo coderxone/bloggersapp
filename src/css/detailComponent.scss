@@ -125,16 +125,27 @@ $successColor:#7dec62;
   width:40%;
   float: left;
   margin-left:8px;
-  margin-top:4px;
+  margin-top:2px;
   text-align: center;
   font-family:AppFont;
-  font-size: 16px;
+  font-size: 12px;
+  color:$base-app-color;
+}
+
+.rightSideM{
+  width:40%;
+  float: left;
+  margin-left: 2px;
+  margin-top: 8px;
+  text-align: center;
+  font-family:AppFont;
+  font-size: 12px;
   color:$base-app-color;
 }
 .rightSideSmall{
   width:40%;
   float: left;
-  margin-left:8px;
+  margin-left: 2px;
   margin-top:2px;
   text-align: center;
   font-family:AppFont;
@@ -233,6 +244,7 @@ $successColor:#7dec62;
   font-family:AppFont;
   height: 30px;
   color:$base-app-color;
+  font-size: 14px;
 
 }
 .project_double_l{
@@ -240,7 +252,7 @@ $successColor:#7dec62;
   font-family:AppFont;
   height: 90px;
   color:$base-app-color;
-
+  font-size: 14px;
 }
 
 .line1{
@@ -364,6 +376,8 @@ $successColor:#7dec62;
 .left_button_one_name{
   text-align: center;
   color:white;
+  font-size: 12px;
+  margin-top:2px;
 }
 .left_button_one_name_confirm{
   text-align: center;

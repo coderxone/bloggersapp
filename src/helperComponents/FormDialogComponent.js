@@ -7,6 +7,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Observable from '../services/Observable';
+import LocalizeComponent from '../localize/LocalizeComponent';
 
 export default function FormDialog(props) {
   const [open, setOpen] = React.useState(false);
@@ -43,16 +44,16 @@ export default function FormDialog(props) {
     <div>
 
       <Dialog open={Behavior} onClose={handleClose} aria-labelledby="form-dialog-title">
-        <DialogTitle id="form-dialog-title">Confirm</DialogTitle>
+        <DialogTitle id="form-dialog-title">{LocalizeComponent.form_confirm}</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            To decline task please explain reason.
+            {LocalizeComponent.to_decline}
           </DialogContentText>
           <TextField
             autoFocus
             margin="dense"
             id="name"
-            label="Please write reason?"
+            label={LocalizeComponent.reason}
             multiline
             type="text"
             fullWidth
@@ -61,10 +62,10 @@ export default function FormDialog(props) {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="primary">
-            Cancel
+            {LocalizeComponent.cancel}
           </Button>
           <Button onClick={event => Confirm(text)} color="primary">
-            Confirm
+            {LocalizeComponent.form_confirm}
           </Button>
         </DialogActions>
       </Dialog>

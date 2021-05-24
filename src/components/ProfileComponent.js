@@ -153,7 +153,7 @@ const ProfileComponent = (props) => {
 
   const [closeDialog,setCloseDialog] = useState(false);
 
-  var backgroundImageUrl = "https://www.daily-sun.com/assets/news_images/2017/08/14/thumbnails/Daily-Sun-38-01-14-08-2017.jpg";
+  var backgroundImageUrl = "https://echohub.io/newimages/no-image.png";
 
   const onSubmit = ((data) => {
 

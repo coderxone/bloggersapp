@@ -36,6 +36,7 @@ import ParseContactsComponent from '../helperComponents/ParseContactsComponent';
 import PermissionRequestComponent from '../helperComponents/PermissionRequestComponent.js';
 import IosPermissionRequestComponent from '../helperComponents/IosPermissionRequestComponent';
 import MobileAppComponent from '../helperComponents/mobileAppComponent';
+import LanguageComponent from '../helperComponents/Language/LanguageComponent';
 import Observable from '../services/Observable';
 import LiveService from '../services/LiveService';
 import { Capacitor,Plugins } from '@capacitor/core';
@@ -62,7 +63,7 @@ import {
    //  if(lang.indexOf("es") >= 0){
    //    LocalizeComponent.setLanguage("es");
    //  }
-    //LocalizeComponent.setLanguage("ru");
+    LocalizeComponent.setLanguage("ru");
 
  }
 
@@ -180,6 +181,7 @@ const BottomFunc = () => {
 
 
   const [mobileDialogStatus,SetMobileDialogStatus] = useState(false);
+  const [languageDialogStatus,SetLanguageDialogStatus] = useState(true);
 //xx
   useEffect(() => {
     const listenLive = LiveService.listenUserDataTask().subscribe(data => {
@@ -465,6 +467,7 @@ const BottomFunc = () => {
                Capacitor.platform === 'web' && (
                  <div className="imgCenter">
                     <MobileAppComponent status={mobileDialogStatus}/>
+                    <LanguageComponent status={languageDialogStatus}/>
                  </div>
                )
              }

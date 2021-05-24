@@ -909,9 +909,9 @@ useEffect(() => {
 
   const changePage = useCallback((Contacts) => {
 
-    if(Contacts == "Contacts"){
+    if(Contacts == LocalizeComponent.contactsName){
       return history.push('/contactlist'), [history];
-    }else if(Contacts == "MyTasks"){
+    }else if(Contacts == LocalizeComponent.myTasks){
       return history.push('/mytasks'), [history];
     }
 
@@ -986,7 +986,7 @@ useEffect(() => {
           </IconButton>
 
           <Typography className="centerM" variant="h6" onClick={event => CloseDrawer()} noWrap>
-            Creator dashboard
+            {LocalizeComponent.creator_dashboard}
           </Typography>
           <IconButton
             color="inherit"
@@ -1021,7 +1021,7 @@ useEffect(() => {
               approveStatus === 1 &&
               (
                 <List >
-                  {['Contacts','MyTasks'].map((text, index) => (
+                  {[LocalizeComponent.contactsName,LocalizeComponent.myTasks].map((text, index) => (
                     <ListItem button key={text} onClick={event => changePage(text)}>
                       <ListItemIcon className={classestwo.icon}>
                         {index == 0 && <InboxIcon />}
@@ -1078,7 +1078,7 @@ useEffect(() => {
                        <div className="CurrentTask">
                          <div className="CurrentTaskTwo_2">
                               <div className="buttonStylePush" onClick={event => GoToTask(currentItem)}>
-                                 <div className="CurrentTaskTwo_2Text">Continue Task</div>
+                                 <div className="CurrentTaskTwo_2Text">{LocalizeComponent.continue_task}</div>
                              </div>
                          </div>
                        </div>
@@ -1095,7 +1095,7 @@ useEffect(() => {
                     <div className="CurrentTask">
                       <div className="CurrentTaskTwo_2">
                            <div className="buttonStylePush" onClick={event => GoOnline()}>
-                              <div className="CurrentTaskTwo_2Text">Go Online</div>
+                              <div className="CurrentTaskTwo_2Text">{LocalizeComponent.go_online}</div>
                           </div>
                       </div>
                     </div>
@@ -1116,15 +1116,15 @@ useEffect(() => {
                       <div className="mainPush_root">
                         <div className="declineButtonBlock">
                            <div className="declineButtonStyle" onClick={event => rejectOrder(items[0])}>
-                               Decline
+                               {LocalizeComponent.Decline}
                            </div>
                         </div>
                         <div className="mainPush">
                           <div className="mainPushColumsOne">
                             <div className="mainPushColumsOneLeft">
-                                <div className="mainPushColumsOneLeft_1">Do before {items[0].date}</div>
+                                <div className="mainPushColumsOneLeft_1">{LocalizeComponent.do_before} {items[0].date}</div>
                                 <div className="mainPushColumsOneLeft_2">{items[0].url}</div>
-                                <div className="mainPushColumsOneLeft_3">Distance: {distance}</div>
+                                <div className="mainPushColumsOneLeft_3">{LocalizeComponent.distance}: {distance}</div>
 
                             </div>
                             <div className="mainPushColumsOneRight">
@@ -1144,15 +1144,15 @@ useEffect(() => {
                                 ${Math.round(items[0].sum / items[0].peoplecount - 1)}
                               </div>
                               <div className="mainPushColumsTwo_2_Second">
-                                  Included Echohub pay and customer tip
+                                  {LocalizeComponent.tips}
                               </div>
                               <div className="mainPushColumsTwo_3_Third">
-                                (Total may be higher)
+                                {LocalizeComponent.high}
                               </div>
                             </div>
                             <div className="mainPushColumsTwo_2">
                                 <div className="buttonStylePush" onClick={event => StartTask(items[0])}>
-                                    <div className="buttonStylePushText">Accept</div>
+                                    <div className="buttonStylePushText">{LocalizeComponent.accept}</div>
                                 </div>
                             </div>
 
@@ -1176,7 +1176,7 @@ useEffect(() => {
              (
                <div className="approvalBysystem">
                   <div className="approvalText">
-                      verifying your email, you will receive an email notification within 4 hours. We will send you email notification.
+                      {LocalizeComponent.verification}
                   </div>
 
                </div>

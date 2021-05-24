@@ -191,12 +191,32 @@ const BannedList = ((props) => {
 });
 
 
-
+//xx
 const CompleteBlockComponent = (props) => {
 
   const [activeStep, setActiveStep] = React.useState(1);
   const statusArray = useMemo(() => {
     var rData = config.getJSONFromMemory("appstatus");
+
+    for(var i = 0;i < rData.length;i++){
+      if(rData[i].text == "open task"){
+        rData[i].text = LocalizeComponent.open_task;
+      }
+      if(rData[i].text == "under consideration by business"){
+        rData[i].text = LocalizeComponent.under_consideration;
+      }
+      if(rData[i].text == "approved by business"){
+        rData[i].text = LocalizeComponent.approved_b;
+      }
+      if(rData[i].text == "waiting system approval"){
+        rData[i].text = LocalizeComponent.waiting_system_appr;
+      }
+    }
+    // console.log(rData);
+    // //open task
+    // //under consideration by business
+    // //approved by business
+    // //waiting system approval
     return rData;
   },[])
 
@@ -1090,9 +1110,9 @@ const EditNetwork = (data) => {
 
               <div className="descriptBox">
                   <div className="descriptionText">
-                      Description: {detailData.description}
+                      {LocalizeComponent.description_n}: {detailData.description}
                       <br/>
-                      Location: {detailData.location_name}
+                      {LocalizeComponent.Location_n}: {detailData.location_name}
                   </div>
               </div>
 
