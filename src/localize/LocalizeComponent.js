@@ -204,7 +204,7 @@ let strings = new LocalizedStrings({
    bl8:"How many subscribers do you currently have ?",
    bl9:"Enter your PayPal email for withdrawal ?",
    bl10:"Enter SSN,ITIN or EIN for background verification ?",
-   bl10:"Upload at least 1 document to proof identity ?",
+   bl11:"Upload at least 1 document to proof identity ?",
    Finish1:"Finish",
    verification:"verifying your profile, you will receive an email notification within 2 hours. We will send you email notification.",
    creator_dashboard:"Creator dashboard",
