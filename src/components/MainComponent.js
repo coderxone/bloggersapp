@@ -36,7 +36,7 @@ import ParseContactsComponent from '../helperComponents/ParseContactsComponent';
 import PermissionRequestComponent from '../helperComponents/PermissionRequestComponent.js';
 import IosPermissionRequestComponent from '../helperComponents/IosPermissionRequestComponent';
 import MobileAppComponent from '../helperComponents/mobileAppComponent';
-import LanguageComponent from '../helperComponents/Language/LanguageComponent';
+import LanguageComponent from '../helperComponents/language/LanguageComponent.js';
 import Observable from '../services/Observable';
 import LiveService from '../services/LiveService';
 import { Capacitor,Plugins } from '@capacitor/core';

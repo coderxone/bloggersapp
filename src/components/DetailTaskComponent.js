@@ -212,11 +212,7 @@ const CompleteBlockComponent = (props) => {
         rData[i].text = LocalizeComponent.waiting_system_appr;
       }
     }
-    // console.log(rData);
-    // //open task
-    // //under consideration by business
-    // //approved by business
-    // //waiting system approval
+
     return rData;
   },[])
 

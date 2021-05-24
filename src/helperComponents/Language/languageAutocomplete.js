@@ -7,22 +7,17 @@ export default function ComboBox() {
   return (
     <Autocomplete
       id="combo-box-demo"
-      options={top100Films}
+      options={languageArray}
       getOptionLabel={(option) => option.title}
+      defaultValue={languageArray[0]}
       style={{ width: 300 }}
-      renderInput={(params) => <TextField {...params} label="Combo box" variant="outlined" />}
+      renderInput={(params) => <TextField {...params} label="Select language" variant="outlined" />}
     />
   );
 }
 
 // Top 100 films as rated by IMDb users. http://www.imdb.com/chart/top
-const top100Films = [
-  { title: 'The Shawshank Redemption', year: 1994 },
-  { title: 'The Godfather', year: 1972 },
-  { title: 'The Godfather: Part II', year: 1974 },
-  { title: 'The Kid', year: 1921 },
-  { title: 'Inglourious Basterds', year: 2009 },
-  { title: 'Snatch', year: 2000 },
-  { title: '3 Idiots', year: 2009 },
-  { title: 'Monty Python and the Holy Grail', year: 1975 },
+const languageArray = [
+  { title: 'English', value: "eng" },
+  { title: 'Russian', value: "ru" },
 ];
