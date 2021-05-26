@@ -20,6 +20,8 @@ import AuthService from '../services/AuthService';
 import DandelionComponent from '../components/dandelionComponent';
 import { increment, decrement,save_email,save_multiData } from '../actions/actions';
 import config from '../config/config.js';
+//facebook web login
+import FacebookWebLoginComponent from '../helperComponents/FacebookWebLoginComponent';
 import {
   Link, Redirect,useHistory
 } from "react-router-dom";
@@ -274,6 +276,8 @@ const AuthorizationComponent = (props) => {
    	<div className={classes.root}>
         <Grid container >
 
+          <FacebookWebLoginComponent/>
+
           <Grid item xs={12}>
             <Paper className={classes.paper}>
 
@@ -338,6 +342,8 @@ const AuthorizationComponent = (props) => {
             </Paper>
           </Grid>
 
+
+
           <Grid item xs={12} >
             <Paper  className={classes.paper}>
 
@@ -346,6 +352,8 @@ const AuthorizationComponent = (props) => {
                   <Link className="appColor" to="/restore">{LocalizeComponent.restore_password}</Link>
 
               </Box>
+
+
 
 
                {redirect === false ? (
@@ -359,6 +367,8 @@ const AuthorizationComponent = (props) => {
 
             </Paper>
           </Grid>
+
+
 
           </Grid>
       </div>

@@ -9,6 +9,7 @@ const observ_subjectAny = new Subject();
 const observ_Reject = new Subject();
 const observ_RejectMob = new Subject();
 const observ_RejectTimOut = new Subject();
+const observ_Lang = new Subject();
 
 
 const observ_f = {
@@ -22,6 +23,13 @@ const observ_f = {
       },
       sendData_subjectMob: data => {
         return observ_RejectMob.next(data);
+      },
+
+      getData_subjectLang:() => {
+        return observ_Lang;
+      },
+      sendData_subjectLang: data => {
+        return observ_Lang.next(data);
       },
 
       getData_subjectMob:() => {

@@ -10,6 +10,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import Typography from '@material-ui/core/Typography';
 import LanguageAutocomplete from '../../helperComponents/language/languageAutocomplete';
 import Observable from '../../services/Observable';
+import config from '../../config/config';
 
 const styles = (theme) => ({
   root: {
@@ -57,17 +58,18 @@ export default function CustomizedDialogs(props) {
   const open = props.status;
 
   const handleClickOpen = () => {
-      Observable.sendData_subjectMob("openMobileDialog");
+      Observable.sendData_subjectLang("openLangDialog");
   };
   const handleClose = () => {
-      Observable.sendData_subjectMob("closeMobileDialog");
+      var lang = config.getUserItemName("lang");
+      if(lang !== false){
+        Observable.sendData_subjectLang("closeLangDialog");
+      }
+
   };
 
   return (
     <div>
-      <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-        Download mobile app
-      </Button>
       <Dialog onClose={handleClose} aria-labelledby="customized-dialog-title" open={open}>
         <DialogTitle id="customized-dialog-title" className="dialogCenterText" onClose={handleClose}>
           Select your language

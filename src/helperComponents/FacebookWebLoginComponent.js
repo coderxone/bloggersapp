@@ -12,7 +12,7 @@ import {
 
 
 
-const ExampleComponent = (props) => {
+const FacebookWebLoginComponent = (props) => {
 
 
 
@@ -20,7 +20,8 @@ const ExampleComponent = (props) => {
 
     <Grid container >
 
-
+    <div id="fb-root"></div>
+    <script async defer crossOrigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v10.0&appId=179803590561761&autoLogAppEvents=1" nonce="M7OtfWI3"></script>
 
 
     </Grid>
@@ -30,4 +31,4 @@ const ExampleComponent = (props) => {
 };
 
 
- export default connect()(ExampleComponent);
+ export default connect()(FacebookWebLoginComponent);

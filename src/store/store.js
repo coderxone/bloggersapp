@@ -13,6 +13,7 @@ const reduceexport = function reducer(state = initialState, action) {
   //console.log('reducer', state, action);
 
   switch(action.type) {
+
     case 'INCREMENT':
     //  console.log("INCREMENT");
       return {

@@ -38,6 +38,7 @@ import IosPermissionRequestComponent from '../helperComponents/IosPermissionRequ
 import MobileAppComponent from '../helperComponents/mobileAppComponent';
 import LanguageComponent from '../helperComponents/language/LanguageComponent.js';
 import Observable from '../services/Observable';
+import config from '../config/config';
 import LiveService from '../services/LiveService';
 import { Capacitor,Plugins } from '@capacitor/core';
 import {
@@ -49,21 +50,15 @@ import {
 
  const DetectLanguage = () => {
 
-   var lang = LocalizeComponent.getInterfaceLanguage();
 
-   // console.log(lang);
-   //
-   //  if(lang.indexOf("en") >= 0){
-   //
-   //  }
-   //  if(lang.indexOf("ru") >= 0){
-   //    console.log(lang);
-   //    LocalizeComponent.setLanguage("ru");
-   //  }
-   //  if(lang.indexOf("es") >= 0){
-   //    LocalizeComponent.setLanguage("es");
-   //  }
-    LocalizeComponent.setLanguage("ru");
+   var lang = config.getUserItemName("lang");
+   if(lang != false){
+     if(lang === "ru"){
+       LocalizeComponent.setLanguage("ru");
+     }
+   }
+
+
 
  }
 
@@ -77,7 +72,7 @@ const BottomFunc = () => {
   const history = useHistory();
   const [route,SetRoute] = useState("");
   const [redirect,Setredirect] = useState(false);
-//xx
+
   const [bloggerCount,setBloggerCount] = useState(0);
 
   const goToLogin = () => {
@@ -181,8 +176,16 @@ const BottomFunc = () => {
 
 
   const [mobileDialogStatus,SetMobileDialogStatus] = useState(false);
-  const [languageDialogStatus,SetLanguageDialogStatus] = useState(true);
-//xx
+  const [languageDialogStatus,SetLanguageDialogStatus] = useState(false);
+
+
+  const checkMemoryLang = () => {
+    var lang = config.getUserItemName("lang");
+
+    if(lang === false){
+      SetLanguageDialogStatus(true);
+    }
+  }
   useEffect(() => {
     const listenLive = LiveService.listenUserDataTask().subscribe(data => {
       //console.log(data);
@@ -192,10 +195,20 @@ const BottomFunc = () => {
       //LiveService
     });
 
+    //check app language
+    checkMemoryLang();
+
     const obs = Observable.subscribeByTimer_4_second().subscribe(data => {
         LiveService.getTaskData();
     })
   },[])
+
+  const UpdatePageLanguage = () => {
+    setTimeout(function(){
+      window.location.reload();
+    },2000);
+
+  }
 
   useEffect(() => {
 
@@ -215,7 +228,7 @@ const BottomFunc = () => {
 
 
     },3000);
-
+//xx
     var ObservableMobileListener = Observable.getData_subjectMob().subscribe(data => {
       //console.log(data);
       if(data == "closeMobileDialog"){
@@ -223,6 +236,17 @@ const BottomFunc = () => {
       }
       if(data == "openMobileDialog"){
         SetMobileDialogStatus(true);
+      }
+
+    })
+    var ObservableLangListener = Observable.getData_subjectLang().subscribe(data => {
+      console.log(data);
+      if(data == "closeLangDialog"){
+        SetLanguageDialogStatus(false);
+        UpdatePageLanguage();
+      }
+      if(data == "openLangDialog"){
+        SetLanguageDialogStatus(true);
       }
     })
 
@@ -245,6 +269,7 @@ const BottomFunc = () => {
 
     return () => {
       ObservableMobileListener.unsubscribe();
+      ObservableLangListener.unsubscribe();
     }
 
 
