@@ -4,7 +4,7 @@ const initialState = {
   password:"",
   array:[]
 };
-
+//props.dispatch(save_email(storageData));
 
 
 const reduceexport = function reducer(state = initialState, action) {
@@ -67,10 +67,18 @@ const reduceexport = function reducer(state = initialState, action) {
 
     case 'SAVE_MULTI_DATA':
     //console.log(action);
-    localStorage.setItem(action._object,action.name); //_object:firstName,name:firstName//firstName
+    localStorage.setItem(action._object,action.name); //_object:name,name:value
     return {
       _object:action._object,
       name:action.name
+    };
+
+    case 'MULTI_SAVE':
+    console.log(action);
+    localStorage.setItem(action.name,action.value); //action:name,name:value
+    return {
+      name:action.name,
+      value:action.value
     };
 
     default:

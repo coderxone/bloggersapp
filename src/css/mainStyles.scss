@@ -1897,4 +1897,49 @@ body {
   font-size: 18px;
   margin-top:3px;
 }
+
+
+.buttonCenterSocial{
+   width: 100%;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   font-family: AppFont;
+}
+
+
+
+
+.faceBookLogin{
+  width: 200px;
+  height: 30px;
+  background-color: $base-app-color;
+  border:0px;
+  border-radius: 5px;
+  font-family: AppFont;
+  font-size: 16px;
+  margin-left:15% !important;
+  text-align: center;
+}
+
+.socialDialog{
+  width: 300px;
+  height: 100px;
+}
+
+
 //aboutUs
+
+.fontStyle{
+  font-family: AppFont !important;
+}
+
+.blink_me {
+  animation: blinker 3s linear infinite;
+}
+
+@keyframes blinker {
+  50% {
+    opacity: 0;
+  }
+}

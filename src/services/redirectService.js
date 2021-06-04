@@ -5,6 +5,7 @@ import config from '../config/config.js';
 import cryptLibrary from '../helpers/CryptLibrary';
 const observ_subject = new Subject();
 const observ_subject2 = new Subject();
+const observ_subject3 = new Subject();
 const timer10s = new Subject();
 
 const redirectService = {
@@ -13,8 +14,7 @@ const redirectService = {
 
 
             var data = {
-              "deviceid":config.getdeviceid(),
-              "email":config.getUserEmail(),
+              "deviceid":comingData.hash,
               "ip": comingData.ip,
               "hash": comingData.hash,
             }
@@ -39,6 +39,29 @@ const redirectService = {
               .then(data =>  observ_subject.next(data.ip));
 
               return observ_subject;
+          },
+
+
+          sendConfirm:(hash) => {
+
+
+            var data = {
+              "deviceid":hash,
+              "hash": hash
+            }
+
+            var encryptedData = cryptLibrary.encrypt(data);
+
+            socket.emit("setconfirm",encryptedData);
+          },
+
+          getConfirm:() => {
+            socket.on("setconfirm",(data) => {
+                //console.log(data);
+                observ_subject3.next(cryptLibrary.decrypt(data));
+            });
+
+            return observ_subject3;
           },
 
 

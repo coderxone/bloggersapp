@@ -18,8 +18,12 @@ import Box from '@material-ui/core/Box';
 import { connect } from 'react-redux';
 import AuthService from '../services/AuthService';
 import DandelionComponent from '../components/dandelionComponent';
-import { increment, decrement,save_email,save_multiData } from '../actions/actions';
+import Observable from '../services/Observable';
+import { increment, decrement,save_email,save_multiData,multiSave } from '../actions/actions';
 import config from '../config/config.js';
+import ReactDOMServer from 'react-dom/server';
+import ActivationEmail from '../components/emailTemplates/ActivationEmail';
+import sendMailService from '../services/sendMailService';
 //facebook web login
 import FacebookWebLoginComponent from '../helperComponents/FacebookWebLoginComponent';
 import {
@@ -109,13 +113,45 @@ const AuthorizationComponent = (props) => {
 
     //console.log(data);
 
+    data.picture = "0";
+    data.name = "0";
+
     const newState = {...storageData};
     newState.email = data.email;
     newState.password = data.password;
+    newState.picture = data.picture;
     setStorageData(newState);
 
 
+
     AuthService.sendAuthData(data);
+  });
+
+  const checkSocialData = (() => {
+//xx
+    //console.log("checking social data");
+    var memoryEmail = config.getUserItemName("social");
+
+    if(memoryEmail){
+
+      if(memoryEmail == "ok"){
+        var data = {
+          email:memoryEmail,
+          name:config.getUserItemName("name"),
+          picture:config.getUserItemName("picture"),
+          password:config.getdeviceid(),
+        }
+
+        AuthService.sendAuthData(data);
+
+        props.dispatch(multiSave({name:"social",value:"not"}));
+
+
+      }
+
+    }
+
+
   });
 
 
@@ -136,7 +172,7 @@ const AuthorizationComponent = (props) => {
           }else if(checkUserAuthorization.role == 2){
             SetRoute("/business");
             Setredirect(true);
-          }else if(checkUserAuthorization.role == 0){
+          }else if(checkUserAuthorization.role == 3){
             SetRoute("/approve");
             Setredirect(true);
           }
@@ -193,7 +229,7 @@ const AuthorizationComponent = (props) => {
                   Setredirect(true);
                 }
 
-              }else if(data.role == 0){
+              }else if(data.role == 3){
                 SetRoute("/approve");
                 Setredirect(true);
               }
@@ -212,8 +248,11 @@ const AuthorizationComponent = (props) => {
                 Setredirect(true);
               }
 
-            }else if(data.role == 0){
+            }else if(data.role == 3){
               SetRoute("/approve");
+              Setredirect(true);
+            }else if(data.role == 0){
+              SetRoute("/role");
               Setredirect(true);
             }
           }
@@ -222,6 +261,20 @@ const AuthorizationComponent = (props) => {
 
           }else if(data.status === "newuser"){
 
+                var generatedLink = data.link;
+                var sendEmail = data.email;
+                var content = ReactDOMServer.renderToString(<ActivationEmail email={sendEmail} url={generatedLink} />);
+                var title = LocalizeComponent.text4;
+
+                var sendObject = {
+                  "email":sendEmail,
+                  "title":title,
+                  "html":content
+                }
+
+                sendMailService.sendMailToUser(sendObject);
+
+  //xx
                 props.dispatch(save_email(storageData));
 
                 var enablelogin = localStorage.getItem("enablelogin");
@@ -267,6 +320,11 @@ const AuthorizationComponent = (props) => {
     },[props,setError,storageData]);
 
     useEffect(() => {
+//xx
+        const timeListener = Observable.subscribeByTimer_5_second().subscribe(data => {
+            checkSocialData();
+        });
+
         checkUserAuthorization();
         BackButton();
     },[]);
@@ -276,7 +334,7 @@ const AuthorizationComponent = (props) => {
    	<div className={classes.root}>
         <Grid container >
 
-          <FacebookWebLoginComponent/>
+
 
           <Grid item xs={12}>
             <Paper className={classes.paper}>
@@ -367,6 +425,17 @@ const AuthorizationComponent = (props) => {
 
             </Paper>
           </Grid>
+
+
+
+          <div className="buttonCenterSocial">
+
+              <FacebookWebLoginComponent />
+
+          </div>
+
+
+
 
 
 

@@ -6,6 +6,7 @@ export const SAVE_COUNTRY = "SAVE_COUNTRY";
 export const SAVE_CATEGORY = "SAVE_CATEGORY";
 export const SAVE_BUSINESS_CATEGORY = "SAVE_BUSINESS_CATEGORY";
 export const SAVE_MULTI_DATA = "SAVE_MULTI_DATA";
+export const MULTI_SAVE = "MULTI_SAVE";
 
 
 export function increment() {
@@ -20,3 +21,4 @@ export const save_country = (data) => ({type: SAVE_COUNTRY,country:data })
 export const save_category = (data) => ({type: SAVE_CATEGORY,category:data })
 export const save_business_category = (data) => ({type: SAVE_BUSINESS_CATEGORY,category:data })
 export const save_multiData = (obj) => ({type: SAVE_MULTI_DATA,_object:obj._object,name:obj.name})
+export const multiSave = (item) => ({type: MULTI_SAVE,name:item.name,value:item.value})

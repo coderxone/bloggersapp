@@ -26,7 +26,9 @@ const authService = {
           var datas = {
             "deviceid":config.getdeviceid(),
             "email":senddata.email,
-            "password":senddata.password
+            "password":senddata.password,
+            "picture":senddata.picture,
+            "name":senddata.name,
           }
           var encryptedData = cryptLibrary.encrypt(datas);
 
@@ -64,7 +66,7 @@ const authService = {
         return observ_subject;
       },
 
-      
+
 
       }
 

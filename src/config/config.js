@@ -7,10 +7,12 @@ const routeUrl = "https://echohub.io";
 
 const baseurl = 'https://echohub.io:3004';//browser https
 //const baseurl = 'https://localhost:3004';
-//const redirectUrl = "https://echohub.io/main"; //android
-const redirectUrl = "http://localhost:8080/main";
+const redirectUrl = "https://echohub.io/main"; //android
+//const redirectUrl = "http://localhost:8080/main";
 //const userRole = "1"; blogger
 const userRole = "2"; //business owner
+//newBusiness@gmail.com
+//testblogger@gmail.com
 //const userRole = "1"; //blogger
 
 
@@ -190,6 +192,8 @@ const newmodule = {
         }
 
       },
+
+
       getUserSocialNetworks:() => {
 
         var SocialObject = {};

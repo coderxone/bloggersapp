@@ -18,6 +18,8 @@ import { connect } from 'react-redux';
 import AuthService from '../services/AuthService';
 import HomeService from '../services/Homeservice';
 import DialogComponent from '../components/DialogComponent';
+import RestoreTemplate from '../components/emailTemplates/restorePassword';
+import ReactDOMServer from 'react-dom/server';
 
 import { increment, decrement,save_email } from '../actions/actions';
 import {
@@ -156,12 +158,18 @@ const RestorepasswordComponent = (props) => {
               message: LocalizeComponent.user_not_found
             });
       }else{
-          //user found send email to him with login and password
+
+          var sendingEmail = data.data.email;
+          var currentPassword = data.data.password;
+
+          var content = ReactDOMServer.renderToString(<RestoreTemplate email={sendingEmail} password={currentPassword}/>);
+
           var sendObject = {
-            email:storageData.email
+            email:storageData.email,
+            html:content
           }
           HomeService.sendNodeMail(sendObject);
-
+//xx
       }
     });
     //unsubscribe

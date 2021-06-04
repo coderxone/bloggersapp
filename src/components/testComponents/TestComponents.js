@@ -13,7 +13,7 @@ const AdminComponent = (props) => {
       const listenUserDataTask = sendMailService.listenUserDataTask().subscribe(data => {
         console.log(data);
       });
-      sendMailService.sendMailToBusiness();
+      //sendMailService.sendMailToBusiness();
 
       return () => {
         listenUserDataTask.unsubscribe();
@@ -24,6 +24,7 @@ const AdminComponent = (props) => {
   return (
 
     <Grid container >
+
 
 
 

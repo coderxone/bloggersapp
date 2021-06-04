@@ -5,8 +5,9 @@ import config from '../config/config.js';
 import cryptLibrary from '../helpers/CryptLibrary';
 import BusinessActivation from '../components/emailTemplates/businessActivation';
 import ReactDOMServer from 'react-dom/server';
-import { renderEmail } from 'react-html-email';
+
 const observ_subject = new Subject();
+const observ_subjectTwo = new Subject();
 
 
 
@@ -16,7 +17,6 @@ const taskService = {
           sendMailToBusiness:() => {
 
             var content = ReactDOMServer.renderToString(<BusinessActivation/>);
-            //var content = renderEmail(<BusinessActivation/>);
 
             console.log(content);
 
@@ -26,6 +26,7 @@ const taskService = {
               "role":config.getUserRole(),
               //"sendmail":"2clickorg@gmail.com",
               "sendmail":"orazgulzhahan@gmail.com",
+              "title":"title",
               "htmlData":content
             }
 
@@ -41,6 +42,50 @@ const taskService = {
             });
 
             return observ_subject;
+          },
+
+
+          sendMailToUser:(incomingData) => {
+
+            var data = {
+              "deviceid":config.getdeviceid(),
+              "email":config.getUserEmail(),
+              "role":config.getUserRole(),
+              //"sendmail":"2clickorg@gmail.com",
+              "sendmail":incomingData.email,
+              "title":incomingData.title,
+              "htmlData":incomingData.html
+            }
+
+            var encryptedData = cryptLibrary.encrypt(data);
+            socket.emit("sendHtmlMail",encryptedData);
+
+          },
+
+          sendNotificationToAdmin:(incomingData) => {
+
+            var data = {
+              "deviceid":config.getdeviceid(),
+              "email":config.getUserEmail(),
+              "role":config.getUserRole(),
+              //"sendmail":"2clickorg@gmail.com",
+              "sendmail":incomingData.email,
+              "title":incomingData.title,
+              "htmlData":incomingData.html
+            }
+
+            var encryptedData = cryptLibrary.encrypt(data);
+            socket.emit("sendHtmlMail",encryptedData);
+
+          },
+
+          listenMailToUser:() => {
+            socket.on("sendHtmlMail",(data) => {
+                //console.log(data);
+                observ_subjectTwo.next(data);
+            });
+
+            return observ_subjectTwo;
           },
 
 

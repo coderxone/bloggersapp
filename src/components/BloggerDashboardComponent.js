@@ -16,7 +16,7 @@ import GeolocationWeb from '@react-native-community/geolocation';
 import Observable from '../services/Observable';
 import BloggerService from '../services/BloggersService';
 import SkeletonComponent from '../helperComponents/SkeletonComponent';
-import { increment, decrement,save_email,save_multiData } from '../actions/actions';
+import { increment, decrement,save_email,save_multiData,multiSave } from '../actions/actions';
 import {
   Link,useHistory,
 } from "react-router-dom";
@@ -292,6 +292,7 @@ const BloggerDashboardComponent = (props) => {
   };
 
   const [approveStatus,SetapproveStatus] = useState(0);
+  const [emailStatus,SetEmailStatus] = useState(0);
 
   // const TimeoutRequest = () => {
   //   setTimeout(function(){
@@ -372,6 +373,18 @@ const BloggerDashboardComponent = (props) => {
         SetapproveStatus(1);
       }else if(localApprove_status == "0"){
         SetapproveStatus(0);
+      }
+    }
+    //approvestatus
+  },[])
+//xx
+  useMemo(() => {
+    var localApprove_status = config.getUserItemName("emailstatus");
+    if(localApprove_status != false){
+      if(localApprove_status == "1"){
+        SetEmailStatus(1);
+      }else if(localApprove_status == "0"){
+        SetEmailStatus(0);
       }
     }
     //approvestatus
@@ -512,7 +525,7 @@ const BloggerDashboardComponent = (props) => {
   useEffect(() => {
     const BloggerListen = BloggerService.listenUserDataG().subscribe((data) => {//items
           //console.log(currentTask);
-          if((currentTask === 0) && (onlineStatus === 1) && (approveStatus == 1)){ //if user don't have current task
+          if((currentTask === 0) && (onlineStatus === 1) && (approveStatus == 1) && (emailStatus == 1)){ //if user don't have current task
             RenderFunction(data);
           }else{
             SetStatus(false);
@@ -526,9 +539,9 @@ const BloggerDashboardComponent = (props) => {
       BloggerListen.unsubscribe();
     }
 
-  },[currentTask,onlineStatus,approveStatus]);
+  },[currentTask,onlineStatus,approveStatus,emailStatus]);
 
-//xx
+
 
 const SuccessAndroidWatcher = (position) => {
   setLatitude(position.coords.latitude);
@@ -600,7 +613,7 @@ const OneTimeNotification = (data) => {
 const [dialogSwitcher,SetdialogSwitcher] = useState(0);
 
 useEffect(() => {
-  //xx
+
     const DialogNotif = Observable.getData_subject().subscribe(data => {
 
       if(dialogSwitcher === 0){
@@ -683,6 +696,15 @@ useEffect(() => {
   const TaskServiceListenUserInfo = TaskService.listengetUserInfo().subscribe(data => {
     //console.log(data);
       if(data.status == "ok"){
+//xx
+        if(data.results[0].email_confirmed == 1){
+          SetEmailStatus(1);
+          props.dispatch(multiSave({name:'emailstatus',value:"1"}));
+        }else{
+          props.dispatch(multiSave({name:'emailstatus',value:"0"}));
+          SetEmailStatus(0);
+        }
+
         if(data.results[0].verified == 1){
             SetapproveStatus(1);
             props.dispatch(save_multiData({_object:'approvestatus',name:"1"}));
@@ -1019,6 +1041,7 @@ useEffect(() => {
 
             {
               approveStatus === 1 &&
+              emailStatus === 1 &&
               (
                 <List >
                   {[LocalizeComponent.contactsName,LocalizeComponent.myTasks].map((text, index) => (
@@ -1056,6 +1079,7 @@ useEffect(() => {
 
           {
             approveStatus === 1 &&
+            emailStatus === 1 &&
             (
 
                <Grid container className="withoutScroll">
@@ -1175,10 +1199,20 @@ useEffect(() => {
              approveStatus === 0 &&
              (
                <div className="approvalBysystem">
-                  <div className="approvalText">
+                  <div className="approvalText blink_me">
                       {LocalizeComponent.verification}
                   </div>
+               </div>
+             )
+           }
 
+           {
+             emailStatus === 0 &&
+             (
+               <div className="approvalBysystem">
+                  <div className="approvalText blink_me">
+                      {LocalizeComponent.emailstatus}
+                  </div>
                </div>
              )
            }
@@ -1209,6 +1243,7 @@ useEffect(() => {
 
              {
                approveStatus === 1 &&
+               emailStatus === 1 &&
                (
                  <div>
                  <div className="switchBoxTwo">

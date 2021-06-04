@@ -231,6 +231,13 @@ let strings = new LocalizedStrings({
    continue_task:"Continue Task",
    suggest_one:"Suggest",
    suggest_two:"View",
+   socialButton:"Sign in with social networks",
+   close:"close",
+   text1:"Hi new user ",
+   text2:"Please confirm account by clicking this link ",
+   text3:"Confirmation link",
+   text4:"Confirmation link from echohub.io",
+   emailstatus:"Please confirm your email",
  },
 
 
@@ -464,6 +471,13 @@ let strings = new LocalizedStrings({
    continue_task:"Перейти к заданию",
    suggest_one:"предложить улучшение",
    suggest_two:"посмотреть",
+   socialButton:"Вход через социальные сети",
+   close:"закрыть",
+   text1:"Привет пользователь ",
+   text2:"Пожалуйста подтвердите свой аккаунт, перейдя по этой ссылке ",
+   text3:"Ссылка подтверждения",
+   text4:"Ссылка подтверждения от echohub.io",
+   emailstatus:"Email не подтвержден",
  },
 
  it: {

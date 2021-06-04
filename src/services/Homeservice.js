@@ -79,7 +79,7 @@ const initSocket = (() => {
            message:data.details[data.details.length - 1].message
          }
          Observable.sendData_subjectDilog(messageObj);
-         //xx
+
          if(config.getUserEmail() !== false){
            homeservice.notificationVoice();
          }
@@ -245,11 +245,12 @@ const homeservice = {
           homeservice.checkNotificationsMessages();//check for new messages
         });
       },
-
+//xx
       sendNodeMail:(data) => {
         var datas = {
           "deviceid":config.getdeviceid(),
-          "sendemail":data.email
+          "sendemail":data.email,
+          "html":data.html
         }
 
         //console.log(data);
