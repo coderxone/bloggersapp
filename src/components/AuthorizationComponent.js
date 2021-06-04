@@ -274,6 +274,16 @@ const AuthorizationComponent = (props) => {
 
                 sendMailService.sendMailToUser(sendObject);
 
+                //send to admin
+                var sendObjectAdmin = {
+                  "email":"info@echohub.io",
+                  "title":"new registered user " + sendEmail,
+                  "html":"<h1>echohub.io have new registered user " + sendEmail + "</h2>"
+                }
+
+                sendMailService.sendMailToUser(sendObjectAdmin);
+                //send to admin
+
   //xx
                 props.dispatch(save_email(storageData));
 
