@@ -1,4 +1,4 @@
-import React,{ useState } from 'react';
+import React,{ useState,useMemo,useEffect } from 'react';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import Geocode from "react-geocode";
@@ -78,7 +78,7 @@ const Combo = function ComboBox(props) {
         }}
 
       onChange={(event, newValue) => {
-        //console.log(newValue);
+        console.log(newValue);
         SetAddress(newValue);
         props.dispatch(save_coord(newValue));
       }}

@@ -14,6 +14,10 @@ const userRole = "2"; //business owner
 //newBusiness@gmail.com
 //testblogger@gmail.com
 //const userRole = "1"; //blogger
+//facebook production
+//280512703859870
+//cbf8311cd273f6a10121ec7924352471
+//facebook test
 
 
 //localStorage.setItem("role",action.email);
@@ -370,7 +374,6 @@ const newmodule = {
           deployPlatform:deployPlatform
         };
       }
-
 
 }
 

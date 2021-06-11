@@ -29,6 +29,7 @@ const authService = {
             "password":senddata.password,
             "picture":senddata.picture,
             "name":senddata.name,
+            "social":senddata.social,
           }
           var encryptedData = cryptLibrary.encrypt(datas);
 

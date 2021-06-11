@@ -1906,6 +1906,19 @@ body {
    justify-content: center;
    font-family: AppFont;
 }
+.centralButton{
+   width: 100%;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   font-family: AppFont;
+   color:$base-app-color;
+}
+
+.ulClass li{
+  padding: 0.5rem;
+  font-family: AppFont;
+}
 
 
 
@@ -1921,6 +1934,20 @@ body {
   margin-left:15% !important;
   text-align: center;
 }
+
+.faceBookLoginMT{
+  margin-top:5px;
+}
+
+.progressMargin{
+  margin:5px;
+}
+
+.hideAuthButtons{
+  visibility: hidden;
+}
+
+
 
 .socialDialog{
   width: 300px;

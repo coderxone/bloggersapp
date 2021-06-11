@@ -5,12 +5,8 @@ import cryptLibrary from '../helpers/CryptLibrary';
 import soundfile from '../voice/to-the-point.ogg';
 import soundfileNotif from '../voice/notification.mp3';
 import soundfileAccept from '../voice/sms.mp3';
-import soundfiletwo from '../voice/to-the-point.mp3';
 import soundfileReject from '../voice/notificationRej.mp3';
 import Observable from '../services/Observable';
-
-
-
 
 
 const observ_subject = new Subject();
@@ -96,7 +92,7 @@ const initSocket = (() => {
 //xx
    homeservice.listenSystemParams().subscribe(data => {
 
-    //console.log(appStatuses);
+    //console.log(data);
      var appStatuses = data.appstatus;
      var string_appStatuses = JSON.stringify(appStatuses);
      localStorage.setItem("appstatus",string_appStatuses);
@@ -121,6 +117,9 @@ const initSocket = (() => {
       //console.log(s);
       localStorage.setItem("soc",s);
      //listenServices();
+     var postamount = data.alldata.postamount;
+     localStorage.setItem("postamount",postamount);
+
    });
 
    homeservice.listenSubscribeToWebFirebaseToken().subscribe(data => {

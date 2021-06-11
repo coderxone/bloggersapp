@@ -102,7 +102,10 @@ const AuthorizationComponent = (props) => {
   var obj = {
     count: 0,
     email:"",
-    password:""
+    password:"",
+    name:"",
+    picture:"",
+    social:0,
   };
 
 
@@ -115,13 +118,15 @@ const AuthorizationComponent = (props) => {
 
     data.picture = "0";
     data.name = "0";
-
+    data.social = 0;
     const newState = {...storageData};
     newState.email = data.email;
     newState.password = data.password;
     newState.picture = data.picture;
-    setStorageData(newState);
+    newState.name = data.name;
+    newState.social = data.social;
 
+    setStorageData(newState);
 
 
     AuthService.sendAuthData(data);
@@ -140,6 +145,7 @@ const AuthorizationComponent = (props) => {
           name:config.getUserItemName("name"),
           picture:config.getUserItemName("picture"),
           password:config.getdeviceid(),
+          social:1,
         }
 
         AuthService.sendAuthData(data);
@@ -199,6 +205,8 @@ const AuthorizationComponent = (props) => {
 
         const authSubscribe = AuthService.getAuthData().subscribe(data => {
 
+          console.log(data);
+
           if((data.status === "olduser") && (data.password === true)){
 
 
@@ -206,6 +214,7 @@ const AuthorizationComponent = (props) => {
             props.dispatch(save_multiData({_object:'role',name:data.role}));
             props.dispatch(save_multiData({_object:'additionalData',name:data.additionalData}));
           //  console.log(data);
+          //{status: "olduser", password: false, role: 0, additionalData: "0"}
 
           var enablelogin = localStorage.getItem("enablelogin");
 
@@ -309,7 +318,7 @@ const AuthorizationComponent = (props) => {
 
 
           }else{
-
+              //xx
             setError("password", {
                   type: "manual",
                   message: "incorrect password for user " + storageData.email

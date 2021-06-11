@@ -1,5 +1,7 @@
-import firebase from 'firebase/app';
+import firebase from 'firebase';
 import 'firebase/messaging';
+import config from '../config/config';
+
 
 var firebaseConfig = {
   apiKey: "AIzaSyAUc1hzfw3s96B8LH_f1LBsE0jW4gCqJVU",
@@ -10,6 +12,8 @@ var firebaseConfig = {
   appId: "1:992987530913:web:c69a82b2e841a44622d2e0",
   measurementId: "G-871R9F8N2F"
 };
+
+
 
 export const checkSupport = () => {
   try{

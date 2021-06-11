@@ -15,6 +15,11 @@ import Paper from '@material-ui/core/Paper';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Button from '@material-ui/core/Button';
+import LocalizeComponent from '../../localize/LocalizeComponent';
+import sendMailService from '../../services/sendMailService';
+import ApprovedComponent from '../../components/emailTemplates/ApprovedEmailComponent';
+import DeclineEmailComponent from '../../components/emailTemplates/DeclineEmailComponent';
+import ReactDOMServer from 'react-dom/server';
 
 import { increment, decrement,save_email } from '../../actions/actions';
 import {
@@ -81,18 +86,49 @@ const SocialNetworksRender = (props) => {
 
 }
 
+const SendApproveMail = (email) => {
+  var content = ReactDOMServer.renderToString(<ApprovedComponent email={email} />);
+
+  var sendUserObject = {
+    "email":email,
+    "title":LocalizeComponent.text7,
+    "html":content
+  }
+
+  sendMailService.sendMailToUser(sendUserObject);
+
+}
+
+const SendDeclineMail = (email) => {
+  var content = ReactDOMServer.renderToString(<DeclineEmailComponent email={email} />);
+
+  var sendUserObject = {
+    "email":email,
+    "title":LocalizeComponent.text6,
+    "html":content
+  }
+
+  sendMailService.sendMailToUser(sendUserObject);
+
+}
+
 const UserRender = (props) => {
 
   var users = props.users;
   const classes = useStyles();
 
   const ApproveUser = (item) => {
+//xx
+    //to item.email
       adminService.ApproveUser(item.id,1);//approve
-      console.log("click");
+      SendApproveMail(item.email);
+      //console.log("click");
   }
+
   const BlockUser = (item) => {
-      adminService.ApproveUser(item.id,3);//approve
-      console.log("click 2");
+      adminService.ApproveUser(item.id,3);//decline
+      SendDeclineMail(item.email);
+      //console.log("click 2");
   }
 
   const list = users.map((item,index) =>
@@ -295,7 +331,7 @@ const AdminComponent = (props) => {
   useEffect(() => {
 
     adminService.getAdminData();
-    config.checkUserAuthorization(0);
+    config.checkUserAuthorization(3);
 
   },[]);
 

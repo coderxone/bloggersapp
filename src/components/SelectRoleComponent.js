@@ -5,6 +5,7 @@ import '../css/selectRole.scss';
 import LocalizeComponent from '../localize/LocalizeComponent';
 import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
+import DandelionComponent from '../components/dandelionComponent';
 import * as yup from "yup";
 import {
   makeStyles,
@@ -156,6 +157,14 @@ const SelectRoleComponent = (props) => {
 
    	<div className={classes.root}>
         <Grid container >
+
+          <div className="bloggerAWrap">
+            <div className="MainLCenterWrap">
+
+                <div className="MainLogoCenter"><DandelionComponent /></div>
+
+              </div>
+          </div>
 
         <ConfirmDialogComponent  status={dialogStatus} text={dialogText} left={dialogLeft} right={dialogRight}/>
 

@@ -155,10 +155,12 @@ const ApplyComponent = (props) => {
   const [selectedTime, setSelectedTime] = React.useState(new Date());
 
   const handleDateChange = (date) => {
+    console.log(date);
     setSelectedDate(date);
     props.dispatch(save_multiData({_object:'date',name:date}));
   };
   const handleTimeChange = (time) => {
+    console.log(time);
     setSelectedTime(time);
     props.dispatch(save_multiData({_object:'time',name:time}));
   };

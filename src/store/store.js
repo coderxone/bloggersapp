@@ -4,7 +4,7 @@ const initialState = {
   password:"",
   array:[]
 };
-//props.dispatch(save_email(storageData));
+//props.dispatch(multiSave(storageData));
 
 
 const reduceexport = function reducer(state = initialState, action) {

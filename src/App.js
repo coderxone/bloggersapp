@@ -39,12 +39,14 @@ import AnimationComponent from './components/AnimationComponent';
 import MainPageDandelion from './components/MainPageDandelion';
 import BloggerAnswersComponent from './components/BloggerAnswersComponent';
 import AdminComponent from './components/adminComponents/AdminComponent';
-import BusinessMailComponent from './components/emailTemplates/businessActivation';
-import RestoreTemplate from './components/emailTemplates/restorePassword';
-import ActivationEmail from './components/emailTemplates/ActivationEmail';
 import TestComponent from './components/testComponents/TestComponents';
 import AboutUsComponent from './components/AboutUsComponent';
 import ConfirmComponent from './components/serviceComponents/ConfirmComponent';
+import ActivationEmail from './components/emailTemplates/ActivationEmail';
+import ChooseWayComponent from './components/ApplyComponents_model1/ChooseWayComponent';
+import NewApplyComponent from './components/ApplyComponents_model1/NewApplyComponent';
+import VideoComponent from './components/ApplyComponents_model1/VideoComponent';
+
 
 const App = () => {
 
@@ -63,6 +65,7 @@ const App = () => {
                 <Route path="/login" component={AuthorizationComponent} exact={true} />
                 <Route path="/restore" component={RestorepasswordComponent} exact={true} />
                 <Route path="/apply" component={ApplyComponent} exact={true} />
+                <Route path="/applyn" component={NewApplyComponent} exact={true} />
                 <Route path="/payment" component={PaymentComponent} exact={true} />
                 <Route path="/business" component={BusinessDashboard} exact={true} />
                 <Route path="/detail" component={DetailComponent} exact={true} />
@@ -84,11 +87,13 @@ const App = () => {
                 <Route path="/blogger-answers" component={BloggerAnswersComponent } exact={true} />
                 <Route path="/approve" component={AdminComponent } exact={true} />
                 <Route path="/emailtemplate" component={ActivationEmail } exact={true} />
-                <Route path="/test" component={TestComponent} exact={true} />
+                <Route path="/test" component={ChooseWayComponent} exact={true} />
+                <Route path="/chooseway" component={ChooseWayComponent} exact={true} />
                 <Route path="/main" component={MainComponent} exact={true} />
                 <Route path="/about" component={AboutUsComponent} exact={true} />
                 <Route path="/follow/:id" component={RedirectComponent} exact={true} />
                 <Route path="/confirm/:id" component={ConfirmComponent} exact={true} />
+                <Route path="/video" component={VideoComponent} exact={true} />
                 <Route exact path="/" render={() => <Redirect to="/main" />} />
                 </LastLocationProvider>
               </Router>
