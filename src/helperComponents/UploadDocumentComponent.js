@@ -108,7 +108,7 @@ const App = (props) => {
 
 
 
-        <input className="fileClass" type="file"  ref={inputFile} onChange={uploadHandler} name="photo" style={{display: 'none'}}></input>
+        <input className="fileClass" type="file" accept="image/*"  ref={inputFile} onChange={uploadHandler} name="photo" style={{display: 'none'}}></input>
 
 
     </div>

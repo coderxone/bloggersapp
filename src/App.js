@@ -45,7 +45,7 @@ import ConfirmComponent from './components/serviceComponents/ConfirmComponent';
 import ActivationEmail from './components/emailTemplates/ActivationEmail';
 import ChooseWayComponent from './components/ApplyComponents_model1/ChooseWayComponent';
 import NewApplyComponent from './components/ApplyComponents_model1/NewApplyComponent';
-import VideoComponent from './components/ApplyComponents_model1/VideoComponent';
+import VideoComponent from './helperComponents/VideoComponent';
 
 
 const App = () => {
@@ -93,7 +93,7 @@ const App = () => {
                 <Route path="/about" component={AboutUsComponent} exact={true} />
                 <Route path="/follow/:id" component={RedirectComponent} exact={true} />
                 <Route path="/confirm/:id" component={ConfirmComponent} exact={true} />
-                <Route path="/video" component={VideoComponent} exact={true} />
+                <Route path="/video" back={true} component={VideoComponent} exact={true} />
                 <Route exact path="/" render={() => <Redirect to="/main" />} />
                 </LastLocationProvider>
               </Router>

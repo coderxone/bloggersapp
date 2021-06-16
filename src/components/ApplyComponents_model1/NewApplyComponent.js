@@ -1,4 +1,4 @@
-import React, {useState,useEffect,useMemo} from 'react';
+import React, {useState,useEffect,useMemo,useCallback} from 'react';
 // import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonInput, IonItem, IonLabel, IonList, IonItemDivider } from '@ionic/react';
 import '../../css/mainStyles.scss';
 import LocalizeComponent from '../../localize/LocalizeComponent';
@@ -33,14 +33,16 @@ import HomeService from '../../services/Homeservice';
 import AlertDangerComponent from '../../helperComponents/AlertDangerComponent';
 import AlertComponent from '../../helperComponents/AlertBoxComponent';
 import Button from '@material-ui/core/Button';
+import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
 import AlarmIcon from '@material-ui/icons/Alarm';
 import ReactGeoCodeComponent from '../GeocodeComponent';
 import DandelionComponent from '../dandelionComponent';
 import BusinessGoalComponent from '../../helperComponents/businessGoalComponent';
+import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import config from '../../config/config.js';
 import {
-  Redirect
+  Redirect,useHistory
 } from "react-router-dom";
 
 
@@ -156,7 +158,26 @@ const ApplyComponent = (props) => {
   var QuestionsArray = [LocalizeComponent.q1,LocalizeComponent.q2,LocalizeComponent.b_26,LocalizeComponent.q3,LocalizeComponent.b_27];
   const [questions] = useState(QuestionsArray);
 
-  const [activeStep, setActiveStep] = React.useState(0);
+
+  const checkStep = useMemo(() => {
+    const step = config.getUserItemName("step");
+    if(step){
+        return parseInt(step);
+    }else{
+      return 0;
+    }
+  },[]);
+
+  const video = useMemo(() => {
+    const video = config.getUserItemName("video");
+    if(video){
+        return true;
+    }else{
+      return false;
+    }
+  },[]);
+
+  const [activeStep, setActiveStep] = React.useState(checkStep);
   const steps = getSteps();
 
   const [error,SetError] = useState(false);
@@ -164,6 +185,7 @@ const ApplyComponent = (props) => {
   const [urlValidate,SeturlValidate] = useState(0);
 
   const [name,setName] = useState('');
+  const history = useHistory();
 
   const handleNext = () => {
       setName("");
@@ -182,8 +204,11 @@ const ApplyComponent = (props) => {
           //console.log("submit");
           onSubmit();
         }else{
+          //xx
           setActiveStep(stepper);
           SetError(false);
+
+          props.dispatch(multiSave({name:'step',value:stepper}));
 
         }
 
@@ -196,6 +221,7 @@ const ApplyComponent = (props) => {
     var stepper = activeStep - 1;
     setName("");
     setActiveStep(stepper);
+    props.dispatch(multiSave({name:'step',value:stepper}));
 
   };
 
@@ -217,14 +243,12 @@ const ApplyComponent = (props) => {
       if(description != false){
         setName(description);
       }
-    }else if(activeStep == 4){
-      var videourl = config.getUserItemName("videourl");
-      if(videourl != false){
-        setName(videourl);
-      }
     }
 
   }
+
+
+
 
   useMemo(() => {
     restoreFormFields();
@@ -262,7 +286,7 @@ const ApplyComponent = (props) => {
         return false;
       }
     }else if(activeStep == 4){
-      if(config.getUserItemName("videourl") != false){
+      if(config.getUserItemName("video") != false){
         return true;
       }else{
         SetError(true);
@@ -307,9 +331,6 @@ const ApplyComponent = (props) => {
       urlChecker(firstName);
     }else if(activeStep == 2){
       objName = "description";
-    }else if(activeStep == 4){
-      objName = "videourl";
-      urlChecker(firstName);
     }
 //xx
 
@@ -358,7 +379,7 @@ const ApplyComponent = (props) => {
              url:config.getUserItemName("companyUrl"),
              description:config.getUserItemName("description"),
              companyName:config.getUserItemName("companyName"),
-             videourl:config.getUserItemName("videourl"),
+             videourl:config.getUserItemName("video"),
              type:1,
            }
 
@@ -376,6 +397,13 @@ const ApplyComponent = (props) => {
 
   });
 
+//xx
+
+  const goToDownload = useCallback(() => {
+
+    return history.push('/video'), [history]
+
+  });
 
 
 
@@ -384,7 +412,8 @@ const ApplyComponent = (props) => {
   useEffect(() => {
 
     restoreFormFields();//restore forms field if saved
-    config.checkUserAuthorization(2);
+
+    //config.checkUserAuthorization(2);
 
   },[]);
 
@@ -500,14 +529,34 @@ const ApplyComponent = (props) => {
 
                 {
                   activeStep == 4 && (
-                    <div>
-                        <TextField
-                            required
-                            onChange={setMultiData}
-                            value={name}
-                            className="textFieldAppStyle"
-                            label={LocalizeComponent.b_28}
-                          />
+                    <div className="VideoImageStyleContainer">
+
+                      <div>
+                        {
+                          video !== false ? (
+                            <Button
+                                variant="contained"
+                                color="primary"
+                                className={classes.button}
+                                startIcon={<CheckCircleIcon className="successUploadSmallIcon" />}
+                              >
+                              {LocalizeComponent.b_30}
+                              </Button>
+                          ) : (
+                            <Button
+                                variant="contained"
+                                color="primary"
+                                className={classes.button}
+                                startIcon={<CloudUploadIcon />}
+                                onClick={goToDownload}
+                              >
+                              {LocalizeComponent.b_28}
+                              </Button>
+                          )
+                        }
+                      </div>
+
+
                       <AlertComponent state={error} text={AlertText}/>
                     </div>
                   )

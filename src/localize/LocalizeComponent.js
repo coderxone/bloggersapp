@@ -281,8 +281,10 @@ let strings = new LocalizedStrings({
    b_24:"continue with this plan",
    b_25:"continue with plan 2",
    b_26:"Please briefly describe your business",
-   b_27:"Please provide YouTube link from existing video",
-   b_28:"url (link) from Youtube",
+   b_27:"Please download 1 min video about your business",
+   b_28:"go to download",
+   b_29:"upload video should be less then 40mb and less than 2 min (standart 1 min)",
+   b_30:"video downloaded",
  },
 
 
@@ -566,8 +568,10 @@ let strings = new LocalizedStrings({
    b_24:"continue with this plan",
    b_25:"continue with plan 2",
    b_26:"Пожалуйста, кратко опишите свой бизнес",
-   b_27:"Пожалуйста предоставьте ссылку на видео из YouTube о вашем бизнесе",
-   b_28:"url (ссылка) из Youtube",
+   b_27:"Пожалуйста загрузите 1 минутное видео о вашем бизнесе",
+   b_28:"перейти к загрузке",
+   b_29:"видео должно быть мньше чем 40mb и не более 2 min (1 минута стандарт)",
+   b_30:"видео загружено",
  },
 
  it: {

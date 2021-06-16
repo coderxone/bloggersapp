@@ -1372,6 +1372,56 @@ body {
   text-align: center;
   color:$successGreenColor;
 }
+.successUploadSmallIcon{
+  width: 100%;
+  font-size: 24px !important;
+  text-align: center;
+  color:$successGreenColor;
+}
+
+//xx
+
+.VideoImageStyleContainer{
+   width: 100%;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   font-family: AppFont;
+}
+
+.VideoImageStyle{
+
+   margin-left:10%;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   font-family: AppFont;
+   width: 80px !important;
+   height: 80px !important;
+
+   float: left;
+}
+
+.videoSecondBlock{
+  margin-top:32px;
+  width:200px;
+  height: 14px;
+  margin-left:5px;
+}
+
+.VideoPreviewStyle{
+
+   margin:20px 5px 5px 5px;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   font-family: AppFont;
+   width: 250px !important;
+   height: 200px !important;
+   float: left;
+
+}
+
 
 .UploadImageStyleSecond{
   width: 80px !important;
@@ -1384,6 +1434,8 @@ body {
   height: 80px !important;
   float: left;
 }
+
+
 
 .imageSecondBlock{
   margin-top:32px;
