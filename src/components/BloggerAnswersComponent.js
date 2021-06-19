@@ -275,12 +275,16 @@ const BloggerAnswersComponent = (props) => {
              }
            }
 
+           let lastName = config.getUserItemName("lastName");
+
+           props.dispatch(save_multiData({_object:'additionalData',name:lastName}));
+
            var finalObject = {
              country:country,
              category:config.getUserCategory(),
              age:config.getUserItemName("age"),
              firstName:config.getUserItemName("firstName"),
-             lastName:config.getUserItemName("lastName"),
+             lastName:lastName,
              nickName:config.getUserItemName("nickName"),
              subscribers_count:config.getUserItemName("subscribers_count"),
              paypal:config.getUserItemName("paypal"),

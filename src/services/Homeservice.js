@@ -22,6 +22,11 @@ const observ_saveAllBan = new Subject();
 // const timer60s = new Subject<any>();
 // const timer300000s$ = new Subject<any>();
 
+//intention
+//relevant
+//golden
+//approach
+//satisfy
 
 const initSocket = (() => {
 

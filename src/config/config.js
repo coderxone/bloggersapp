@@ -186,6 +186,11 @@ const newmodule = {
         }
 
       },
+      deleteUserItemName:(name) => {
+
+        localStorage.removeItem(name);
+
+      },
       getJSONFromMemory:(name) => {
 
         var gettingItem = localStorage.getItem(name);
@@ -329,7 +334,9 @@ const newmodule = {
       getBaseUrl:() => {
         return routeUrl + "/assets/entry/uploads/";
       },
-
+      getUploadUrl:() => {
+        return routeUrl;
+      },
 
       getCryptKey:() => {
         return cryptKey.props.element;

@@ -413,7 +413,7 @@ const ApplyComponent = (props) => {
 
     restoreFormFields();//restore forms field if saved
 
-    //config.checkUserAuthorization(2);
+    config.checkUserAuthorization(2);
 
   },[]);
 
@@ -424,6 +424,9 @@ const ApplyComponent = (props) => {
           if(data.status === "ok"){
               //data.insertId
               localStorage.setItem("insertId",data.insertId);
+              config.deleteUserItemName("video");
+              config.deleteUserItemName("step");
+
 
               SetRoute("/payment");
               Setredirect(true);

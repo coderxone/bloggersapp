@@ -120,7 +120,7 @@ const PaymentComponent = (props) => {
         });
 
         const subscribeByTimer_10_second = PaymentService.subscribeByTimer_10_second().subscribe(data => {
-          console.log(data);
+          //console.log(data);
           var checkid = localStorage.getItem("insertId");
 
           var checkobj = {

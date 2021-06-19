@@ -274,7 +274,7 @@ const SubDetail = (item,e) => {
 
 
 
-
+//xx
 const BlogListComponent = (props) => {
 
   const items = props.items;
@@ -887,7 +887,7 @@ useEffect(() => {
           </div>
 
           <div className="BlockDivider"></div>
-          
+
           <ConfirmDialogComponent status={dialogStatus} left={leftbutton} right={rightbutton} text={dialogText}/>
         </Grid>
     </div>

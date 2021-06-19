@@ -92,6 +92,7 @@ const App = (props) => {
           if(res.status == 200){
             //console.log(res);
             props.dispatch(save_multiData({_object:'video',name:res.data}));
+            props.dispatch(save_multiData({_object:'videostatus',name:"1"}));
             Setsuccessupload(1);
 
             goBack();

@@ -202,7 +202,7 @@ const AuthorizationComponent = (props) => {
 
 
   useEffect(() => {
-
+//xx
         const authSubscribe = AuthService.getAuthData().subscribe(data => {
 
           console.log(data);

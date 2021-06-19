@@ -27,13 +27,7 @@ import ConfirmDialogComponent from '../helperComponents/ConfirmDialogComponent';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import EditListComponent from '../helperComponents/EditSocialNetworkComponent.js';
 import config from '../config/config.js';
-
-import Stepper from '@material-ui/core/Stepper';
-import Step from '@material-ui/core/Step';
-import StepLabel from '@material-ui/core/StepLabel';
-import StepConnector from '@material-ui/core/StepConnector';
 import clsx from 'clsx';
-import Check from '@material-ui/icons/Check';
 
 import Drawer from '@material-ui/core/Drawer';
 import Button from '@material-ui/core/Button';
@@ -44,6 +38,10 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import FormDialogComponent from '../helperComponents/FormDialogComponent';
+import CheckCircleIcon from '@material-ui/icons/CheckCircle';
+import CloudUploadIcon from '@material-ui/icons/CloudUpload';
+import BloggerProgressComponent from './bloggerDetailComponents/BloggerProgressComponent';
+import M2_instructionComponent from './bloggerDetailComponents/M2_instructionComponent';
 
 import {
   useHistory
@@ -51,66 +49,7 @@ import {
 
 import { increment, decrement,save_email } from '../actions/actions';
 
-const QontoConnector = withStyles({
-    alternativeLabel: {
-    top: 2,
-    left: 'calc(-50% + 16px)',
-    right: 'calc(50% + 16px)',
-    },
-    active: {
-    '& $line': {
-      borderColor: '#0083ff',
-    },
-    },
-    completed: {
-    '& $line': {
-      borderColor: '#0083ff',
-    },
-    },
-    line: {
-    borderColor: '#eaeaf0',
-    borderTopWidth: 3,
-    borderRadius: 1
-    },
-    })(StepConnector);
 
-    const useQontoStepIconStyles = makeStyles({
-      root: {
-        color: '#eaeaf0',
-        display: 'flex',
-        height: 10,
-        alignItems: 'center',
-      },
-      active: {
-        color: '#0083ff',
-      },
-      circle: {
-        width: 8,
-        height: 8,
-        borderRadius: '50%',
-        backgroundColor: 'currentColor',
-      },
-      completed: {
-        color: '#0083ff',
-        zIndex: 1,
-        fontSize: 10,
-      },
-    });
-
-    function QontoStepIcon(props) {
-        const classes = useQontoStepIconStyles();
-        const { active, completed } = props;
-
-        return (
-          <div
-            className={clsx(classes.root, {
-              [classes.active]: active,
-            })}
-          >
-            {completed ? <Check className={classes.completed} /> : <div className={classes.circle} />}
-          </div>
-        );
-      }
 
 
 function mapStateToProps(state,ownProps) {
@@ -192,66 +131,7 @@ const BannedList = ((props) => {
 
 
 //xx
-const CompleteBlockComponent = (props) => {
 
-  const [activeStep, setActiveStep] = React.useState(1);
-  const statusArray = useMemo(() => {
-    var rData = config.getJSONFromMemory("appstatus");
-
-    for(var i = 0;i < rData.length;i++){
-      if(rData[i].text == "open task"){
-        rData[i].text = LocalizeComponent.open_task;
-      }
-      if(rData[i].text == "under consideration by business"){
-        rData[i].text = LocalizeComponent.under_consideration;
-      }
-      if(rData[i].text == "approved by business"){
-        rData[i].text = LocalizeComponent.approved_b;
-      }
-      if(rData[i].text == "waiting system approval"){
-        rData[i].text = LocalizeComponent.waiting_system_appr;
-      }
-    }
-
-    return rData;
-  },[])
-
-  const items = props.items;
-
-  //console.log(items);
-
-  const content = useMemo(() => {
-
-    return items.map((item,index) =>
-
-      <div key={item.id} >
-            <div  className="MainBlockStepperWithoutFrame withoutScroll">
-              <div className="secondLevelStepper">
-
-                <Stepper className="StepperAppStyles" alternativeLabel activeStep={item.status - 1} connector={<QontoConnector />}>
-                  {statusArray.map((label) => (
-                    <Step key={label.id}>
-                      <StepLabel StepIconComponent={QontoStepIcon}>{label.text}</StepLabel>
-                    </Step>
-                  ))}
-                </Stepper>
-              </div>
-            </div>
-        </div>
-
-      );
-
-  },[props.items]);
-
-
-
-  return (
-    <div className="fullWidth withoutScroll" >
-      {content}
-    </div>
-  );
-
-}
 
 
 
@@ -281,7 +161,24 @@ const DetailTaskComponent = (props) => {
       }
   },[props]);
 
-  //console.log(detailData);
+
+  //video upload notifier
+  const video = useMemo(() => {
+    const video = config.getUserItemName("video");
+    if(video){
+        return true;
+    }else{
+      return false;
+    }
+  },[]);
+
+
+  const goToDownload = useCallback(() => {
+
+    return history.push('/video'), [history]
+
+  });
+  //video upload notifier
 
 
 
@@ -335,7 +232,7 @@ const DetailTaskComponent = (props) => {
     document.execCommand('copy');
     document.body.removeChild(selBox);
 
-    SetalertText("copied to clipboard");//setText in Alert
+    SetalertText(LocalizeComponent.copied);//setText in Alert
     SetSucessState(true);//show alert
     hideAlert();
     //this.homeservice.Toast("copied to clipboard");
@@ -348,7 +245,7 @@ const DetailTaskComponent = (props) => {
       SetInputText(string);
   });
 
-  // const netWorkArray = ["Instagram","Facebook","Youtube","Twitter"];
+  // const netWorkArray = ["Instagram","Facebook","Youtube","Twitter","Echohub"];
   const netWorkArray = useMemo(function(){
 
       var array = [];
@@ -394,6 +291,7 @@ const DetailTaskComponent = (props) => {
   const [stepper,SetStep] = useState(0);
 
   const [checkLinksValidationsArray] = useState(["inst","face","yout","twit"]);
+
 
   const Share = (() => {
 
@@ -447,6 +345,24 @@ const DetailTaskComponent = (props) => {
           }
 
       }
+
+  });
+
+//xx
+  const sendUploadedVideo = (() => {
+
+                let video = config.getUserItemName("video");
+
+                if(video){
+                  var obj = {
+                    id:detailData.id,
+                    videotype:netWorkArray[4],
+                    url:config.getUploadUrl() + "/" + video,
+                    set:"set"
+                  }
+
+                  DetailTaskService.setUrl(obj);
+                }
 
   });
 
@@ -551,6 +467,7 @@ const DetailTaskComponent = (props) => {
     DetailTaskService.checkUrl(checkObj);
   });
 
+//xx
   const checkCurrentStatus = ((id) => {
 
     var checkObj = {
@@ -560,18 +477,30 @@ const DetailTaskComponent = (props) => {
     DetailTaskService.checkCurrentStatus(checkObj);
   });
 
-  const SubmittedTask = (id) => {
+  const SubmittedTask = (id,stepNumber) => {
       var submitObj = {
-        approvetask:0,
+        approvetask:stepNumber,
         id:id
       }
 
-      //console.log(submitObj);
-
       DetailTaskService.submitOrder(submitObj);
   }
+//from step 1 to 2
+//xx
+  const videostatus = useMemo(() => {
+    const videostatus = config.getUserItemName("videostatus");
+    if(videostatus){
+      sendUploadedVideo();//send video after upload
+    }
+  },[]);
 
+  const deleteVideoStatus = () => {
+    config.deleteUserItemName("videostatus")
+    config.deleteUserItemName("video")
+    SetcompletedTask(true);
+  }
 
+//xx
 const CountTaskFunction = (data) => {
   if(data.status === "false"){
     if(stepper > 0){
@@ -615,11 +544,11 @@ const CountTaskFunction = (data) => {
     SetCurrentNetwork(replaceArray[0]);
 
     SetStep(count);
-
+//xx
     if((countOfTask == count) && (countOfTask > 0) && (count > 0)){
-      SetcompletedTask(true);
+      //SetcompletedTask(true);
       //console.log(111);
-      SubmittedTask(detailData.id);
+      //SubmittedTask(detailData.id,3);
       localStorage.removeItem("tempstorageData");
       localStorage.removeItem("tempstorageDistance");
     }
@@ -639,10 +568,11 @@ useEffect(() => {
     //SetStep(stepper => stepper + 1);
   });
 
+  //manage statuses
   const listenCurrentStatusL = DetailTaskService.listenCurrentStatus().subscribe(data => {
 
-    //console.log(data);
-
+    console.log(data);
+//xx
     if(data.data.length > 0){
 
       const newlistArray = [...listArrayComplete];
@@ -650,9 +580,10 @@ useEffect(() => {
       for(var i = 0;i < data.data.length;i++){
 
           //change status
-          if(data.data[i].status !== 1){
+          let currentStatus = data.data[i].status;
+          if(currentStatus === 2){
             setCurrentTaskStatus(1);
-          }else{
+          }else if(currentStatus === 0 || currentStatus === 1){//status === 1 or status === 0
             setCurrentTaskStatus(0);
           }
           //change status
@@ -763,22 +694,27 @@ useEffect(() => {
 },[])
 
   useEffect(() => {
-
+    //xx //inserted video after upload
     const ListenlistenSetUrl = DetailTaskService.listenSetUrl().subscribe(data => {
       //console.log(data);
       if(data.status == "inserted"){
-        CheckVideos(detailData.id);
-        SetInputText("");
+        //CheckVideos(detailData.id);
+        //SetInputText("");
+        SubmittedTask(detailData.id,0);
         //SetStep(stepper => stepper + 1);
       }
 
     });
 
+    //xx
     const listenSubmittedOrder = DetailTaskService.listenSubmittedOrder().subscribe(data => {
       //console.log(data);
       if(data.currentStatus == 0){
-          SetCurrentStatus(LocalizeComponent.waitingApprove);
+        deleteVideoStatus();
+          //SetCurrentStatus(LocalizeComponent.waitingApprove);
       }
+
+
     });
 
     const obs = Observable.subscribeByTimer_10_second().subscribe(data => {
@@ -810,7 +746,7 @@ useEffect(() => {
 
     });
 
-//xx
+
     const ListenRejectObserver = Observable.getReject_subject().subscribe(data => {
 
         if(data.action === 1){
@@ -891,8 +827,9 @@ useEffect(() => {
 
 
 
-
+//xx
 //run 1 time
+//checking task
 useEffect(() => {
 
   SethowManySteps(netWorkArrayState.length + 1);
@@ -903,6 +840,7 @@ useEffect(() => {
   //console.log("checked");
   checkGenerateUrl();
   config.checkUserAuthorization(1);
+  //deleteVideoStatus();
 
 
 
@@ -1039,7 +977,7 @@ const EditNetwork = (data) => {
     };
 
     const [formDialogStatus,SetformDialogStatus] = useState(false);
-//xx
+
     const OpenTaskWindow = () => {
 
         const newState = {...state};
@@ -1114,11 +1052,35 @@ const EditNetwork = (data) => {
 
               <div className="BlockDivider"></div>
 
-              <CompleteBlockComponent items={listArrayComplete} />
+            {
+              // Task Progress
+            }
+
+              <BloggerProgressComponent items={listArrayComplete} />
 
             <div className="BlockDivider"></div>
 
-              {swithbutton === false ? (
+
+            {
+              // instruction block for model2
+            }
+            <M2_instructionComponent status={currentTaskStatus}/>
+
+            {
+              swithbutton === false ||
+              currentTaskStatus === 7 && (
+                <div className="BlockDivider"></div>
+              )
+            }
+
+
+
+
+              {
+
+                // generate  button
+
+                swithbutton === false && (
                 <div className="buttonBox">
                     <div className="generateButton" onClick={GenerateUrl}>
                         <div className="generateButtonText"  >
@@ -1126,20 +1088,71 @@ const EditNetwork = (data) => {
                         </div>
                     </div>
                 </div>
-               ) : (
-                 <div className="buttonBox">
-                     <div className="generateButton" onClick={CopyUrl}>
-                         <div className="generateButtonText"  >
-                             {LocalizeComponent.CopyUrl}
-                         </div>
-                     </div>
-                 </div>
-               )}
+               )
+             }
 
-               <div className="BlockDivider"></div>
 
                {
-                 currentTaskStatus === 0 &&
+                 //copy button
+                 currentTaskStatus === 7 &&
+                 (
+                 <div className="buttonBox">
+                       <div className="generateButton" onClick={CopyUrl}>
+                           <div className="generateButtonText"  >
+                               {LocalizeComponent.CopyUrl}
+                           </div>
+                       </div>
+                   </div>
+                 )
+             }
+
+
+
+              {
+                // upload block
+
+                currentTaskStatus === 0 && (
+                  <div className="BlockDivider"></div>
+                )
+              }
+
+              {currentTaskStatus === 0 && (
+                <div className="VideoImageStyleContainer">
+
+                  <div>
+                    {
+                      video !== false ? (
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            className={classes.button}
+                            startIcon={<CheckCircleIcon className="successUploadSmallIcon" />}
+                          >
+                          {LocalizeComponent.b_30}
+                          </Button>
+                      ) : (
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            className={classes.button}
+                            startIcon={<CloudUploadIcon />}
+                            onClick={goToDownload}
+                          >
+                          {LocalizeComponent.b_28}
+                          </Button>
+                      )
+                    }
+                  </div>
+
+
+                </div>
+              )}
+
+
+               {
+                 // social links sending
+
+                 currentTaskStatus === 3 &&
                  (
 
                <div className="setBox">
@@ -1200,11 +1213,18 @@ const EditNetwork = (data) => {
              )
            }
 
-           <div className="BlockDivider"></div>
+           {
+             currentTaskStatus === 7 && (
+               <div className="BlockDivider"></div>
+             )
+           }
+
 
 
             {
-              currentTaskStatus === 0 && (
+              // edit block
+
+              currentTaskStatus === 7 && (
                 <div className="fullSize">
                {editFormStatus === true ? (
                  <div className="setBoxTwo">
@@ -1258,7 +1278,9 @@ const EditNetwork = (data) => {
 
             <div className="BlockDivider"></div>
 
-
+              {
+                // chat with business
+              }
 
 
                <div className="buttonBoxSet">
@@ -1270,8 +1292,6 @@ const EditNetwork = (data) => {
                </div>
 
                <div className="BlockDivider"></div>
-
-
 
 
 

@@ -929,9 +929,7 @@ body{
 
 
 
-.fullSize{
-  width:100%;
-}
+
 
 .mainCentralDiv{
   /* base styles */
@@ -1387,6 +1385,7 @@ body {
    align-items: center;
    justify-content: center;
    font-family: AppFont;
+   padding:15px;
 }
 
 .VideoImageStyle{
@@ -2017,8 +2016,43 @@ body {
   animation: blinker 3s linear infinite;
 }
 
+
+
 @keyframes blinker {
   50% {
     opacity: 0;
   }
+}
+
+// project common styles
+
+
+
+.projectBox{
+  margin-left:15px;
+  margin-right: 5px;
+  margin-top:10px;
+  margin-bottom:10px;
+}
+
+.projectPadding{
+  padding:10px;
+}
+.projectPaddingLi  li{
+  padding:2px;
+}
+.projectFont{
+  font-family: AppFont;
+}
+
+.projectTextColor{
+  color:$base-app-color;
+}
+
+.projectFontSize{
+  font-size:18px;
+}
+
+.fullSize{
+  width:100%;
 }
