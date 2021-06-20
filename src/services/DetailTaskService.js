@@ -183,6 +183,31 @@ const DetailTaskService = {
             return observ_subject3;
           },
 
+          checkReadyVideo:(obj) => {
+
+            var data = {
+              deviceid:config.getdeviceid(),
+              email:config.getUserEmail(),
+              id: obj.id,
+              status:obj.status //check
+            }
+
+            //console.log(data);
+
+            var encryptedData = cryptLibrary.encrypt(data);
+
+            socket.emit("checkApprovedByUservideo",encryptedData);
+          },
+
+          listenReadyVideo:() => {
+            socket.on("checkApprovedByUservideo",(data) => {
+                //console.log(data);
+                observ_subject3.next(cryptLibrary.decrypt(data));
+            });
+
+            return observ_subject3;
+          },
+
 
           checkBannedVideo:(obj) => {
 

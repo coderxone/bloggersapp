@@ -64,6 +64,52 @@ const ExampleComponent = (props) => {
             </div>
           )
         }
+        {
+          status == 3 &&
+          (
+            <ol className="projectPaddingLi">
+
+              <li>
+                  {
+                    LocalizeComponent.step3
+                  }
+              </li>
+              <li>
+                  {
+                    LocalizeComponent.step3_1
+                  }
+              </li>
+              <li>
+                  {
+                    LocalizeComponent.step3_2
+                  }
+              </li>
+              <li>
+                  {
+                    LocalizeComponent.step3_3
+                  }
+              </li>
+              <li>
+                  {
+                    LocalizeComponent.step3_4
+                  }
+              </li>
+              <li>
+                  {
+                    LocalizeComponent.step3_5
+                  }
+              </li>
+              <li>
+                  {
+                    LocalizeComponent.step3_6
+                  }
+              </li>
+
+            </ol>
+
+
+          )
+        }
 
 
 

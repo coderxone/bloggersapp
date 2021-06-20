@@ -554,7 +554,7 @@ const DetailComponent = (props) => {
   var widthValueSecond = 70 + "%";
 
   const CountPercentFunction = (data) => {
-    //data.data
+    //console.log(data);
     //SetprogressBarValue
     //ItemData.peoplecount
     var completeTasks = 0;

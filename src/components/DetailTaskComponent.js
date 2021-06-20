@@ -292,7 +292,7 @@ const DetailTaskComponent = (props) => {
 
   const [checkLinksValidationsArray] = useState(["inst","face","yout","twit"]);
 
-
+//xx
   const Share = (() => {
 
       if(inputtext.length > 0){
@@ -456,7 +456,7 @@ const DetailTaskComponent = (props) => {
 
   const [currentStatus,SetCurrentStatus] = useState(LocalizeComponent.doneTask);
 
-
+//xx
   const CheckVideos = ((id) => {
 
     var checkObj = {
@@ -464,7 +464,7 @@ const DetailTaskComponent = (props) => {
       id:id,
     }
 
-    DetailTaskService.checkUrl(checkObj);
+    DetailTaskService.checkReadyVideo(checkObj);
   });
 
 //xx
@@ -549,8 +549,8 @@ const CountTaskFunction = (data) => {
       //SetcompletedTask(true);
       //console.log(111);
       //SubmittedTask(detailData.id,3);
-      localStorage.removeItem("tempstorageData");
-      localStorage.removeItem("tempstorageDistance");
+      //localStorage.removeItem("tempstorageData");
+      //localStorage.removeItem("tempstorageDistance");
     }
     //SetCurrentNetwork
   }
@@ -559,10 +559,17 @@ const CountTaskFunction = (data) => {
 const [listArrayComplete,setListArrayComplete] = useState([]);
 const [currentTaskStatus,setCurrentTaskStatus] = useState(0);
 
-useEffect(() => {
-  const ListenlistenCheckUrl = DetailTaskService.listenCheckUrl().subscribe(data => {
+const [downloadUrl,SetDownloadUrl] = useState('');
 
-      CountTaskFunction(data);
+//xx checking video from from video table
+useEffect(() => {
+  const ListenlistenCheckUrl = DetailTaskService.listenReadyVideo().subscribe(data => {
+
+      //console.log(data);
+      let url = data.data[0].url;
+
+      SetDownloadUrl(url);
+      //CountTaskFunction(data);
 
 
     //SetStep(stepper => stepper + 1);
@@ -581,10 +588,13 @@ useEffect(() => {
 
           //change status
           let currentStatus = data.data[i].status;
-          if(currentStatus === 2){
+          if(currentStatus === 2){ //under consideration by business
             setCurrentTaskStatus(1);
-          }else if(currentStatus === 0 || currentStatus === 1){//status === 1 or status === 0
+          }else if(currentStatus === 0 || currentStatus === 1){//status === 1 or status === 0 //open task
             setCurrentTaskStatus(0);
+          }else if(currentStatus === 3){
+            setCurrentTaskStatus(3);
+            CheckVideos(detailData.id);
           }
           //change status
           var found = 0;
@@ -721,7 +731,7 @@ useEffect(() => {
         //SubmittedTask(detailData.id);
         //console.log(detailData.id);
 
-        CheckVideos(detailData.id);
+        //CheckVideos(detailData.id);
         CheckcheckBannedVideoF(detailData.id);
         checkCurrentStatus(detailData.id);
 
@@ -741,7 +751,7 @@ useEffect(() => {
 
 
     const ListenEditObserv = Observable.getData_subject_Edit().subscribe(data => {
-
+//xx
         SetCurrentNetworkTwo(data);
 
     });
@@ -795,7 +805,7 @@ useEffect(() => {
         SetSucessState(true);
         seteditFormStatus(false);
         hideAlert();
-        CheckVideos(detailData.id);
+        //CheckVideos(detailData.id);
       }else if(data.status == "already"){
         SetInputText("");
         SetdangerText(LocalizeComponent.replace_confirmation);
@@ -833,7 +843,7 @@ useEffect(() => {
 useEffect(() => {
 
   SethowManySteps(netWorkArrayState.length + 1);
-  CheckVideos(detailData.id);
+  //CheckVideos(detailData.id);
   checkCurrentStatus(detailData.id);
   CheckcheckBannedVideoF(detailData.id);
   //console.log(detailData.id);
@@ -1013,6 +1023,8 @@ const EditNetwork = (data) => {
 
 
 
+
+
   return (
 
    	<div className={classes.root}>
@@ -1068,7 +1080,36 @@ const EditNetwork = (data) => {
 
             {
               swithbutton === false ||
-              currentTaskStatus === 7 && (
+              currentTaskStatus === 3 && (
+                <div className="BlockDivider"></div>
+              )
+            }
+
+
+            {
+              currentTaskStatus === 3 &&
+              downloadUrl !== '' &&
+              (
+                <div className="VideoImageStyleContainer">
+                    <a  target="_blank" href={downloadUrl}>
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        className={classes.button}
+                        startIcon={<CloudUploadIcon />}
+                        download
+
+                      >
+                      {LocalizeComponent.step3_7}
+                    </Button>
+                  </a>
+                </div>
+
+              )
+            }
+
+            {
+              currentTaskStatus === 3 && (
                 <div className="BlockDivider"></div>
               )
             }
@@ -1094,7 +1135,7 @@ const EditNetwork = (data) => {
 
                {
                  //copy button
-                 currentTaskStatus === 7 &&
+                 currentTaskStatus === 3 &&
                  (
                  <div className="buttonBox">
                        <div className="generateButton" onClick={CopyUrl}>
@@ -1106,7 +1147,12 @@ const EditNetwork = (data) => {
                  )
              }
 
-
+             {
+               //devider from copy url
+               currentTaskStatus === 3 && (
+                 <div className="BlockDivider"></div>
+               )
+             }
 
               {
                 // upload block
@@ -1170,6 +1216,15 @@ const EditNetwork = (data) => {
                           <StepperComponent step={stepper} count={howmanysteps}/>
                        </div>
 
+                       <div className="SelectSocial">
+
+                         <FormControl className={classes.formControl} error={selectError}>
+                               <InputLabel id="demo-simple-select-label">{LocalizeComponent.select_social}</InputLabel>
+                               <EditListComponent list={originalNetWorkArrayState} currentNetworkTwo={currentNetworkTwo}/>
+                         </FormControl>
+
+                       </div>
+
 
                        <input type="text" value={inputtext}  onChange={event => setText(event.target.value)} className="setInputStyle" name="setUrl"></input>
 
@@ -1214,7 +1269,7 @@ const EditNetwork = (data) => {
            }
 
            {
-             currentTaskStatus === 7 && (
+             currentTaskStatus === 3 && (
                <div className="BlockDivider"></div>
              )
            }
@@ -1224,7 +1279,7 @@ const EditNetwork = (data) => {
             {
               // edit block
 
-              currentTaskStatus === 7 && (
+              currentTaskStatus === 3 && (
                 <div className="fullSize">
                {editFormStatus === true ? (
                  <div className="setBoxTwo">
@@ -1251,7 +1306,7 @@ const EditNetwork = (data) => {
 
                        <form onSubmit={handleSubmit(EditNetwork)}>
 
-                       <input ref={register} required type="text" className="setInputStyle" name="url"/>
+                         <input ref={register} required type="text" className="setInputStyle" name="url"/>
 
                          <div className="buttonBoxSet">
 
@@ -1259,7 +1314,7 @@ const EditNetwork = (data) => {
 
                          </div>
 
-                         </form>
+                        </form>
                    </div>
 
                  </div>
