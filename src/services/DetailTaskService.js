@@ -63,7 +63,8 @@ const DetailTaskService = {
               id: obj.id,
               videotype:obj.videotype,
               url:obj.url,
-              status:obj.set //check
+              status:obj.set, //check
+              action:obj.action
             }
 
             //console.log(data);

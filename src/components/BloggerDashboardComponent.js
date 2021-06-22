@@ -874,7 +874,7 @@ const GoToTask = useCallback((item) => {
 const rejectOrder = (item) => {
   var obj = {
     id:item.id,
-    approvetask:4
+    approvetask:6
   }
   DetailTaskService.submitOrder(obj);
   SetStatus(false);

@@ -42,6 +42,12 @@ import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import BloggerProgressComponent from './bloggerDetailComponents/BloggerProgressComponent';
 import M2_instructionComponent from './bloggerDetailComponents/M2_instructionComponent';
+import DoneAllIcon from '@material-ui/icons/DoneAll';
+import NavigateNextIcon from '@material-ui/icons/NavigateNext';
+import TextField from '@material-ui/core/TextField';
+import FileCopyIcon from '@material-ui/icons/FileCopy';
+import EditIcon from '@material-ui/icons/Edit';
+import ChatIcon from '@material-ui/icons/Chat';
 
 import {
   useHistory
@@ -267,6 +273,19 @@ const DetailTaskComponent = (props) => {
       return array;
 
   },[]);
+  const SocialListWithoutEchohub = useMemo(function(){
+
+      var array = [];
+      var cycleAr = JSON.parse(localStorage.getItem("soc"));
+      cycleAr.map(item => {
+        if(item.name != "Echohub"){
+          array.push(item.name);
+        }
+
+      });
+      return array;
+
+  },[]);
   const OrigNTwo = useMemo(function(){
 
       var array = [];
@@ -297,8 +316,10 @@ const DetailTaskComponent = (props) => {
 
       if(inputtext.length > 0){
           var find = inputtext;
+          find = find.toLowerCase();
           var validate = 0;
 
+          //check url for start from existing social networks
           for(var i = 0;i < checkLinksValidationsArray.length;i++){
             if(find.indexOf(checkLinksValidationsArray[i]) >= 0){
                 validate = 1;
@@ -335,9 +356,10 @@ const DetailTaskComponent = (props) => {
             if(validate === 1){
                 var obj = {
                   id:detailData.id,
-                  videotype:netWorkArray[stepper],
+                  videotype:currentNetworkTwo,
                   url:inputtext,
-                  set:"set"
+                  set:"set",
+                  action:1
                 }
               //  console.log(obj);
                 DetailTaskService.setUrl(obj);
@@ -348,7 +370,12 @@ const DetailTaskComponent = (props) => {
 
   });
 
-//xx
+  const [activateSubmit,SetActivateSubmit] = useState(false);
+  const submitTaskFinalStep = () => {
+        SubmittedTask(detailData.id,4);
+  }
+
+//xxx
   const sendUploadedVideo = (() => {
 
                 let video = config.getUserItemName("video");
@@ -356,9 +383,10 @@ const DetailTaskComponent = (props) => {
                 if(video){
                   var obj = {
                     id:detailData.id,
-                    videotype:netWorkArray[4],
+                    videotype:"Echohub.io",
                     url:config.getUploadUrl() + "/" + video,
-                    set:"set"
+                    set:"set",
+                    action:0
                   }
 
                   DetailTaskService.setUrl(obj);
@@ -500,8 +528,13 @@ const DetailTaskComponent = (props) => {
     SetcompletedTask(true);
   }
 
-//xx
+
+
+
+//xxxl
 const CountTaskFunction = (data) => {
+
+  //console.log(data)
   if(data.status === "false"){
     if(stepper > 0){
       SetStep(0);
@@ -543,7 +576,13 @@ const CountTaskFunction = (data) => {
     setnetWorkArrayState(replaceArray);
     SetCurrentNetwork(replaceArray[0]);
 
-    SetStep(count);
+    if(count > 0){
+      SetStep(count - 1);
+    }
+
+    if(count > 1){
+      SetActivateSubmit(true);
+    }
 //xx
     if((countOfTask == count) && (countOfTask > 0) && (count > 0)){
       //SetcompletedTask(true);
@@ -561,7 +600,7 @@ const [currentTaskStatus,setCurrentTaskStatus] = useState(0);
 
 const [downloadUrl,SetDownloadUrl] = useState('');
 
-//xx checking video from from video table
+//xxx checking video from from video table
 useEffect(() => {
   const ListenlistenCheckUrl = DetailTaskService.listenReadyVideo().subscribe(data => {
 
@@ -569,7 +608,7 @@ useEffect(() => {
       let url = data.data[0].url;
 
       SetDownloadUrl(url);
-      //CountTaskFunction(data);
+      CountTaskFunction(data);
 
 
     //SetStep(stepper => stepper + 1);
@@ -579,7 +618,7 @@ useEffect(() => {
   const listenCurrentStatusL = DetailTaskService.listenCurrentStatus().subscribe(data => {
 
     console.log(data);
-//xx
+//xxx
     if(data.data.length > 0){
 
       const newlistArray = [...listArrayComplete];
@@ -595,6 +634,12 @@ useEffect(() => {
           }else if(currentStatus === 3){
             setCurrentTaskStatus(3);
             CheckVideos(detailData.id);
+          }else if(currentStatus === 4){
+            setCurrentTaskStatus(4);
+          }else if(currentStatus === 5){
+            setCurrentTaskStatus(5);
+            SetalertText(LocalizeComponent.readyToWithdrawal);//setText in Alert
+            SetSucessState(true);//show alert
           }
           //change status
           var found = 0;
@@ -708,19 +753,25 @@ useEffect(() => {
     const ListenlistenSetUrl = DetailTaskService.listenSetUrl().subscribe(data => {
       //console.log(data);
       if(data.status == "inserted"){
-        //CheckVideos(detailData.id);
-        //SetInputText("");
-        SubmittedTask(detailData.id,0);
+        if(data.videotype === "Echohub"){
+          SubmittedTask(detailData.id,0);
+        }else{
+          CheckVideos(detailData.id);
+        }
+        //
+        SetInputText("");
+        //
         //SetStep(stepper => stepper + 1);
       }
 
     });
 
-    //xx
+    //xxx
     const listenSubmittedOrder = DetailTaskService.listenSubmittedOrder().subscribe(data => {
       //console.log(data);
       if(data.currentStatus == 0){
         deleteVideoStatus();
+
           //SetCurrentStatus(LocalizeComponent.waitingApprove);
       }
 
@@ -731,7 +782,7 @@ useEffect(() => {
         //SubmittedTask(detailData.id);
         //console.log(detailData.id);
 
-        //CheckVideos(detailData.id);
+        CheckVideos(detailData.id);
         CheckcheckBannedVideoF(detailData.id);
         checkCurrentStatus(detailData.id);
 
@@ -805,7 +856,7 @@ useEffect(() => {
         SetSucessState(true);
         seteditFormStatus(false);
         hideAlert();
-        //CheckVideos(detailData.id);
+        CheckVideos(detailData.id);
       }else if(data.status == "already"){
         SetInputText("");
         SetdangerText(LocalizeComponent.replace_confirmation);
@@ -843,7 +894,7 @@ useEffect(() => {
 useEffect(() => {
 
   SethowManySteps(netWorkArrayState.length + 1);
-  //CheckVideos(detailData.id);
+  CheckVideos(detailData.id);
   checkCurrentStatus(detailData.id);
   CheckcheckBannedVideoF(detailData.id);
   //console.log(detailData.id);
@@ -1070,7 +1121,13 @@ const EditNetwork = (data) => {
 
               <BloggerProgressComponent items={listArrayComplete} />
 
-            <div className="BlockDivider"></div>
+          {
+            currentTaskStatus !== 4 &&
+            currentTaskStatus !== 5 && (
+              <div className="BlockDivider"></div>
+            )
+          }
+
 
 
             {
@@ -1122,12 +1179,18 @@ const EditNetwork = (data) => {
                 // generate  button
 
                 swithbutton === false && (
-                <div className="buttonBox">
-                    <div className="generateButton" onClick={GenerateUrl}>
-                        <div className="generateButtonText"  >
-                            {LocalizeComponent.startTask}
-                        </div>
-                    </div>
+
+
+                <div className="VideoImageStyleContainer">
+                  <Button
+                      variant="contained"
+                      color="primary"
+                      className={classes.button + " projectFont"}
+                      startIcon={<CheckCircleIcon className="FileCopyIcon" />}
+                      onClick={GenerateUrl}
+                    >
+                    {LocalizeComponent.startTask}
+                  </Button>
                 </div>
                )
              }
@@ -1137,13 +1200,19 @@ const EditNetwork = (data) => {
                  //copy button
                  currentTaskStatus === 3 &&
                  (
-                 <div className="buttonBox">
-                       <div className="generateButton" onClick={CopyUrl}>
-                           <div className="generateButtonText"  >
-                               {LocalizeComponent.CopyUrl}
-                           </div>
-                       </div>
+
+                   <div className="VideoImageStyleContainer">
+                     <Button
+                         variant="contained"
+                         color="primary"
+                         className={classes.button + " projectFont"}
+                         startIcon={<CheckCircleIcon className="FileCopyIcon" />}
+                         onClick={CopyUrl}
+                       >
+                       {LocalizeComponent.CopyUrl}
+                     </Button>
                    </div>
+
                  )
              }
 
@@ -1171,7 +1240,7 @@ const EditNetwork = (data) => {
                         <Button
                             variant="contained"
                             color="primary"
-                            className={classes.button}
+                            className={classes.button + " projectFont"}
                             startIcon={<CheckCircleIcon className="successUploadSmallIcon" />}
                           >
                           {LocalizeComponent.b_30}
@@ -1180,7 +1249,7 @@ const EditNetwork = (data) => {
                         <Button
                             variant="contained"
                             color="primary"
-                            className={classes.button}
+                            className={classes.button + " projectFont"}
                             startIcon={<CloudUploadIcon />}
                             onClick={goToDownload}
                           >
@@ -1207,8 +1276,7 @@ const EditNetwork = (data) => {
                        <div className="ShareNameBox">
 
                           <div className="ShareNameText">
-                              {LocalizeComponent.currentStep} <div className="socialColor">{currentNetWork} {LocalizeComponent.socialNetwork}</div>
-                              {LocalizeComponent.currentStepAfter}
+                              {LocalizeComponent.currentStep}
                           </div>
                        </div>
 
@@ -1225,8 +1293,16 @@ const EditNetwork = (data) => {
 
                        </div>
 
+                       <div className="VideoImageStyleContainer">
+                         <TextField id="standard-basic"
+                           value={inputtext}
+                           onChange={event => setText(event.target.value)}
+                           className="setInputStyle"
+                           label={LocalizeComponent.step3_9} />
+                       </div>
 
-                       <input type="text" value={inputtext}  onChange={event => setText(event.target.value)} className="setInputStyle" name="setUrl"></input>
+
+
 
                          {banVideo.length > 0 ? (
                            <BannedList list={banVideo}/>
@@ -1244,13 +1320,43 @@ const EditNetwork = (data) => {
                                 </div>
                             </div>
                            ) : (
-                             <div className="buttonBoxSet">
-                                 <div className="generateButtonSet" onClick={Share}>
-                                     <div className="generateButtonTextSet"  >
-                                         {LocalizeComponent.next_x}
+
+                             <div>
+                                 <div className="VideoImageStyleContainer">
+                                   <Button
+                                       variant="contained"
+                                       color="primary"
+                                       className={classes.button  + " projectFont"}
+                                       endIcon={<NavigateNextIcon />}
+                                       onClick={Share}
+                                     >
+                                     {LocalizeComponent.next_x}
+                                   </Button>
+                                </div>
+
+                                {
+                                  //xxx
+                                  activateSubmit === true &&
+                                  (
+                                    <div>
+                                      <div className="BlockDivider"></div>
+
+                                      <div className="VideoImageStyleContainer">
+                                           <Button
+                                               variant="contained"
+                                               color="primary"
+                                               className={classes.button + " projectFont"}
+                                               startIcon={<DoneAllIcon />}
+                                               onClick={(event) => submitTaskFinalStep()}
+                                             >
+                                             {LocalizeComponent.step3_8}
+                                           </Button>
                                      </div>
-                                 </div>
-                             </div>
+                                    </div>
+                                  )
+                                }
+
+                           </div>
                            )}
 
 
@@ -1278,20 +1384,24 @@ const EditNetwork = (data) => {
 
             {
               // edit block
-
+              //xxx
               currentTaskStatus === 3 && (
                 <div className="fullSize">
                {editFormStatus === true ? (
                  <div className="setBoxTwo">
 
                    <div>
-                       <div className="ShareNameBoxEdit" onClick={DisableEditBox}>
 
-                          <div className="ShareNameTextFrame">
-                              <div className="ShareNameTextB">
-                                  {LocalizeComponent.edit_social}
-                              </div>
-                          </div>
+                       <div className="VideoImageStyleContainer">
+                         <Button
+                             variant="contained"
+                             color="primary"
+                             className={classes.button  + " projectFont"}
+                             endIcon={<EditIcon />}
+                             onClick={DisableEditBox}
+                           >
+                           {LocalizeComponent.edit_social}
+                         </Button>
                        </div>
 
                        <div className="SelectSocial">
@@ -1306,7 +1416,15 @@ const EditNetwork = (data) => {
 
                        <form onSubmit={handleSubmit(EditNetwork)}>
 
-                         <input ref={register} required type="text" className="setInputStyle" name="url"/>
+                         <div className="VideoImageStyleContainer">
+                           <TextField id="standard-basic"
+
+                             ref={register}
+                             className="setInputStyle"
+                             name="url"
+                             label={LocalizeComponent.step3_10} />
+                         </div>
+
 
                          <div className="buttonBoxSet">
 
@@ -1319,14 +1437,20 @@ const EditNetwork = (data) => {
 
                  </div>
                 ) : (
-                  <div className="buttonBoxSet">
-                      <div className="generateButtonSet" onClick={EnableEditBox}>
-                          <div className="generateButtonTextSet"  >
-                              {LocalizeComponent.edit_button_link}
-                          </div>
-                      </div>
+
+                  <div className="VideoImageStyleContainer">
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        className={classes.button  + " projectFont"}
+                        endIcon={<EditIcon />}
+                        onClick={EnableEditBox}
+                      >
+                      {LocalizeComponent.edit_button_link}
+                    </Button>
                   </div>
-                )}
+                )
+              }
               </div>
               )
             }
@@ -1338,12 +1462,17 @@ const EditNetwork = (data) => {
               }
 
 
-               <div className="buttonBoxSet">
-                   <div className="generateButtonSet" onClick={(event) => goToChat()}>
-                       <div className="generateButtonTextSet"  >
-                           {LocalizeComponent.chat_with_business}
-                       </div>
-                   </div>
+
+               <div className="VideoImageStyleContainer">
+                 <Button
+                     variant="contained"
+                     color="primary"
+                     className={classes.button  + " projectFont"}
+                     endIcon={<ChatIcon />}
+                     onClick={(event) => goToChat()}
+                   >
+                   {LocalizeComponent.chat_with_business}
+                 </Button>
                </div>
 
                <div className="BlockDivider"></div>
@@ -1361,6 +1490,31 @@ const EditNetwork = (data) => {
 
   );
 };
+
+
+
+//notes
+// SetCurrentNetworkTwo
+// currentNetworkTwo
+// Share
+// ReplaceLinks
+// inputtext
+// SubmittedTask(detailData.id,0);
+// submitTaskFinalStep
+// SetActivateSubmit
+// listenSetUrl
+//
+// CheckVideos(detailData.id);
+// checkReadyVideo
+// listenReadyVideo
+//
+// DetailTaskService.listenCurrentStatus()
+// CountTaskFunction(data);
+//
+// setText
+//
+// DetailTaskService.setUrl
+//notes
 
 
  export default connect(mapStateToProps,mapDispatchToProps)(DetailTaskComponent);

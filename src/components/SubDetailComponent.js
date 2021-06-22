@@ -27,6 +27,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
+import AlertDangerComponent from '../helperComponents/AlertDangerComponent';
 import config from '../config/config.js';
 import { increment, decrement,save_email } from '../actions/actions';
 import {
@@ -146,6 +147,8 @@ var historyId = 9900;
 
 const ListComponent = (props) => {
 
+  const editMode = props.editMode;
+
   const projectId = props.projectId;
   const classestree = useStylesthree();
 
@@ -174,7 +177,7 @@ const ListComponent = (props) => {
             </div>
           </div>
 
-          <SubComponent condition={item} projectId={projectId} />
+          <SubComponent condition={item} projectId={projectId} editMode={editMode}/>
 
     </div>
   );
@@ -197,20 +200,40 @@ const ListComponent = (props) => {
 //xx
 const SubComponent = (props) => {
 
+  const editMode = props.editMode;
   var status = props.condition.status;
   var id = props.condition.id;
   var projectId = props.projectId;
   var email = props.condition.user_email;
 
+  const [dangerState,SetdangerState] = useState(false);
+  const [dangerText,SetdangerText] = useState("");
+
   var url = props.condition.url;
 
+
+  const closeAlert = () => {
+    setTimeout(function(){
+      SetdangerState(false);
+    },3000);
+  }
+
   const setBan = (id) => {
+
 
     var sendObject = {
       from:10,
       id:id
     }
-    ObservableService.sendData_subject(sendObject);
+    if(editMode === true){
+      ObservableService.sendData_subject(sendObject);
+    }else{
+      SetdangerText(LocalizeComponent.editMode);
+      SetdangerState(true);
+      closeAlert();
+
+    }
+
     //DetailService.setBan(id);
 
   }
@@ -259,6 +282,8 @@ const SubComponent = (props) => {
 
 
        </div>
+
+       <AlertDangerComponent state={dangerState} text={dangerText}/>
 
     </div>
   );
@@ -452,10 +477,22 @@ const DetailComponent = (props) => {
     }
   }
 
+  const [editMode,setEditMode] = useState(true);
+
   useEffect(() => {
     const listenDetailService = DetailService.listenCheckvideosByUser().subscribe(data => {
 
-      SetListX(data,listArray);
+      console.log(data);
+      if(data.status === "ok"){
+        if(data.editmode === false){
+          setEditMode(false);
+        }else{
+          setEditMode(true);
+        }
+        SetListX(data,listArray);
+      }
+
+
 
     });
 
@@ -562,13 +599,15 @@ const DetailComponent = (props) => {
   };
 
 
+
+
   return (
 
     <div className={classes.root}>
         <Grid container >
           <ConfirmDialogComponent  status={dialogStatus} text={dialogText} left={dialogLeft} right={dialogRight}/>
           <GoBackComponent center={LocalizeComponent.Offers}/>
-          <ListComponent items={listArray} projectId={Project_id}/>
+          <ListComponent items={listArray} projectId={Project_id} editMode={editMode}/>
         </Grid>
     </div>
 
