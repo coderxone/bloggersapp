@@ -302,7 +302,8 @@ let strings = new LocalizedStrings({
    step3_9:"Social network video url (link)",
    step3_10:"Social network new video url (link)",
    editMode:"Edit task already posted Edit mode not avalable",
-   readyToWithdrawal:"Task Ready To CashOut",
+   readyToWithdrawal:"Task ready for withdrawal",
+   statuswithdrawal:"Task ready for withdrawal",
 
  },
 

@@ -93,6 +93,9 @@ const BloggerProgressComponent = (props) => {
       if(rData[i].text == "waiting system approval"){
         rData[i].text = LocalizeComponent.waiting_system_appr;
       }
+      if(rData[i].text == "ready for withdrawal"){
+        rData[i].text = LocalizeComponent.statuswithdrawal;
+      }
     }
 
     return rData;
