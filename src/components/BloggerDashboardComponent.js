@@ -265,6 +265,112 @@ const BlockComponent = (props) => {
 
 }
 
+//xxx
+const ShowPush = (props) => {
+
+  const items = props.items;
+  const distance = props.distance;
+  const status = props.status;
+  const timerVariable = props.timerVariable;
+  const timerCircleVariable = props.timerCircleVariable;
+  const StartTask = (item) => {
+    let sendObj = {
+      action:"starttask",
+      status:1,
+      item:item
+    }
+
+    Observable.sendAny(sendObj);
+  }
+
+  const rejectOrder = (item) => {
+    let sendObj = {
+      action:"rejectorder",
+      status:1,
+      item:item
+    }
+
+    Observable.sendAny(sendObj);
+  }
+
+
+  return (
+    <div className="mainPush_root">
+      <div className="declineButtonBlock">
+         <div className="declineButtonStyle" onClick={event => rejectOrder(items[0])}>
+             {LocalizeComponent.Decline}
+         </div>
+      </div>
+      <div className="mainPush">
+        <div className="mainPushColumsOne">
+          <div className="mainPushColumsOneLeft">
+              <div className="mainPushColumsOneLeft_1">{LocalizeComponent.do_before} {items[0].date}</div>
+              <div className="mainPushColumsOneLeft_2">{items[0].url}</div>
+              <div className="mainPushColumsOneLeft_3">{LocalizeComponent.distance}: {distance}</div>
+
+          </div>
+          <div className="mainPushColumsOneRight">
+            <div className="CircularProgressParent">
+              <CircularProgressComponent status={status} timerVariable={timerVariable} timerCircleVariable={timerCircleVariable}/>
+            </div>
+
+          </div>
+
+        </div>
+        <div className="mainPushColumsTwo">
+
+          <div className="mainPushColumsTwo_1">
+            <div className="gorizontalGreyLine">
+            </div>
+            <div className="mainPushColumsTwo_1_Price">
+              ${Math.round(items[0].sum / items[0].peoplecount - 1)}
+            </div>
+            <div className="mainPushColumsTwo_2_Second">
+                {LocalizeComponent.tips}
+            </div>
+            <div className="mainPushColumsTwo_3_Third">
+              {LocalizeComponent.high}
+            </div>
+          </div>
+          <div className="mainPushColumsTwo_2">
+              <div className="buttonStylePush" onClick={event => StartTask(items[0])}>
+                  <div className="buttonStylePushText">{LocalizeComponent.accept}</div>
+              </div>
+          </div>
+
+
+        </div>
+
+      </div>
+    </div>
+  );
+}
+
+const DistrubuteComponent = (props) => {
+
+  const latitude = props.latitude;
+  const longitude = props.longitude;
+  const item = props.item;
+  const status = props.status;
+  if(status === true){
+    if(item.type === 2){
+      return <DirectionComponent latitude={latitude} longitude={longitude} item={item} status={status} />
+    }else if(item.type === 1){
+        return (
+          <div>
+              Video component
+          </div>
+        )
+    }
+  }else{
+    return false;
+  }
+
+
+
+
+}
+
 
 
 //xx
@@ -316,6 +422,7 @@ const BloggerDashboardComponent = (props) => {
   const [longitude, setLongitude] = useState(0);
   //const [searchcountD,SetsearchcountD] = useState(0);
   const [firstLoadStorage,setFirstLoadStorage] = useState(true);
+  //gps switcher
   const [swithState,SetswithState] = useState(false);
   const [onlineStatusSwitcher,SetonlineStatusSwitcher] = useState(false);
   const [onlineStatus,SetonlineStatus] = useState(0);
@@ -344,8 +451,44 @@ const BloggerDashboardComponent = (props) => {
       }
     }
 
-  },[])
+  },[]);
 
+  const [incrementCoordinates,SetincrementCoordinates] = useState(0);
+
+  const SwitchCoordinates = (incrementCoordinates) => {
+      let oldXCoordinate = incrementCoordinates;
+      oldXCoordinate++;
+      SetincrementCoordinates(oldXCoordinate);
+  }
+
+  const ManageTasks2Mode = (swithState,status,currentTask,incrementCoordinates) => {
+    // latitude
+    // swithState
+    //busy variable status
+    if(status === false && currentTask === 0){
+      if(swithState === false){
+        console.log("swithch == " + swithState);
+        console.log("status == " + status);
+        console.log("incrementCoordinates == " + incrementCoordinates);
+        console.log("currentTask == " + currentTask);
+        SwitchCoordinates(incrementCoordinates);
+      }
+    }
+  }
+
+  //xxx
+
+  //checking and calling tasks every 10 sec
+  useEffect(() => {
+    const checkTimer15Sec = Observable.subscribeByTimer_15_second().subscribe(sec => {
+      ManageTasks2Mode(swithState,status,currentTask,incrementCoordinates);
+    });
+    return () => {
+      checkTimer15Sec.unsubscribe();
+    }
+  },[swithState,status,incrementCoordinates,currentTask]);
+
+  //calling task when geolocation has changed
   useMemo(() => {
 
     if((latitude != 0) && (longitude != 0)){
@@ -362,9 +505,67 @@ const BloggerDashboardComponent = (props) => {
         }
       }
 
+      console.log("running gps on mode");
+
       BloggerService.setAllData(latitude,longitude,gps);
+    }else{
+      var gps = 2;
+      if(swithState === false){
+        console.log("gps" + gps);
+        BloggerService.setAllData(latitude,longitude,gps);
+      }
     }
-  },[latitude,longitude,swithState]);
+  },[latitude,longitude,swithState,incrementCoordinates]);
+
+
+  //geolocation call function
+  //xxx
+  useEffect(() => {
+
+    var options = {
+      maximumAge: 40000,
+      enableHighAccuracy: true,
+      timeout: 40000
+    }
+      try{
+        GeolocationWeb.setRNConfiguration(locationConfig);
+      }catch(e){
+
+      }
+
+      var watchId = null;
+      var watchIdAndroidIos = null;
+
+      if(swithState === true){
+        if(Capacitor.platform !== 'web'){
+          watchIdAndroidIos = Geolocation.watchPosition(SuccessAndroidWatcher,ErrorAndroidPosition,options);
+        }else{
+          watchId = GeolocationWeb.watchPosition(SuccessLocationWatcher, ErrorPosition, options);
+        }
+      }
+
+
+    return () => {
+
+      if(swithState === true){
+        if(Capacitor.platform !== 'web'){
+          if((watchIdAndroidIos != null)){
+            Geolocation.clearWatch(watchIdAndroidIos);
+          }
+        }else{
+          if((watchId != null)){
+            GeolocationWeb.clearWatch(watchId);
+          }
+        }
+      }
+
+    }
+
+
+  },[swithState]);
+
+
+
 
   useMemo(() => {
     var localApprove_status = config.getUserItemName("approvestatus");
@@ -433,7 +634,7 @@ const BloggerDashboardComponent = (props) => {
       }
   },[]);
 
-
+  //xxx
   const RenderFunction = (data) => {
 
     //  return false;
@@ -523,6 +724,7 @@ const BloggerDashboardComponent = (props) => {
   }
 
   useEffect(() => {
+    //xxx
     const BloggerListen = BloggerService.listenUserDataG().subscribe((data) => {//items
           //console.log(currentTask);
           if((currentTask === 0) && (onlineStatus === 1) && (approveStatus == 1) && (emailStatus == 1)){ //if user don't have current task
@@ -548,6 +750,7 @@ const SuccessAndroidWatcher = (position) => {
   setLongitude(position.coords.longitude);
 }
 
+//xxx
 const SuccessLocationWatcher = (position) => {
       //checkData();
       setLatitude(position.coords.latitude);
@@ -645,7 +848,6 @@ useEffect(() => {
 useEffect(() => {
 
 
-
   const RoutePassing = Observable.getRoute().subscribe(data => {
 
     if(data.status === "ok"){
@@ -658,8 +860,20 @@ useEffect(() => {
 
     if(data.action === "cancelTask"){
         if(data.status == 1){
-
+          //rejectOrder(items[0]);
+          console.log('cancelled');
+//xxx
         }
+    }else if(data.action === "starttask"){
+
+        if(data.status === 1){
+          let item = data.item;
+          StartTask(item);
+        }
+
+    }else if(data.action === "rejectorder"){
+        let item = data.item;
+        rejectOrder(item);
     }
 
   });
@@ -736,10 +950,8 @@ useEffect(() => {
     TaskService.getUserInfo();
   });
 
-  //xx
-  const checkTimer10Sec = Observable.subscribeByTimer_10_second().subscribe(sec => {
-    Homeservice.CheckAllBanVideos();
-  });
+
+
 
   const listenBanVideos = Homeservice.listenCheckAllBanVideos().subscribe(data => {
       //console.log(data);
@@ -755,6 +967,12 @@ useEffect(() => {
   });
 
 
+  const checkTimer10Sec = Observable.subscribeByTimer_10_second().subscribe(sec => {
+    Homeservice.CheckAllBanVideos();
+
+  });
+
+
 
   if(lastLocation != null){
     if(lastLocation.pathname == "/detailtask"){
@@ -765,43 +983,9 @@ useEffect(() => {
 
 
 
-  var options = {
-    maximumAge: 40000,
-    enableHighAccuracy: true,
-    timeout: 40000
-  }
-    try{
-      GeolocationWeb.setRNConfiguration(locationConfig);
-    }catch(e){
-
-    }
-
-    var watchId = null;
-    var watchIdAndroidIos = null;
-
-    if(Capacitor.platform !== 'web'){
-      watchIdAndroidIos = Geolocation.watchPosition(SuccessAndroidWatcher,ErrorAndroidPosition,options);
-    }else{
-      watchId = GeolocationWeb.watchPosition(SuccessLocationWatcher, ErrorPosition, options);
-    }
-
-//xx
-
 
 
     return () => {
-
-
-          if(Capacitor.platform !== 'web'){
-            if((watchIdAndroidIos != null)){
-              Geolocation.clearWatch(watchIdAndroidIos);
-            }
-          }else{
-            if((watchId != null)){
-              GeolocationWeb.clearWatch(watchId);
-            }
-          }
-
 
 
         DialogExecute.unsubscribe();
@@ -812,9 +996,8 @@ useEffect(() => {
         TaskServiceListen.unsubscribe();
         TaskServiceListenUserInfo.unsubscribe();
         checkTimer.unsubscribe();
-        checkTimer10Sec.unsubscribe();
         listenBanVideos.unsubscribe();
-
+        checkTimer10Sec.unsubscribe();
 
     }
 
@@ -831,6 +1014,7 @@ const RefreshIncrement = () => {
   SettimerVariable(previousValue => 60);
 }
 
+
 useMemo(() => {
   if(timerVariable == 0){
 
@@ -841,7 +1025,7 @@ useMemo(() => {
     RefreshIncrement();
     SetStatus(false);
     //send request to reject task because of timer
-    //Observable.sendAny(obj);
+    Observable.sendAny(obj);
   }
 },[timerVariable]);
 
@@ -1094,8 +1278,10 @@ useEffect(() => {
                 }
 
 
+                {
+                  <DistrubuteComponent latitude={latitude} longitude={longitude} item={items[0]} status={status} />
+                }
 
-                 <DirectionComponent latitude={latitude} longitude={longitude} item={items[0]} status={status} />
 
                    {
                      currentTask != 0 && (
@@ -1137,54 +1323,7 @@ useEffect(() => {
                      <div></div>
                     ) : (
 
-                      <div className="mainPush_root">
-                        <div className="declineButtonBlock">
-                           <div className="declineButtonStyle" onClick={event => rejectOrder(items[0])}>
-                               {LocalizeComponent.Decline}
-                           </div>
-                        </div>
-                        <div className="mainPush">
-                          <div className="mainPushColumsOne">
-                            <div className="mainPushColumsOneLeft">
-                                <div className="mainPushColumsOneLeft_1">{LocalizeComponent.do_before} {items[0].date}</div>
-                                <div className="mainPushColumsOneLeft_2">{items[0].url}</div>
-                                <div className="mainPushColumsOneLeft_3">{LocalizeComponent.distance}: {distance}</div>
-
-                            </div>
-                            <div className="mainPushColumsOneRight">
-                              <div className="CircularProgressParent">
-                                <CircularProgressComponent status={status} timerVariable={timerVariable} timerCircleVariable={timerCircleVariable}/>
-                              </div>
-
-                            </div>
-
-                          </div>
-                          <div className="mainPushColumsTwo">
-
-                            <div className="mainPushColumsTwo_1">
-                              <div className="gorizontalGreyLine">
-                              </div>
-                              <div className="mainPushColumsTwo_1_Price">
-                                ${Math.round(items[0].sum / items[0].peoplecount - 1)}
-                              </div>
-                              <div className="mainPushColumsTwo_2_Second">
-                                  {LocalizeComponent.tips}
-                              </div>
-                              <div className="mainPushColumsTwo_3_Third">
-                                {LocalizeComponent.high}
-                              </div>
-                            </div>
-                            <div className="mainPushColumsTwo_2">
-                                <div className="buttonStylePush" onClick={event => StartTask(items[0])}>
-                                    <div className="buttonStylePushText">{LocalizeComponent.accept}</div>
-                                </div>
-                            </div>
-
-
-                          </div>
-
-                        </div>
-                      </div>
+                      <ShowPush items={items} distance={distance} status={status} timerVariable={timerVariable} timerCircleVariable={timerCircleVariable}/>
 
                     )}
 

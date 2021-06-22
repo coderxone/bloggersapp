@@ -46,6 +46,7 @@ import ActivationEmail from './components/emailTemplates/ActivationEmail';
 import ChooseWayComponent from './components/ApplyComponents_model1/ChooseWayComponent';
 import NewApplyComponent from './components/ApplyComponents_model1/NewApplyComponent';
 import VideoComponent from './helperComponents/VideoComponent';
+import Model1DetailTaskComponent from './components/ApplyComponents_model1/Model1DetailTaskComponent';
 
 
 const App = () => {
@@ -75,6 +76,7 @@ const App = () => {
                 <Route path="/role" component={SelectRoleComponent} exact={true} />
                 <Route path="/blogger" component={BloggerDashboardComponent} exact={true} />
                 <Route path="/detailtask" component={DetailTaskComponent} exact={true} />
+                <Route path="/mdetailtask" component={Model1DetailTaskComponent} exact={true} />
                 <Route path="/suggest" component={SuggestComponent} exact={true} />
                 <Route path="/contactlist" component={ContactListComponent} exact={true} />
                 <Route path="/mytasks" component={TaskComponent} exact={true} />

@@ -437,7 +437,8 @@ const ApplyComponent = (props) => {
              description:config.getUserItemName("description"),
              companyName:config.getUserItemName("companyName"),
              category:config.getUserItemName("category"),
-             businessAnswers:config.getbusinessCategory()
+             businessAnswers:config.getbusinessCategory(),
+             type:2
 
            }
 

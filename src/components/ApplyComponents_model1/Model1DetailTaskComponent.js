@@ -1,8 +1,8 @@
 import React, {useState,useMemo,useEffect,useCallback} from 'react';
 // import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonInput, IonItem, IonLabel, IonList, IonItemDivider } from '@ionic/react';
-import '../css/mainStyles.scss';
-import '../css/DetailDescriptionComponent.scss';
-import LocalizeComponent from '../localize/LocalizeComponent';
+import '../../css/mainStyles.scss';
+import '../../css/DetailDescriptionComponent.scss';
+import LocalizeComponent from '../../localize/LocalizeComponent';
 import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
@@ -17,16 +17,16 @@ import {
 } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import { connect } from 'react-redux';
-import DetailTaskService from '../services/DetailTaskService';
-import AlertSuccessComponent from '../helperComponents/AlertSuccessComponent';
-import AlertDangerComponent from '../helperComponents/AlertDangerComponent';
-import StepperComponent from '../helperComponents/StepperComponent';
-import Observable from '../services/Observable';
-import GoBackAbsoluteComponent from '../helperComponents/goBackAbsoluteComponent';
-import ConfirmDialogComponent from '../helperComponents/ConfirmDialogComponent';
+import DetailTaskService from '../../services/DetailTaskService';
+import AlertSuccessComponent from '../../helperComponents/AlertSuccessComponent';
+import AlertDangerComponent from '../../helperComponents/AlertDangerComponent';
+import StepperComponent from '../../helperComponents/StepperComponent';
+import Observable from '../../services/Observable';
+import GoBackAbsoluteComponent from '../../helperComponents/goBackAbsoluteComponent';
+import ConfirmDialogComponent from '../../helperComponents/ConfirmDialogComponent';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import EditListComponent from '../helperComponents/EditSocialNetworkComponent.js';
-import config from '../config/config.js';
+import EditListComponent from '../../helperComponents/EditSocialNetworkComponent.js';
+import config from '../../config/config.js';
 import clsx from 'clsx';
 
 import Drawer from '@material-ui/core/Drawer';
@@ -37,11 +37,11 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
-import FormDialogComponent from '../helperComponents/FormDialogComponent';
+import FormDialogComponent from '../../helperComponents/FormDialogComponent';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
-import BloggerProgressComponent from './bloggerDetailComponents/BloggerProgressComponent';
-import M2_instructionComponent from './bloggerDetailComponents/M2_instructionComponent';
+import BloggerProgressComponent from './../ApplyComponents_model1/M1BloggerProgressComponent';
+import M1_instructionComponent  from './../bloggerDetailComponents/M1_instructionComponent';
 import DoneAllIcon from '@material-ui/icons/DoneAll';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import TextField from '@material-ui/core/TextField';
@@ -53,7 +53,7 @@ import {
   useHistory
 } from "react-router-dom";
 
-import { increment, decrement,save_email } from '../actions/actions';
+import { increment, decrement,save_email } from '../../actions/actions';
 
 
 
@@ -532,6 +532,7 @@ const DetailTaskComponent = (props) => {
 
 
 //xxxl
+//counting incomin videos
 const CountTaskFunction = (data) => {
 
   //console.log(data)
@@ -576,11 +577,9 @@ const CountTaskFunction = (data) => {
     setnetWorkArrayState(replaceArray);
     SetCurrentNetwork(replaceArray[0]);
 
-    if(count > 0){
-      SetStep(count - 1);
-    }
 
-    if(count > 1){
+    if(count > 0){
+      SetStep(count);
       SetActivateSubmit(true);
     }
 //xx
@@ -604,15 +603,17 @@ const [downloadUrl,SetDownloadUrl] = useState('');
 useEffect(() => {
   const ListenlistenCheckUrl = DetailTaskService.listenReadyVideo().subscribe(data => {
 
-      //console.log(data);
-      let url = data.data[0].url;
+      console.log(data);
+      if(data.status !== "false"){
+        CountTaskFunction(data);
+      }
 
-      SetDownloadUrl(url);
-      CountTaskFunction(data);
 
 
     //SetStep(stepper => stepper + 1);
   });
+
+  //console.log(detailData.id);
 
   //manage statuses
   const listenCurrentStatusL = DetailTaskService.listenCurrentStatus().subscribe(data => {
@@ -629,15 +630,17 @@ useEffect(() => {
           let currentStatus = data.data[i].status;
           if(currentStatus === 2){ //under consideration by business
             setCurrentTaskStatus(1);
+            SetSucessState(false);
           }else if(currentStatus === 0 || currentStatus === 1){//status === 1 or status === 0 //open task
             setCurrentTaskStatus(0);
+            SetSucessState(false);
           }else if(currentStatus === 3){
-            setCurrentTaskStatus(3);
-            CheckVideos(detailData.id);
+
           }else if(currentStatus === 4){
-            setCurrentTaskStatus(4);
+            SetSucessState(false);
+            setCurrentTaskStatus(1);
           }else if(currentStatus === 5){
-            setCurrentTaskStatus(5);
+            setCurrentTaskStatus(2);
             SetalertText(LocalizeComponent.readyToWithdrawal);//setText in Alert
             SetSucessState(true);//show alert
           }
@@ -1119,7 +1122,7 @@ const EditNetwork = (data) => {
               // Task Progress
             }
 
-              <BloggerProgressComponent items={listArrayComplete} />
+              <BloggerProgressComponent items={listArrayComplete} status={currentTaskStatus} />
 
           {
             currentTaskStatus !== 4 &&
@@ -1133,22 +1136,23 @@ const EditNetwork = (data) => {
             {
               // instruction block for model2
             }
-            <M2_instructionComponent status={currentTaskStatus}/>
+            <M1_instructionComponent status={currentTaskStatus}/>
 
             {
               swithbutton === false ||
-              currentTaskStatus === 3 && (
+              currentTaskStatus === 0 && (
                 <div className="BlockDivider"></div>
               )
             }
 
 
             {
-              currentTaskStatus === 3 &&
-              downloadUrl !== '' &&
+              //xxx
+              currentTaskStatus === 0 &&
+              detailData.videourl !== '' &&
               (
                 <div className="VideoImageStyleContainer">
-                    <a  target="_blank" href={downloadUrl}>
+                    <a  target="_blank" href={detailData.videourl}>
                       <Button
                         variant="contained"
                         color="primary"
@@ -1157,7 +1161,7 @@ const EditNetwork = (data) => {
                         download
 
                       >
-                      {LocalizeComponent.step3_7}
+                      {LocalizeComponent.m1_insruction_step7}
                     </Button>
                   </a>
                 </div>
@@ -1166,7 +1170,7 @@ const EditNetwork = (data) => {
             }
 
             {
-              currentTaskStatus === 3 && (
+              currentTaskStatus === 0 && (
                 <div className="BlockDivider"></div>
               )
             }
@@ -1198,7 +1202,7 @@ const EditNetwork = (data) => {
 
                {
                  //copy button
-                 currentTaskStatus === 3 &&
+                 currentTaskStatus === 0 &&
                  (
 
                    <div className="VideoImageStyleContainer">
@@ -1218,7 +1222,7 @@ const EditNetwork = (data) => {
 
              {
                //devider from copy url
-               currentTaskStatus === 3 && (
+               currentTaskStatus === 7 && (
                  <div className="BlockDivider"></div>
                )
              }
@@ -1226,12 +1230,12 @@ const EditNetwork = (data) => {
               {
                 // upload block
 
-                currentTaskStatus === 0 && (
+                currentTaskStatus === 7 && (
                   <div className="BlockDivider"></div>
                 )
               }
 
-              {currentTaskStatus === 0 && (
+              {currentTaskStatus === 7 && (
                 <div className="VideoImageStyleContainer">
 
                   <div>
@@ -1267,7 +1271,7 @@ const EditNetwork = (data) => {
                {
                  // social links sending
 
-                 currentTaskStatus === 3 &&
+                 currentTaskStatus === 0 &&
                  (
 
                <div className="setBox">
@@ -1276,8 +1280,10 @@ const EditNetwork = (data) => {
                        <div className="ShareNameBox">
 
                           <div className="ShareNameText">
-                              <div>{LocalizeComponent.currentStep}</div>
-                              <div>{LocalizeComponent.m1_insruction_step9}</div>
+                            <ul>
+                              <li>{LocalizeComponent.m1_insruction_step8}</li>
+                              <li>{LocalizeComponent.m1_insruction_step9}</li>
+                            </ul>
                           </div>
                        </div>
 
@@ -1376,7 +1382,7 @@ const EditNetwork = (data) => {
            }
 
            {
-             currentTaskStatus === 3 && (
+             currentTaskStatus === 0 && (
                <div className="BlockDivider"></div>
              )
            }
@@ -1386,7 +1392,7 @@ const EditNetwork = (data) => {
             {
               // edit block
               //xxx
-              currentTaskStatus === 3 && (
+              currentTaskStatus === 0 && (
                 <div className="fullSize">
                {editFormStatus === true ? (
                  <div className="setBoxTwo">

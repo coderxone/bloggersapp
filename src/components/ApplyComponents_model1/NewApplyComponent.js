@@ -379,7 +379,7 @@ const ApplyComponent = (props) => {
              url:config.getUserItemName("companyUrl"),
              description:config.getUserItemName("description"),
              companyName:config.getUserItemName("companyName"),
-             videourl:config.getUserItemName("video"),
+             videourl:config.getUploadUrl() + "/" + config.getUserItemName("video"),
              type:1,
            }
 

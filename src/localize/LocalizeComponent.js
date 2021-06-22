@@ -304,6 +304,16 @@ let strings = new LocalizedStrings({
    editMode:"Edit task already posted Edit mode not avalable",
    readyToWithdrawal:"Task ready for withdrawal",
    statuswithdrawal:"Task ready for withdrawal",
+   m1_insruction_step0:"Read description",
+   m1_insruction_step1:"Download video",
+   m1_insruction_step2:"Copy hash url and put under posted video",
+   m1_insruction_step3:"Make a post",
+   m1_insruction_step4:"(Note) If platform instagram post to 'Reels'",
+   m1_insruction_step5:"Copy back link from posted video",
+   m1_insruction_step6:"Keep video during 7 days for system approve",
+   m1_insruction_step7:"Download video to post",
+   m1_insruction_step8:"Submit back link from posted video with form below",
+   m1_insruction_step9:"Note (Know that castomer may pay Tips for additional posts to other social networks)",
 
  },
 
