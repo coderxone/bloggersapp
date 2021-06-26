@@ -11,10 +11,15 @@ import {
 } from "react-router-dom";
 
 
+const mapStateToProps = (state) => {
+  return {
+      somethingFromStore: state.somethingFromStore
+  }
+}
 
 const ExampleComponent = (props) => {
 
-
+  const stateFromprops = props.somethingFromStore;
 
 
   return (
@@ -31,4 +36,4 @@ const ExampleComponent = (props) => {
 };
 
 
- export default connect()(ExampleComponent);
+ export default connect(mapStateToProps)(ExampleComponent);

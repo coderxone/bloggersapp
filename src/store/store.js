@@ -2,7 +2,10 @@ const initialState = {
   count: 0,
   email:"",
   password:"",
-  array:[]
+  array:[],
+  video_component:{
+
+  }
 };
 //props.dispatch(multiSave(storageData));
 

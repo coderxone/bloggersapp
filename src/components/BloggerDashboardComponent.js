@@ -52,6 +52,7 @@ import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
 import config from '../config/config';
 import { Capacitor } from '@capacitor/core';
 import { Plugins } from '@capacitor/core';
+import VideoComponent from '../components/BloggerDashboardComponents/VideoComponent';
 const { Geolocation } = Plugins;
 
 
@@ -266,6 +267,9 @@ const BlockComponent = (props) => {
 }
 
 //xxx
+
+
+
 const ShowPush = (props) => {
 
   const items = props.items;
@@ -346,21 +350,21 @@ const ShowPush = (props) => {
   );
 }
 
+//xxx
 const DistrubuteComponent = (props) => {
 
   const latitude = props.latitude;
   const longitude = props.longitude;
   const item = props.item;
   const status = props.status;
+  const timerVariable = props.timerVariable;
+  const timerCircleVariable = props.timerCircleVariable;
+
   if(status === true){
     if(item.type === 2){
       return <DirectionComponent latitude={latitude} longitude={longitude} item={item} status={status} />
     }else if(item.type === 1){
-        return (
-          <div>
-              Video component
-          </div>
-        )
+        return <VideoComponent status={status} item={item} timerVariable={timerVariable} timerCircleVariable={timerCircleVariable} />;
     }
   }else{
     return false;
@@ -512,6 +516,7 @@ const BloggerDashboardComponent = (props) => {
       var gps = 2;
       if(swithState === false){
         console.log("gps" + gps);
+        //xxx
         BloggerService.setAllData(latitude,longitude,gps);
       }
     }
@@ -1023,9 +1028,10 @@ useMemo(() => {
       status:1
     }
     RefreshIncrement();
-    SetStatus(false);
+    //xxx
+    //SetStatus(false);//uncomment
     //send request to reject task because of timer
-    Observable.sendAny(obj);
+    //Observable.sendAny(obj);//uncomment
   }
 },[timerVariable]);
 
@@ -1172,7 +1178,7 @@ useEffect(() => {
 
   return (
 
-    <div className={classestwo.root}>
+    <div className={classestwo.root} >
       <CssBaseline />
       <AppBar
         position="fixed"
@@ -1181,7 +1187,7 @@ useEffect(() => {
         })}
       >
         <Toolbar>
-            <div className="myToolbar">
+            <div className="myToolbar" >
           <IconButton
             color="inherit"
             aria-label="open drawer"
@@ -1266,7 +1272,7 @@ useEffect(() => {
             emailStatus === 1 &&
             (
 
-               <Grid container className="withoutScroll">
+               <Grid container className="withoutScroll" >
 
                 {
                   (
@@ -1279,7 +1285,10 @@ useEffect(() => {
 
 
                 {
-                  <DistrubuteComponent latitude={latitude} longitude={longitude} item={items[0]} status={status} />
+
+                      <DistrubuteComponent latitude={latitude} longitude={longitude} item={items[0]} status={status} timerVariable={timerVariable} timerCircleVariable={timerCircleVariable} />
+
+
                 }
 
 
@@ -1323,7 +1332,7 @@ useEffect(() => {
                      <div></div>
                     ) : (
 
-                      <ShowPush items={items} distance={distance} status={status} timerVariable={timerVariable} timerCircleVariable={timerCircleVariable}/>
+                      <div></div>
 
                     )}
 
@@ -1452,3 +1461,6 @@ useEffect(() => {
 
 
  export default connect()(BloggerDashboardComponent);
+
+
+ // <ShowPush items={items} distance={distance} status={status} timerVariable={timerVariable} timerCircleVariable={timerCircleVariable}/>

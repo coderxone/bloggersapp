@@ -112,6 +112,71 @@ body{
   background-color: $pushNotificationBackground;
 }
 
+//model 1 push style
+
+//VideoComponent
+
+.model1PushRoot{
+  position: absolute !important;
+  left: 0px;
+  bottom:0px;
+
+}
+.PushVideoStyles{
+  width: 100%;
+  z-index: 50;
+
+  // position: absolute;
+  // left: 0px;
+
+}
+
+.mainPush_rootModel1{
+
+  // position: absolute;
+  // left: 0px;
+  overflow: hidden;
+  width:100%;
+  height: 440px;
+  background-color: $pushNotificationBackground;
+  // bottom:4px;
+  // font-family: AppFont;
+
+}
+
+.mainPushModel1{
+  overflow: hidden;
+  width:100%;
+  height: 382px;//260px;
+
+}
+
+.mainPushColumsTwoModel1{
+  width:100%;
+  height: 42%;
+
+}
+
+.mainPushColumsOneM1{
+  width:100%;
+  height: 26%;
+
+}
+.mainPushColumsCenterBlockM1{
+  width:100%;
+  height: 32%;
+
+}
+//xxx
+.mainPushColumsCenterBlockM1Description{
+  margin-left:10px;
+  margin-right: 10px;
+  font-size: 16px;
+  color:black;
+  font-family: AppFont;
+}
+//model 1 push style
+
 .declineButtonBlock{
 
   overflow: hidden;
@@ -2024,6 +2089,8 @@ body {
   }
 }
 
+
+
 // project common styles
 
 
@@ -2033,6 +2100,11 @@ body {
   margin-right: 5px;
   margin-top:10px;
   margin-bottom:10px;
+}
+
+.textOverFlow{
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .projectPadding{
