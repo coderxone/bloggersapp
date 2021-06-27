@@ -32,6 +32,10 @@ const VideoComponent = (props) => {
   const timerVariable = props.timerVariable;
   const timerCircleVariable = props.timerCircleVariable;
 
+  const downloadUrl = useMemo(() => {
+    return config.getVideoUrl() + item.videourl;
+  },[]);
+
 
   const Start = () => {
     if(playState === 0){
@@ -80,11 +84,11 @@ const VideoComponent = (props) => {
       <div className="model1PushRoot" id="automaticScroll">
 
         <div className="PushVideoStyles" onClick={Start}>
-          <video width="100%" ref={playVideo} src="https://echohub.io/videos/EchohubForbusiness.mp4"  poster={BusinessPoster} type="video/mp4"/>
+          <video width="100%" ref={playVideo} src={downloadUrl}  poster={BusinessPoster} type="video/mp4"/>
         </div>
         <TaskPushModelOne item={item}  status={status} timerVariable={timerVariable} timerCircleVariable={timerCircleVariable} />
 
-    
+
       </div>
 
   );
