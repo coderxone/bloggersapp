@@ -34,8 +34,8 @@ const ShowPushModel1 = (props) => {
 
   return (
     <div className="mainPush_rootModel1">
-      <div className="declineButtonBlock">
-         <div className="declineButtonStyle" onClick={event => rejectOrder(item)}>
+      <div className="declineButtonBlockM1">
+         <div className="declineButtonStyleM1" onClick={event => rejectOrder(item)}>
              {LocalizeComponent.Decline}
          </div>
       </div>
@@ -44,7 +44,7 @@ const ShowPushModel1 = (props) => {
           <div className="mainPushColumsOneLeft">
               <div className="mainPushColumsOneLeft_1">{LocalizeComponent.do_before} {item.date}</div>
               <div className="mainPushColumsOneLeft_2">{item.url}</div>
-              <div className="mainPushColumsOneLeft_3">{LocalizeComponent.distance}: </div>
+              <div className="mainPushColumsOneLeft_3">{LocalizeComponent.type_of_post}: {LocalizeComponent.type1}</div>
 
           </div>
           <div className="mainPushColumsOneRight">

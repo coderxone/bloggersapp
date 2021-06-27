@@ -314,7 +314,9 @@ let strings = new LocalizedStrings({
    m1_insruction_step7:"Download video to post",
    m1_insruction_step8:"Submit back link from posted video with form below",
    m1_insruction_step9:"Note (Know that castomer may pay Tips for additional posts to other social networks)",
-
+   type_of_post:'Type',
+   type1:'post video',
+   type2:'record video',
  },
 
 

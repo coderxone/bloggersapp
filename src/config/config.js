@@ -337,6 +337,9 @@ const newmodule = {
       getUploadUrl:() => {
         return routeUrl;
       },
+      getVideoUrl:() => {
+        return routeUrl + "/videoUploads/";
+      },
 
       getCryptKey:() => {
         return cryptKey.props.element;
