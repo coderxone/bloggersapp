@@ -292,6 +292,19 @@ const BottomFunc = () => {
                 </div>
             </div>
 
+            <div className="centerElements getStartedButtonMargin">
+              <div className="getStartedButtonFrame">
+                <div className="getStartedButton robotoFont smallFontSize blackColor centerText">
+                    {LocalizeComponent.a4}
+                </div>
+              </div>
+            </div>
+
+            <div className="mainPageDeviderBlock">
+              <div className="mainPageDevider"></div>
+            </div>
+
+
 
 
 
