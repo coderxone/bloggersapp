@@ -11,8 +11,18 @@ $fontSize:18px;
 @font-face {
   font-family: 'AppFont';
   src: url('../fonts/AVA_LL.TTF') format('ttf'),
-       url('../fonts/AVA_LL.TTF') format('ttf'),
        url('../fonts/AVA_LL.TTF') format('truetype');
+}
+
+@font-face {
+  font-family: 'Roboto';
+  src: url('../fonts/roboto/Roboto-Regular.ttf') format('ttf'),
+       url('../fonts/roboto/Roboto-Regular.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'RobotoLight';
+  src: url('../fonts/roboto/Roboto-Light.ttf') format('ttf'),
+       url('../fonts/roboto/Roboto-Light.ttf') format('truetype');
 }
 
 

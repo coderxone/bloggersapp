@@ -1,0 +1,182 @@
+/* The side navigation menu */
+//left
+
+
+$menufontsize:16px;
+
+.sidenav {
+  height: 100%; /* 100% Full-height */
+  width: 0; /* 0 width - change this with JavaScript */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Stay on top */
+  top: 0; /* Stay at the top */
+  left: 0;
+  background-color: #111; /* Black*/
+  overflow-x: hidden; /* Disable horizontal scroll */
+  padding-top: 60px; /* Place content 60px from the top */
+  transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
+}
+
+.mySidenavChild{
+  margin-top:60px;
+}
+
+/* The navigation menu links */
+.sidenav a {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #818181;
+  display: block;
+  transition: 0.3s;
+}
+
+/* When you mouse over the navigation links, change their color */
+.sidenav a:hover {
+  color: #f1f1f1;
+}
+
+/* Position and style the close button (top right corner) */
+.sidenav .closebtn {
+  position: absolute;
+  top: 60px;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+}
+
+/* Style page content - use this if you want to push the page content to the right when you open the side navigation */
+#main {
+  transition: margin-left .5s;
+  padding: 20px;
+}
+
+/* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+}
+
+//left
+
+
+//right
+.sidenavR {
+  height: 100%; /* 100% Full-height */
+  width: 0; /* 0 width - change this with JavaScript */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Stay on top */
+  top: 0; /* Stay at the top */
+  left: 0;
+  background-color: white; /* Black*/
+  overflow-x: hidden; /* Disable horizontal scroll */
+  padding-top: 60px; /* Place content 60px from the top */
+  transition: left;
+
+}
+
+
+/* The navigation menu links */
+.sidenavR a {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: $menufontsize;
+  font-family: RobotoLight;
+  font-style: normal;
+  color: #000000;
+  display: block;
+  transition: 0.3s;
+}
+
+/* When you mouse over the navigation links, change their color */
+.sidenavR a:hover {
+  color: #f1f1f1;
+}
+
+/* Position and style the close button (top right corner) */
+.sidenavR .closebtn {
+  position: absolute;
+  top: 60px;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+}
+
+/* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
+@media screen and (max-height: 450px) {
+  .sidenavR {padding-top: 15px;}
+  .sidenavR a {font-size: 18px;}
+}
+//right
+
+.menuContainer{
+  width: 100%;
+  height: 46px;
+   // background-color: yellow;
+   margin-top:60px;
+  overflow: hidden;
+}
+
+.menuLogoStyle{
+  // background-color: red;
+  width:80px;
+  height: 46px;
+  margin-left:10px;
+  float: left;
+}
+
+.menuLogoStyleTwo{
+   // background-color: orange;
+  width:80px;
+  height: 20px;
+  margin-left:10px;
+  margin-top:12.5px;
+  float: left;
+}
+.menuLogoStyleTwoText{
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  color: #000000;
+}
+
+.menuSignUp{
+  width:75px;
+  height: 20px;
+  float: left;
+  margin-top:12.5px;
+  margin-left:49%;
+}
+.menuSignUpText{
+  font-family: RobotoLight;
+  font-style: normal;
+  font-weight: 100;
+  font-size: 16px;
+  color: #000000;
+}
+
+.menuIcon{
+  width:35px;
+  height: 35px;
+  margin-top:5.5px;
+  float: left;
+}
+
+.menuIconColor{
+  color:black;
+  font-size: 35px !important;
+}
+
+.menuFont{
+  font-family: RobotoLight;
+  font-style: normal;
+  color: #000000;
+}
+
+.menuPadding{
+  margin-top:40px;
+}
+.menuLeftMargin{
+  margin-left:20px;
+}

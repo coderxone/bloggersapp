@@ -1,5 +1,5 @@
 import React, { useCallback,useEffect,useState,useMemo,useRef } from 'react';
-import AnimationComponent from '../components/AnimationComponent';
+import MenuComponent from '../components/MenuComponents/MenuComponent';
 import MainPageDandelion from '../components/MainPageDandelion';
 import LocalizeComponent from '../localize/LocalizeComponent';
 import Grid from '@material-ui/core/Grid';
@@ -19,17 +19,9 @@ import AnnouncementIcon from '@material-ui/icons/Announcement';
 import CenterFocusStrongIcon from '@material-ui/icons/CenterFocusStrong';
 import TrendingUpIcon from '@material-ui/icons/TrendingUp';
 import WorkIcon from '@material-ui/icons/Work';
-import AnimationFComponent from '../components/businessComponents/AnimationTwoFactory';
-import AnimationFSecond from '../components/businessComponents/AnimationTwoFactorySecond';
-import AnimationFThird from '../components/businessComponents/AnimationTwoFactoryThird';
-import AnimationFFour from '../components/businessComponents/AnimationTwoFactoryFour';
-import AnimationFFifth from '../components/businessComponents/AnimationTwoFactoryFifth';
-import EchohubText from '../images/main/Background_text_name.png';
-import BloggerAnimationComponent from '../components/bloggerComponents/BloggerAnimationComponent';
-import BloggerCopy2 from '../components/bloggerComponents/bloggerCopy2';
-import BloggerCopy3 from '../components/bloggerComponents/bloggerCopy3';
-import BloggerCopy4 from '../components/bloggerComponents/bloggerCopy4';
-import BusinessPoster from '../images/businessPoster.png';
+
+
+
 import PushComponent from '../helperComponents/NativePushNotificationComponent';
 import WebPushNotification from '../helperComponents/WebPushComponent';
 import ParseContactsComponent from '../helperComponents/ParseContactsComponent';
@@ -280,109 +272,18 @@ const BottomFunc = () => {
 
   return (
 
-    <Grid container className="businessContainer" >
+    <div id="opacityControl">
+      <MenuComponent />
 
-            <div className={"Login_block " + bottomTopSize}  onClick={goToLogin}>
-              <div className="Login_image">
-                  <div className="Login_image_text">{LocalizeComponent.Sign_up}</div>
-              </div>
-
-              <div className="Login_sign_in" >
-                <div className="Login_sign_in_text" onClick={goToLogin}>
-                  {LocalizeComponent.Sign}
-                </div>
-              </div>
-
-
-            </div>
-
-            <div className="dandelionBox">
-
-                <MainPageDandelion/>
-
-            </div>
-
-            <div className="backgroundCl" >
-
-            </div>
+      <Grid container className="businessContainer"  >
 
 
 
 
-            <div className="Rolebuttons">
-
-              {BusinessSwitcher == 0 ? (
-                <div className="creatorButtonDisabled" onClick={goToBloggerPage}>
-                  <div className="textCreatorDisabled">
-                    {LocalizeComponent.Creator}
-                  </div>
-                </div>
-               ) : (
-                 <div className="creatorButtonActive" onClick={goToBloggerPage}>
-                   <div className="textCreatorActiv">
-                     {LocalizeComponent.Creator}
-                   </div>
-                 </div>
-               )}
-
-
-
-              {BusinessSwitcher == 0 ? (
-                <div className="creatorButtonTwoActiv" onClick={goToBusinessPage}>
-                  <div className="textCreatorTwoActiv">
-                    {LocalizeComponent.Business}
-                  </div>
-                </div>
-               ) : (
-                 <div className="creatorButtonTwoDisabled" onClick={goToBusinessPage}>
-                   <div className="textCreatorTwoDisabled">
-                     {LocalizeComponent.Business}
-                   </div>
-                 </div>
-               )}
-
-
-            </div>
 
 
 
 
-            <div className="BackgroundText">
-                <div className="BackgroundTextV">
-                  <img className="BackgroundText_name" src={EchohubText}/> <span className="IO_size">.IO</span> - {LocalizeComponent.echohub_title}.
-                </div>
-            </div>
-
-
-            {BusinessSwitcher == 0 ? (
-              <div className="BusinessVideo" onClick={Start}>
-                <video width="100%" ref={playVideo} src="https://echohub.io/videos/EchohubForbusiness.mp4"  poster={BusinessPoster} type="video/mp4"/>
-              </div>
-             ) : (
-               <div className="BusinessVideo" onClick={StartBlogger}>
-                 <video width="100%" ref={playVideoBlog} src="https://echohub.io/videos/EchohubCreators.mp4"  poster={BusinessPoster} type="video/mp4"/>
-               </div>
-             )}
-
-
-
-            {BusinessSwitcher == 0 ? (
-              <div className="blockClass">
-                <AnimationFComponent bloggercount={bloggerCount} page={1} />
-                <AnimationFSecond  page={2} />
-                <AnimationFThird page={3} />
-                <AnimationFFour  page={4} />
-
-              </div>
-             ) : (
-               <div className="BlogMinus">
-                  <BloggerAnimationComponent page={1} />
-                  <BloggerCopy2 page={2} />
-                  <BloggerCopy3 page={3} />
-
-
-               </div>
-             )}
 
 
              {redirect === true && (
@@ -390,91 +291,10 @@ const BottomFunc = () => {
                )
              }
 
-             <div className="JoinClass">
-               <div className="LoginButtonFrame" onClick={goToLogin} >
-                 <div className="LoginButtonName">
-                    {LocalizeComponent.login_button}
-                 </div>
-               </div>
-             </div>
-
-             <div className="Echohub_policy DivAppBackground">
-               <div className="echohub_child">
-                  <div className="echohub_child_text">
-                      {LocalizeComponent.All_rights_reserved}
-                  </div>
-                  <div className="echohub_child_text" >
-                    <a  className="echohub_child_text_url"  target="_blank" href="https://twitter.com/EchohubI">{LocalizeComponent.Follow_Twitter}</a>
-                  </div>
-
-                  <div className="echohub_child_text" >
-                    <a  className="echohub_child_text_url"  target="_blank" href="https://youtube.com/channel/UC-tvKHO66_pcfeOrh1n2YQg">{LocalizeComponent.Follow_Youtube}</a>
-                  </div>
-
-                  <div className="echohub_child_text" >
-                    <a  className="echohub_child_text_url"  target="_blank" href="https://www.tiktok.com/@echohub.io?lang=en">{LocalizeComponent.Follow_TikTok}</a>
-                  </div>
-               </div>
-
-               <div className="echohub_child">
-                 <div className="echohub_child_text">
-                   E-mail: <a className="echohub_child_text_url"  target="_blank" href="mailto:info@echohub.io">info@echohub.io</a>
-                 </div>
-
-                 <div className="echohub_child_text">
-                    <a  className="echohub_child_text_url"  target="_blank" href="https://www.facebook.com/permalink.php?story_fbid=2446311895515266&id=100004094374192">{LocalizeComponent.Follow_Facebook}</a>
-                 </div>
-
-                 <div className="echohub_child_text" >
-                   <a  className="echohub_child_text_url"  target="_blank" href="https://instagram.com/echohub.io?igshid=fm0hdtx3u10y">{LocalizeComponent.Follow_Instagram}</a>
-                 </div>
 
 
 
 
-               </div>
-               <div className="echohub_child">
-                 <div className="echohub_child_text">
-                   <div className="textPadding">
-                     <a  className="echohub_child_text_url"  target="_blank" href="http://echohub.io/echohub_documents/PrivacyPolicy.docx">{LocalizeComponent.Privacy_policy}</a>
-                   </div>
-
-                   <div className="textPadding">
-                     <a  className="echohub_child_text_url"  target="_blank" href="http://echohub.io/echohub_documents/PrivacyPolicy.docx">{LocalizeComponent.Denial_responsibility}</a>
-                   </div>
-
-                   <div className="textPadding">
-                     {LocalizeComponent.Subscribe_to_news}
-                   </div>
-
-                   <div className="textPadding">
-                     <a  className="echohub_child_text_url"  target="_blank" href="http://echohub.io/echohub_documents/PrivacyPolicy.docx">{LocalizeComponent.Reviews}</a>
-                   </div>
-
-                 </div>
-               </div>
-             </div>
-
-             <div className="aboutUs" >
-               <div  className="aboutUs_child">
-                 <Link  className="deleteUrlClass"
-                     to={{
-                       pathname: "/about"
-                     }}
-                     >
-                       <div className="aboutUs_child_text">
-                          {LocalizeComponent.About_Connect}
-                       </div>
-                 </Link>
-               </div>
-
-
-               <div className="aboutUs_child aboutUs_childTop">
-                 <div className="aboutUs_child_text">
-                    {LocalizeComponent.Patent_USA}
-                 </div>
-               </div>
-             </div>
 
              <div>
                <PushComponent/>
@@ -488,18 +308,13 @@ const BottomFunc = () => {
                }
              </div>
 
-             {
-               Capacitor.platform === 'web' && (
-                 <div className="imgCenter">
-                    <MobileAppComponent status={mobileDialogStatus}/>
-                    <LanguageComponent status={languageDialogStatus}/>
-                 </div>
-               )
-             }
+
 
 
 
     </Grid>
+
+  </div>
 
 
 

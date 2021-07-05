@@ -317,6 +317,10 @@ let strings = new LocalizedStrings({
    type_of_post:'Type',
    type1:'post video',
    type2:'record video',
+   home:'Home',
+   pricing:'Pricing',
+   Why:'Why Echohub.io',
+   contactUs:'Contact Us',
  },
 
 
