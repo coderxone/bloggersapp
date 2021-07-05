@@ -322,6 +322,9 @@ let strings = new LocalizedStrings({
    Why:'Why Echohub.io',
    contactUs:'Contact Us',
    log_in:'Log in',
+   a1:"Be famous all over the world",
+   a2:"with Echohub.io",
+   a3:"It is an innovative platform that connects all people with a large number of subscribers around the world. We allowed people with a large number of followers to monetize their social networks, and companies to massively distribute videos about their business.",
  },
 
 

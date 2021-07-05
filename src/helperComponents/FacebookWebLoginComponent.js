@@ -1,4 +1,4 @@
-import React, {useState,useEffect,useMemo} from 'react';
+import React, {useState,useEffect,useMemo,useCallback} from 'react';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import config from '../config/config.js';
@@ -26,6 +26,7 @@ import FacebookIcon from '@material-ui/icons/Facebook';
 
 import DialogActions from '@material-ui/core/DialogActions';
 import googleIcon from '../icons/googleIcon.png';
+import { useHistory } from "react-router-dom";
 
 
 var firebaseConfig = {
@@ -42,59 +43,15 @@ firebase.initializeApp(firebaseConfig);
 
 
 
-// firebase.auth().signOut();
 const FacebookWebLoginComponent = (props) => {
 
-  const responseFacebook = (response) => {
-    console.log(response);
+  const history = useHistory();
 
-    var name = response.name;
-    var email = response.email;
-    var picture = response.picture.data.url;
+  const GoToLogin = useCallback((item) => {
 
+      return history.push({pathname: '/login'}), [history];
 
-    props.dispatch(multiSave({name:"name",value:name}));
-    props.dispatch(multiSave({name:"email",value:email}));
-    props.dispatch(multiSave({name:"picture",value:picture}));
-    props.dispatch(multiSave({name:"social",value:"ok"}));
-
-  }
-
-
-
-  const componentClicked = (event) => {
-    event.preventDefault();
-  }
-
-  useEffect(() => {
-
-
-
-
-
-  },[]);
-
-  const [open, setOpen] = React.useState(false);
-
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = (value) => {
-    setOpen(false);
-  };
-
-
-  const [signed,setSigned] = useState(false);
-
-  const firebaseSignResponse = (response,providerId) => {
-    console.log(response);
-    console.log(providerId);
-
-
-    setSigned(true);
-  }
+  });
 
   const loginWithGoogle = () => {
 
@@ -123,6 +80,12 @@ const FacebookWebLoginComponent = (props) => {
         props.dispatch(multiSave({name:"picture",value:picture}));
         props.dispatch(multiSave({name:"social",value:"ok"}));
         setProgress(1);
+
+
+        let currentUrl = config.getCurrentUrl();
+        if(currentUrl === 'main'){
+            GoToLogin();
+        }
 
 
 
@@ -176,6 +139,12 @@ const FacebookWebLoginComponent = (props) => {
         props.dispatch(multiSave({name:"picture",value:picture}));
         props.dispatch(multiSave({name:"social",value:"ok"}));
         setProgress(1);
+
+
+        let currentUrl = config.getCurrentUrl();
+        if(currentUrl === 'main'){
+            GoToLogin();
+        }
 
 
         // This gives you a Facebook Access Token. You can use it to access the Facebook API.

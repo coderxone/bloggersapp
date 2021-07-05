@@ -78,6 +78,12 @@ const newmodule = {
         return baseurl;
       },
 
+      getCurrentUrl:() => {
+        let currentUrl = window.location.pathname;
+        currentUrl = currentUrl.replace('/','');
+        return currentUrl;
+      },
+
       getUserCoordinates:() => {
 
         var coord = localStorage.getItem("coord");

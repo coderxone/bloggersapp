@@ -34,6 +34,7 @@ $mainTextColor:#00002F;
 
 
 
+
 .businessContainer{
   padding-bottom:20px;
 
@@ -534,4 +535,29 @@ $mainTextColor:#00002F;
 
 .buttonCenter{
   margin-left: 25%;
+}
+
+.firstBlock{
+    font-size: 28px;
+    margin-top:30px;
+    margin-bottom:20px;
+}
+
+
+
+
+
+.firstBlockText{
+  line-height: 1.5;
+  font-weight: 600;
+}
+
+.blockTwo{
+  line-height: 1.2;
+  font-weight: 300;
+}
+
+.blockTwoPadding{
+  padding-left:30px;
+  padding-right:30px;
 }

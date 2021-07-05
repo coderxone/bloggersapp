@@ -2176,8 +2176,33 @@ body {
   font-family: AppFont;
 }
 
+.robotoFont{
+  font-family: RobotoLight;
+  font-style: normal;
+}
+.blackColor{
+  color: #000000;
+}
+
+.centerText{
+  text-align: center;
+}
+
+.centerElements{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .projectTextColor{
   color:$base-app-color;
+}
+
+
+
+.smallTextSize{
+  font-size: 16px;
 }
 
 .projectFontSize{

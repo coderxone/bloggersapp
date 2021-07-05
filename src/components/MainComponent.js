@@ -279,7 +279,18 @@ const BottomFunc = () => {
 
 
 
+            <div className="firstBlock centerElements">
+                <div className="firstBlockText robotoFont blackColor centerText">
+                    {LocalizeComponent.a1}<br/>
+                    {LocalizeComponent.a2}
+                </div>
+            </div>
 
+            <div className="centerElements blockTwoPadding">
+                <div className="robotoFont blackColor centerText blockTwo projectFontSize">
+                  {LocalizeComponent.a3}
+                </div>
+            </div>
 
 
 
