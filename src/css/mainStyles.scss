@@ -987,9 +987,10 @@ body{
 
 }
 
-.MainLCenterWrap{
-  width: 100%;
+.MainLCenterWrapAbout{
+  width: 80%;
   overflow: hidden;
+  margin-left:10%;
 }
 
 
@@ -1273,6 +1274,9 @@ ion-item {
 
 .deleteUrlClass{
   color: #FFFFFF;
+  text-decoration: none;
+}
+.deleteUrlClassWithoutText{
   text-decoration: none;
 }
 
@@ -2054,6 +2058,7 @@ body {
    justify-content: center;
    font-family: AppFont;
 }
+
 .centralButton{
    width: 100%;
    display: flex;
@@ -2071,20 +2076,39 @@ body {
 
 
 
-.faceBookLogin{
-  width: 200px;
-  height: 30px;
-  background-color: $base-app-color;
-  border:0px;
-  border-radius: 5px;
-  font-family: AppFont;
-  font-size: 16px;
-  margin-left:15% !important;
-  text-align: center;
+.socialBox{
+  width:100%;
+  margin-top:20px;
+  margin-bottom:20px;
+}
+
+.facebookButton{
+  width:100%;
+  height: 40px;
+
 }
 
 .faceBookLoginMT{
-  margin-top:5px;
+  width: 35px !important;
+  height: 35px !important;
+  color:$base-app-color !important;
+  float: left;
+}
+
+.faceBookLoginText{
+  width: 200px;
+  height: 30px;
+  float: left;
+  margin-top:10px;
+  margin-left:5px;
+}
+
+.robotoText{
+  font-family: RobotoLight;
+  font-style: normal;
+  font-weight: 100;
+  font-size: 16px;
+  color: #000000;
 }
 
 .progressMargin{
@@ -2141,6 +2165,9 @@ body {
 
 .projectPadding{
   padding:10px;
+}
+.projectMarginTop{
+  margin-top:10px;
 }
 .projectPaddingLi  li{
   padding:2px;

@@ -421,6 +421,16 @@ const AuthorizationComponent = (props) => {
 
 
 
+
+
+
+
+          <div className="buttonCenterSocial">
+
+              <FacebookWebLoginComponent />
+
+          </div>
+
           <Grid item xs={12} >
             <Paper  className={classes.paper}>
 
@@ -444,14 +454,6 @@ const AuthorizationComponent = (props) => {
 
             </Paper>
           </Grid>
-
-
-
-          <div className="buttonCenterSocial">
-
-              <FacebookWebLoginComponent />
-
-          </div>
 
 
 

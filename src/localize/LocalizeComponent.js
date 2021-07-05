@@ -321,6 +321,7 @@ let strings = new LocalizedStrings({
    pricing:'Pricing',
    Why:'Why Echohub.io',
    contactUs:'Contact Us',
+   log_in:'Log in',
  },
 
 

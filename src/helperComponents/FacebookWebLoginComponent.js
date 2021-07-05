@@ -22,8 +22,10 @@ import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Dialog from '@material-ui/core/Dialog';
+import FacebookIcon from '@material-ui/icons/Facebook';
 
 import DialogActions from '@material-ui/core/DialogActions';
+import googleIcon from '../icons/googleIcon.png';
 
 
 var firebaseConfig = {
@@ -199,61 +201,35 @@ const FacebookWebLoginComponent = (props) => {
 
   return (
 
-    <div>
-      <Dialog onClose={handleClose} aria-labelledby="simple-dialog-title" open={open}>
-        <DialogTitle id="simple-dialog-title fontStyle">{LocalizeComponent.socialButton}</DialogTitle>
-        <div className="socialDialog">
+    <div >
+
+        {
+          progress == 1 &&
+          (
+            <LinearProgress className="BloggerProgress progressMargin" color="secondary" />
+          )
+        }
 
 
 
 
-                        <div >
-                          {
-                            progress == 1 &&
-                            (
-                              <LinearProgress className="BloggerProgress progressMargin" color="secondary" />
-                            )
-                          }
+          <div className="socialBox">
 
 
-                            <button
-                              className="faceBookLogin"
-                              onClick={loginWithGoogle}
-                            >
-                              Sign In with Google
-                            </button>
+              <div className="facebookButton " onClick={loginWithFacebook}>
+                <FacebookIcon  className="faceBookLoginMT"/>
+                <div className="faceBookLoginText robotoText">Continue with Facebook</div>
+              </div>
 
-                            <button
-                              className="faceBookLogin faceBookLoginMT"
-                              onClick={loginWithFacebook}
-                            >
-                              Sign In with Facebook
-                            </button>
-
-                        </div>
+              <div className="facebookButton projectMarginTop" onClick={loginWithGoogle}>
+                <img src={googleIcon}  className="faceBookLoginMT"/>
+                <div className="faceBookLoginText robotoText">Sign in with Google</div>
+              </div>
 
 
+          </div>
 
 
-
-        </div>
-
-        <DialogActions>
-          <Button onClick={handleClose} color="primary" autoFocus>
-            {LocalizeComponent.close}
-          </Button>
-        </DialogActions>
-
-      </Dialog>
-
-      <div>
-
-
-        <Button variant="contained" color="primary"  onClick={handleClickOpen}>
-          {LocalizeComponent.socialButton}
-        </Button>
-
-      </div>
 
     </div>
 

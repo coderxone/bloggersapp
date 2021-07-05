@@ -21,7 +21,7 @@ const AdminComponent = () => {
 
     <Grid container >
 
-      <div className="MainLCenterWrap">
+      <div className="MainLCenterWrapAbout">
 
           <div className="MainLogoCenter"><DandelionComponent /></div>
 
