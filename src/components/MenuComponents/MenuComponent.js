@@ -87,12 +87,12 @@ const ExampleComponent = (props) => {
         <div className="mySidenavChild">
             <a  className="closebtn" onClick={closeNavR}>&times;</a>
             <div className="menuLeftMargin">
-              <a href="#">{LocalizeComponent.Creator}</a>
+              <Link to={{pathname: "/creator"}}>{LocalizeComponent.Creator}</Link>
               <a href="#">{LocalizeComponent.Business}</a>
             </div>
 
             <div className="menuTopMargin menuLeftMargin">
-              <Link to={{pathname: "/main"}}>{LocalizeComponent.About_Connect}</Link>
+              <Link to={{pathname: "/main"}}>{LocalizeComponent.home}</Link>
               <Link to={{pathname: "/about"}}>{LocalizeComponent.About_Connect}</Link>
 
               <a href="#">{LocalizeComponent.pricing}</a>
