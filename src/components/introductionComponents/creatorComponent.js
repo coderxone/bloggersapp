@@ -16,6 +16,22 @@ const BottomFunc = () => {
 
 
 
+  const [tab,setTab] = useState(0);
+  const [leftTabClass,setLeftTabClass] = useState("activeTab");
+  const [rightTabClass,setRightTabClass] = useState("");
+
+  const SwitchTab = (number) => {
+    setTab(number);
+    if(number === 0){
+      setLeftTabClass("activeTab");
+      setRightTabClass("");
+    }else if(number === 1){
+      setLeftTabClass("");
+      setRightTabClass("activeTab");
+    }
+
+  }
+
 
 
   return (
@@ -82,60 +98,111 @@ const BottomFunc = () => {
         <div className="tabViewBoxCover">
 
               <div className="tabsSwitcher">
-                <div className="leftSwitcher">
+                <div className={"leftSwitcher " + leftTabClass} onClick={event => SwitchTab(0)}>
                     {LocalizeComponent.c_16}<br></br>
                     {LocalizeComponent.c_19}
                 </div>
-                <div className="rightSwitcher">
+                <div className={"rightSwitcher " + rightTabClass} onClick={event => SwitchTab(1)}>
                     {LocalizeComponent.c_17}<br></br>
                     {LocalizeComponent.c_19}
                 </div>
               </div>
 
+              {
+                tab === 0 ? (
+                  <div className="tabViewBox">
 
-              <div className="tabViewBox">
+                    <div className="firstTabViewBox">
 
-                <div className="firstTabViewBox">
-
-                    <div className="centerElements">
-                      <div className="circleSign">
-                        <div className="circleSignText">
-                          {LocalizeComponent.c_16}
+                        <div className="centerElements">
+                          <div className="circleSign">
+                            <div className="circleSignText">
+                              {LocalizeComponent.c_16}
+                            </div>
+                          </div>
                         </div>
+
+
+                      <div className="secondBlock">
+                        {LocalizeComponent.c_16}<br></br>
+                        {LocalizeComponent.c_19}
                       </div>
+
                     </div>
 
+                    <div className="secondTabViewBox">
+                      <div className="commonViewBox textOverFlow">
+                        <div className="leftViewBox"><CheckIcon/></div>
+                        <div className="rightViewBox">{LocalizeComponent.c_20}</div>
+                      </div>
+                      <div className="commonViewBox textOverFlow">
+                        <div className="leftViewBox"><CheckIcon/></div>
+                        <div className="rightViewBox">{LocalizeComponent.c_21}</div>
+                      </div>
+                      <div className="commonViewBox textOverFlow">
+                        <div className="leftViewBox"><CheckIcon/></div>
+                        <div className="rightViewBox">{LocalizeComponent.c_22}</div>
+                      </div>
 
-                  <div className="secondBlock">
-                    {LocalizeComponent.c_16}<br></br>
-                    {LocalizeComponent.c_19}
+                    </div>
+
+                    <Link to={{pathname: "/login"}} className="BoxbuttonDivProjectButton viewBoxButtonStyles deleteUrlClassWithoutText">
+                      <div className="BoxbuttonStyleProject" >{LocalizeComponent.Sign_up}</div>
+                    </Link>
+
+
+
                   </div>
+                ) : (
+                  <div className="tabViewBox">
 
-                </div>
+                    <div className="firstTabViewBox">
 
-                <div className="secondTabViewBox">
-                  <div className="commonViewBox textOverFlow">
-                    <div className="leftViewBox"><CheckIcon/></div>
-                    <div className="rightViewBox">{LocalizeComponent.c_20}</div>
+                        <div className="centerElements">
+                          <div className="circleSign">
+                            <div className="circleSignText">
+                              {LocalizeComponent.c_17}
+                            </div>
+                          </div>
+                        </div>
+
+
+                      <div className="secondBlock">
+                        {LocalizeComponent.c_17}<br></br>
+                        {LocalizeComponent.c_19}
+                      </div>
+
+                    </div>
+
+                    <div className="secondTabViewBox">
+                      <div className="commonViewBox textOverFlow">
+                        <div className="leftViewBox"><CheckIcon/></div>
+                        <div className="rightViewBox">{LocalizeComponent.c_20}</div>
+                      </div>
+                      <div className="commonViewBox textOverFlow">
+                        <div className="leftViewBox"><CheckIcon/></div>
+                        <div className="rightViewBox">{LocalizeComponent.c_21}</div>
+                      </div>
+                      <div className="commonViewBox textOverFlow">
+                        <div className="leftViewBox"><CheckIcon/></div>
+                        <div className="rightViewBox">{LocalizeComponent.c_22}</div>
+                      </div>
+
+                    </div>
+
+                    <Link to={{pathname: "/login"}} className="BoxbuttonDivProjectButton viewBoxButtonStyles deleteUrlClassWithoutText">
+                      <div className="BoxbuttonStyleProject" >{LocalizeComponent.Sign_up}</div>
+                    </Link>
+
+
+
                   </div>
-                  <div className="commonViewBox textOverFlow">
-                    <div className="leftViewBox"><CheckIcon/></div>
-                    <div className="rightViewBox">{LocalizeComponent.c_21}</div>
-                  </div>
-                  <div className="commonViewBox textOverFlow">
-                    <div className="leftViewBox"><CheckIcon/></div>
-                    <div className="rightViewBox">{LocalizeComponent.c_22}</div>
-                  </div>
-
-                </div>
-
-                <Link to={{pathname: "/login"}} className="BoxbuttonDivProjectButton viewBoxButtonStyles deleteUrlClassWithoutText">
-                  <div className="BoxbuttonStyleProject" >{LocalizeComponent.Sign_up}</div>
-                </Link>
+                )
+              }
 
 
 
-              </div>
+
 
         </div>
 

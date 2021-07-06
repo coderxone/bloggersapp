@@ -2244,6 +2244,11 @@ body {
   float: left;
 }
 
+.activeTab{
+  border-bottom: 2px solid black;
+  padding-bottom:2px;
+}
+
 .tabViewBoxCover{
   width: 100%;
   padding:0px 10px 0px 10px;
