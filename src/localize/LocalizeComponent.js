@@ -341,6 +341,13 @@ let strings = new LocalizedStrings({
    c_13:"Requirents",
    c_14:"The presence of subscribers at least 500",
    c_15:"Verify your social network account",
+   c_16:"M1",
+   c_17:"M2",
+   c_18:"Choose the Right Model for You",
+   c_19:"Creator",
+   c_20:"Download video from business",
+   c_21:"Make a post on your social network",
+   c_22:"Get paid",
 
  },
 

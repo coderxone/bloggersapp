@@ -423,7 +423,7 @@ const AuthorizationComponent = (props) => {
 
 
 
-          
+
           {redirect === false ? (
             <Box>
 

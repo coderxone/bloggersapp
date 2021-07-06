@@ -7,6 +7,7 @@ $whiteFontColor:white;
 $greyFontColor:#979797;
 $successGreenColor:#34eb83;
 $pushNotificationBackground:white;
+$designTextColor:#000000;
 $fontSize:18px;
 @font-face {
   font-family: 'AppFont';
@@ -1286,9 +1287,7 @@ ion-item {
   color: #FFFFFF;
   text-decoration: none;
 }
-.deleteUrlClassWithoutText{
-  text-decoration: none;
-}
+
 
 .backstyle{
   margin-top:15px;
@@ -2211,6 +2210,120 @@ body {
   line-height: 1.2;
 }
 
+.tabBox{
+  margin-top:100px;
+  width:100%;
+}
+
+.chooseModel{
+  font-family: Roboto;
+  font-size: 24px;
+  text-align: center;
+  height: 24px;
+  width: 100%;
+  color:$designTextColor;
+}
+
+.tabsSwitcher{
+
+  margin-top:35px;
+  width: 100%;
+  height: 45px;
+  font-family: RobotoLight;
+  font-size: 16px;
+  color:$designTextColor;
+  text-align: center;
+}
+
+.leftSwitcher{
+  width:50%;
+  float: left;
+}
+.rightSwitcher{
+  width:50%;
+  float: left;
+}
+
+.tabViewBoxCover{
+  width: 100%;
+  padding:0px 10px 0px 10px;
+}
+.tabViewBox{
+
+  margin-top:30px;
+  border:2px solid #E5E5E5;
+  border-radius:5px;
+}
+
+.firstTabViewBox{
+  width:100%;
+  height: 168px;
+
+
+}
+.circleSign{
+  width:83px;
+  height: 83px;
+  background-color: #C4C4C4;
+  border-radius: 50px;
+  margin-top:20px;
+}
+
+.circleSignText{
+  line-height: 83px;
+  text-align: center;
+  font-size: 16px;
+  color:$designTextColor;
+  font-family: RobotoLight;
+}
+
+.secondBlock{
+  margin-top:20px;
+  width: 100%;
+  text-align: center;
+  height: 45px;
+  font-family: RobotoLight;
+  color:$designTextColor;
+  font-size: 16px;
+}
+
+
+.secondTabViewBox{
+  width: 100%;
+  margin-top:10px;
+  overflow: hidden;
+}
+
+.commonViewBox{
+  width:100%;
+  height: 30px;
+  margin-left:20px;
+
+  margin-top:7px;
+
+}
+
+.leftViewBox{
+  width:10%;
+  float: left;
+  line-height: 30px;
+  color:#4ba44f;
+}
+.rightViewBox{
+  width:90%;
+  float: left;
+  line-height: 27px;
+  color:$designTextColor;
+  font-family: RobotoLight;
+  font-size: 16px;
+}
+
+.viewBoxButtonStyles{
+  margin-top:15px;
+  margin-bottom:70px;
+}
+
+
 
 
 // project common styles
@@ -2289,4 +2402,34 @@ body {
 
 .fullSize{
   width:100%;
+}
+
+.BoxbuttonDivProjectButton{
+  width: 100%;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding:0px 10px 0px 10px;
+}
+
+
+.BoxbuttonStyleProject{
+    /* base styles */
+	width:100%;
+	height: 100%;
+	/* background:linear-gradient(to right, #8936f4, $base-app-color); */
+	background-color:#E5E5E5;
+	border-radius:10px;
+  color:#000000;
+  border:0px;
+  font-family:RobotoLight;
+  font-size: 16px;
+  text-align: center;
+  line-height: 50px;
+  border:1px solid #C5BDBD;
+}
+
+.deleteUrlClassWithoutText{
+  text-decoration: none;
 }
