@@ -88,7 +88,7 @@ const ExampleComponent = (props) => {
             <a  className="closebtn" onClick={closeNavR}>&times;</a>
             <div className="menuLeftMargin">
               <Link to={{pathname: "/creator"}}>{LocalizeComponent.Creator}</Link>
-              <a href="#">{LocalizeComponent.Business}</a>
+              <Link to={{pathname: "/businessintro"}}>{LocalizeComponent.Business}</Link>
             </div>
 
             <div className="menuTopMargin menuLeftMargin">

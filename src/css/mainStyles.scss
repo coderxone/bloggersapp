@@ -2301,32 +2301,35 @@ body {
 
 .commonViewBox{
   width:100%;
-  height: 30px;
-  margin-left:20px;
-
-  margin-top:7px;
-
+  list-style-type:none;
+  padding-left:7px;
+}
+.commonViewBox li{
+  width:100%;
+  padding: 8px;
+  overflow: auto;
 }
 
 .leftViewBox{
   width:10%;
   float: left;
-  line-height: 30px;
   color:#4ba44f;
+  line-height: 100%;
 }
 .rightViewBox{
   width:90%;
-  float: left;
-  line-height: 27px;
+  float: right;
   color:$designTextColor;
   font-family: RobotoLight;
   font-size: 16px;
+  line-height: 1.4;
 }
 
 .viewBoxButtonStyles{
   margin-top:15px;
   margin-bottom:70px;
 }
+
 
 
 
@@ -2343,7 +2346,6 @@ body {
 }
 
 .textOverFlow{
-  overflow: hidden;
   text-overflow: ellipsis;
 }
 

@@ -131,18 +131,22 @@ const BottomFunc = () => {
                     </div>
 
                     <div className="secondTabViewBox">
-                      <div className="commonViewBox textOverFlow">
-                        <div className="leftViewBox"><CheckIcon/></div>
-                        <div className="rightViewBox">{LocalizeComponent.c_20}</div>
-                      </div>
-                      <div className="commonViewBox textOverFlow">
-                        <div className="leftViewBox"><CheckIcon/></div>
-                        <div className="rightViewBox">{LocalizeComponent.c_21}</div>
-                      </div>
-                      <div className="commonViewBox textOverFlow">
-                        <div className="leftViewBox"><CheckIcon/></div>
-                        <div className="rightViewBox">{LocalizeComponent.c_22}</div>
-                      </div>
+
+                      <ul className="commonViewBox">
+                        <li className="rightLiViewBox ">
+                            <CheckIcon className="leftViewBox"/>
+                            <div className="rightViewBox">{LocalizeComponent.c_20}</div>
+                        </li>
+                        <li className="rightLiViewBox ">
+                            <CheckIcon className="leftViewBox"/>
+                            <div className="rightViewBox">{LocalizeComponent.c_21}</div>
+                        </li>
+                        <li className="rightLiViewBox ">
+                            <CheckIcon className="leftViewBox"/>
+                            <div className="rightViewBox">{LocalizeComponent.c_22}</div>
+                        </li>
+
+                      </ul>
 
                     </div>
 
@@ -175,19 +179,23 @@ const BottomFunc = () => {
                     </div>
 
                     <div className="secondTabViewBox">
-                      <div className="commonViewBox textOverFlow">
-                        <div className="leftViewBox"><CheckIcon/></div>
-                        <div className="rightViewBox">{LocalizeComponent.c_20}</div>
-                      </div>
-                      <div className="commonViewBox textOverFlow">
-                        <div className="leftViewBox"><CheckIcon/></div>
-                        <div className="rightViewBox">{LocalizeComponent.c_21}</div>
-                      </div>
-                      <div className="commonViewBox textOverFlow">
-                        <div className="leftViewBox"><CheckIcon/></div>
-                        <div className="rightViewBox">{LocalizeComponent.c_22}</div>
-                      </div>
 
+                      <ul className="commonViewBox">
+                        <li className="rightLiViewBox ">
+                            <CheckIcon className="leftViewBox"/>
+                            <div className="rightViewBox">{LocalizeComponent.c_20}</div>
+                        </li>
+                        <li className="rightLiViewBox ">
+                            <CheckIcon className="leftViewBox"/>
+                            <div className="rightViewBox">{LocalizeComponent.c_21}</div>
+                        </li>
+                        <li className="rightLiViewBox ">
+                            <CheckIcon className="leftViewBox"/>
+                            <div className="rightViewBox">{LocalizeComponent.c_22}</div>
+                        </li>
+
+                      </ul>
+                      
                     </div>
 
                     <Link to={{pathname: "/login"}} className="BoxbuttonDivProjectButton viewBoxButtonStyles deleteUrlClassWithoutText">

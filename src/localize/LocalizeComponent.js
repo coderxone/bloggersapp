@@ -348,6 +348,12 @@ let strings = new LocalizedStrings({
    c_20:"Download video from business",
    c_21:"Make a post on your social network",
    c_22:"Get paid",
+   bb_11:"Let the whole world know",
+   bb_12:"about your business",
+   bb_13:"Provide business with a new tool for mass dissemination of information",
+   bb_14:"It is an innovative platform that connects all people with a large number of subscribers around the world. We allowed people with a large number of followers to monetize their social networks, and companies to massively distribute videos about their business. All you need is to upload your video about your business to echohub.io, and all the creators of our system will publish your video on their social networks. On our platform, we have united all subscribers around the world, which allows your business to become instantly recognizable.",
+   bb_15:"Provide business with a new innovative tool for the mass dissemination of information",
+   bb_16:"Business",
 
  },
 

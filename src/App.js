@@ -48,6 +48,7 @@ import NewApplyComponent from './components/ApplyComponents_model1/NewApplyCompo
 import VideoComponent from './helperComponents/VideoComponent';
 import Model1DetailTaskComponent from './components/ApplyComponents_model1/Model1DetailTaskComponent';
 import creatorComponent from './components/introductionComponents/creatorComponent';
+import BusinessIntroComponent from './components/introductionComponents/BusinessIntroComponent';
 
 
 const App = () => {
@@ -98,6 +99,7 @@ const App = () => {
                 <Route path="/confirm/:id" component={ConfirmComponent} exact={true} />
                 <Route path="/video" back={true} component={VideoComponent} exact={true} />
                 <Route path="/creator" back={true} component={creatorComponent} exact={true} />
+                <Route path="/businessintro" back={true} component={BusinessIntroComponent} exact={true} />
                 <Route exact path="/" render={() => <Redirect to="/main" />} />
                 </LastLocationProvider>
               </Router>
