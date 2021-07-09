@@ -131,7 +131,7 @@ const ProfileComponent = (props) => {
   },[]);
 
 
-//  console.log(checkingEmail);
+  //console.log(checkingEmail);
 
 
 

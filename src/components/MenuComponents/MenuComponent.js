@@ -95,7 +95,7 @@ const ExampleComponent = (props) => {
               <Link to={{pathname: "/main"}}>{LocalizeComponent.home}</Link>
               <Link to={{pathname: "/about"}}>{LocalizeComponent.About_Connect}</Link>
 
-              <a href="#">{LocalizeComponent.pricing}</a>
+              <Link to={{pathname: "/profile"}}>{LocalizeComponent.pricing}</Link>
               <a href="#">{LocalizeComponent.Why}</a>
               <a target="_blank" href="mailto:info@echohub.io">{LocalizeComponent.contactUs}</a>
             </div>

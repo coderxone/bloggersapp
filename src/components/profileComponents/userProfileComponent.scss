@@ -1,0 +1,83 @@
+$u_image_width:175px;
+$u_image_height:175px;
+
+.u_background{
+  width:100%;
+  height: 230px;
+}
+
+.infoPanelCover{
+
+  width:100%;
+  height:500px;
+  padding:0px 10px 0px 10px;
+  background-color: grey;
+}
+
+.infoPanel{
+  margin-top:-52.5px;
+  width:100%;
+  height:500px;
+  border-radius: 5px;
+  // padding:0px 0px 0px 0px;
+  background-color: #F6F6F6;
+  padding:0px 0px 30px 0px;
+
+}
+
+.u_image{
+  width:$u_image_width;
+  height: $u_image_height;
+  border-radius: 100px;
+  border:1px solid #C4C4C4;
+  background-color: lightblue;
+}
+
+.u_imagePosition{
+  margin-top:-85px;
+}
+
+.u_imageRole{
+  width:100%;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 400;
+  margin-top:10px;
+}
+.u_imageName{
+  margin-top:4px;
+  width:100%;
+  text-align: center;
+  font-size: 22px;
+  font-weight: 400;
+  margin-top:10px;
+}
+
+.activityMT{
+  margin-top:30px;
+}
+
+.right_childCompletitionBlockCopyWithPrivilagius{
+    width:55% !important;
+}
+
+.right_childCompletitionBlockRSpace{
+  width: 15%;
+  float: left;
+}
+
+.activityM{
+  color:black;
+  font-family: RobotoLight;
+  font-size:16px;
+}
+.userProgressBlock{
+  width: 100%;
+}
+
+.user_bio{
+  width:100%;
+  font-family: RobotoLight;
+  font-size: 14px;
+  margin-top:10px;
+}

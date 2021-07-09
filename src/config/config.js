@@ -83,6 +83,14 @@ const newmodule = {
         currentUrl = currentUrl.replace('/','');
         return currentUrl;
       },
+      getRedirectExeption:() => {
+
+
+        let exceptionUrlPaths = ['main','userprofile'];
+
+        return exceptionUrlPaths;
+
+      },
 
       getUserCoordinates:() => {
 
