@@ -1,6 +1,7 @@
 $u_image_width:175px;
 $u_image_height:175px;
-
+$base-app-color:#0083ff;
+$successGreenColor:#34eb83;
 .u_background{
   width:100%;
   height: 230px;
@@ -11,7 +12,23 @@ $u_image_height:175px;
   width:100%;
   height:500px;
   padding:0px 10px 0px 10px;
-  background-color: grey;
+  background-color: white;
+}
+
+.editIcon{
+  position: absolute;
+  top:295px;
+  right:25px;
+  width:25px !important;
+  height: 25px !important;
+}
+.doneIcon{
+  position: absolute;
+  top:295px;
+  right:25px;
+  width:25px !important;
+  height: 25px !important;
+  color:$base-app-color;
 }
 
 .infoPanel{
@@ -61,23 +78,91 @@ $u_image_height:175px;
     width:55% !important;
 }
 
-.right_childCompletitionBlockRSpace{
-  width: 15%;
-  float: left;
+
+.completitionBlockB{
+  width: 100%;
+  height: 30px;
+  font-family:RobotoLight;
+  margin-left: 2px;
+  margin-top:10px;
+  margin-bottom: 10px;
+  color:black;
+
 }
+
+.left_childCompletitionBlockB{
+  width:55%;
+  float:left;
+  text-align: center;
+  padding-top:4px;
+  height: 30px;
+}
+.right_childCompletitionBlockB{
+  width:30%;
+  float:left;
+  margin-right:15%;
+  height: 30px;
+}
+
+.completition_percentB{
+  position: relative;
+  top:-30px;
+  width:100%;
+  height: 30px;
+
+}
+.completition_percent_textB{
+  text-align: center;
+  width: 100%;
+  padding-top:4px;
+  color:black;
+  font-weight: bold;
+}
+
+.progressRectangle{
+  width:100%;
+  height:30px;
+  background-color: white;
+  border-radius: 5px;
+  border:1px solid $base-app-color;
+
+}
+
 
 .activityM{
   color:black;
   font-family: RobotoLight;
+
   font-size:16px;
 }
 .userProgressBlock{
   width: 100%;
+  padding-top:30px;
+  padding-bottom:30px;
+}
+
+.user_bioCover{
+
+  padding:10px;
+}
+.user_bioTitle{
+  font-family: Roboto;
+  font-size: 18px;
 }
 
 .user_bio{
-  width:100%;
   font-family: RobotoLight;
-  font-size: 14px;
-  margin-top:10px;
+  width:100%;
+  font-size: 16px;
+  margin-top:20px;
+}
+
+//edit mode
+.bioTextArea{
+  background-color: white;
+  border-radius:5px;
+  width:100%;
+  min-height: 60px;
+  font-family: RobotoLight;
+  color:black;
 }
