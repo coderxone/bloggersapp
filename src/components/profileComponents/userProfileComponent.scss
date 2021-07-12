@@ -21,11 +21,20 @@ $successGreenColor:#34eb83;
   right:25px;
   width:25px !important;
   height: 25px !important;
+  color:$base-app-color;
 }
 .doneIcon{
   position: absolute;
   top:295px;
   right:25px;
+  width:25px !important;
+  height: 25px !important;
+  color:$base-app-color;
+}
+.PhotoCameraIcon{
+  position: absolute;
+  top:295px;
+  right:70px;
   width:25px !important;
   height: 25px !important;
   color:$base-app-color;

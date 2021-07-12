@@ -50,6 +50,7 @@ import Model1DetailTaskComponent from './components/ApplyComponents_model1/Model
 import creatorComponent from './components/introductionComponents/creatorComponent';
 import BusinessIntroComponent from './components/introductionComponents/BusinessIntroComponent';
 import userProfileComponent from './components/profileComponents/userProfileComponent';
+import userProfilePhotoUpload from './components/profileComponents/userProfilePhotoUpload';
 
 
 const App = () => {
@@ -92,7 +93,7 @@ const App = () => {
                 <Route path="/blogger-answers" component={BloggerAnswersComponent } exact={true} />
                 <Route path="/approve" component={AdminComponent } exact={true} />
                 <Route path="/emailtemplate" component={ActivationEmail } exact={true} />
-                <Route path="/test" component={ChooseWayComponent} exact={true} />
+                <Route path="/test" component={userProfilePhotoUpload} exact={true} />
                 <Route path="/chooseway" component={ChooseWayComponent} exact={true} />
                 <Route path="/main" component={MainComponent} exact={true} />
                 <Route path="/about" component={AboutUsComponent} exact={true} />

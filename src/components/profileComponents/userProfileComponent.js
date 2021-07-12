@@ -15,6 +15,8 @@ import {
 import Input from '@material-ui/core/Input';
 import DoneAllIcon from '@material-ui/icons/DoneAll';
 
+import userProfilePhotoUpload from './userProfilePhotoUpload';
+
 
 
 const BottomFunc = () => {
@@ -129,6 +131,9 @@ const BottomFunc = () => {
                           <DoneAllIcon className="doneIcon" onClick={event => EditMode(0)}/>
                         )
                       }
+
+
+                      <userProfilePhotoUpload />
 
 
 
