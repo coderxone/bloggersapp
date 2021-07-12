@@ -4,6 +4,7 @@ import Obfuscate from 'react-obfuscate';
 const deployMode = "development";//development//production
 const deployPlatform = "browser";//browser//android
 const routeUrl = "https://echohub.io";
+const serverImagePath = "https://echohub.io/newimages/";
 
 //const baseurl = 'https://echohub.io:3004';//browser https
 const baseurl = 'https://localhost:3004';
@@ -76,6 +77,9 @@ const newmodule = {
       },
       getBaseDomainUrl:() => {
         return baseurl;
+      },
+      getServerImagePath:() => {
+        return serverImagePath;
       },
 
       getCurrentUrl:() => {

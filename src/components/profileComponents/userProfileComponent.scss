@@ -39,6 +39,41 @@ $successGreenColor:#34eb83;
   height: 25px !important;
   color:$base-app-color;
 }
+.PhotoBackgroundIcon{
+  position: absolute;
+  top:115px;
+  right:10px;
+  width:25px !important;
+  height: 25px !important;
+  color:$base-app-color;
+}
+
+.successUploadIcon{
+  position: absolute;
+  right:110px;
+  top:332px;
+  width: 24px;
+  font-size: 30px !important;
+  color:$successGreenColor;
+}
+
+.userProfileUploadProgressCover{
+  position: absolute;
+  width: 40%;
+  height: 20px;
+  top:365px;
+  left:30%;
+
+}
+.userProfileBackgroundUploadProgressCover{
+  position: absolute;
+  width: 40%;
+  height: 20px;
+  top:155px;
+  left:30%;
+
+}
+
 
 .infoPanel{
   margin-top:-52.5px;

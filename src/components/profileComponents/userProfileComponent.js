@@ -3,6 +3,7 @@ import MenuComponent from '../../components/MenuComponents/MenuComponent';
 import LocalizeComponent from '../../localize/LocalizeComponent';
 import Grid from '@material-ui/core/Grid';
 import config from '../../config/config';
+import { connect } from 'react-redux';
 import '../../components/profileComponents/userProfileComponent.scss';
 import ProgressIndicator from '../../helperComponents/progressIndicator';
 import ProfileService from '../../services/ProfileService';
@@ -15,15 +16,44 @@ import {
 import Input from '@material-ui/core/Input';
 import DoneAllIcon from '@material-ui/icons/DoneAll';
 
-import userProfilePhotoUpload from './userProfilePhotoUpload';
+import UserProfilePhotoUpload from './userProfilePhotoUpload';
+import { useSelector, useDispatch } from 'react-redux'
 
 
 
-const BottomFunc = () => {
+const mapStateToProps = (state) => {
+  return state;
+}
+
+const BottomFunc = (props) => {
 
 
-  const [backgroundImageUrl,setBackgroundImageUrl] = useState("https://bladenonline.com/wp-content/uploads/2020/04/shutterstock_753167914_1.jpg");
-  const [userBackgroundImageUrl,setUserBackgroundImageUrl] = useState("https://echohub.io/newimages/no-image.png");
+  const count = useSelector((state) => state.counter.value);
+  const IMAGE_DATA = useSelector((state) => state.counter.IMAGE_DATA);
+  const BACKGROUND_IMAGE_DATA = useSelector((state) => state.counter.BACKGROUND_IMAGE_DATA);
+  const dispatch = useDispatch();
+
+
+
+  const [backgroundImageUrl,setBackgroundImageUrl] = useState(config.getServerImagePath() + "background.jpeg");
+  const [userBackgroundImageUrl,setUserBackgroundImageUrl] = useState(config.getServerImagePath() + "no-image.png");
+
+  const [switchDownloadedImage,SetswitchDownloadedImage] = useState(0);
+  const [switchDownloadedBackgroundImage,SetswitchDownloadedBackgroundImage] = useState(0);
+
+  useMemo(() => {
+
+    if(String(IMAGE_DATA) !== "[object Object]"){
+      SetswitchDownloadedImage(1);
+    }
+  },[IMAGE_DATA])
+
+  useMemo(() => {
+
+    if(String(BACKGROUND_IMAGE_DATA) !== "[object Object]"){
+      SetswitchDownloadedBackgroundImage(1);
+    }
+  },[BACKGROUND_IMAGE_DATA])
 
   const [progressBarValue,SetprogressBarValue] = useState(10);
 
@@ -85,6 +115,15 @@ const BottomFunc = () => {
         personalObject.bio = LocalizeComponent.user_8;
       }
 
+      console.log(personalObject);
+      //setUserBackgroundImageUrl
+      if(personalObject.image_url !== "no-image.png"){
+        setUserBackgroundImageUrl(config.getServerImagePath() + personalObject.image_url);
+      }
+      if(personalObject.background_image !== "background.jpeg"){
+        setBackgroundImageUrl(config.getServerImagePath() + personalObject.background_image);
+      }
+
       SetprogressBarValueA(personalObject.points);
       SetUserData(personalObject);
 
@@ -94,7 +133,16 @@ const BottomFunc = () => {
 
     });
 
+
+
     ProfileService.getOwnData();
+
+
+    // props.reduxStorage.getState(res => {
+    //   console.log(res);
+    // })
+
+
 
     return () => {
         util.unsubscribe();
@@ -109,19 +157,35 @@ const BottomFunc = () => {
     <div id="opacityControl">
       <MenuComponent />
 
+
+
       <Grid container className="projectContainer"  >
 
+        {
+          switchDownloadedBackgroundImage === 0 ? (
+            <div className="u_background" style={ { backgroundPosition: "center",backgroundRepeat:"no-repeat",backgroundSize:"cover",background: "url(" + backgroundImageUrl + ") no-repeat center/cover" }}>
 
-        <div className="u_background" style={ { backgroundPosition: "center",backgroundRepeat:"no-repeat",backgroundSize:"cover",background: "url(" + backgroundImageUrl + ") no-repeat center/cover" }}>
+            </div>
+          ) : (
+            <img className="u_background" src={BACKGROUND_IMAGE_DATA}  />
+          )
+        }
 
-        </div>
 
         <div className="infoPanelCover">
             <div className="infoPanel robotoFont blackColor">
 
 
                       <div className="centerElements">
-                          <div className="u_image u_imagePosition" style={ { backgroundPosition: "center",backgroundRepeat:"no-repeat",backgroundSize:"cover",background: "url(" + userBackgroundImageUrl + ") no-repeat center/cover" }}></div>
+                        {
+                          switchDownloadedImage === 0 ? (
+                            <div className="u_image u_imagePosition" style={ { backgroundPosition: "center",backgroundRepeat:"no-repeat",backgroundSize:"cover",background: "url(" + userBackgroundImageUrl + ") no-repeat center/cover" }}></div>
+                          ) : (
+                            <img className="u_image u_imagePosition" src={IMAGE_DATA}  />
+                          )
+                        }
+
+
                       </div>
 
                       {
@@ -133,7 +197,7 @@ const BottomFunc = () => {
                       }
 
 
-                      <userProfilePhotoUpload />
+                      <UserProfilePhotoUpload back={false} />
 
 
 
@@ -208,6 +272,9 @@ const BottomFunc = () => {
 
     </Grid>
 
+
+
+
   </div>
 
 
@@ -218,6 +285,4 @@ const BottomFunc = () => {
 }
 
 
-
-
-export default BottomFunc;
+ export default BottomFunc;

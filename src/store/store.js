@@ -1,11 +1,34 @@
-const initialState = {
+import { createSlice } from '@reduxjs/toolkit'
+
+// const counterSlice = createSlice({
+//   name: 'counter',
+//   initialState,
+//   reducers: {
+//     increment(state) {
+//       state.value++
+//     },
+//     decrement(state) {
+//       state.value--
+//     },
+//     incrementByAmount(state, action) {
+//       state.value += action.payload
+//     },
+//   },
+// })
+
+
+
+
+let initialState = {
   count: 0,
   email:"",
   password:"",
   array:[],
   video_component:{
 
-  }
+  },
+  IMAGE_DATA:{}
+
 };
 //props.dispatch(multiSave(storageData));
 
@@ -16,6 +39,7 @@ const reduceexport = function reducer(state = initialState, action) {
   //console.log('reducer', state, action);
 
   switch(action.type) {
+
 
     case 'INCREMENT':
     //  console.log("INCREMENT");
@@ -84,6 +108,12 @@ const reduceexport = function reducer(state = initialState, action) {
       value:action.value
     };
 
+    case 'IMAGE_DATA':
+    console.log(action)
+    state.IMAGE_DATA = action.data;
+
+    return state;
+
     default:
       return state;
   }
@@ -92,4 +122,7 @@ const reduceexport = function reducer(state = initialState, action) {
 }
 
  export default reduceexport;
+
+ // export const { increment, decrement, incrementByAmount } = counterSlice.actions
+ // export default counterSlice.reducer;
 // export default connect(mapStateToProps)(reduceexport);

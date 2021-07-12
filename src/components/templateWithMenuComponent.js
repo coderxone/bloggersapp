@@ -1,4 +1,5 @@
 import React, { useCallback,useEffect,useState,useMemo,useRef } from 'react';
+import { connect } from 'react-redux';
 import MenuComponent from '../../components/MenuComponents/MenuComponent';
 import LocalizeComponent from '../../localize/LocalizeComponent';
 import Grid from '@material-ui/core/Grid';
@@ -9,12 +10,16 @@ import {
 
  //LocalizeComponent.setLanguage("ru");
 
+ const mapStateToProps = (state) => {
+   return {
+       somethingFromStore: state.somethingFromStore
+   }
+ }
+
+const BottomFunc = (props) => {
 
 
-const BottomFunc = () => {
-
-
-
+  const reduxStore = props.somethingFromStore;
 
 
   return (
@@ -47,5 +52,4 @@ const BottomFunc = () => {
 
 
 
-
-export default BottomFunc;
+export default connect(mapStateToProps)(BottomFunc);

@@ -3,8 +3,8 @@ import axios from 'axios';
 import uploadImage from '../../images/uploadimage.png';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import config from '../../config/config.js';
-import { connect } from 'react-redux';
-import { save_multiData } from '../../actions/actions';
+import { save_multiData,setImageData } from '../../actions/actions';
+
 import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
 import Grid from '@material-ui/core/Grid';
 import DandelionComponent from '../../components/dandelionComponent';
@@ -13,6 +13,10 @@ import LocalizeComponent from '../../localize/LocalizeComponent';
 import GoBackAbsoluteComponent from '../../helperComponents/goBackAbsoluteComponent';
 import { useHistory } from "react-router-dom";
 import PhotoCameraIcon from '@material-ui/icons/PhotoCamera';
+import {useDispatch} from 'react-redux';
+import {saveImageData,saveBackgroundImageData} from '../../features/counter-slice';
+import PhotoIcon from '@material-ui/icons/Photo';
+
 
 const App = (props) => {
 
@@ -20,6 +24,7 @@ const App = (props) => {
     selectedFile:null
   }
   const activeButton = props.back;
+  const dispatch = useDispatch();
 
   const [progress, setProgress] = React.useState(0);
   const [buffer, setBuffer] = React.useState(0);
@@ -27,6 +32,7 @@ const App = (props) => {
   const [successupload,Setsuccessupload] = useState(0);
   const [image, setImage] = useState({});
   const [existingImage,SetexistingImage] = useState(0);
+  const [existingBackgroundImage,SetexistingBackgroundImage] = useState(0);
   const [imageData, setimageData] = useState({});
 
   const [error,SetError] = useState(false);
@@ -36,18 +42,28 @@ const App = (props) => {
 
   let history = useHistory();
 
+  const [loadPath,SetLoadPath] = useState(0);
+
   const openFile = (command) => {
 
 
         setImage({});
         SetexistingImage(0);
         Setsuccessupload(0);
+        SetexistingBackgroundImage(0);
+        if(command === 1){
+          SetLoadPath(1);
+        }else{
+          SetLoadPath(0);
+        }
+
         inputFile.current.click();
+
 
 
   }
 
-  const uploadHandler = (event) => {
+  const uploadHandler = (event,loadPath) => {
 
     let filesize = event.target.files[0].size;
 
@@ -59,9 +75,20 @@ const App = (props) => {
     }
 
     event.preventDefault();
-    setImage(URL.createObjectURL(event.target.files[0]));
+
     setimageData(event.target.files[0]);
-    SetexistingImage(1);
+
+    if(loadPath === 1){
+        dispatch(saveBackgroundImageData(URL.createObjectURL(event.target.files[0])));
+        SetexistingBackgroundImage(1);
+    }else{
+      setImage(URL.createObjectURL(event.target.files[0]));
+
+      dispatch(saveImageData(URL.createObjectURL(event.target.files[0])));
+      SetexistingImage(1);
+    }
+
+
 
     event.target.value = null;
 
@@ -76,16 +103,31 @@ const App = (props) => {
 
   }
 
+  const hideLoadStuffs = () => {
+    setTimeout(function(){
+      Setsuccessupload(0);
+      SetexistingImage(0);
+      SetexistingBackgroundImage(0);
+    },2000);
+  }
 
-  const uploadButton = () => {
 
 
+  const uploadButton = (loadPath) => {
+
+    //loadPath
     const formdata = new FormData();
 
     formdata.append('email',config.getUserEmail());
 
+    let uploadUrl = config.getBaseDomainUrl() + "/usermainphoto";
+    if(loadPath === 1){
+        uploadUrl = config.getBaseDomainUrl() + "/userbackgroundImage";
+    }
+
+    //return false;
     formdata.append('photo',imageData,imageData.name);
-      axios.post(config.getBaseDomainUrl() + "/usermainphoto",formdata,{
+      axios.post(uploadUrl,formdata,{
         onUploadProgress:progressEvent => {
           var uploadProgress = Math.round((progressEvent.loaded / progressEvent.total) * 100);
           setProgress(uploadProgress);
@@ -94,10 +136,15 @@ const App = (props) => {
       })
       .then(res => {
           if(res.status == 200){
-            console.log(res);
-            // props.dispatch(save_multiData({_object:'profilephoto',name:res.data}));
-            // props.dispatch(save_multiData({_object:'profilephotostatus',name:"1"}));
-            // Setsuccessupload(1);
+            //console.log(res.data);
+
+
+
+            if(loadPath === 0){
+                Setsuccessupload(1);
+            }
+
+             hideLoadStuffs();
 
             //goBack();
           }
@@ -107,16 +154,19 @@ const App = (props) => {
   useMemo(() => {
 
     if(existingImage !== 0){
-      uploadButton();
+      uploadButton(loadPath);
+    }
+    if(existingBackgroundImage !== 0){
+      uploadButton(loadPath);
     }
 
-  },[existingImage]);
+  },[existingImage,existingBackgroundImage,loadPath]);
 
 
 
 
   return (
-    <Grid container >
+    <div >
     {
       activeButton === true && (
         <GoBackAbsoluteComponent/>
@@ -126,53 +176,46 @@ const App = (props) => {
 
 
 
-      <img className="VideoImageStyle" onClick={openFile} src={uploadImage}/>
+
       <PhotoCameraIcon className="PhotoCameraIcon" onClick={event => openFile(0)}/>
+      <PhotoIcon className="PhotoBackgroundIcon" onClick={event => openFile(1)}/>
 
 
-
-      <div className="videoSecondBlock">
           {
             existingImage == 1 && (
-              <LinearProgress variant="buffer" value={progress} valueBuffer={buffer} />
+              <div className="userProfileUploadProgressCover">
+                  <LinearProgress  variant="buffer" value={progress} valueBuffer={buffer} />
+              </div>
+
+            )
+          }
+          {
+            existingBackgroundImage == 1 && (
+              <div className="userProfileBackgroundUploadProgressCover">
+                  <LinearProgress  variant="buffer" value={progress} valueBuffer={buffer} />
+              </div>
+
             )
           }
 
           {
             successupload == 1 &&
             (
-              <div className="VideoImageStyleContainer">
-                <CheckCircleOutlineIcon className="successUpload"/>
-              </div>
-
+                <CheckCircleOutlineIcon className="successUploadIcon"/>
             )
           }
 
-      </div>
 
-      <div className="ListDivider"></div>
-
-      {
-        existingImage === 1 && (
-
-
-
-          <div className="VideoImageStyleContainer">
-            <img className="VideoPreviewStyle"  src={image}  />
-          </div>
-
-        )
-      }
 
       <AlertComponent state={error} text={AlertText}/>
 
 
 
-        <input className="fileClass" type="file" accept="image/*"  ref={inputFile} onChange={uploadHandler} name="photo" style={{display: 'none'}}></input>
+        <input className="fileClass" type="file" accept="image/*"  ref={inputFile} onChange={event => uploadHandler(event,loadPath)} name="photo" style={{display: 'none'}}></input>
 
 
-    </Grid>
+    </div>
   );
 }
 
- export default connect()(App);
+ export default App;
