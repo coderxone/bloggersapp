@@ -171,13 +171,14 @@ const AuthorizationComponent = (props) => {
 
           let exeptionArray = config.getRedirectExeption();
 
+
           if(exeptionArray.indexOf(currentUrl) >= 0){
             return false;
           }
 
-          //console.log(currentUrl);
-
-          //return false;
+          // console.log(currentUrl);
+          //
+          // return false;
 
           if(checkUserAuthorization.role == 1){
               if(checkUserAuthorization.additionalData == "0"){

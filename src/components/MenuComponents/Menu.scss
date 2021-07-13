@@ -146,7 +146,7 @@ $menufontsize:16px;
   height: 20px;
   float: left;
   margin-top:12.5px;
-  margin-left:49%;
+  margin-left:40%;
 }
 .menuSignUpText{
   font-family: RobotoLight;
@@ -154,13 +154,16 @@ $menufontsize:16px;
   font-weight: 100;
   font-size: 16px;
   color: #000000;
+
 }
 
 .menuIcon{
   width:35px;
   height: 35px;
   margin-top:5.5px;
-  float: left;
+  float: right;
+  margin-right:5px;
+
 }
 
 .menuIconColor{

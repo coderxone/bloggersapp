@@ -424,7 +424,7 @@ const BusinessDashboard = (props) => {
     if(Contacts == "Contacts"){
       return history.push('/contactlist'), [history]
     }else if(Contacts == "New Request"){
-      return history.push('/apply'), [history]
+      return history.push('/chooseway'), [history]
     }
 
   });

@@ -16,7 +16,7 @@ import { connect } from 'react-redux';
 import SelectRoleService from '../services/SelectRoleService';
 import ConfirmDialogComponent from '../helperComponents/ConfirmDialogComponent';
 import Observable from '../services/Observable';
-
+import MenuComponent from '../components/MenuComponents/MenuComponent';
 
 import { increment, decrement,save_email } from '../actions/actions';
 import {
@@ -87,7 +87,7 @@ const SelectRoleComponent = (props) => {
   const [role,setRole] = useState(1);
 
   const selectRoleEvent = (roleType) => {
-      console.log(roleType);
+      //console.log(roleType);
 
       setRole(roleType);
       setDialogText(LocalizeComponent.continue);
@@ -135,7 +135,7 @@ const SelectRoleComponent = (props) => {
         SetRoute("/blogger-answers");
         Setredirect(true);
       }else if(data.role == 2){
-        SetRoute("/apply");
+        SetRoute("/chooseway");
         Setredirect(true);
       }
 
@@ -155,8 +155,11 @@ const SelectRoleComponent = (props) => {
 
   return (
 
-   	<div className={classes.root}>
-        <Grid container >
+   	<div className={classes.root} id="opacityControl">
+
+      <MenuComponent />
+
+        <Grid container  className="projectContainer">
 
           <div className="bloggerAWrap">
             <div className="MainLCenterWrap">
@@ -168,27 +171,25 @@ const SelectRoleComponent = (props) => {
 
         <ConfirmDialogComponent  status={dialogStatus} text={dialogText} left={dialogLeft} right={dialogRight}/>
 
-        <div className="profileBlock additionalMarginTop">
-            <div className="profileInformation">
-                {LocalizeComponent.selectRole}
+
+
+        <div className="centerElements RolegetStartedButtonMargin RolePosition"  onClick={(event) => selectRoleEvent(1)}>
+          <div className="getStartedButtonFrame">
+            <div className="getStartedButton robotoFont smallFontSize blackColor centerText">
+                {LocalizeComponent.blogger}
             </div>
+          </div>
         </div>
 
-        <div className="RoleBox">
-
-            <div className="ChildRoleBox" onClick={(event) => selectRoleEvent(1)}>
-                <div className="role_button_style">{LocalizeComponent.blogger}</div>
-
+        <div className="centerElements RolegetStartedButtonMargin"   onClick={(event) => selectRoleEvent(2)}>
+          <div className="getStartedButtonFrame">
+            <div className="getStartedButton robotoFont smallFontSize blackColor centerText">
+                {LocalizeComponent.business}
             </div>
-
+          </div>
         </div>
-        <div className="RoleBoxTwo">
 
-            <div className="ChildRoleBox"  onClick={(event) => selectRoleEvent(2)}>
-                <div className="role_button_style">{LocalizeComponent.business}</div>
-            </div>
 
-        </div>
 
         <div>
 

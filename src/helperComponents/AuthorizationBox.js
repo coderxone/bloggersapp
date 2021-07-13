@@ -179,6 +179,15 @@ const AuthorizationComponent = (props) => {
 
       if(checkUserAuthorization !== false){
 
+        let currentUrl = config.getCurrentUrl();
+
+        let exeptionArray = config.getRedirectExeption();
+
+
+        if(exeptionArray.indexOf(currentUrl) >= 0){
+          return false;
+        }
+
           if(checkUserAuthorization.role == 1){
               if(checkUserAuthorization.additionalData == "0"){
                 SetRoute("/blogger-answers");

@@ -5,6 +5,9 @@ import Observable from '../services/Observable';
 
 const useStyles = makeStyles((theme) => ({
   root: {
+    position:'relative',
+    width:'60px',
+    height:'60px',
     display: 'flex',
     '& > * + *': {
       marginLeft: theme.spacing(2),
@@ -29,8 +32,10 @@ const CircularDeterminate = (props) => {
   return (
     <div className={classes.root}>
       <CircularProgress className="CircularProgress"  variant="determinate" value={timerCircleVariable} />
+      <div className="CircleTimerCover">
+          <div className="CircleTimer">{timerVariable}</div>
+      </div>
 
-      <div className="CircleTimer">{timerVariable}</div>
     </div>
   );
 }

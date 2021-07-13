@@ -15,7 +15,8 @@ const ShowPushModel1 = (props) => {
     let sendObj = {
       action:"starttask",
       status:1,
-      item:item
+      item:item,
+      type:"m1"
     }
 
     Observable.sendAny(sendObj);
@@ -77,7 +78,7 @@ const ShowPushModel1 = (props) => {
           </div>
           <div className="mainPushColumsTwo_2">
               <div className="buttonStylePush" onClick={event => StartTask(item)}>
-                  <div className="buttonStylePushText">{LocalizeComponent.accept}</div>
+                  <div className="buttonStylePushText buttonStylePushTextAdd">{LocalizeComponent.accept}</div>
               </div>
           </div>
 

@@ -292,7 +292,7 @@ const BottomFunc = () => {
                 </div>
             </div>
 
-            <div className="centerElements getStartedButtonMargin">
+            <div className="centerElements getStartedButtonMargin"  onClick={goToLogin}>
               <div className="getStartedButtonFrame">
                 <div className="getStartedButton robotoFont smallFontSize blackColor centerText">
                     {LocalizeComponent.a_4}

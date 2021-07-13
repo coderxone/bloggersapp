@@ -36,7 +36,7 @@ const BottomFunc = (props) => {
 
 
   const [backgroundImageUrl,setBackgroundImageUrl] = useState(config.getServerImagePath() + "background.jpeg");
-  const [userBackgroundImageUrl,setUserBackgroundImageUrl] = useState(config.getServerImagePath() + "no-image.png");
+  const [userBackgroundImageUrl,setUserBackgroundImageUrl] = useState(config.getServerImageBackgroundPath() + "no-image.png");
 
   const [switchDownloadedImage,SetswitchDownloadedImage] = useState(0);
   const [switchDownloadedBackgroundImage,SetswitchDownloadedBackgroundImage] = useState(0);
@@ -115,13 +115,13 @@ const BottomFunc = (props) => {
         personalObject.bio = LocalizeComponent.user_8;
       }
 
-      console.log(personalObject);
+      //console.log(personalObject);
       //setUserBackgroundImageUrl
       if(personalObject.image_url !== "no-image.png"){
         setUserBackgroundImageUrl(config.getServerImagePath() + personalObject.image_url);
       }
       if(personalObject.background_image !== "background.jpeg"){
-        setBackgroundImageUrl(config.getServerImagePath() + personalObject.background_image);
+        setBackgroundImageUrl(config.getServerImageBackgroundPath() + personalObject.background_image);
       }
 
       SetprogressBarValueA(personalObject.points);

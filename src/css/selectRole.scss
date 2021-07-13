@@ -2,9 +2,8 @@ $base-app-color:#0083ff;
 
 @font-face {
   font-family: 'AppFont';
-  src: url('../fonts/AVA_LL.TTF') format('ttf'),
-       url('../fonts/AVA_LL.TTF') format('ttf'),
-       url('../fonts/AVA_LL.TTF') format('truetype');
+  src: url('../fonts/roboto/Roboto-Light.ttf') format('ttf'),
+       url('../fonts/roboto/Roboto-Light.ttf') format('truetype');
 }
 
 .additionalMarginTop{
@@ -13,8 +12,10 @@ $base-app-color:#0083ff;
 }
 
 .profileInformation{
-  font-size: 25px;
-  font-family:"Roboto", "Helvetica", "Arial", sans-serif;
+  font-size: 20px;
+  font-family:RobotoLight;
+  color:black;
+
 }
 
 .additionalButtonTop{
@@ -48,4 +49,17 @@ $base-app-color:#0083ff;
   font-family:"Roboto", "Helvetica", "Arial", sans-serif;
   font-size: 18px;
   padding-top:9px;
+}
+
+.RolegetStartedButtonMargin{
+  margin-top:10px;
+  padding-left:10px;
+  padding-right:10px;
+  width: 100%;
+}
+
+.RolePosition{
+
+  margin-top:15%;
+  font-family: AppFont;
 }

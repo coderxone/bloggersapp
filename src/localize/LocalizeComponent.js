@@ -279,7 +279,7 @@ let strings = new LocalizedStrings({
    b_22:"контроль выполнения задач",
    b_23:"моментальное распространение во все социальные сети",
    b_24:"continue with this plan",
-   b_25:"continue with plan 2",
+   b_25:"continue with plan ",
    b_26:"Please briefly describe your business",
    b_27:"Please upload 1 min video about your business",
    b_28:"go to upload",

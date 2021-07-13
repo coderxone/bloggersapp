@@ -95,7 +95,7 @@ const ExampleComponent = (props) => {
               <Link to={{pathname: "/main"}}>{LocalizeComponent.home}</Link>
               <Link to={{pathname: "/about"}}>{LocalizeComponent.About_Connect}</Link>
 
-              <Link to={{pathname: "/userprofile"}}>{LocalizeComponent.pricing}</Link>
+
               <a href="#">{LocalizeComponent.Why}</a>
               <a target="_blank" href="mailto:info@echohub.io">{LocalizeComponent.contactUs}</a>
             </div>
@@ -103,7 +103,7 @@ const ExampleComponent = (props) => {
             <div className="menuDevider menuTopMargin"></div>
 
             <div className="menuLogIn"  onClick={GoToLogin}>
-                <div className="menuSignUpText">
+                <div className="menuSignUpText ">
                     {LocalizeComponent.log_in}
                 </div>
             </div>
@@ -136,7 +136,7 @@ const ExampleComponent = (props) => {
 
 
         <div className="menuSignUp"  onClick={GoToLogin}>
-            <div className="menuSignUpText">
+            <div className="menuSignUpText rightText">
                 {LocalizeComponent.Sign_up}
             </div>
         </div>
@@ -153,6 +153,6 @@ const ExampleComponent = (props) => {
 
   );
 };
-
+//<Link to={{pathname: "/userprofile"}}>{LocalizeComponent.pricing}</Link>
 
  export default connect(mapStateToProps)(ExampleComponent);

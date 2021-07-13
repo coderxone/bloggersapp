@@ -4,7 +4,8 @@ import Obfuscate from 'react-obfuscate';
 const deployMode = "development";//development//production
 const deployPlatform = "browser";//browser//android
 const routeUrl = "https://echohub.io";
-const serverImagePath = "https://echohub.io/newimages/";
+const serverImagePath = "https://echohub.io/newimages/profileImages";
+const serverImageBackgroundPath = "https://echohub.io/newimages/profileImages";
 
 //const baseurl = 'https://echohub.io:3004';//browser https
 const baseurl = 'https://localhost:3004';
@@ -81,6 +82,9 @@ const newmodule = {
       getServerImagePath:() => {
         return serverImagePath;
       },
+      getServerImageBackgroundPath:() => {
+        return serverImageBackgroundPath;
+      },
 
       getCurrentUrl:() => {
         let currentUrl = window.location.pathname;
@@ -90,7 +94,7 @@ const newmodule = {
       getRedirectExeption:() => {
 
 
-        let exceptionUrlPaths = ['main','userprofile'];
+        let exceptionUrlPaths = ['main','userprofile','businessintro','creator','blogger','business'];
 
         return exceptionUrlPaths;
 

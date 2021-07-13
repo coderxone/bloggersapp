@@ -14,6 +14,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import LocalizeComponent from '../../localize/LocalizeComponent';
 import Button from '@material-ui/core/Button';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
+import CheckIcon from '@material-ui/icons/Check';
 
 import { multiSave } from '../../actions/actions';
 import {
@@ -78,7 +79,7 @@ const SimpleAccordion = ({callParentEvent}) => {
   }
 
   return (
-    <div className={classes.root}>
+    <div className={classes.root + " projectContainer"}>
       <Accordion>
         <AccordionSummary
           aria-controls="panel1a-content"
@@ -86,7 +87,7 @@ const SimpleAccordion = ({callParentEvent}) => {
         >
           <div  className={classes.center}>
             <div className={classes.m}>
-              {LocalizeComponent.n1}
+              {LocalizeComponent.n1} / {LocalizeComponent.c_16}
             </div>
           </div>
         </AccordionSummary>
@@ -101,23 +102,58 @@ const SimpleAccordion = ({callParentEvent}) => {
                 endIcon={<NavigateNextIcon/>}
                 onClick={event => continueWithPlan(1)}
               >
-                    {LocalizeComponent.b_24}
+                    {LocalizeComponent.b_24} {LocalizeComponent.c_16}
 
               </Button>
             </div>
-            <ol className="ulClass">
-              <li>{LocalizeComponent.a1}</li>
-              <li>{LocalizeComponent.a2}</li>
-              <li>{LocalizeComponent.a3}</li>
-              <li>{LocalizeComponent.a4}</li>
-              <li>{LocalizeComponent.a5}</li>
-              <li>{LocalizeComponent.a6}</li>
-              <li>{LocalizeComponent.a7}</li>
-              <li>{LocalizeComponent.a8}</li>
-              <li>{LocalizeComponent.a9}</li>
-              <li>{LocalizeComponent.a10}</li>
-              <li>{LocalizeComponent.a11}</li>
-            </ol>
+
+            <ul className="commonViewBox">
+              <li className="rightLiViewBox ">
+                  <CheckIcon className="leftViewBox"/>
+                  <div className="rightViewBox">{LocalizeComponent.a1}</div>
+              </li>
+              <li className="rightLiViewBox ">
+                  <CheckIcon className="leftViewBox"/>
+                  <div className="rightViewBox">{LocalizeComponent.a2}</div>
+              </li>
+              <li className="rightLiViewBox ">
+                  <CheckIcon className="leftViewBox"/>
+                  <div className="rightViewBox">{LocalizeComponent.a3}</div>
+              </li>
+              <li className="rightLiViewBox ">
+                  <CheckIcon className="leftViewBox"/>
+                  <div className="rightViewBox">{LocalizeComponent.a4}</div>
+              </li>
+              <li className="rightLiViewBox ">
+                  <CheckIcon className="leftViewBox"/>
+                  <div className="rightViewBox">{LocalizeComponent.a5}</div>
+              </li>
+              <li className="rightLiViewBox ">
+                  <CheckIcon className="leftViewBox"/>
+                  <div className="rightViewBox">{LocalizeComponent.a6}</div>
+              </li>
+              <li className="rightLiViewBox ">
+                  <CheckIcon className="leftViewBox"/>
+                  <div className="rightViewBox">{LocalizeComponent.a7}</div>
+              </li>
+              <li className="rightLiViewBox ">
+                  <CheckIcon className="leftViewBox"/>
+                  <div className="rightViewBox">{LocalizeComponent.a8}</div>
+              </li>
+              <li className="rightLiViewBox ">
+                  <CheckIcon className="leftViewBox"/>
+                  <div className="rightViewBox">{LocalizeComponent.a9}</div>
+              </li>
+              <li className="rightLiViewBox ">
+                  <CheckIcon className="leftViewBox"/>
+                  <div className="rightViewBox">{LocalizeComponent.a10}</div>
+              </li>
+              <li className="rightLiViewBox ">
+                  <CheckIcon className="leftViewBox"/>
+                  <div className="rightViewBox">{LocalizeComponent.a11}</div>
+              </li>
+
+            </ul>
           </div>
         </AccordionDetails>
       </Accordion>
@@ -128,7 +164,7 @@ const SimpleAccordion = ({callParentEvent}) => {
         >
           <div className={classes.center}>
             <div className={classes.m2}>
-              {LocalizeComponent.n2}
+              {LocalizeComponent.n2} / {LocalizeComponent.c_17}
             </div>
           </div>
         </AccordionSummary>
@@ -142,34 +178,111 @@ const SimpleAccordion = ({callParentEvent}) => {
                 onClick={event => continueWithPlan(2)}
                 endIcon={<NavigateNextIcon/>}
               >
-                    {LocalizeComponent.b_25}
+                    {LocalizeComponent.b_25} {LocalizeComponent.c_17}
               </Button>
             </div>
-            <ol className="ulClass">
-              <li>{LocalizeComponent.b_1}</li>
-              <li>{LocalizeComponent.b_2}</li>
-              <li>{LocalizeComponent.b_3}</li>
-              <li>{LocalizeComponent.b_4}</li>
-              <li>{LocalizeComponent.b_5}</li>
-              <li>{LocalizeComponent.b_6}</li>
-              <li>{LocalizeComponent.b_7}</li>
-              <li>{LocalizeComponent.b_8}</li>
-              <li>{LocalizeComponent.b_9}</li>
-              <li>{LocalizeComponent.b_10} </li>
-              <li>{LocalizeComponent.b_11}</li>
-              <li>{LocalizeComponent.b_12}</li>
-              <li>{LocalizeComponent.b_13}</li>
-              <li>{LocalizeComponent.b_14}</li>
-              <li>{LocalizeComponent.b_15}</li>
-              <li>{LocalizeComponent.b_16}</li>
-              <li>{LocalizeComponent.b_17}</li>
-              <li>{LocalizeComponent.b_18}</li>
-              <li>{LocalizeComponent.b_19}</li>
-              <li>{LocalizeComponent.b_20}</li>
-              <li>{LocalizeComponent.b_21}</li>
-              <li>{LocalizeComponent.b_22}</li>
-              <li>{LocalizeComponent.b_23}</li>
-            </ol>
+
+
+            <div className="secondTabViewBox">
+
+              <ul className="commonViewBox">
+                <li className="rightLiViewBox ">
+                    <CheckIcon className="leftViewBox"/>
+                    <div className="rightViewBox">{LocalizeComponent.b_1}</div>
+                </li>
+                <li className="rightLiViewBox ">
+                    <CheckIcon className="leftViewBox"/>
+                    <div className="rightViewBox">{LocalizeComponent.b_2}</div>
+                </li>
+                <li className="rightLiViewBox ">
+                    <CheckIcon className="leftViewBox"/>
+                    <div className="rightViewBox">{LocalizeComponent.b_3}</div>
+                </li>
+                <li className="rightLiViewBox ">
+                    <CheckIcon className="leftViewBox"/>
+                    <div className="rightViewBox">{LocalizeComponent.b_4}</div>
+                </li>
+                <li className="rightLiViewBox ">
+                    <CheckIcon className="leftViewBox"/>
+                    <div className="rightViewBox">{LocalizeComponent.b_5}</div>
+                </li>
+                <li className="rightLiViewBox ">
+                    <CheckIcon className="leftViewBox"/>
+                    <div className="rightViewBox">{LocalizeComponent.b_6}</div>
+                </li>
+                <li className="rightLiViewBox ">
+                    <CheckIcon className="leftViewBox"/>
+                    <div className="rightViewBox">{LocalizeComponent.b_7}</div>
+                </li>
+                <li className="rightLiViewBox ">
+                    <CheckIcon className="leftViewBox"/>
+                    <div className="rightViewBox">{LocalizeComponent.b_8}</div>
+                </li>
+                <li className="rightLiViewBox ">
+                    <CheckIcon className="leftViewBox"/>
+                    <div className="rightViewBox">{LocalizeComponent.b_9}</div>
+                </li>
+                <li className="rightLiViewBox ">
+                    <CheckIcon className="leftViewBox"/>
+                    <div className="rightViewBox">{LocalizeComponent.b_10}</div>
+                </li>
+                <li className="rightLiViewBox ">
+                    <CheckIcon className="leftViewBox"/>
+                    <div className="rightViewBox">{LocalizeComponent.b_11}</div>
+                </li>
+                <li className="rightLiViewBox ">
+                    <CheckIcon className="leftViewBox"/>
+                    <div className="rightViewBox">{LocalizeComponent.b_12}</div>
+                </li>
+                <li className="rightLiViewBox ">
+                    <CheckIcon className="leftViewBox"/>
+                    <div className="rightViewBox">{LocalizeComponent.b_13}</div>
+                </li>
+                <li className="rightLiViewBox ">
+                    <CheckIcon className="leftViewBox"/>
+                    <div className="rightViewBox">{LocalizeComponent.b_14}</div>
+                </li>
+                <li className="rightLiViewBox ">
+                    <CheckIcon className="leftViewBox"/>
+                    <div className="rightViewBox">{LocalizeComponent.b_15}</div>
+                </li>
+                <li className="rightLiViewBox ">
+                    <CheckIcon className="leftViewBox"/>
+                    <div className="rightViewBox">{LocalizeComponent.b_16}</div>
+                </li>
+                <li className="rightLiViewBox ">
+                    <CheckIcon className="leftViewBox"/>
+                    <div className="rightViewBox">{LocalizeComponent.b_17}</div>
+                </li>
+                <li className="rightLiViewBox ">
+                    <CheckIcon className="leftViewBox"/>
+                    <div className="rightViewBox">{LocalizeComponent.b_18}</div>
+                </li>
+                <li className="rightLiViewBox ">
+                    <CheckIcon className="leftViewBox"/>
+                    <div className="rightViewBox">{LocalizeComponent.b_19}</div>
+                </li>
+                <li className="rightLiViewBox ">
+                    <CheckIcon className="leftViewBox"/>
+                    <div className="rightViewBox">{LocalizeComponent.b_20}</div>
+                </li>
+                <li className="rightLiViewBox ">
+                    <CheckIcon className="leftViewBox"/>
+                    <div className="rightViewBox">{LocalizeComponent.b_21}</div>
+                </li>
+                <li className="rightLiViewBox ">
+                    <CheckIcon className="leftViewBox"/>
+                    <div className="rightViewBox">{LocalizeComponent.b_22}</div>
+                </li>
+                <li className="rightLiViewBox ">
+                    <CheckIcon className="leftViewBox"/>
+                    <div className="rightViewBox">{LocalizeComponent.b_23}</div>
+                </li>
+
+              </ul>
+
+            </div>
+
           </div>
         </AccordionDetails>
       </Accordion>
@@ -212,9 +325,8 @@ const ExampleComponent = (props) => {
           </div>
       </div>
 
-      <div>
+      <div className="projectMarginTopByPercent">
             <SimpleAccordion callParentEvent={ExecuteChildrentClick} />
-
       </div>
 
 

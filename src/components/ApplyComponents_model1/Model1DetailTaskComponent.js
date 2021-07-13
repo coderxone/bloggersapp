@@ -1,4 +1,4 @@
-import React, {useState,useMemo,useEffect,useCallback} from 'react';
+import React, {useState,useMemo,useEffect,useCallback,useRef} from 'react';
 // import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonInput, IonItem, IonLabel, IonList, IonItemDivider } from '@ionic/react';
 import '../../css/mainStyles.scss';
 import '../../css/DetailDescriptionComponent.scss';
@@ -48,6 +48,7 @@ import TextField from '@material-ui/core/TextField';
 import FileCopyIcon from '@material-ui/icons/FileCopy';
 import EditIcon from '@material-ui/icons/Edit';
 import ChatIcon from '@material-ui/icons/Chat';
+import BusinessPoster from '../../images/businessPoster.png';
 
 import {
   useHistory
@@ -166,6 +167,9 @@ const DetailTaskComponent = (props) => {
         }
       }
   },[props]);
+
+
+  console.log(detailData)
 
 
   //video upload notifier
@@ -1075,7 +1079,18 @@ const EditNetwork = (data) => {
       </div>
     );
 
+    const playVideo = useRef(null);
+    const [playState,SetPlayState] = useState(0);
 
+    const Start = () => {
+      if(playState === 0){
+        playVideo.current.play();
+        SetPlayState(1);
+      }else{
+        SetPlayState(0);
+        playVideo.current.pause();
+      }
+    }
 
 
 
@@ -1144,6 +1159,11 @@ const EditNetwork = (data) => {
                 <div className="BlockDivider"></div>
               )
             }
+
+
+            <div className="PushVideoStyles" onClick={Start}>
+              <video width="100%" ref={playVideo} src={detailData.videourl}  poster={BusinessPoster} type="video/mp4"/>
+            </div>
 
 
             {

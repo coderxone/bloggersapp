@@ -11,8 +11,8 @@ $designTextColor:#000000;
 $fontSize:18px;
 @font-face {
   font-family: 'AppFont';
-  src: url('../fonts/AVA_LL.TTF') format('ttf'),
-       url('../fonts/AVA_LL.TTF') format('truetype');
+  src: url('../fonts/roboto/Roboto-Light.ttf') format('ttf'),
+       url('../fonts/roboto/Roboto-Light.ttf') format('truetype');
 }
 
 @font-face {
@@ -71,13 +71,20 @@ $fontSize:18px;
 .BloggerProgress{
   width: 100% !important;
 }
+//xxx
+
+.goOnlineStyleMargin{
+    margin-top:9px;
+    padding-left:10px;
+    padding-right:10px;
+}
+
 .CurrentTask{
   position: absolute;
   left: 0px;
   bottom:0px;
   width: 100%;
   height: 80px;
-
 }
 
 .CurrentTaskTwo_2{
@@ -87,11 +94,12 @@ $fontSize:18px;
 }
 
 .CurrentTaskTwo_2Text{
-  font-family:AppFont !important;
+  font-family:RobotoLight !important;
   font-size: 25px;
   color:white;
   font-weight: bold;
   text-align: center;
+  line-height: 50px;
 }
 
 
@@ -195,6 +203,9 @@ body{
   font-size: 16px;
   color:black;
   font-family: AppFont;
+  // background-color: lightblue;
+  max-height: 85px;
+
 }
 
 .declineButtonBlockM1{
@@ -284,28 +295,55 @@ body{
   font-size: 18px;
 }
 
-.CircularProgress{
-  width:55px !important;
-  color:$base-app-color !important;
-}
-
-.CircleTimer{
-  margin-left:-33px !important;
-  margin-top:3px !important;
-  font-size: 22px;
-}
-
-.CircularProgressParent{
-  margin-top:27px;
-  margin-left:7px;
-}
-
 .mainPushColumsOneRight{
   width:23%;
   height: 100%;
   float: left;
+  overflow: hidden;
+}
+
+.CircularProgressParent{
+  margin-top:10px;
+  margin-left:7px;
 
 }
+
+
+//xxx
+.CircularProgressCover{
+  position: relative;
+  width: 60px !important;
+  height: 60px !important;
+}
+
+.CircularProgress{
+  width: 60px !important;
+  height: 60px !important;
+  color:$base-app-color !important;
+}
+
+.CircleTimerCover{
+  position: absolute;
+  top:0px;
+  left:0px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.CircleTimer{
+  width: 100%;
+  height: 100%;
+  font-size: 20px;
+  line-height: 60px;
+  font-family: AppFont;
+
+
+}
+
+
+
 
 .mainPushColumsTwo{
   width:100%;
@@ -358,18 +396,9 @@ body{
   overflow: hidden;
 }
 
-.buttonStylePush{
-    /* base styles */
-  margin-left:5%;
-  margin-top:9px;
-	width:90%;
-	height: 45px;
-	/* background:linear-gradient(to right, #8936f4, $base-app-color); */
-	background:linear-gradient(to right, $base-app-color, $base-app-color);
-	border-radius:25px;
-  border: 2px solid white;
 
-}
+
+
 
 
 
@@ -466,7 +495,7 @@ body{
 
   .buttonStylePushText{
     font-family:AppFont !important;
-    font-size: 30px;
+    font-size: 24px;
     color:white;
     font-weight: bold;
     text-align: center;
@@ -483,7 +512,7 @@ body{
 
   .buttonStylePushText{
     font-family:AppFont !important;
-    font-size: 30px;
+    font-size: 24px;
     color:white;
     font-weight: bold;
     text-align: center;
@@ -526,7 +555,7 @@ body{
 
   .buttonStylePushText{
     font-family:AppFont !important;
-    font-size: 30px;
+    font-size: 24px;
     color:white;
     font-weight: bold;
     text-align: center;
@@ -570,7 +599,7 @@ body{
 
   .buttonStylePushText{
     font-family:AppFont !important;
-    font-size: 30px;
+    font-size: 24px;
     color:white;
     font-weight: bold;
     text-align: center;
@@ -614,7 +643,7 @@ body{
 
   .buttonStylePushText{
     font-family:AppFont !important;
-    font-size: 28px;
+    font-size: 24px;
     color:white;
     font-weight: bold;
     text-align: center;
@@ -658,7 +687,7 @@ body{
 
   .buttonStylePushText{
     font-family:AppFont !important;
-    font-size: 26px;
+    font-size: 24px;
     color:white;
     font-weight: bold;
     text-align: center;
@@ -702,7 +731,7 @@ body{
 
   .buttonStylePushText{
     font-family:AppFont !important;
-    font-size: 26px;
+    font-size: 24px;
     color:white;
     font-weight: bold;
     text-align: center;
@@ -2106,7 +2135,7 @@ body {
 }
 
 .faceBookLoginText{
-  width: 200px;
+  width: 170px;
   height: 30px;
   float: left;
   margin-top:10px;
@@ -2331,6 +2360,9 @@ body {
   margin-bottom:70px;
 }
 
+.buttonStylePushTextAdd{
+  line-height: 50px;
+}
 
 
 
@@ -2347,6 +2379,7 @@ body {
 }
 
 .textOverFlow{
+  overflow: hidden;
   text-overflow: ellipsis;
 }
 
@@ -2355,6 +2388,9 @@ body {
 }
 .projectMarginTop{
   margin-top:10px;
+}
+.projectMarginTopByPercent{
+  margin-top:10%;
 }
 .projectPaddingLi  li{
   padding:2px;
@@ -2382,6 +2418,10 @@ body {
   justify-content: center;
 }
 
+.rightText{
+  text-align: center;
+}
+
 .projectTextColor{
   color:$base-app-color;
 }
@@ -2404,6 +2444,11 @@ body {
 .projectFontSize{
   font-size:18px;
 }
+
+.whiteFont{
+  color:white;
+}
+
 .smallFontSize{
   font-size:16px;
 }
@@ -2441,3 +2486,32 @@ body {
 .deleteUrlClassWithoutText{
   text-decoration: none;
 }
+
+.projectBackgroundColor{
+  background-color: $base-app-color;
+}
+//projectButtonCentral
+.projectStyleButtonFrame{
+
+  border-radius: 10px;
+  width:100%;
+  height: 50px;
+}
+.projectStyleButton{
+  line-height: 50px;
+}
+
+.buttonStylePush{
+    /* base styles */
+  margin-left:5%;
+  margin-top:5px;
+	width:90%;
+	height: 50px;
+	/* background:linear-gradient(to right, #8936f4, $base-app-color); */
+	background:$base-app-color;
+	border-radius:10px;
+  border: 1px solid white;
+
+
+}
+//projectButtonCentral

@@ -339,7 +339,7 @@ const ShowPush = (props) => {
           </div>
           <div className="mainPushColumsTwo_2">
               <div className="buttonStylePush" onClick={event => StartTask(items[0])}>
-                  <div className="buttonStylePushText buttonStylePushTextAdd">{LocalizeComponent.accept}</div>
+                  <div className="buttonStylePushText">{LocalizeComponent.accept}</div>
               </div>
           </div>
 
@@ -361,7 +361,7 @@ const DistrubuteComponent = (props) => {
   const timerVariable = props.timerVariable;
   const timerCircleVariable = props.timerCircleVariable;
 
-  //console.log(item)
+  console.log(item)
 
   if(status === true){
     if(item.type === 2){
@@ -414,11 +414,8 @@ const BloggerDashboardComponent = (props) => {
   //   },4000);
   // }
 
-  const timeValueOne = 300;
-  const timeValueCircle = 500;
-
-  const [timerVariable,SettimerVariable] = useState(timeValueOne);
-  const [timerCircleVariable,SettimerCircleVariable] = useState(timeValueCircle);
+  const [timerVariable,SettimerVariable] = useState(60);
+  const [timerCircleVariable,SettimerCircleVariable] = useState(100);
 
   const [items,SetItems] = useState([]);
 
@@ -738,7 +735,7 @@ const BloggerDashboardComponent = (props) => {
     //xxx
     const BloggerListen = BloggerService.listenUserDataG().subscribe((data) => {//items
           //console.log(data);
-          console.log(currentTask,onlineStatus,approveStatus,emailStatus);
+          console.log(currentTask,onlineStatus);
           if((currentTask === 0) && (onlineStatus === 1) && (approveStatus == 1) && (emailStatus == 1)){ //if user don't have current task
             RenderFunction(data);
           }else{
@@ -878,12 +875,9 @@ useEffect(() => {
         }
     }else if(data.action === "starttask"){
 
-        let item = data.item;
-
         if(data.status === 1){
-
+          let item = data.item;
           StartTask(item);
-
         }
 
     }else if(data.action === "rejectorder"){
@@ -1025,8 +1019,8 @@ const IncrementFunction = () => {
 }
 
 const RefreshIncrement = () => {
-  SettimerCircleVariable(previousValue => timeValueCircle);
-  SettimerVariable(previousValue => timeValueOne);
+  SettimerCircleVariable(previousValue => 100);
+  SettimerVariable(previousValue => 60);
 }
 
 
@@ -1062,23 +1056,12 @@ useEffect(() => {
 const StartTask = ((item) => {
     Homeservice.notificationVoiceA();
     DetailTaskService.generateUrl(item.id);
-
-    if(item.type === 1){
-      GoToTaskM1(item);
-    }else{
-      GoToTask(item);
-    }
-
+    GoToTask(item);
 });
 
 const GoToTask = useCallback((item) => {
 
     return history.push({pathname: '/detailtask',data:item}), [history];
-
-});
-const GoToTaskM1 = useCallback((item) => {
-
-    return history.push({pathname: '/mdetailtask',data:item}), [history];
 
 });
 //xx
@@ -1199,14 +1182,81 @@ useEffect(() => {
 
   return (
 
-    <div id="opacityControl" >
-      <MenuComponent />
+    <div className={classestwo.root} >
+      <CssBaseline />
+      <AppBar
+        position="fixed"
+        className={clsx(classestwo.appBar, {
+          [classestwo.appBarShift]: open,
+        })}
+      >
+        <Toolbar>
+            <div className="myToolbar" >
+          <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            onClick={handleDrawerOpen}
+            className={clsx(classestwo.menuButton, open && classestwo.hide) + " leftM"}
+          >
+            <MenuIcon />
+          </IconButton>
 
-      <div className="projectContainer">
+          <Typography className="centerM" variant="h6" onClick={event => CloseDrawer()} noWrap>
+            {LocalizeComponent.creator_dashboard}
+          </Typography>
+          <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            onClick={rightHandleDrawerOpen}
+            className={clsx(classestwo.menuButton, open && classestwo.hide) + " rightM"}
+          >
+            <FilterListIcon />
+          </IconButton>
+          </div>
+        </Toolbar>
+      </AppBar>
 
 
+          <Drawer
+            className={classestwo.drawer + " leftDrawer"}
+            variant="persistent"
+            anchor="left"
+            open={open}
+            classes={{
+              paper: classestwo.drawerPaper,
+            }}
+          >
+            <div className={classestwo.drawerHeader}>
+              <IconButton onClick={handleDrawerClose}>
+                {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+              </IconButton>
+            </div>
+            <Divider />
 
+            {
+              approveStatus === 1 &&
+              emailStatus === 1 &&
+              (
+                <List >
+                  {[LocalizeComponent.contactsName,LocalizeComponent.myTasks].map((text, index) => (
+                    <ListItem button key={text} onClick={event => changePage(text)}>
+                      <ListItemIcon className={classestwo.icon}>
+                        {index == 0 && <InboxIcon />}
+                        {index == 1 && <MailIcon />}
+                        {index == 2 && <PaymentIcon />}
+                        {index == 3 && <PersonOutlineIcon />}
+                      </ListItemIcon>
+                      <ListItemText primary={text} />
+                    </ListItem>
+                  ))}
+                </List>
 
+            )
+          }
+
+            <Divider />
+
+          </Drawer>
 
 
 
@@ -1217,7 +1267,7 @@ useEffect(() => {
             [classestwo.contentShift]: open,
           })}
         >
-
+          <div className={classestwo.drawerHeader} />
 
 
 
@@ -1241,6 +1291,7 @@ useEffect(() => {
                 {
 
                       <DistrubuteComponent latitude={latitude} longitude={longitude} item={items[0]} status={status} timerVariable={timerVariable} timerCircleVariable={timerCircleVariable} />
+
 
                 }
 
@@ -1266,15 +1317,9 @@ useEffect(() => {
                     ) && (
                     <div className="CurrentTask">
                       <div className="CurrentTaskTwo_2">
-
-                          <div className="centerElements goOnlineStyleMargin" onClick={event => GoOnline()} >
-                            <div className="projectStyleButtonFrame projectBackgroundColor">
-                              <div className="projectStyleButton robotoFont projectFontSize centerText whiteFont">
-                                  {LocalizeComponent.go_online}
-                              </div>
-                            </div>
+                           <div className="buttonStylePush" onClick={event => GoOnline()}>
+                              <div className="CurrentTaskTwo_2Text">{LocalizeComponent.go_online}</div>
                           </div>
-
                       </div>
                     </div>
                     )
@@ -1332,11 +1377,73 @@ useEffect(() => {
        ) : (
 
 
+         <Drawer
+           className={classestwo.drawerRight + " leftDrawer"}
+           variant="persistent"
+           anchor="right"
+           open={openRight}
+           classes={{
+             paper: classestwo.drawerPaper,
+           }}
+         >
+           <div className={classestwo.drawerHeaderRight}>
+             <IconButton onClick={rightHandleDrawerClose}>
+               {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+             </IconButton>
+           </div>
+           <Divider />
+
+             {
+               approveStatus === 1 &&
+               emailStatus === 1 &&
+               (
+                 <div>
+                 <div className="switchBoxTwo">
+
+                   <div className="lswitchBoxTwo">
+                     {LocalizeComponent.searchLocal}
+                   </div>
+                   <div className="rswitchBoxTwo">
+                     <Switch
+                       checked={swithState}
+                       onChange={handleSwitch}
+                       color="primary"
+                       className="switchCheckbox"
+                       name="checkedA"
+                       inputProps={{ 'aria-label': 'primary checkbox' }}
+                     />
+
+                   </div>
 
 
-             <div></div>
+                 </div>
+                 <div className="switchBoxTwo">
+
+                   <div className="lswitchBoxTwo">
+                     {LocalizeComponent.Go_offline}
+                   </div>
+                   <div className="rswitchBoxTwo">
+                     <Switch
+                       checked={onlineStatusSwitcher}
+                       onChange={handleSwitchOnlineStatusSwitcher}
+                       color="primary"
+                       className="switchCheckbox"
+                       name="checkedA"
+                       inputProps={{ 'aria-label': 'primary checkbox' }}
+                     />
+
+                   </div>
 
 
+                 </div>
+
+               </div>
+               )
+             }
+
+           <Divider />
+
+         </Drawer>
        )}
 
 
@@ -1345,7 +1452,7 @@ useEffect(() => {
 
 
 
-    </div>
+
     </div>
 
 
