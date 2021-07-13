@@ -360,6 +360,7 @@ const DistrubuteComponent = (props) => {
   const status = props.status;
   const timerVariable = props.timerVariable;
   const timerCircleVariable = props.timerCircleVariable;
+  const userPoints = props.userPoints;
 
   //console.log(item)
 
@@ -367,7 +368,7 @@ const DistrubuteComponent = (props) => {
     if(item.type === 2){
       return <DirectionComponent latitude={latitude} longitude={longitude} item={item} status={status} />
     }else if(item.type === 1){
-        return <VideoComponent status={status} item={item} timerVariable={timerVariable} timerCircleVariable={timerCircleVariable} />;
+        return <VideoComponent status={status} item={item} timerVariable={timerVariable} timerCircleVariable={timerCircleVariable} userPoints={userPoints} />;
     }
   }else{
     return false;
@@ -423,6 +424,7 @@ const BloggerDashboardComponent = (props) => {
   const [items,SetItems] = useState([]);
 
   const [status,SetStatus] = useState(false);
+
   const [currentTask,SetcurrentTask] = useState(0);
   const [currentItem,SetcurrentItem] = useState({});
 
@@ -601,6 +603,16 @@ const BloggerDashboardComponent = (props) => {
     }
     //approvestatus
   },[])
+
+  const [userPoints,SetUserPoints] = useState(0);
+
+  useMemo(() => {
+      let userPoints = config.getUserItemName("points");
+
+      if(userPoints !== false){
+        SetUserPoints(Number(userPoints));
+      }
+  },[]);
 
 
 
@@ -917,15 +929,25 @@ useEffect(() => {
           //console.log(data.data[0].id);
           SetcurrentTask(data.data[0].id);
           SetcurrentItem(data.data[0]);
+        }else{
+          SetcurrentTask(0);
         }
 
       }
   });
 
+
+
   const TaskServiceListenUserInfo = TaskService.listengetUserInfo().subscribe(data => {
-    //console.log(data);
+  //  console.log(data);
       if(data.status == "ok"){
 //xx
+        //saving user Points
+        let userPoints = data.results[0].points;
+        SetUserPoints(Number(userPoints));
+        props.dispatch(multiSave({name:'points',value:userPoints}));
+        //saving user Points
+
         if(data.results[0].email_confirmed == 1){
           SetEmailStatus(1);
           props.dispatch(multiSave({name:'emailstatus',value:"1"}));
@@ -1071,6 +1093,15 @@ const StartTask = ((item) => {
 
 });
 
+const CheckTypeAndGoToTask = (item) => {
+  console.log(item);
+  if(item.type === 1){
+    GoToTaskM1(item);
+  }else if(item.type === 2){
+    GoToTask(item);
+  }
+}
+
 const GoToTask = useCallback((item) => {
 
     return history.push({pathname: '/detailtask',data:item}), [history];
@@ -1212,11 +1243,7 @@ useEffect(() => {
 
 
       {openRight === false ? (
-        <main
-          className={clsx(classestwo.content, {
-            [classestwo.contentShift]: open,
-          })}
-        >
+        <div>
 
 
 
@@ -1240,7 +1267,12 @@ useEffect(() => {
 
                 {
 
-                      <DistrubuteComponent latitude={latitude} longitude={longitude} item={items[0]} status={status} timerVariable={timerVariable} timerCircleVariable={timerCircleVariable} />
+                  currentTask === 0 &&
+                  status !== false &&
+                  onlineStatus === 1 &&
+                  (
+                    <DistrubuteComponent latitude={latitude} longitude={longitude} item={items[0]} status={status} timerVariable={timerVariable} timerCircleVariable={timerCircleVariable} userPoints={userPoints} />
+                  )
 
                 }
 
@@ -1249,11 +1281,19 @@ useEffect(() => {
                      currentTask != 0 && (
                        <div className="CurrentTask">
                          <div className="CurrentTaskTwo_2">
-                              <div className="buttonStylePush" onClick={event => GoToTask(currentItem)}>
-                                 <div className="CurrentTaskTwo_2Text">{LocalizeComponent.continue_task}</div>
+
+                             <div className="centerElements goOnlineStyleMargin" onClick={event => CheckTypeAndGoToTask(currentItem)} >
+                               <div className="projectStyleButtonFrame projectBackgroundColor">
+                                 <div className="projectStyleButton robotoFont projectFontSize centerText whiteFont">
+                                     {LocalizeComponent.continue_task}
+                                 </div>
+                               </div>
                              </div>
+
                          </div>
                        </div>
+
+
                     )
 
                   }
@@ -1328,7 +1368,7 @@ useEffect(() => {
              <ConfirmDialogComponent status={dialogStatus} left={leftbutton} right={rightbutton} text={dialogText}/>
 
 
-        </main>
+        </div>
        ) : (
 
 

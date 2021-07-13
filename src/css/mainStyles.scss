@@ -151,6 +151,11 @@ body{
   bottom:0px;
 
 }
+
+.PushVideoStylesCoverMargin{
+  margin-top:15px;
+  margin-bottom:15px;
+}
 .PushVideoStyles{
   width: 100%;
   z-index: 50;
@@ -1289,9 +1294,10 @@ ion-item {
 
 .alertPosition{
   width:70%;
-  position:absolute !important;
+  position:fixed !important;
   left:15%;
-  top:80%;
+  top:70%;
+  z-index: 2000;
 }
 .alertBoxPosition{
   margin-top:5px;

@@ -18,7 +18,7 @@ export default function FormDialog(props) {
   const [text,setText] = useState("");
 
   const ListenInput = (event) => {
-    console.log(event.target.value);
+  //  console.log(event.target.value);
     setText(event.target.value);
   }
 

@@ -18,7 +18,7 @@ const ExampleComponent = (props) => {
 
   const status = props.status;
 
-  console.log(status)
+  //console.log(status)
 
 
   return (

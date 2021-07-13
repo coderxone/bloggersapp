@@ -362,6 +362,7 @@ let strings = new LocalizedStrings({
    user_6:"First Name",
    user_7:"Last Name",
    user_8:"Bio",
+   user_9:"Price",
 
  },
 

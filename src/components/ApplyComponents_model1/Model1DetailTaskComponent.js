@@ -182,6 +182,16 @@ const DetailTaskComponent = (props) => {
     }
   },[]);
 
+  const [userPoints,SetUserPoints] = useState(0);
+
+  useMemo(() => {
+      let userPoints = config.getUserItemName("points");
+
+      if(userPoints !== false){
+        SetUserPoints(Number(userPoints));
+      }
+  },[]);
+
 
   const goToDownload = useCallback(() => {
 
@@ -607,7 +617,7 @@ const [downloadUrl,SetDownloadUrl] = useState('');
 useEffect(() => {
   const ListenlistenCheckUrl = DetailTaskService.listenReadyVideo().subscribe(data => {
 
-      console.log(data);
+      //console.log(data);
       if(data.status !== "false"){
         CountTaskFunction(data);
       }
@@ -622,7 +632,7 @@ useEffect(() => {
   //manage statuses
   const listenCurrentStatusL = DetailTaskService.listenCurrentStatus().subscribe(data => {
 
-    console.log(data);
+    //console.log(data);
 //xxx
     if(data.data.length > 0){
 
@@ -1128,6 +1138,8 @@ const EditNetwork = (data) => {
                       {LocalizeComponent.description_n}: {detailData.description}
                       <br/>
                       {LocalizeComponent.Location_n}: {detailData.location_name}
+                      <br/>
+                      {LocalizeComponent.user_9}: ${userPoints}
                   </div>
               </div>
 
@@ -1161,9 +1173,17 @@ const EditNetwork = (data) => {
             }
 
 
-            <div className="PushVideoStyles" onClick={Start}>
-              <video width="100%" ref={playVideo} src={detailData.videourl}  poster={BusinessPoster} type="video/mp4"/>
-            </div>
+            {
+              currentTaskStatus === 0 && (
+                <div>
+                <div className="PushVideoStyles PushVideoStylesCoverMargin" onClick={Start}>
+                  <video width="100%" ref={playVideo} src={detailData.videourl}  poster={BusinessPoster} type="video/mp4"/>
+                </div>
+                <div className="BlockDivider"></div>
+                </div>
+              )
+            }
+
 
 
             {

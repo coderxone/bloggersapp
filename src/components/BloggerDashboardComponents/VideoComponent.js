@@ -31,6 +31,7 @@ const VideoComponent = (props) => {
   const [playState,SetPlayState] = useState(0);
   const timerVariable = props.timerVariable;
   const timerCircleVariable = props.timerCircleVariable;
+  const userPoints = props.userPoints;
 
   const downloadUrl = useMemo(() => {
     return config.getVideoUrl() + item.videourl;
@@ -86,7 +87,7 @@ const VideoComponent = (props) => {
         <div className="PushVideoStyles" onClick={Start}>
           <video width="100%" ref={playVideo} src={downloadUrl}  poster={BusinessPoster} type="video/mp4"/>
         </div>
-        <TaskPushModelOne item={item}  status={status} timerVariable={timerVariable} timerCircleVariable={timerCircleVariable} />
+        <TaskPushModelOne item={item}  status={status} timerVariable={timerVariable} timerCircleVariable={timerCircleVariable} userPoints={userPoints}/>
 
 
       </div>

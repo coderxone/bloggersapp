@@ -11,6 +11,7 @@ const ShowPushModel1 = (props) => {
   const status = props.status;
   const timerVariable = props.timerVariable;
   const timerCircleVariable = props.timerCircleVariable;
+  const userPoints = props.userPoints;
   const StartTask = (item) => {
     let sendObj = {
       action:"starttask",
@@ -67,7 +68,7 @@ const ShowPushModel1 = (props) => {
             <div className="gorizontalGreyLine">
             </div>
             <div className="mainPushColumsTwo_1_Price">
-              ${Math.round(item.sum / item.peoplecount - 1)}
+              ${userPoints}
             </div>
             <div className="mainPushColumsTwo_2_Second">
                 {LocalizeComponent.tips}
