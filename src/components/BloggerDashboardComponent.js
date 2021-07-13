@@ -273,7 +273,7 @@ const BlockComponent = (props) => {
 
 const ShowPush = (props) => {
 
-  const items = props.items;
+  const item = props.item;
   const distance = props.distance;
   const status = props.status;
   const timerVariable = props.timerVariable;
@@ -302,14 +302,14 @@ const ShowPush = (props) => {
   return (
     <div className="mainPush_root">
       <div className="declineButtonBlock">
-         <div className="declineButtonStyle" onClick={event => rejectOrder(items[0])}>
+         <div className="declineButtonStyle" onClick={event => rejectOrder(item)}>
              {LocalizeComponent.Decline}
          </div>
       </div>
       <div className="mainPush">
         <div className="mainPushColumsOne">
           <div className="mainPushColumsOneLeft">
-              <div className="mainPushColumsOneLeft_1">{LocalizeComponent.do_before} {items[0].date}</div>
+              <div className="mainPushColumsOneLeft_1">{LocalizeComponent.do_before} {item.date}</div>
               <div className="mainPushColumsOneLeft_2">{items[0].url}</div>
               <div className="mainPushColumsOneLeft_3">{LocalizeComponent.distance}: {distance}</div>
 
@@ -351,7 +351,26 @@ const ShowPush = (props) => {
   );
 }
 
-//xxx
+const DirectionPush = (props) => {
+
+  const latitude = props.latitude;
+  const longitude = props.longitude;
+  const item = props.item;
+  const status = props.status;
+  const timerVariable = props.timerVariable;
+  const timerCircleVariable = props.timerCircleVariable;
+  const distance = props.distance;
+
+  return (
+    <div>
+      <DirectionComponent latitude={latitude} longitude={longitude} item={item} status={status} />
+      <ShowPush item={item} distance={distance} status={status} timerVariable={timerVariable} timerCircleVariable={timerCircleVariable}/>
+    </div>
+
+  )
+}
+
+//xxxz
 const DistrubuteComponent = (props) => {
 
   const latitude = props.latitude;
@@ -361,12 +380,13 @@ const DistrubuteComponent = (props) => {
   const timerVariable = props.timerVariable;
   const timerCircleVariable = props.timerCircleVariable;
   const userPoints = props.userPoints;
+  const distance = props.distance;
 
   //console.log(item)
 
   if(status === true){
     if(item.type === 2){
-      return <DirectionComponent latitude={latitude} longitude={longitude} item={item} status={status} />
+      <DirectionPush distance={distance} latitude={latitude} timerVariable={timerVariable} timerCircleVariable={timerCircleVariable} longitude={longitude} item={item} status={status}/>
     }else if(item.type === 1){
         return <VideoComponent status={status} item={item} timerVariable={timerVariable} timerCircleVariable={timerCircleVariable} userPoints={userPoints} />;
     }
@@ -938,33 +958,7 @@ useEffect(() => {
 
 
 
-  const TaskServiceListenUserInfo = TaskService.listengetUserInfo().subscribe(data => {
-  //  console.log(data);
-      if(data.status == "ok"){
-//xx
-        //saving user Points
-        let userPoints = data.results[0].points;
-        SetUserPoints(Number(userPoints));
-        props.dispatch(multiSave({name:'points',value:userPoints}));
-        //saving user Points
 
-        if(data.results[0].email_confirmed == 1){
-          SetEmailStatus(1);
-          props.dispatch(multiSave({name:'emailstatus',value:"1"}));
-        }else{
-          props.dispatch(multiSave({name:'emailstatus',value:"0"}));
-          SetEmailStatus(0);
-        }
-
-        if(data.results[0].verified == 1){
-            SetapproveStatus(1);
-            props.dispatch(save_multiData({_object:'approvestatus',name:"1"}));
-        }else if(data.results[0].verified == 0){
-            SetapproveStatus(0);
-            props.dispatch(save_multiData({_object:'approvestatus',name:"0"}));
-        }
-      }
-  });
 
 
 //xx
@@ -1031,7 +1025,7 @@ useEffect(() => {
         ListenlistenSetUrl.unsubscribe();
         listenSubmittedOrder.unsubscribe();
         TaskServiceListen.unsubscribe();
-        TaskServiceListenUserInfo.unsubscribe();
+
         checkTimer.unsubscribe();
         listenBanVideos.unsubscribe();
         checkTimer10Sec.unsubscribe();
@@ -1039,6 +1033,44 @@ useEffect(() => {
     }
 
 },[])
+
+
+useEffect(() => {
+  const TaskServiceListenUserInfo = TaskService.listengetUserInfo().subscribe(data => {
+  //  console.log(data);
+      if(data.status == "ok"){
+
+        //saving user Points
+        let userPointsX = data.results[0].points;
+
+        if(userPoints !== Number(userPointsX)){
+          SetUserPoints(Number(userPointsX));
+          props.dispatch(multiSave({name:'points',value:userPointsX}));
+        }
+
+        //saving user Points
+      if(emailStatus === 0){
+        if(data.results[0].email_confirmed == 1){
+          SetEmailStatus(1);
+          props.dispatch(multiSave({name:'emailstatus',value:"1"}));
+        }
+      }
+
+        if(approveStatus === 0){
+          if(data.results[0].verified == 1){
+              SetapproveStatus(1);
+              props.dispatch(save_multiData({_object:'approvestatus',name:"1"}));
+          }
+        }
+
+      }
+  });
+
+
+  return () => {
+    TaskServiceListenUserInfo.unsubscribe();
+  }
+},[userPoints,emailStatus,approveStatus]);
 ///---------
 
 const IncrementFunction = () => {
@@ -1271,7 +1303,7 @@ useEffect(() => {
                   status !== false &&
                   onlineStatus === 1 &&
                   (
-                    <DistrubuteComponent latitude={latitude} longitude={longitude} item={items[0]} status={status} timerVariable={timerVariable} timerCircleVariable={timerCircleVariable} userPoints={userPoints} />
+                    <DistrubuteComponent distance={distance} latitude={latitude} longitude={longitude} item={items[0]} status={status} timerVariable={timerVariable} timerCircleVariable={timerCircleVariable} userPoints={userPoints} />
                   )
 
                 }
