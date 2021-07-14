@@ -116,7 +116,7 @@ const AuthorizationComponent = (props) => {
 
     //console.log(data);
 
-    data.picture = "0";
+    data.picture = "no-image.png";
     data.name = "0";
     data.social = 0;
     const newState = {...storageData};

@@ -25,6 +25,7 @@ import Observable from '../services/Observable';
 import DialogComponent from '../components/DialogComponent';
 import config from '../config/config.js';
 import styles from "@chatscope/chat-ui-kit-styles/dist/default/styles.min.css";
+import MainService from '../services/MainService';
 
 import {
   MainContainer,
@@ -278,7 +279,7 @@ const SuggestComponent = (props) => {
 
   }
 
-  const demoUrl = "https://echohub.io/newimages/no-image.png";
+  const [demoUrl,SetUserProfileImage] = useState(config.getServerImagePath() + "no-image.png");
 
   const [lastMessageId,setLastMessageId] = useState(0);
 
@@ -294,6 +295,8 @@ const SuggestComponent = (props) => {
           if(existlist.length < 1){
             return false;
           }
+
+
           const newList = [...messagesList];
           var lastMid = 0;
 
@@ -335,7 +338,7 @@ const SuggestComponent = (props) => {
 
     //unsubscribe
 
-  }, []);
+  }, [demoUrl]);
 
   const requestToCheckMessages = (() => {
     var checkObj = {
@@ -344,6 +347,10 @@ const SuggestComponent = (props) => {
     }
     //initiase functions
     ChatService.checkGetAllMessages(checkObj);
+  });
+
+  const requestToGetProfileImage = (() => {
+    MainService.getUserData(currentEmail);
   });
 
   const initMessageService = (() => {
@@ -421,14 +428,25 @@ const SuggestComponent = (props) => {
       listenSendM.unsubscribe();
     }
 
-  },[messagesList,lastMessageId])
+  },[messagesList,lastMessageId,demoUrl])
 
 
   useEffect(() => {
 
     initMessageService();
     initMessageService();
-    requestToCheckMessages();
+
+    let listenProfileImage = MainService.listenUserDataG().subscribe(result => {
+      let image = result.result.image_url;
+      SetUserProfileImage(config.getServerImagePath() + image);
+      requestToCheckMessages();
+    })
+
+    requestToGetProfileImage();
+
+    return () => {
+      listenProfileImage.unsubscribe();
+    }
 
 
   }, []);

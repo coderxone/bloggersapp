@@ -4,8 +4,11 @@ import Obfuscate from 'react-obfuscate';
 const deployMode = "development";//development//production
 const deployPlatform = "browser";//browser//android
 const routeUrl = "https://echohub.io";
-const serverImagePath = "https://echohub.io/newimages/profileImages";
-const serverImageBackgroundPath = "https://echohub.io/newimages/profileImages";
+const serverNewImages = "https://echohub.io/newimages/";
+const serverImagePath = "https://echohub.io/profileImages/";
+const serverImageBackgroundPath = "https://echohub.io/backgroundImages/";
+const serverVideoPath = "https://echohub.io/videoUploads/";
+
 
 const baseurl = 'https://echohub.io:3004';//browser https
 //const baseurl = 'https://localhost:3004';
@@ -79,8 +82,14 @@ const newmodule = {
       getBaseDomainUrl:() => {
         return baseurl;
       },
+      getServerNewFolderPath:() => {
+        return serverNewImages;
+      },
       getServerImagePath:() => {
         return serverImagePath;
+      },
+      getServerVideoPath:() => {
+        return serverVideoPath;
       },
       getServerImageBackgroundPath:() => {
         return serverImageBackgroundPath;

@@ -25,7 +25,7 @@ import HomeService from '../services/Homeservice';
 import ContactListService from '../services/ContactListService';
 import DialogComponent from '../components/DialogComponent';
 import config from '../config/config.js';
-
+import LinearProgress from '@material-ui/core/LinearProgress';
 import { increment, decrement,save_email } from '../actions/actions';
 import {
   Link,
@@ -68,7 +68,9 @@ const MapList = ((props) => {
 
   const list = props.list;
 
-  const eliotIco = "https://echohub.io/newimages/no-image.png";
+  //console.log(list)
+
+  const eliotIco = "no-image.png";
 
   const [messageCount,setMessageCount] = useState(3);
   const [online,setOnline] = useState(1);
@@ -112,7 +114,7 @@ const MapList = ((props) => {
 
          key={item.id} className="mainList deleteUrlClass">
           <div className="pleftBlock">
-            <div style ={ { backgroundPosition: "center",backgroundRepeat:"no-repeat",backgroundSize:"cover",background: "url("+eliotIco+") no-repeat center/cover" }  } className="pleftBlockOne"></div>
+            <div style ={ { backgroundPosition: "center",backgroundRepeat:"no-repeat",backgroundSize:"cover",background: "url("+ config.getServerImagePath() + item.image_url + ") no-repeat center/cover" }  } className="pleftBlockOne"></div>
             <div className="pleftBlockTwo">
             {item.online == 1 ? (
                   <FiberManualRecordIcon className="mysize "/>
@@ -197,14 +199,27 @@ const ContactListComponent = (props) => {
 
   const [closeDialog,setCloseDialog] = useState(false);
 
+  const [existsMessages,SetExistsMessages] = useState(true);
+
   const [contactList,setContactList] = useState([]);
+  const [loader,setLoader] = useState(true);
 
 
 
   useEffect(() => {
 
     const contactsub = ContactListService.listenContactData().subscribe(data => {
-      setContactList(data.data);
+
+      let list = data.data;
+
+      if(list.length > 0){
+        setContactList(list);
+        setLoader(false);
+      }else{
+        SetExistsMessages(false);
+
+      }
+
     });
     //unsubscribe
 
@@ -241,15 +256,39 @@ const ContactListComponent = (props) => {
         <GoBackAbsoluteComponent />
         <Grid container >
 
-          <MapList list={contactList} />
+        <div className="ContactsProgress">
+            {
+              loader === true && (
+                <LinearProgress className="ContactsProgress" color="secondary" />
+              )
+            }
+        </div>
+
+        {
+            existsMessages === false ? (
+            <div className="noMessagesPosition">
+              <div className="centerElements">
+                  <img className="noMessages" src={config.getServerNewFolderPath() + "cat.png"} alt="echohub.io cat"/>
+              </div>
+
+              <div className="approvalBysystem">
+                 <div className="approvalText blink_me">
+                     {LocalizeComponent.no_messagesYet}
+                 </div>
+              </div>
+
+            </div>
+          ) : (
+            <MapList list={contactList} />
+          )
+        }
 
 
         </Grid>
       </div>
 
-
   );
 };
 
-
+//
  export default connect(mapStateToProps,mapDispatchToProps)(ContactListComponent);

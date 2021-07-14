@@ -18,7 +18,7 @@ const MainService = {
               "checkEmail": comingData,
             }
 
-            console.log(data);
+            //console.log(data);
 
             var encryptedData = cryptLibrary.encrypt(data);
 

@@ -34,7 +34,7 @@ const VideoComponent = (props) => {
   const userPoints = props.userPoints;
 
   const downloadUrl = useMemo(() => {
-    return config.getVideoUrl() + item.videourl;
+    return config.getServerVideoPath() + item.videourl;
   },[]);
 
 

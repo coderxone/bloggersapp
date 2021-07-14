@@ -370,7 +370,7 @@ let strings = new LocalizedStrings({
    user_14:"Go to Dashboard",
    user_15:"This program does the same as Elon Musk's tweet, and the whole world will know about it. Why, like Elon Musk, because we collect all people with their subscribers around the world, this allowed us to collect a large number of subscribers, and when a business sends videos to our program, all the people who are on our platform just publish your videos in their own social networks.",
    about_1:"Hi, we are «D, G и GB». We are a Silicon Valley startup team. Located in Mountain View, California. What we are doing is creating a platform that connects all people with a large number of subscribers around the world. We allowed people with a large number of followers to monetize their social networks, and companies to massively distribute videos about their business.",
-
+   no_messagesYet:"no messages yet..",
  },
 
 

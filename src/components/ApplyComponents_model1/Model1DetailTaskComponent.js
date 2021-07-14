@@ -1177,7 +1177,7 @@ const EditNetwork = (data) => {
               currentTaskStatus === 0 && (
                 <div>
                 <div className="PushVideoStyles PushVideoStylesCoverMargin" onClick={Start}>
-                  <video width="100%" ref={playVideo} src={detailData.videourl}  poster={BusinessPoster} type="video/mp4"/>
+                  <video width="100%" ref={playVideo} src={config.getServerVideoPath() + detailData.videourl}  poster={BusinessPoster} type="video/mp4"/>
                 </div>
                 <div className="BlockDivider"></div>
                 </div>
@@ -1192,13 +1192,13 @@ const EditNetwork = (data) => {
               detailData.videourl !== '' &&
               (
                 <div className="VideoImageStyleContainer">
-                    <a  target="_blank" href={detailData.videourl}>
+                    <a  target="_blank" download href={config.getServerVideoPath() + detailData.videourl}>
                       <Button
                         variant="contained"
                         color="primary"
                         className={classes.button}
                         startIcon={<CloudUploadIcon />}
-                        download
+
 
                       >
                       {LocalizeComponent.m1_insruction_step7}
