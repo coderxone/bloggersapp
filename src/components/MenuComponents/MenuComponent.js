@@ -1,4 +1,4 @@
-import React, {useState,useCallback} from 'react';
+import React, {useState,useCallback,useMemo} from 'react';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import LocalizeComponent from '../../localize/LocalizeComponent';
@@ -17,7 +17,7 @@ import {
   Link,
 } from "react-router-dom";
 import {useSelector,useDispatch} from 'react-redux';
-import {handleSwitch,handleSwitchOnlineStatusSwitcher} from '../../features/counter-slice';
+import {handleSwitch,handleSwitchOnlineStatusSwitcher,SetUserRole,SetUserAuthorization} from '../../features/counter-slice';
 
 
 
@@ -35,6 +35,8 @@ const ExampleComponent = (props) => {
   const authorized_user = useSelector(state => state.counter.authorized_user);
   const swithState = useSelector((state) => state.counter.bloggerDashboard.swithState);
   const onlineStatusSwitcher = useSelector((state) => state.counter.bloggerDashboard.onlineStatusSwitcher);
+  const approveStatus = useSelector(state => state.counter.bloggerDashboard.approveStatus);
+  const emailStatus = useSelector(state => state.counter.bloggerDashboard.emailStatus);
   const dispatch = useDispatch();
 
   const history = useHistory();
@@ -44,6 +46,13 @@ const ExampleComponent = (props) => {
   const GoToLogin = useCallback(() => {
 
       return history.push({pathname: '/login'}), [history];
+
+  });
+
+  const Logout = useCallback(() => {
+
+              config.LogoutUser();
+      return history.push({pathname: '/main'}), [history];
 
   });
 
@@ -72,9 +81,23 @@ const ExampleComponent = (props) => {
     document.getElementById("mySidenavR").style.width = "0";
     document.getElementById("mySidenavR").style.marginLeft = "0%";
     document.getElementById("opacityControl").style.backgroundColor = "transparent";
-
-
   }
+
+
+  const authorization = useSelector(state => state.counter.bloggerDashboard.authorization);
+  const userRole = useSelector(state => state.counter.bloggerDashboard.role);
+
+  useMemo(() => {
+    let checkUserAuthorization = config.CheckIfAuthorized();
+    dispatch(SetUserAuthorization(checkUserAuthorization));
+
+    let userRole = Number(config.getUserRole());
+    dispatch(SetUserRole(userRole))
+  });
+
+
+
+
 
   const logoStatus = 1;
 
@@ -90,10 +113,30 @@ const ExampleComponent = (props) => {
         <div className="mySidenavChild">
 
             <a  className="closebtn" onClick={closeNav}>&times;</a>
-            <a href="#">About</a>
-            <a href="#">Services</a>
-            <a href="#">Clients</a>
-            <a href="#">Contact</a>
+
+          {
+            authorization === true &&
+            bloggerPermission === 1 && (
+              <div>
+                  <div className="menuLeftMargin">
+                    <Link to={{pathname: "/contactlist"}}>{LocalizeComponent.contactsName}</Link>
+                    <Link to={{pathname: "/mytasks"}}>{LocalizeComponent.myTasks}</Link>
+
+                  </div>
+                  <div className="menuTopMargin menuLeftMargin">
+                    <Link to={{pathname: "/userprofile"}}>{LocalizeComponent.user_11}</Link>
+                  </div>
+              </div>
+            )
+          }
+
+
+          <div className="menuLogout"  onClick={Logout}>
+              <div className="menuLeftMargin menuLogoutText">
+                  {LocalizeComponent.user_12}
+              </div>
+          </div>
+
 
         </div>
 
@@ -115,32 +158,61 @@ const ExampleComponent = (props) => {
                   <div className="menuTopMargin menuLeftMargin">
                     <Link to={{pathname: "/main"}}>{LocalizeComponent.home}</Link>
                     <Link to={{pathname: "/about"}}>{LocalizeComponent.About_Connect}</Link>
-
-
-                    <a href="#">{LocalizeComponent.Why}</a>
+                    <Link to={{pathname: "/why"}}>{LocalizeComponent.Why}</Link>
                     <a target="_blank" href="mailto:info@echohub.io">{LocalizeComponent.contactUs}</a>
                   </div>
+                {
+                  authorization === true && (
+                    <div className="menuTopMargin menuLeftMargin">
+                      {
+
+                        userRole === 1 ? (
+                          <Link to={{pathname: "/blogger"}}>{LocalizeComponent.user_13}</Link>
+                        ) : (
+                          <Link to={{pathname: "/business"}}>{LocalizeComponent.user_13}</Link>
+                        )
+                      }
+                    </div>
+                  )
+                }
+
 
                   <div className="menuDevider menuTopMargin"></div>
 
-                  <div className="menuLogIn"  onClick={GoToLogin}>
-                      <div className="menuSignUpText ">
-                          {LocalizeComponent.log_in}
+                {
+                  authorization === true ? (
+                    <div className="menuLogout"  onClick={Logout}>
+                        <div className="menuLeftMargin menuLogoutText">
+                            {LocalizeComponent.user_12}
+                        </div>
+                    </div>
+                  ) : (
+                    <div>
+                      <div className="menuLogIn"  onClick={GoToLogin}>
+                          <div className="menuSignUpText ">
+                              {LocalizeComponent.log_in}
+                          </div>
                       </div>
-                  </div>
 
-                  <div className="menuCenterSocial">
+                      <div className="menuCenterSocial">
 
-                      <FacebookWebLoginComponent />
+                          <FacebookWebLoginComponent />
 
-                  </div>
+                      </div>
+                    </div>
+                  )
+                }
+
+
               </div>
             )
           }
 
           {
-            bloggerPermission === 1 && (
-              <div>
+            bloggerPermission === 1 &&
+            approveStatus === 1 &&
+            emailStatus === 1 && (
+              <div className="switchBoxMenu">
                 <div className="switchBoxTwo">
 
                   <div className="lswitchBoxTwo">
@@ -212,9 +284,13 @@ const ExampleComponent = (props) => {
 
 
             <div className="menuSignUp"  onClick={GoToLogin}>
-                <div className="menuSignUpText rightText">
-                    {LocalizeComponent.Sign_up}
-                </div>
+              {
+                authorization === false && (
+                  <div className="menuSignUpText rightText">
+                      {LocalizeComponent.Sign_up}
+                  </div>
+                )
+              }
             </div>
 
             <div className="menuIcon" onClick={openNavR}>

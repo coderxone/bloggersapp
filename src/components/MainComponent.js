@@ -19,7 +19,7 @@ import AnnouncementIcon from '@material-ui/icons/Announcement';
 import CenterFocusStrongIcon from '@material-ui/icons/CenterFocusStrong';
 import TrendingUpIcon from '@material-ui/icons/TrendingUp';
 import WorkIcon from '@material-ui/icons/Work';
-
+import {useSelector} from 'react-redux';
 
 
 import PushComponent from '../helperComponents/NativePushNotificationComponent';
@@ -69,6 +69,14 @@ const BottomFunc = () => {
 
   const goToLogin = () => {
     SetRoute("/login");
+    Setredirect(true);
+  };
+  const goToBloggerDashBoard = () => {
+    SetRoute("/blogger");
+    Setredirect(true);
+  };
+  const goToBusinessDashBoard = () => {
+    SetRoute("/business");
     Setredirect(true);
   };
 
@@ -257,8 +265,6 @@ const BottomFunc = () => {
 
 
 
-
-
     return () => {
       ObservableMobileListener.unsubscribe();
       ObservableLangListener.unsubscribe();
@@ -269,6 +275,9 @@ const BottomFunc = () => {
 
 
   },[]);
+
+  const authorization = useSelector(state => state.counter.bloggerDashboard.authorization);
+  const userRole = useSelector(state => state.counter.bloggerDashboard.role);
 
   return (
 
@@ -292,13 +301,41 @@ const BottomFunc = () => {
                 </div>
             </div>
 
-            <div className="centerElements getStartedButtonMargin"  onClick={goToLogin}>
-              <div className="getStartedButtonFrame">
-                <div className="getStartedButton robotoFont smallFontSize blackColor centerText">
-                    {LocalizeComponent.a_4}
+            {
+              authorization === false ? (
+                <div className="centerElements getStartedButtonMargin"  onClick={goToLogin}>
+                  <div className="getStartedButtonFrame">
+                    <div className="getStartedButton robotoFont smallFontSize blackColor centerText">
+                        {LocalizeComponent.a_4}
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
+              ) : (
+                <div className="centerElements getStartedButtonMargin">
+                {
+                  userRole === 1 ? (
+
+                      <div className="getStartedButtonFrame"   onClick={goToBloggerDashBoard}>
+                        <div className="getStartedButton robotoFont smallFontSize blackColor centerText">
+                            {LocalizeComponent.user_14}
+                        </div>
+                      </div>
+
+                  ) : (
+
+                      <div className="getStartedButtonFrame"  onClick={goToBusinessDashBoard}>
+                        <div className="getStartedButton robotoFont smallFontSize blackColor centerText">
+                            {LocalizeComponent.user_14}
+                        </div>
+                      </div>
+
+                  )
+                }
+                </div>
+
+              )
+            }
+
 
             <div className="mainPageDeviderBlock">
               <div className="mainPageDevider"></div>

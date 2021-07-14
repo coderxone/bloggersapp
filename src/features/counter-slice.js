@@ -4,12 +4,16 @@ const initialState = {
   value: 0,
   IMAGE_DATA:{},
   BACKGROUND_IMAGE_DATA:{},
-  authorized_user:0,
+
   bloggerDashboard:{
-    blogger_autorization_menu:1,
+    blogger_autorization_menu:0,
     swithState:false,
     onlineStatusSwitcher:false,
     onlineStatus:0,
+    approveStatus:0,
+    emailStatus:0,
+    role:1,
+    authorization:false,
   }
  }
 
@@ -33,10 +37,10 @@ const counterSlice = createSlice({
       state.BACKGROUND_IMAGE_DATA = action.payload
     },
     enableBloggerMenu(state) {
-      state.blogger_autorization_menu = 1;
+      state.bloggerDashboard.blogger_autorization_menu = 1;
     },
     disableBloggerMenu(state) {
-      state.blogger_autorization_menu = 0;
+      state.bloggerDashboard.blogger_autorization_menu = 0;
     },
     enableAuthorized_user(state) {
       state.authorized_user = 1;
@@ -82,6 +86,18 @@ const counterSlice = createSlice({
         localStorage.setItem("online",1);
         state.bloggerDashboard.onlineStatusSwitcher = false;
     },
+    SetapproveStatus(state,action){
+      state.bloggerDashboard.approveStatus = action.payload;
+    },
+    SetEmailStatus(state,action){
+      state.bloggerDashboard.emailStatus = action.payload;
+    },
+    SetUserRole(state,action){
+      state.bloggerDashboard.role = action.payload;
+    },
+    SetUserAuthorization(state,action){
+      state.bloggerDashboard.authorization = action.payload;
+    },
   },
 })
 
@@ -101,6 +117,10 @@ export const { increment,
   SetonlineStatus,
   GoOffline,
   GoOnline,
+  SetapproveStatus,
+  SetEmailStatus,
+  SetUserRole,
+  SetUserAuthorization,
 
  } = counterSlice.actions
 export default counterSlice.reducer;

@@ -51,6 +51,7 @@ import creatorComponent from './components/introductionComponents/creatorCompone
 import BusinessIntroComponent from './components/introductionComponents/BusinessIntroComponent';
 import userProfileComponent from './components/profileComponents/userProfileComponent';
 import userProfilePhotoUpload from './components/profileComponents/userProfilePhotoUpload';
+import WhyEchohubComponent from './components/introductionComponents/WhyEchohubComponent';
 
 
 const App = () => {
@@ -103,6 +104,7 @@ const App = () => {
                 <Route path="/creator" back={true} component={creatorComponent} exact={true} />
                 <Route path="/businessintro" back={true} component={BusinessIntroComponent} exact={true} />
                 <Route path="/userprofile" back={true} component={userProfileComponent} exact={true} />
+                <Route path="/why" back={true} component={WhyEchohubComponent} exact={true} />
                 <Route exact path="/" render={() => <Redirect to="/main" />} />
                 </LastLocationProvider>
               </Router>

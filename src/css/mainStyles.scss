@@ -930,16 +930,17 @@ body{
   width:75%;
   height: 100%;
   // background-color: purple;
-  font-family:$fontStyles;
-  font-size: $font-size;
-  color:$base-app-color;
+  padding: 8px 8px 8px 32px;
+  font-size: 16px;
+  font-family: RobotoLight;
+  font-style: normal;
+  color: #000000;
   font-weight: bold;
   overflow: hidden !important;
 
 }
 .rswitchBoxTwo{
   float: left;
-  margin-top:15px;
   width:25%;
   height: 100%;
   overflow: hidden !important;
@@ -2395,6 +2396,9 @@ body {
 }
 .projectMarginTop{
   margin-top:10px;
+}
+.projectMarginTopDescription{
+  margin-top:20px;
 }
 .projectMarginTopByPercent{
   margin-top:10%;

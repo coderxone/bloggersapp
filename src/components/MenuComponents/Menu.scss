@@ -94,9 +94,18 @@ $menufontsize:16px;
   transition: 0.3s;
 }
 
+
+
 /* When you mouse over the navigation links, change their color */
 .sidenavR a:hover {
-  color: #f1f1f1;
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: $menufontsize;
+  font-family: RobotoLight;
+  font-style: normal;
+  color: #000000;
+  display: block;
+  transition: 0.3s;
 }
 
 /* Position and style the close button (top right corner) */
@@ -210,6 +219,20 @@ $menufontsize:16px;
   margin-left:58%;
   margin-top:30px;
 }
+.menuLogout{
+  position:absolute;
+  width:100px;
+  left:0px;
+  top:90%;
+}
+
+.menuLogoutText{
+  padding: 8px 8px 8px 32px;
+  font-size: $menufontsize;
+  font-family: RobotoLight;
+  font-style: normal;
+  color: #000000;
+}
 
 .menuCenterSocial{
    width: 85%;
@@ -219,4 +242,8 @@ $menufontsize:16px;
    justify-content: center;
    font-family: AppFont;
    margin-top:20px;
+}
+
+.switchBoxMenu{
+  padding-top:10px;
 }

@@ -125,6 +125,10 @@ const FacebookWebLoginComponent = (props) => {
         /** @type {firebase.auth.OAuthCredential} */
         var credential = result.credential;
 
+        var token = credential.accessToken;
+        console.log(token);
+        console.log("-----");
+        console.log(result);
         // The signed-in user info.
         var user = result.user;
 

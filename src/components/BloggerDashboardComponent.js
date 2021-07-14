@@ -31,7 +31,7 @@ import { Plugins } from '@capacitor/core';
 import VideoComponent from '../components/BloggerDashboardComponents/VideoComponent';
 import MenuComponent from '../components/MenuComponents/MenuComponent';
 import ShowPushComponentM2 from '../components/BloggerDashboardComponents/ShowPushComponentM2';
-import { enableBloggerMenu,disableBloggerMenu,SetswithState,SetonlineStatusSwitcher,SetonlineStatus,GoOffline,GoOnline } from '../features/counter-slice';
+import { enableBloggerMenu,disableBloggerMenu,SetswithState,SetonlineStatusSwitcher,SetonlineStatus,GoOffline,GoOnline,SetapproveStatus,SetEmailStatus } from '../features/counter-slice';
 import { useSelector, useDispatch } from 'react-redux';
 const { Geolocation } = Plugins;
 
@@ -114,8 +114,9 @@ const BloggerDashboardComponent = (props) => {
     email:""
   };
 
-  const [approveStatus,SetapproveStatus] = useState(0);
-  const [emailStatus,SetEmailStatus] = useState(0);
+  const approveStatus = useSelector(state => state.counter.bloggerDashboard.approveStatus);
+  const emailStatus = useSelector(state => state.counter.bloggerDashboard.emailStatus);
+  const bloggerPermission = useSelector(state => state.counter.bloggerDashboard.blogger_autorization_menu);
 
   // const TimeoutRequest = () => {
   //   setTimeout(function(){
@@ -188,10 +189,10 @@ const BloggerDashboardComponent = (props) => {
     //busy variable status
     if(status === false && currentTask === 0){
       if(swithState === false){
-        console.log("swithch == " + swithState);
-        console.log("status == " + status);
-        console.log("incrementCoordinates == " + incrementCoordinates);
-        console.log("currentTask == " + currentTask);
+        // console.log("swithch == " + swithState);
+        // console.log("status == " + status);
+        // console.log("incrementCoordinates == " + incrementCoordinates);
+        // console.log("currentTask == " + currentTask);
         SwitchCoordinates(incrementCoordinates);
       }
     }
@@ -232,7 +233,7 @@ const BloggerDashboardComponent = (props) => {
     }else{
       var gps = 2;
       if(swithState === false){
-        console.log("gps" + gps);
+        //console.log("gps" + gps);
         //xxx
         BloggerService.setAllData(latitude,longitude,gps);
       }
@@ -293,9 +294,10 @@ const BloggerDashboardComponent = (props) => {
     var localApprove_status = config.getUserItemName("approvestatus");
     if(localApprove_status != false){
       if(localApprove_status == "1"){
-        SetapproveStatus(1);
+        dispatch(SetapproveStatus(1));
+        dispatch(enableBloggerMenu());
       }else if(localApprove_status == "0"){
-        SetapproveStatus(0);
+        dispatch(SetapproveStatus(0));
       }
     }
     //approvestatus
@@ -305,9 +307,10 @@ const BloggerDashboardComponent = (props) => {
     var localApprove_status = config.getUserItemName("emailstatus");
     if(localApprove_status != false){
       if(localApprove_status == "1"){
-        SetEmailStatus(1);
+        dispatch(SetEmailStatus(1));
+        dispatch(enableBloggerMenu());
       }else if(localApprove_status == "0"){
-        SetEmailStatus(0);
+        dispatch(SetEmailStatus(0));
       }
     }
     //approvestatus
@@ -454,7 +457,7 @@ const BloggerDashboardComponent = (props) => {
     //xxx
     const BloggerListen = BloggerService.listenUserDataG().subscribe((data) => {//items
           //console.log(data);
-          console.log(currentTask,onlineStatus,approveStatus,emailStatus);
+          //console.log(currentTask,onlineStatus,approveStatus,emailStatus);
           if((currentTask === 0) && (onlineStatus === 1) && (approveStatus == 1) && (emailStatus == 1)){ //if user don't have current task
             RenderFunction(data);
           }else{
@@ -732,14 +735,16 @@ useEffect(() => {
         //saving user Points
       if(emailStatus === 0){
         if(data.results[0].email_confirmed == 1){
-          SetEmailStatus(1);
+          dispatch(SetEmailStatus(1));
+          dispatch(enableBloggerMenu());
           props.dispatch(multiSave({name:'emailstatus',value:"1"}));
         }
       }
 
         if(approveStatus === 0){
           if(data.results[0].verified == 1){
-              SetapproveStatus(1);
+              dispatch(SetapproveStatus(1));
+              dispatch(enableBloggerMenu());
               props.dispatch(save_multiData({_object:'approvestatus',name:"1"}));
           }
         }
@@ -852,15 +857,7 @@ useEffect(() => {
   const history = useHistory();
 
 
-  const changePage = useCallback((Contacts) => {
 
-    if(Contacts == LocalizeComponent.contactsName){
-      return history.push('/contactlist'), [history];
-    }else if(Contacts == LocalizeComponent.myTasks){
-      return history.push('/mytasks'), [history];
-    }
-
-  });
 
   //notification part
 

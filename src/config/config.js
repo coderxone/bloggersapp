@@ -7,8 +7,8 @@ const routeUrl = "https://echohub.io";
 const serverImagePath = "https://echohub.io/newimages/profileImages";
 const serverImageBackgroundPath = "https://echohub.io/newimages/profileImages";
 
-//const baseurl = 'https://echohub.io:3004';//browser https
-const baseurl = 'https://localhost:3004';
+const baseurl = 'https://echohub.io:3004';//browser https
+//const baseurl = 'https://localhost:3004';
 const redirectUrl = "https://echohub.io/main"; //android
 //const redirectUrl = "http://localhost:8080/main";
 //const userRole = "1"; blogger
@@ -317,6 +317,20 @@ const newmodule = {
         }else{
           return false;
         }
+      },
+      CheckIfAuthorized:() => {
+        var email = localStorage.getItem("email");
+        if(email){
+          return true;
+        }else{
+          return false;
+        }
+      },
+      LogoutUser:() => {
+        localStorage.clear();
+        setTimeout(function(){
+          window.location.reload();
+        },3000);
       },
 
       getUserRole:() => {
