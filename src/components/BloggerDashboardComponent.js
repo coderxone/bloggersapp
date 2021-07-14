@@ -3,13 +3,6 @@ import React, {useState,useMemo,useEffect,useCallback} from 'react';
 import '../css/mainStyles.scss';
 import '../css/bloggerdashboard.scss';
 import LocalizeComponent from '../localize/LocalizeComponent';
-import { useForm } from "react-hook-form";
-import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from "yup";
-import {
-  makeStyles,
-  useTheme,
-} from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import { connect } from 'react-redux';
 import GeolocationWeb from '@react-native-community/geolocation';
@@ -21,335 +14,30 @@ import {
   Link,useHistory,
 } from "react-router-dom";
 import Switch from '@material-ui/core/Switch';
-import clsx from 'clsx';
-import Drawer from '@material-ui/core/Drawer';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import List from '@material-ui/core/List';
-import Typography from '@material-ui/core/Typography';
-import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
+
 import ConfirmDialogComponent from '../helperComponents/ConfirmDialogComponent';
 import { useLastLocation } from 'react-router-last-location';
 import FilterListIcon from '@material-ui/icons/FilterList';
-import CircularProgressComponent from '../helperComponents/CircularProgressComponent';
 import DirectionComponent from '../components/DirectionComponent';
 import DetailTaskService from '../services/DetailTaskService';
 import TaskService from '../services/TaskService';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Homeservice from '../services/Homeservice';
-import PaymentIcon from '@material-ui/icons/Payment';
-import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
 import config from '../config/config';
 import { Capacitor } from '@capacitor/core';
 import { Plugins } from '@capacitor/core';
 import VideoComponent from '../components/BloggerDashboardComponents/VideoComponent';
 import MenuComponent from '../components/MenuComponents/MenuComponent';
+import ShowPushComponentM2 from '../components/BloggerDashboardComponents/ShowPushComponentM2';
+import { enableBloggerMenu,disableBloggerMenu,SetswithState,SetonlineStatusSwitcher,SetonlineStatus,GoOffline,GoOnline } from '../features/counter-slice';
+import { useSelector, useDispatch } from 'react-redux';
 const { Geolocation } = Plugins;
 
 
-
-
-const drawerWidth = 240;
-
-const useStylestwo = makeStyles((theme) => ({
-  root: {
-    display: 'flex',
-    height:'100%'
-  },
-  icon:{
-    color:"#0083ff"
-  },
-  appBar: {
-    transition: theme.transitions.create(['margin', 'width'], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-
-  },
-  appBarShift: {
-    width: `calc(100% - ${drawerWidth}px)`,
-    marginLeft: drawerWidth,
-    transition: theme.transitions.create(['margin', 'width'], {
-      easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-
-  },
-  menuButton: {
-    marginRight: theme.spacing(2),
-  },
-  hide: {
-    display: 'none',
-  },
-  drawer: {
-    width: drawerWidth,
-    flexShrink: 0,
-  },
-  drawerRight: {
-    width: drawerWidth,
-    flexShrink: 0,
-  },
-  drawerPaper: {
-    width: drawerWidth,
-    backgroundColor:"white",
-    color:"#0083ff",
-  },
-  drawerHeader: {
-    display: 'flex',
-    alignItems: 'center',
-    padding: theme.spacing(0, 1),
-    // necessary for content to be below app bar
-    ...theme.mixins.toolbar,
-    justifyContent: 'flex-end',
-    backgroundColor:'#0083ff',
-  },
-  drawerHeaderRight: {
-    display: 'flex',
-    alignItems: 'center',
-    padding: theme.spacing(0, 1),
-    // necessary for content to be below app bar
-    ...theme.mixins.toolbar,
-    justifyContent: 'flex-start',
-    backgroundColor:'#0083ff',
-  },
-  content: {
-    flexGrow: 1,
-    padding: theme.spacing(0),
-    transition: theme.transitions.create('margin', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-    marginLeft: -drawerWidth,
-    marginRight: 0,
-    backgroundColor:"white",
-    color:"#0083ff",
-    height:"100%",
-  },
-  contentRight: {
-    flexGrow: 1,
-    padding: theme.spacing(0),
-    transition: theme.transitions.create('margin', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-    marginLeft: -drawerWidth,
-    marginRight: -drawerWidth,
-    backgroundColor:"white",
-    color:"#0083ff",
-    height:"100%",
-  },
-  contentShift: {
-    transition: theme.transitions.create('margin', {
-      easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-    marginLeft: 0,
-    marginRight: drawerWidth,
-    height:'100%',
-  },
-  contentShiftRight: {
-    transition: theme.transitions.create('margin', {
-      easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-    marginLeft: 0,
-    marginRight: drawerWidth,
-    height:'100%',
-  },
-}));
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-    backgroundColor:'#0083ff',
-  },
-  paper: {
-    padding: theme.spacing(2),
-    textAlign: 'center',
-    color: theme.palette.text.secondary,
-    backgroundColor:'#0083ff',
-  },
-}));
-
-
-
-const schema = yup.object().shape({
-  email: yup.string().required("Required").email(),
-});
-
-
-
-
-
-
-
-
-
-const BlockComponent = (props) => {
-
-  const items = props.items;
-  const dist = props.distance;
-
-
-    const content = items.map((item,index) =>
-
-      <Link key={item.id} className="deleteUrlClass"
-          to={{
-            pathname: "/detailtask",
-            data: item // your data array of objects
-          }}
-          >
-            <div  className="MainBlock withoutScroll">
-              <div  className="firstLevel">
-                  <div className="firstLevelText">
-                      {item.url} - {item.description}
-                    <br />distance less than {dist} miles
-                  </div>
-              </div>
-              <div className="secondLevel">
-                <div className="secondLevelShare">
-                  <div className="secondLevelOne">
-                    <div className="shouldButton">
-                        <div className="shouldButtonText">
-                              limit: {item.peoplecount} infl.
-                        </div>
-                    </div>
-                  </div>
-                  <div className="secondLevelTwo">
-                    <div className="shareButton">
-                        <div className="shareButtonText">
-                              share
-                        </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="secondLevelShareThree">
-                  <div className="secondLevelThree">
-                    <div className="shouldButtonThree">
-                        <div className="shouldButtonText">
-                              {item.date} - {item.time}
-                        </div>
-                    </div>
-                  </div>
-                  <div className="secondLevelThreeTwo">
-                    <div className="shareButtonThree">
-                        <div className="shareButtonText">
-                              {Math.round(item.sum / item.peoplecount - 1)} $
-                        </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-        </Link>
-
-      );
-
-
-
-
-
-  return (
-    <div className="fullWidth withoutScroll" >
-      {content}
-    </div>
-  );
-
-}
-
 //xxx
 
-
-
-const ShowPush = (props) => {
-
-  const item = props.item;
-  const distance = props.distance;
-  const status = props.status;
-  const timerVariable = props.timerVariable;
-  const timerCircleVariable = props.timerCircleVariable;
-  const StartTask = (item) => {
-    let sendObj = {
-      action:"starttask",
-      status:1,
-      item:item
-    }
-
-    Observable.sendAny(sendObj);
-  }
-
-  const rejectOrder = (item) => {
-    let sendObj = {
-      action:"rejectorder",
-      status:1,
-      item:item
-    }
-
-    Observable.sendAny(sendObj);
-  }
-
-
-  return (
-    <div className="mainPush_root">
-      <div className="declineButtonBlock">
-         <div className="declineButtonStyle" onClick={event => rejectOrder(item)}>
-             {LocalizeComponent.Decline}
-         </div>
-      </div>
-      <div className="mainPush">
-        <div className="mainPushColumsOne">
-          <div className="mainPushColumsOneLeft">
-              <div className="mainPushColumsOneLeft_1">{LocalizeComponent.do_before} {item.date}</div>
-              <div className="mainPushColumsOneLeft_2">{items[0].url}</div>
-              <div className="mainPushColumsOneLeft_3">{LocalizeComponent.distance}: {distance}</div>
-
-          </div>
-          <div className="mainPushColumsOneRight">
-            <div className="CircularProgressParent">
-              <CircularProgressComponent status={status} timerVariable={timerVariable} timerCircleVariable={timerCircleVariable}/>
-            </div>
-
-          </div>
-
-        </div>
-        <div className="mainPushColumsTwo">
-
-          <div className="mainPushColumsTwo_1">
-            <div className="gorizontalGreyLine">
-            </div>
-            <div className="mainPushColumsTwo_1_Price">
-              ${Math.round(items[0].sum / items[0].peoplecount - 1)}
-            </div>
-            <div className="mainPushColumsTwo_2_Second">
-                {LocalizeComponent.tips}
-            </div>
-            <div className="mainPushColumsTwo_3_Third">
-              {LocalizeComponent.high}
-            </div>
-          </div>
-          <div className="mainPushColumsTwo_2">
-              <div className="buttonStylePush" onClick={event => StartTask(items[0])}>
-                  <div className="buttonStylePushText buttonStylePushTextAdd">{LocalizeComponent.accept}</div>
-              </div>
-          </div>
-
-
-        </div>
-
-      </div>
-    </div>
-  );
-}
 
 const DirectionPush = (props) => {
 
@@ -361,10 +49,11 @@ const DirectionPush = (props) => {
   const timerCircleVariable = props.timerCircleVariable;
   const distance = props.distance;
 
+
   return (
     <div>
       <DirectionComponent latitude={latitude} longitude={longitude} item={item} status={status} />
-      <ShowPush item={item} distance={distance} status={status} timerVariable={timerVariable} timerCircleVariable={timerCircleVariable}/>
+      <ShowPushComponentM2 item={item} distance={distance} status={status} timerVariable={timerVariable} timerCircleVariable={timerCircleVariable}/>
     </div>
 
   )
@@ -386,7 +75,7 @@ const DistrubuteComponent = (props) => {
 
   if(status === true){
     if(item.type === 2){
-      <DirectionPush distance={distance} latitude={latitude} timerVariable={timerVariable} timerCircleVariable={timerCircleVariable} longitude={longitude} item={item} status={status}/>
+        return <DirectionPush distance={distance} longitude={longitude} latitude={latitude} timerVariable={timerVariable} timerCircleVariable={timerCircleVariable} item={item} status={status}/>
     }else if(item.type === 1){
         return <VideoComponent status={status} item={item} timerVariable={timerVariable} timerCircleVariable={timerCircleVariable} userPoints={userPoints} />;
     }
@@ -395,14 +84,14 @@ const DistrubuteComponent = (props) => {
   }
 
 
-
-
 }
 
 
 
 //xx
 const BloggerDashboardComponent = (props) => {
+
+  const dispatch = useDispatch();
 
   const locationConfig = {skipPermissionRequests:false,authorizationLevel:"whenInUse"}
 
@@ -455,9 +144,9 @@ const BloggerDashboardComponent = (props) => {
   //const [searchcountD,SetsearchcountD] = useState(0);
   const [firstLoadStorage,setFirstLoadStorage] = useState(true);
   //gps switcher
-  const [swithState,SetswithState] = useState(false);
-  const [onlineStatusSwitcher,SetonlineStatusSwitcher] = useState(false);
-  const [onlineStatus,SetonlineStatus] = useState(0);
+  const swithState = useSelector((state) => state.counter.bloggerDashboard.swithState);
+  const onlineStatusSwitcher = useSelector((state) => state.counter.bloggerDashboard.onlineStatusSwitcher);
+  const onlineStatus = useSelector((state) => state.counter.bloggerDashboard.onlineStatus);
 
   useMemo(() => {
       var onlineStatus = localStorage.getItem("online");
@@ -465,11 +154,11 @@ const BloggerDashboardComponent = (props) => {
       // return false;
       if(onlineStatus){
         if(onlineStatus == 1){
-          SetonlineStatus(1);
-          SetonlineStatusSwitcher(false);
+          dispatch(SetonlineStatus(1));
+          dispatch(SetonlineStatusSwitcher(false));
         }else{
-          SetonlineStatus(0);
-          SetonlineStatusSwitcher(true);
+          dispatch(SetonlineStatus(0));
+          dispatch(SetonlineStatusSwitcher(true));
         }
       }
   },[]);
@@ -479,7 +168,7 @@ const BloggerDashboardComponent = (props) => {
     var currentSwitcher = localStorage.getItem("switcher");
     if(currentSwitcher){
       if(currentSwitcher == 1){
-        SetswithState(true);
+        dispatch(SetswithState(true));
       }
     }
 
@@ -744,14 +433,9 @@ const BloggerDashboardComponent = (props) => {
               SetStatus(true);
               Homeservice.notificationVoiceR();
 
-
-
           }
 
         }
-
-
-
 
 
       }else if(data.status == "later"){
@@ -958,9 +642,6 @@ useEffect(() => {
 
 
 
-
-
-
 //xx
   const DialogExecute = Observable.getData_subjectDialog().subscribe(data => {
     if(data.alert == "opendialog"){
@@ -1155,17 +836,6 @@ const rejectOrder = (item) => {
   Homeservice.notificationVoiceReject();
 }
 
-const GoOnline = () => {
-    SetonlineStatus(1);
-    localStorage.setItem("online",1);
-    SetonlineStatusSwitcher(false);
-}
-
-const GoOffline = () => {
-  SetonlineStatus(0);
-  localStorage.setItem("online",0);
-  SetonlineStatusSwitcher(true);
-}
 
 //run to check services
 useEffect(() => {
@@ -1179,29 +849,8 @@ useEffect(() => {
 //run to check services
 
 
-
-
-
-  const classestwo = useStylestwo();
-  const theme = useTheme();
   const history = useHistory();
-  const [open, setOpen] = React.useState(false);
-  const [openRight, setOpenRight] = React.useState(false);
-  const handleDrawerOpen = () => {
-    setOpen(true);
-  };
 
-  const handleDrawerClose = () => {
-    setOpen(false);
-  };
-
-  const rightHandleDrawerOpen = () => {
-    setOpenRight(true);
-  };
-
-  const rightHandleDrawerClose = () => {
-    setOpenRight(false);
-  };
 
   const changePage = useCallback((Contacts) => {
 
@@ -1222,7 +871,7 @@ useEffect(() => {
   });
 
 
-// <BlockComponent items={items} distance={distance}/>
+
 
   const [dialogStatus,setDialogStatus] = useState(false);
   const [leftbutton,setLeftbutton] = useState('');
@@ -1232,67 +881,37 @@ useEffect(() => {
   const [detailMessage,setDetailMessage] = useState("");
 
 
-  const CloseDrawer = () => {
-    setOpen(false);
-    setOpenRight(false);
-  }
-
-
-
-
-  const handleSwitch = (event) => {
-    var SwitcherValue = event.target.checked;
-    var saveSwitcherValue = 2;
-    if(SwitcherValue == true){
-      saveSwitcherValue = 1;
-    }
-    localStorage.setItem("switcher",saveSwitcherValue);
-
-    SetswithState(SwitcherValue);
-  }
-
-  const handleSwitchOnlineStatusSwitcher = (event) => {
-    var SwitcherValue = event.target.checked;
-    SetonlineStatusSwitcher(SwitcherValue);
-    GoOffline();
-  }
-
-
 
 
   return (
 
     <div id="opacityControl" >
-      <MenuComponent />
+      <MenuComponent  />
 
       <div className="projectContainer">
-
-
-
-
-
-
-
-
-      {openRight === false ? (
-        <div>
-
-
-
 
           {
             approveStatus === 1 &&
             emailStatus === 1 &&
             (
 
-               <Grid container className="withoutScroll" >
+               <div container className="withoutScroll" >
 
                 {
                   (
                     status == false &&
                     onlineStatus == 1
                   ) && (
-                    <LinearProgress className="BloggerProgress" color="secondary" />
+
+                    <div>
+                      <LinearProgress className="BloggerProgress" color="secondary" />
+
+                      <div className="approvalBysystem">
+                         <div className="approvalText blink_me">
+                             {LocalizeComponent.user_10}
+                         </div>
+                      </div>
+                    </div>
                   )
                 }
 
@@ -1339,7 +958,7 @@ useEffect(() => {
                     <div className="CurrentTask">
                       <div className="CurrentTaskTwo_2">
 
-                          <div className="centerElements goOnlineStyleMargin" onClick={event => GoOnline()} >
+                          <div className="centerElements goOnlineStyleMargin" onClick={event => dispatch(GoOnline())} >
                             <div className="projectStyleButtonFrame projectBackgroundColor">
                               <div className="projectStyleButton robotoFont projectFontSize centerText whiteFont">
                                   {LocalizeComponent.go_online}
@@ -1359,17 +978,11 @@ useEffect(() => {
 
 
 
-                   {status === false ? (
-                     <div></div>
-                    ) : (
-
-                      <div></div>
-
-                    )}
 
 
 
-               </Grid>
+
+               </div>
 
              )
            }
@@ -1400,23 +1013,6 @@ useEffect(() => {
              <ConfirmDialogComponent status={dialogStatus} left={leftbutton} right={rightbutton} text={dialogText}/>
 
 
-        </div>
-       ) : (
-
-
-
-
-             <div></div>
-
-
-       )}
-
-
-
-
-
-
-
     </div>
     </div>
 
@@ -1430,6 +1026,3 @@ useEffect(() => {
 
 
  export default connect()(BloggerDashboardComponent);
-
-
- // <ShowPush items={items} distance={distance} status={status} timerVariable={timerVariable} timerCircleVariable={timerCircleVariable}/>

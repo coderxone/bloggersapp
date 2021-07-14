@@ -605,10 +605,13 @@ useEffect(() => {
   const ListenlistenCheckUrl = DetailTaskService.listenReadyVideo().subscribe(data => {
 
       //console.log(data);
-      let url = data.data[0].url;
+      if(data.status !== "false"){
+        let url = data.data[0].url;
 
-      SetDownloadUrl(url);
-      CountTaskFunction(data);
+        SetDownloadUrl(url);
+        CountTaskFunction(data);
+      }
+
 
 
     //SetStep(stepper => stepper + 1);
@@ -824,7 +827,7 @@ useEffect(() => {
 
         console.log(data);
         if(data.status == "ok"){
-          console.log("goBack");
+          //console.log("goBack");
           goBackEvent();
         }
 

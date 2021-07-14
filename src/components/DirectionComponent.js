@@ -10,6 +10,7 @@ import { GoogleMap, useJsApiLoader,DirectionsService,LoadScript,DirectionsRender
 
 const MyComponent = (props) => {
 
+  //console.log(props)
   const [containerStyle,SetContainerStyle] = useState({width: '100%',height: '90vh'});
 
   const { isLoaded } = useJsApiLoader({
@@ -122,20 +123,23 @@ const MyComponent = (props) => {
   const directionsCallback = (response) => {
 
     //console.log(response);
-    if (response !== null) {
-      if (response.status === 'OK') {
+    setTimeout(function(){
+      if (response !== null) {
+        if (response.status === 'OK') {
 
 
-        var sendObj = {
-          distance:response.routes[0].legs[0].distance.text,
-          status:"ok"
+          var sendObj = {
+            distance:response.routes[0].legs[0].distance.text,
+            status:"ok"
+          }
+          SetResponse(response);
+          Observable.sendRoute(sendObj);
+        } else {
+          //console.log('response: ', response)
         }
-        SetResponse(response);
-        Observable.sendRoute(sendObj);
-      } else {
-        //console.log('response: ', response)
       }
-    }
+    },1000);
+
   }
 
 
