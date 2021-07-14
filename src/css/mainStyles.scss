@@ -1005,6 +1005,8 @@ body{
 
 .MuiButton-label{
   color:$base-app-color !important;
+  font-family: RobotoLight !important;
+  font-style: normal;
 }
 
 .MuiTypography-colorInherit{
@@ -2425,6 +2427,7 @@ body {
 .robotoFont{
   font-family: RobotoLight;
   font-style: normal;
+
 }
 .blackColor{
   color: #000000;

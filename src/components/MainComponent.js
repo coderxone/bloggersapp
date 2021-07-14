@@ -19,7 +19,7 @@ import AnnouncementIcon from '@material-ui/icons/Announcement';
 import CenterFocusStrongIcon from '@material-ui/icons/CenterFocusStrong';
 import TrendingUpIcon from '@material-ui/icons/TrendingUp';
 import WorkIcon from '@material-ui/icons/Work';
-import {useSelector} from 'react-redux';
+import {useSelector,useDispatch} from 'react-redux';
 
 
 import PushComponent from '../helperComponents/NativePushNotificationComponent';
@@ -27,11 +27,12 @@ import WebPushNotification from '../helperComponents/WebPushComponent';
 import ParseContactsComponent from '../helperComponents/ParseContactsComponent';
 import PermissionRequestComponent from '../helperComponents/PermissionRequestComponent.js';
 import IosPermissionRequestComponent from '../helperComponents/IosPermissionRequestComponent';
-import MobileAppComponent from '../helperComponents/mobileAppComponent';
+
 import LanguageComponent from '../helperComponents/language/LanguageComponent.js';
 import Observable from '../services/Observable';
 import config from '../config/config';
 import LiveService from '../services/LiveService';
+import {SetMobileDialogStatus} from '../features/counter-slice';
 import { Capacitor,Plugins } from '@capacitor/core';
 import {
   Link,useHistory,
@@ -61,6 +62,7 @@ DetectLanguage();
 
 const BottomFunc = () => {
 
+  const dispatch = useDispatch();
   const history = useHistory();
   const [route,SetRoute] = useState("");
   const [redirect,Setredirect] = useState(false);
@@ -174,8 +176,7 @@ const BottomFunc = () => {
   }
 
 
-
-  const [mobileDialogStatus,SetMobileDialogStatus] = useState(false);
+  
   const [languageDialogStatus,SetLanguageDialogStatus] = useState(false);
 
 
@@ -232,10 +233,10 @@ const BottomFunc = () => {
     var ObservableMobileListener = Observable.getData_subjectMob().subscribe(data => {
       //console.log(data);
       if(data == "closeMobileDialog"){
-        SetMobileDialogStatus(false);
+        dispatch(SetMobileDialogStatus(false));
       }
       if(data == "openMobileDialog"){
-        SetMobileDialogStatus(true);
+        dispatch(SetMobileDialogStatus(true));
       }
 
     })
@@ -256,7 +257,7 @@ const BottomFunc = () => {
 
       if((!mobile) && (mobile !== "1")){
         setTimeout(function(){
-          SetMobileDialogStatus(true);
+          dispatch(SetMobileDialogStatus(true));
           localStorage.setItem("mobile","1");
         },6000);
       }
@@ -368,6 +369,14 @@ const BottomFunc = () => {
                  )
                }
              </div>
+
+             {
+               Capacitor.platform === 'web' && (
+                 <div className="imgCenter">
+                    <LanguageComponent status={languageDialogStatus}/>
+                 </div>
+               )
+             }
 
 
 

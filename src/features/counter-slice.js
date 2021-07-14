@@ -14,7 +14,8 @@ const initialState = {
     emailStatus:0,
     role:1,
     authorization:false,
-  }
+  },
+  mobileDialogStatus:false,
  }
 
 const counterSlice = createSlice({
@@ -98,6 +99,9 @@ const counterSlice = createSlice({
     SetUserAuthorization(state,action){
       state.bloggerDashboard.authorization = action.payload;
     },
+    SetMobileDialogStatus(state,action){
+      state.mobileDialogStatus = action.payload;
+    },
   },
 })
 
@@ -121,6 +125,7 @@ export const { increment,
   SetEmailStatus,
   SetUserRole,
   SetUserAuthorization,
+  SetMobileDialogStatus,
 
  } = counterSlice.actions
 export default counterSlice.reducer;

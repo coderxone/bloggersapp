@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
@@ -11,6 +11,10 @@ import Typography from '@material-ui/core/Typography';
 import Ios from '../images/iphone.png';
 import Android from '../images/android.png';
 import Observable from '../services/Observable';
+import LocalizeComponent from '../localize/LocalizeComponent';
+import {
+  useHistory,
+} from "react-router-dom";
 
 const styles = (theme) => ({
   root: {
@@ -56,9 +60,23 @@ export default function CustomizedDialogs(props) {
 
 
   const open = props.status;
+  const history = useHistory();
 
-  const handleClickOpen = () => {
-      Observable.sendData_subjectMob("openMobileDialog");
+  const GoToHome = useCallback((item) => {
+
+      return history.push({pathname: '/main'}), [history];
+
+  });
+
+
+  const handleClickOpen = (event) => {
+    event.preventDefault();
+      GoToHome();
+
+      setTimeout(function(){
+        Observable.sendData_subjectMob("openMobileDialog");
+      },1000)
+
   };
   const handleClose = () => {
       Observable.sendData_subjectMob("closeMobileDialog");
@@ -66,12 +84,11 @@ export default function CustomizedDialogs(props) {
 
   return (
     <div>
-      <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-        Download mobile app
-      </Button>
+
+      <a href="#"  onClick={handleClickOpen}>{LocalizeComponent.download_app}</a>
       <Dialog onClose={handleClose} aria-labelledby="customized-dialog-title" open={open}>
         <DialogTitle id="customized-dialog-title" className="dialogCenterText" onClose={handleClose}>
-          Download our mobile apps for <a  target="_blank" href="https://apps.apple.com/us/app/echohub-io/id1563339758" >IOS</a> and <a href="https://play.google.com/store/apps/details?id=io.echohub.www&hl=en_US&gl=US">ANDROID</a>
+          {LocalizeComponent.download_app_2} for <a  target="_blank" href="https://apps.apple.com/us/app/echohub-io/id1563339758" >IOS</a> and <a href="https://play.google.com/store/apps/details?id=io.echohub.www&hl=en_US&gl=US">ANDROID</a>
         </DialogTitle>
         <DialogContent dividers>
 

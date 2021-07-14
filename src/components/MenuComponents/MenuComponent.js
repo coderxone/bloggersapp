@@ -18,6 +18,8 @@ import {
 } from "react-router-dom";
 import {useSelector,useDispatch} from 'react-redux';
 import {handleSwitch,handleSwitchOnlineStatusSwitcher,SetUserRole,SetUserAuthorization} from '../../features/counter-slice';
+import MobileAppComponent from '../../helperComponents/mobileAppComponent';
+import { Capacitor } from '@capacitor/core';
 
 
 
@@ -37,6 +39,7 @@ const ExampleComponent = (props) => {
   const onlineStatusSwitcher = useSelector((state) => state.counter.bloggerDashboard.onlineStatusSwitcher);
   const approveStatus = useSelector(state => state.counter.bloggerDashboard.approveStatus);
   const emailStatus = useSelector(state => state.counter.bloggerDashboard.emailStatus);
+  const mobileDialogStatus = useSelector(state => state.counter.mobileDialogStatus);
   const dispatch = useDispatch();
 
   const history = useHistory();
@@ -124,8 +127,20 @@ const ExampleComponent = (props) => {
 
                   </div>
                   <div className="menuTopMargin menuLeftMargin">
+                    {
+
+                      userRole === 1 ? (
+                        <Link to={{pathname: "/blogger"}}>{LocalizeComponent.user_13}</Link>
+                      ) : (
+                        <Link to={{pathname: "/business"}}>{LocalizeComponent.user_13}</Link>
+                      )
+                    }
+                  </div>
+
+                  <div className=" menuLeftMargin">
                     <Link to={{pathname: "/userprofile"}}>{LocalizeComponent.user_11}</Link>
                   </div>
+
               </div>
             )
           }
@@ -160,6 +175,11 @@ const ExampleComponent = (props) => {
                     <Link to={{pathname: "/about"}}>{LocalizeComponent.About_Connect}</Link>
                     <Link to={{pathname: "/why"}}>{LocalizeComponent.Why}</Link>
                     <a target="_blank" href="mailto:info@echohub.io">{LocalizeComponent.contactUs}</a>
+                      {
+                        Capacitor.platform === 'web' && (
+                             <MobileAppComponent status={mobileDialogStatus}/>
+                        )
+                      }
                   </div>
                 {
                   authorization === true && (
