@@ -152,6 +152,15 @@ const AuthorizationComponent = (props) => {
           googleToken:config.getUserItemNameByToken("googletoken"),
         }
 
+        const newState = {...storageData};
+        newState.email = config.getUserItemName("email");
+        newState.password = config.getdeviceid();
+        newState.picture = config.getUserItemName("picture");
+        newState.name = config.getUserItemName("name");
+        newState.social = 1;
+
+        setStorageData(newState);
+
         AuthService.sendAuthData(data);
 
         props.dispatch(multiSave({name:"social",value:"not"}));

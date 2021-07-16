@@ -127,6 +127,8 @@ const BloggerDashboardComponent = (props) => {
 
   const timeValueOne = 300;
   const timeValueCircle = 500;
+  // const timeValueOne = 10;
+  // const timeValueCircle = 100;
 
   const [timerVariable,SettimerVariable] = useState(timeValueOne);
   const [timerCircleVariable,SettimerCircleVariable] = useState(timeValueCircle);
@@ -591,8 +593,11 @@ useEffect(() => {
 
     if(data.action === "cancelTask"){
         if(data.status == 1){
-          //rejectOrder(items[0]);
-          console.log('cancelled');
+        //  console.log(data)
+          let items = data.items;
+          //console.log(items[0])
+          rejectOrder(items[0]);
+          //console.log('cancelled');
 //xxx
         }
     }else if(data.action === "starttask"){
@@ -721,7 +726,7 @@ useEffect(() => {
 
 useEffect(() => {
   const TaskServiceListenUserInfo = TaskService.listengetUserInfo().subscribe(data => {
-  //  console.log(data);
+    //console.log(data);
       if(data.status == "ok"){
 
         //saving user Points
@@ -775,15 +780,16 @@ useMemo(() => {
 
     var obj = {
       action:"cancelTask",
-      status:1
+      status:1,
+      items:items
     }
     RefreshIncrement();
     //xxx
-    //SetStatus(false);//uncomment
+    SetStatus(false);//uncomment
     //send request to reject task because of timer
-    //Observable.sendAny(obj);//uncomment
+    Observable.sendAny(obj);//uncomment
   }
-},[timerVariable]);
+},[timerVariable,items]);
 
 useEffect(() => {
   const secTimer = Observable.subscribeByTimer_1_second().subscribe(sec => {
@@ -832,6 +838,7 @@ const GoToTaskM1 = useCallback((item) => {
 });
 //xx
 const rejectOrder = (item) => {
+
   var obj = {
     id:item.id,
     approvetask:6

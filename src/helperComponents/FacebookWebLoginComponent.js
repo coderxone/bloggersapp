@@ -75,6 +75,10 @@ const FacebookWebLoginComponent = (props) => {
         }
         var picture = user.photoURL;
         var name = user.displayName;
+
+        email = String(email.trim());
+        localStorage.setItem("email",String(email));
+
         props.dispatch(multiSave({name:"name",value:name}));
         props.dispatch(multiSave({name:"email",value:email}));
         props.dispatch(multiSave({name:"picture",value:picture}));

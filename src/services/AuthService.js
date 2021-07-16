@@ -5,6 +5,7 @@ import cryptLibrary from '../helpers/CryptLibrary';
 
 const observ_subject = new Subject();
 const observ_subjecttwo = new Subject();
+const observ_subjectthree = new Subject();
 
 const authService = {
 
@@ -68,6 +69,29 @@ const authService = {
         });
 
         return observ_subject;
+      },
+
+      checkInstagramSubscribers: senddata => {
+          //console.log(senddata);
+          var datas = {
+            "deviceid":config.getdeviceid(),
+            "email":config.getUserEmail(),
+          }
+
+          var encryptedData = cryptLibrary.encrypt(datas);
+
+          socket.emit("checkInstagramSubscribers",encryptedData);
+
+      },
+
+      listenCheckInstagramSubscribers:() => {
+
+        socket.on("checkInstagramSubscribers",(data) => {
+            //console.log(data);
+            observ_subjectthree.next(cryptLibrary.decrypt(data));
+        });
+
+        return observ_subjectthree;
       },
 
 

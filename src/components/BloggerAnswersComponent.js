@@ -31,6 +31,10 @@ import UploadDocumentComponent from '../helperComponents/UploadDocumentComponent
 import { increment, decrement,save_email,save_multiData } from '../actions/actions';
 import BloggerAnswersService from '../services/BloggerAnswersService';
 import DandelionComponent from '../components/dandelionComponent';
+import AuthService from '../services/AuthService';
+import { useSelector, useDispatch} from 'react-redux';
+import { SetChangeStep,CancelSSNCheck,CancelSubscribersCheck } from '../features/counter-slice';
+import MultiInputComponent from '../components/BloggerAnswersComponents.js/MultiInputComponent';
 import {
   Redirect,
 } from "react-router-dom";
@@ -105,21 +109,39 @@ const schema = yup.object().shape({
   email: yup.string().required("Required").email(),
 });
 
-function getSteps() {
-  return ['1', '2', '3','4','5','6','7','8','9','10'];
-}
+
 
 
 const BloggerAnswersComponent = (props) => {
 
-  var QuestionsArray = [LocalizeComponent.bl1,LocalizeComponent.bl2,LocalizeComponent.bl3,LocalizeComponent.bl4,LocalizeComponent.bl5,LocalizeComponent.bl6,LocalizeComponent.bl7,LocalizeComponent.bl8,LocalizeComponent.bl9,LocalizeComponent.bl10,LocalizeComponent.bl11];
-  const [questions] = useState(QuestionsArray);
+  const dispatch = useDispatch();
+
+
 
   const classes = useStyles();
 
+  //xxx
+  const questions = useSelector((state) => state.counter.bloggersAnswers.questions);
+  const checkssn = useSelector((state) => state.counter.bloggersAnswers.checkssn);
+  const socialcheck = useSelector((state) => state.counter.bloggersAnswers.socialcheck);
+  const multisaveArray = useSelector((state) => state.counter.bloggersAnswers.multisaveArray);
+  const [fieldType,SetFieldType] = useState("text");
+
+  useMemo(() => {
+    let checkssn = config.getUserItemName("checkssn");
+
+    if(Number(checkssn) === 0){
+      dispatch(CancelSSNCheck());
+    }
+
+  },[])
 
   const [activeStep, setActiveStep] = React.useState(0);
-  const steps = getSteps();
+
+  //const steps = useState(getSteps());
+  const steps = useSelector((state) => state.counter.bloggersAnswers.steps);
+
+
 
   const [error,SetError] = useState(false);
   const [AlertText,SetAlertText] = useState('please fill in');
@@ -132,25 +154,16 @@ const BloggerAnswersComponent = (props) => {
 
       resultStep = checkForms();
 
-      console.log(resultStep);
-
       if(resultStep == true){
         var stepper = activeStep + 1;
 
-        if(stepper == 9){
-          var country = config.getUserCountry();
-          if(country){
-            if(country !== "US"){
-              stepper += 1;
-            }
-          }
-        }
-
-        if(stepper == 11){
+        if(stepper == steps.length){
+          //console.log("submit")
           onSubmit();
         }else{
           setActiveStep(stepper);
           SetError(false);
+          restoreData(stepper);
         }
 
       }
@@ -160,10 +173,43 @@ const BloggerAnswersComponent = (props) => {
 
   };
 
+  const handleBack = () => {
+
+    var stepper = activeStep - 1;
+
+    console.log(stepper)
+    setName("");
+    setActiveStep(stepper);
+    restoreData(stepper);
+  };
+
+  const restoreData = (stepper) => {
+
+    let multisavear = [...multisaveArray];
+
+    var objName = multisavear[stepper];
+
+
+    if(objName === "age" || objName === "accountage" || objName === "subscribers_count"  || objName === "accountage"){
+      SetFieldType("number");
+    }else{
+      SetFieldType("text");
+    }
+
+
+    let savedData = config.getUserItemName(objName);
+
+    if(savedData != false){
+      setName(savedData);
+    }
+
+
+  }
+
   const [name,setName] = useState('');
 
   const checkForms = () => {
-    if(activeStep == 0){
+    if(multisaveArray[activeStep] == "location"){
       var result = config.getUserCountry();
       if(result != false){
         return true;
@@ -172,51 +218,73 @@ const BloggerAnswersComponent = (props) => {
         return false;
       }
 
-    }else if(activeStep == 1){
+    }else if(multisaveArray[activeStep] == "category"){
       var result = config.getUserCategory();
       if(result != false){
         return true;
       }else{
-        SetAlertText("please fill in");
+        SetAlertText(LocalizeComponent.select_address);
         SetError(true);
         return false;
       }
-    }else if(activeStep == 2){
-      if(age != 0){
+    }else if(multisaveArray[activeStep] == "age"){
+      if(config.getUserItemName(multisaveArray[activeStep]) != false){
+        return true;
+      }else{
+        SetAlertText(LocalizeComponent.select_age);
+        SetError(true);
+        return false;
+      }
+    }else if(multisaveArray[activeStep] === "firstName"){
+      if(config.getUserItemName(multisaveArray[activeStep]) != false){
         return true;
       }else{
         SetError(true);
         return false;
       }
-    }else if((activeStep === 3) || (activeStep === 4) || (activeStep === 5)){
-      if(name.length > 0){
+    }else if(multisaveArray[activeStep] === "lastName"){
+      if(config.getUserItemName(multisaveArray[activeStep]) != false){
         return true;
       }else{
         SetError(true);
         return false;
       }
-    }else if(activeStep === 6){
+    }else if(multisaveArray[activeStep] === "accountage"){
+      if(config.getUserItemName(multisaveArray[activeStep]) != false){
+        return true;
+      }else{
+        SetError(true);
+        return false;
+      }
+    }else if(multisaveArray[activeStep] === "nickName"){
+      if(config.getUserItemName(multisaveArray[activeStep]) != false){
+        return true;
+      }else{
+        SetError(true);
+        return false;
+      }
+    }else if(multisaveArray[activeStep] === "sociallink"){
       if(config.getUserSocialNetworks().status == true){
         return true;
       }else{
         SetError(true);
         return false;
       }
-    }else if(activeStep === 7){
-      if(config.getUserItemName("subscribers_count") != false){
+    }else if(multisaveArray[activeStep] === "subscribers_count"){
+      if(config.getUserItemName(multisaveArray[activeStep]) != false){
         return true;
       }else{
         SetError(true);
         return false;
       }
-    }else if(activeStep === 8){
-      if(config.getUserItemName("paypal") != false){
+    }else if(multisaveArray[activeStep] === "paypal"){
+      if(config.getUserItemName(multisaveArray[activeStep]) != false){
         return true;
       }else{
         SetError(true);
         return false;
       }
-    }else if(activeStep === 9){
+    }else if(multisaveArray[activeStep] === "ssn"){
       if(config.getUserSSN().status != false){
         return true;
       }else{
@@ -224,34 +292,28 @@ const BloggerAnswersComponent = (props) => {
         SetError(true);
         return false;
       }
-    }else if(activeStep === 10){
+    }else if(multisaveArray[activeStep] === "identity"){
       if(config.getUserItemName("photo") != false){
         return true;
       }else{
         SetAlertText("please download image");
         SetError(true);
+        hideAlert();
         return false;
       }
     }
     //getUserSSN
   }
 
-  const handleBack = () => {
+  const hideAlert = () => {
 
-    var stepper = activeStep - 1;
+    setTimeout(function(){
+      SetError(false);
+    },3000)
 
-    if(stepper == 9){
-      var country = config.getUserCountry();
-      if(country){
-        if(country !== "US"){
-          stepper -= 1;
-        }
-      }
-    }
+  }
 
-    setName("");
-    setActiveStep(stepper);
-  };
+
 
   const handleReset = () => {
     setName("");
@@ -263,7 +325,6 @@ const BloggerAnswersComponent = (props) => {
 
       const FinalLogic = async function(){
          try {
-
            var SsnObject = {};
 
            var country = config.getUserCountry();
@@ -271,7 +332,12 @@ const BloggerAnswersComponent = (props) => {
              if(country !== "US"){
                SsnObject.SSN = "not required";
              }else{
-               SsnObject = config.getUserSSN();
+               if(checkssn === false){
+                 SsnObject.SSN = "not required";
+               }else{
+                 SsnObject = config.getUserSSN();
+               }
+
              }
            }
 
@@ -279,18 +345,24 @@ const BloggerAnswersComponent = (props) => {
 
            props.dispatch(save_multiData({_object:'additionalData',name:lastName}));
 
+
            var finalObject = {
              country:country,
              category:config.getUserCategory(),
              age:config.getUserItemName("age"),
              firstName:config.getUserItemName("firstName"),
              lastName:lastName,
+             accountage:config.getUserItemName("accountage"),
              nickName:config.getUserItemName("nickName"),
              subscribers_count:config.getUserItemName("subscribers_count"),
              paypal:config.getUserItemName("paypal"),
              socialNetworks:config.getUserSocialNetworks(),
              ssn:SsnObject,
              photo:config.getUserItemName("photo"),
+             savetype:{
+               checkssn:checkssn,
+               socialcheck:socialcheck
+             },
            }
            return finalObject;
          }catch (e){
@@ -299,6 +371,7 @@ const BloggerAnswersComponent = (props) => {
       };
 
       FinalLogic().then(response => {
+
         BloggerAnswersService.updateUsersData(response);
       })
 
@@ -319,18 +392,12 @@ const BloggerAnswersComponent = (props) => {
 
   const setMultiData = (event) => {
 
-    var objName = '';
-    if(activeStep == 3){
-      objName = "firstName";
-    }else if(activeStep == 4){
-      objName = "lastName";
-    }else if(activeStep == 5){
-      objName = "nickName";
-    }else if(activeStep == 7){
-      objName = "subscribers_count";
-    }else if(activeStep == 8){
-      objName = "paypal";
-    }
+    let multisavear = [...multisaveArray];
+
+    var objName = multisavear[activeStep];
+
+    console.log(objName);
+
 
     var firstName = event.target.value;
     if(firstName.length > 0){
@@ -343,7 +410,7 @@ const BloggerAnswersComponent = (props) => {
   const [route,SetRoute] = useState("");
   const [redirect,Setredirect] = useState(false);
 
-
+//xxx
   useEffect(() => {
     const service = BloggerAnswersService.listenUpdateUsersData().subscribe(data => {
 
@@ -356,8 +423,20 @@ const BloggerAnswersComponent = (props) => {
 
     config.checkUserAuthorization(1);
 
+    let listenCheckInstagramSubscribers = AuthService.listenCheckInstagramSubscribers().subscribe(res => {
+      let instagramStatus = res.instagramStatus;
+
+      if(instagramStatus){
+          dispatch(CancelSubscribersCheck());
+      }
+
+
+    })
+    AuthService.checkInstagramSubscribers();
+
     return () => {
       service.unsubscribe();
+      listenCheckInstagramSubscribers.unsubscribe();
     }
   },[])
 
@@ -385,7 +464,7 @@ const BloggerAnswersComponent = (props) => {
 
 
                   {
-                    activeStep == 0 && (
+                    multisaveArray[activeStep] == "location" && (
                       <div>
                         <CountryComponent />
                         <AlertComponent state={error} text={AlertText}/>
@@ -393,47 +472,67 @@ const BloggerAnswersComponent = (props) => {
                     )
                   }
                   {
-                    activeStep == 1 && (
+                    multisaveArray[activeStep] == "category" && (
                       <div>
                         <CategoriesComponent/>
                         <AlertComponent state={error} text={AlertText}/>
                       </div>
                     )
                   }
-                  {
-                    activeStep == 2 && (
-                      <div>
-                        <TextField
-                            required
-                            onChange={setOld}
-                            type="number"
-                            className="textFieldAppStyle"
-                          />
-                        <AlertComponent state={error} text={AlertText}/>
-                      </div>
 
-                    )
-                  }
+
                   {
+                    multisaveArray[activeStep] === "age" &&
                     (
-                    activeStep == 3 ||
-                    activeStep == 4 ||
-                    activeStep == 5
-                    ) && (
-                      <div>
-                          <TextField
-                              required
-                              onChange={setMultiData}
-                              value={name}
-                              className="textFieldAppStyle"
-                            />
-                          <AlertComponent state={error} text={AlertText}/>
-                      </div>
+                      <MultiInputComponent error={error} AlertText={AlertText} name={name} setMultiData={event => setMultiData(event)} fieldType={fieldType} />
+                    )
+                  }
+                  {
+                    multisaveArray[activeStep] === "firstName" &&
+                    (
+                      <MultiInputComponent error={error} AlertText={AlertText} name={name} setMultiData={event => setMultiData(event)} fieldType={fieldType} />
+                    )
+                  }
+                  {
+                    multisaveArray[activeStep] === "lastName" &&
+                    (
+                      <MultiInputComponent error={error} AlertText={AlertText} name={name} setMultiData={event => setMultiData(event)} fieldType={fieldType} />
+                    )
+                  }
+                  {
+                    multisaveArray[activeStep] === "nickName" &&
+                    (
+                      <MultiInputComponent error={error} AlertText={AlertText} name={name} setMultiData={event => setMultiData(event)} fieldType={fieldType} />
+                    )
+                  }
+                  {
+                    multisaveArray[activeStep] === "subscribers_count" &&
+
+                    (
+                      <MultiInputComponent error={error} AlertText={AlertText} name={name} setMultiData={event => setMultiData(event)} fieldType={fieldType} />
+                    )
+                  }
+                  {
+                    multisaveArray[activeStep] === "accountage" &&
+
+                    (
+                      <MultiInputComponent error={error} AlertText={AlertText} name={name} setMultiData={event => setMultiData(event)} fieldType={fieldType} />
+                    )
+                  }
+                  {
+                    multisaveArray[activeStep] === "paypal" &&
+
+                    (
+                      <MultiInputComponent error={error} AlertText={AlertText} name={name} setMultiData={event => setMultiData(event)} fieldType={fieldType} />
                     )
                   }
 
+
+
+
                   {
-                    activeStep == 6 && (
+                    socialcheck === true &&
+                    multisaveArray[activeStep] === "sociallink" && (
 
                       <div>
                         <EditListComponent />
@@ -442,39 +541,11 @@ const BloggerAnswersComponent = (props) => {
 
                     )
                   }
+
+
                   {
-                    activeStep == 7 && (
-
-                      <div>
-                          <TextField
-                              required
-                              onChange={setMultiData}
-                              value={name}
-                              type="number"
-                              className="textFieldAppStyle"
-                            />
-                          <AlertComponent state={error} text={AlertText}/>
-                      </div>
-
-                    )
-                  }
-                  {
-                    activeStep == 8 && (
-
-                      <div>
-                        <TextField
-                            required
-                            onChange={setMultiData}
-                            value={name}
-                            className="textFieldAppStyle"
-                          />
-                        <AlertComponent state={error} text={AlertText}/>
-                      </div>
-
-                    )
-                  }
-                  {
-                    activeStep == 9 && (
+                    checkssn === true &&
+                    multisaveArray[activeStep] === "ssn" && (
 
                       <div>
                         <VerifyComponent  />
@@ -484,7 +555,8 @@ const BloggerAnswersComponent = (props) => {
                     )
                   }
                   {
-                    activeStep == 10 && (
+                    checkssn === true &&
+                    multisaveArray[activeStep] === "identity" && (
 
                       <div>
                         <UploadDocumentComponent  />
@@ -507,7 +579,7 @@ const BloggerAnswersComponent = (props) => {
                      {LocalizeComponent.q11}
                    </Button>
                    {
-                     activeStep < steps.length && (
+                     activeStep < steps.length - 1 && (
                        <Button
                          variant="contained"
                          color="primary"
@@ -519,7 +591,7 @@ const BloggerAnswersComponent = (props) => {
                        )
                    }
                    {
-                     activeStep === steps.length && (
+                     activeStep === steps.length - 1 && (
                        <Button
                          variant="contained"
                          color="primary"

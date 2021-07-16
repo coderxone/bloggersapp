@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
+import LocalizeComponent from '../localize/LocalizeComponent';
 
 const initialState = {
   value: 0,
@@ -14,6 +15,13 @@ const initialState = {
     emailStatus:0,
     role:1,
     authorization:false,
+  },
+  bloggersAnswers:{
+    steps:['1', '2', '3','4','5','6','7','8','9','10','11','12'],
+    multisaveArray:['location', 'category', 'age','firstName','lastName','accountage','nickName','sociallink','subscribers_count','paypal','ssn','identity'],
+    checkssn:true,
+    socialcheck:true,
+    questions:[LocalizeComponent.bl1,LocalizeComponent.bl2,LocalizeComponent.bl3,LocalizeComponent.bl4,LocalizeComponent.bl5,LocalizeComponent.socialNetworkAge,LocalizeComponent.bl6,LocalizeComponent.bl7,LocalizeComponent.bl8,LocalizeComponent.bl9,LocalizeComponent.bl10,LocalizeComponent.bl11]
   },
   mobileDialogStatus:false,
  }
@@ -102,6 +110,30 @@ const counterSlice = createSlice({
     SetMobileDialogStatus(state,action){
       state.mobileDialogStatus = action.payload;
     },
+    SetChangeStep(state,action){
+      state.bloggersAnswers.steps = action.payload;
+    },
+    CancelSSNCheck(state){
+      state.bloggersAnswers.steps = ['1', '2', '3','4','5','6','7','8','9','10'];
+      state.bloggersAnswers.checkssn = false;
+      state.bloggersAnswers.questions = [LocalizeComponent.bl1,LocalizeComponent.bl2,LocalizeComponent.bl3,LocalizeComponent.bl4,LocalizeComponent.bl5,LocalizeComponent.bl6,LocalizeComponent.bl7,LocalizeComponent.bl8,LocalizeComponent.socialNetworkAge,LocalizeComponent.bl9];
+      state.bloggersAnswers.multisaveArray = ['location', 'category', 'age','firstName','lastName','nickName','sociallink','subscribers_count','accountage','paypal'];
+    },
+    CancelSubscribersCheck(state){
+
+      state.bloggersAnswers.socialcheck = false;
+      if(state.bloggersAnswers.checkssn == false){
+        state.bloggersAnswers.steps = ['1', '2', '3','4','5','6','7'];
+        state.bloggersAnswers.questions = [LocalizeComponent.bl1,LocalizeComponent.bl2,LocalizeComponent.bl3,LocalizeComponent.bl4,LocalizeComponent.bl5,LocalizeComponent.socialNetworkAge,LocalizeComponent.bl9];
+        state.bloggersAnswers.multisaveArray = ['location', 'category', 'age','firstName','lastName','accountage','paypal'];
+      }else{
+        state.bloggersAnswers.steps = ['1', '2', '3','4','5','6','7','8','9'];
+        state.bloggersAnswers.questions = [LocalizeComponent.bl1,LocalizeComponent.bl2,LocalizeComponent.bl3,LocalizeComponent.bl4,LocalizeComponent.bl5,LocalizeComponent.socialNetworkAge,LocalizeComponent.bl9,LocalizeComponent.bl10,LocalizeComponent.bl11];
+        state.bloggersAnswers.multisaveArray = ['location', 'category', 'age','firstName','lastName','accountage','paypal','ssn','identity'];
+      }
+
+
+    },
   },
 })
 
@@ -126,6 +158,9 @@ export const { increment,
   SetUserRole,
   SetUserAuthorization,
   SetMobileDialogStatus,
+  SetChangeStep,
+  CancelSSNCheck,
+  CancelSubscribersCheck,
 
  } = counterSlice.actions
 export default counterSlice.reducer;

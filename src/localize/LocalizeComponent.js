@@ -373,6 +373,9 @@ let strings = new LocalizedStrings({
    no_messagesYet:"no messages yet..",
    download_app:"Download mobile app",
    download_app_2:"Download our mobile apps",
+   select_address:"Please select your address",
+   select_age:"Please write your age",
+   socialNetworkAge:"how old is your social network account",
  },
 
 
@@ -749,6 +752,9 @@ let strings = new LocalizedStrings({
    no_messagesYet:"у вас нет сообщений..",
    download_app:"Загрузи мобильное приложение",
    download_app_2:"Загрузи наши мобильные приложения",
+   select_address:"Укажите свой адресс",
+   select_age:"Сколько вам лет",
+   socialNetworkAge:"Cколько лет вашему аккаунту социальной сети",
  },
 
  it: {

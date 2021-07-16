@@ -125,6 +125,9 @@ const initSocket = (() => {
      var postamount = data.alldata.postamount;
      localStorage.setItem("postamount",postamount);
 
+     let checkSSN = data.alldata.checkSSN;
+     localStorage.setItem("checkssn",checkSSN);
+
    });
 
    homeservice.listenSubscribeToWebFirebaseToken().subscribe(data => {

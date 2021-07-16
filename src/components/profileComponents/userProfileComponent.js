@@ -35,8 +35,8 @@ const BottomFunc = (props) => {
 
 
 
-  const [backgroundImageUrl,setBackgroundImageUrl] = useState(config.getServerImagePath() + "background.jpeg");
-  const [userBackgroundImageUrl,setUserBackgroundImageUrl] = useState(config.getServerImageBackgroundPath() + "no-image.png");
+  const [backgroundImageUrl,setBackgroundImageUrl] = useState(config.getServerImageBackgroundPath() + "background.jpeg");
+  const [userBackgroundImageUrl,setUserBackgroundImageUrl] = useState(config.getServerImagePath() + "no-image.png");
 
   const [switchDownloadedImage,SetswitchDownloadedImage] = useState(0);
   const [switchDownloadedBackgroundImage,SetswitchDownloadedBackgroundImage] = useState(0);
@@ -118,7 +118,14 @@ const BottomFunc = (props) => {
       //console.log(personalObject);
       //setUserBackgroundImageUrl
       if(personalObject.image_url !== "no-image.png"){
-        setUserBackgroundImageUrl(config.getServerImagePath() + personalObject.image_url);
+
+        let image_name = personalObject.image_url;
+        if(image_name.indexOf("https") >= 0){
+          setUserBackgroundImageUrl(personalObject.image_url);
+        }else{
+          setUserBackgroundImageUrl(config.getServerImagePath() + personalObject.image_url);
+        }
+
       }
       if(personalObject.background_image !== "background.jpeg"){
         setBackgroundImageUrl(config.getServerImageBackgroundPath() + personalObject.background_image);
