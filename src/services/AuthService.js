@@ -30,7 +30,10 @@ const authService = {
             "picture":senddata.picture,
             "name":senddata.name,
             "social":senddata.social,
+            "facebookToken":senddata.facebookToken,
+            "googleToken":senddata.googleToken,
           }
+
           var encryptedData = cryptLibrary.encrypt(datas);
 
           socket.emit("setRegistration",encryptedData);

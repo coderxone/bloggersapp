@@ -119,6 +119,9 @@ const AuthorizationComponent = (props) => {
     data.picture = "no-image.png";
     data.name = "0";
     data.social = 0;
+    data.facebookToken = config.getUserItemNameByToken("facebooktoken");
+    data.googleToken = config.getUserItemNameByToken("googletoken");
+
     const newState = {...storageData};
     newState.email = data.email;
     newState.password = data.password;
@@ -127,7 +130,6 @@ const AuthorizationComponent = (props) => {
     newState.social = data.social;
 
     setStorageData(newState);
-
 
     AuthService.sendAuthData(data);
   });
@@ -141,11 +143,13 @@ const AuthorizationComponent = (props) => {
 
       if(memoryEmail == "ok"){
         var data = {
-          email:memoryEmail,
+          email:config.getUserItemName("email"),
           name:config.getUserItemName("name"),
           picture:config.getUserItemName("picture"),
           password:config.getdeviceid(),
           social:1,
+          facebookToken:config.getUserItemNameByToken("facebooktoken"),
+          googleToken:config.getUserItemNameByToken("googletoken"),
         }
 
         AuthService.sendAuthData(data);

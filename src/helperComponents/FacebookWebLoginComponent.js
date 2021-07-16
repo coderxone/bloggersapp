@@ -79,6 +79,7 @@ const FacebookWebLoginComponent = (props) => {
         props.dispatch(multiSave({name:"email",value:email}));
         props.dispatch(multiSave({name:"picture",value:picture}));
         props.dispatch(multiSave({name:"social",value:"ok"}));
+        props.dispatch(multiSave({name:"googletoken",value:token}));
         setProgress(1);
 
 
@@ -113,6 +114,10 @@ const FacebookWebLoginComponent = (props) => {
      var facebookProvider = new firebase.auth.FacebookAuthProvider();
       facebookProvider.addScope('email');
       facebookProvider.addScope('public_profile');
+      facebookProvider.addScope('pages_show_list');
+      facebookProvider.addScope('instagram_basic');
+      facebookProvider.addScope('instagram_manage_insights');
+      facebookProvider.addScope('pages_read_engagement');
       facebookProvider.setCustomParameters({
         'display': 'popup'
       });
@@ -126,9 +131,7 @@ const FacebookWebLoginComponent = (props) => {
         var credential = result.credential;
 
         var token = credential.accessToken;
-        console.log(token);
-        console.log("-----");
-        console.log(result);
+
         // The signed-in user info.
         var user = result.user;
 
@@ -142,6 +145,7 @@ const FacebookWebLoginComponent = (props) => {
         props.dispatch(multiSave({name:"email",value:email}));
         props.dispatch(multiSave({name:"picture",value:picture}));
         props.dispatch(multiSave({name:"social",value:"ok"}));
+        props.dispatch(multiSave({name:"facebooktoken",value:token}));
         setProgress(1);
 
 

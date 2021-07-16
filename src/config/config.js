@@ -217,6 +217,17 @@ const newmodule = {
         }
 
       },
+      getUserItemNameByToken:(name) => {
+
+        var gettingItem = localStorage.getItem(name);
+
+        if(gettingItem){
+          return gettingItem;
+        }else{
+          return 0;
+        }
+
+      },
       deleteUserItemName:(name) => {
 
         localStorage.removeItem(name);
