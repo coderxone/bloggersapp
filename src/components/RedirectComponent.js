@@ -53,7 +53,7 @@ const RedirectComponent = (props) => {
     const getViews = RedirectService.getViews().subscribe(data => {
       console.log(data);
       if(data.status == "ok"){
-        window.location.href = data.redirecturl;
+        window.location.replace(data.redirecturl);
       }
     });
     //unsubscribe

@@ -49,6 +49,7 @@ import FileCopyIcon from '@material-ui/icons/FileCopy';
 import EditIcon from '@material-ui/icons/Edit';
 import ChatIcon from '@material-ui/icons/Chat';
 import BusinessPoster from '../../images/businessPoster.png';
+// import VideoHashChecker from '../../services/VideoHashChecker/VideoHashChecker';
 
 import {
   useHistory
@@ -919,6 +920,7 @@ useEffect(() => {
   checkGenerateUrl();
   config.checkUserAuthorization(1);
   //deleteVideoStatus();
+
 
 
 

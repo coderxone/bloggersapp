@@ -124,6 +124,9 @@ const initSocket = (() => {
      //listenServices();
      var postamount = data.alldata.postamount;
      localStorage.setItem("postamount",postamount);
+     //count_of_video
+     var count_of_video = data.alldata.count_of_video;
+     localStorage.setItem("countofvideo",count_of_video);
 
      let checkSSN = data.alldata.checkSSN;
      localStorage.setItem("checkssn",checkSSN);

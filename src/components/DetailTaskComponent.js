@@ -48,6 +48,7 @@ import TextField from '@material-ui/core/TextField';
 import FileCopyIcon from '@material-ui/icons/FileCopy';
 import EditIcon from '@material-ui/icons/Edit';
 import ChatIcon from '@material-ui/icons/Chat';
+import VideoHashChecker from '../services/VideoHashChecker/VideoHashChecker';
 
 import {
   useHistory
