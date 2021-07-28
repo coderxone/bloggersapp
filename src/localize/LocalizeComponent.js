@@ -376,6 +376,7 @@ let strings = new LocalizedStrings({
    select_address:"Please select your address",
    select_age:"Please write your age",
    socialNetworkAge:"how old is your social network account",
+   newReq:"New Request",
  },
 
 
@@ -755,6 +756,7 @@ let strings = new LocalizedStrings({
    select_address:"Укажите свой адресс",
    select_age:"Сколько вам лет",
    socialNetworkAge:"Cколько лет вашему аккаунту социальной сети",
+   newReq:"Новый запрос",
  },
 
  it: {

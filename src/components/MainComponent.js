@@ -176,7 +176,7 @@ const BottomFunc = () => {
   }
 
 
-  
+
   const [languageDialogStatus,SetLanguageDialogStatus] = useState(false);
 
 
@@ -191,6 +191,7 @@ const BottomFunc = () => {
     const listenLive = LiveService.listenUserDataTask().subscribe(data => {
       //console.log(data);
       var bloggerCount = data.results.length;
+      localStorage.setItem("bloggerCount",bloggerCount);
       //console.log(bloggerCount);
       setBloggerCount(bloggerCount);
       //LiveService

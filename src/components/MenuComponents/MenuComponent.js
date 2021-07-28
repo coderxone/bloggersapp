@@ -33,6 +33,7 @@ const mapStateToProps = (state) => {
 
 const ExampleComponent = (props) => {
 
+  const businessMenuState = useSelector(state => state.counter.businessDashboard.menuState);
   const bloggerPermission = useSelector(state => state.counter.bloggerDashboard.blogger_autorization_menu);
   const authorized_user = useSelector(state => state.counter.authorized_user);
   const swithState = useSelector((state) => state.counter.bloggerDashboard.swithState);
@@ -145,6 +146,34 @@ const ExampleComponent = (props) => {
             )
           }
 
+          {
+            authorization === true &&
+            businessMenuState === 1 && (
+              <div>
+                  <div className="menuLeftMargin">
+                    <Link to={{pathname: "/contactlist"}}>{LocalizeComponent.contactsName}</Link>
+                    <Link to={{pathname: "/chooseway"}}>{LocalizeComponent.newReq}</Link>
+
+                  </div>
+                  <div className="menuTopMargin menuLeftMargin">
+                    {
+
+                      userRole === 1 ? (
+                        <Link to={{pathname: "/blogger"}}>{LocalizeComponent.user_13}</Link>
+                      ) : (
+                        <Link to={{pathname: "/business"}}>{LocalizeComponent.user_13}</Link>
+                      )
+                    }
+                  </div>
+
+                  <div className=" menuLeftMargin">
+                    <Link to={{pathname: "/businessprofile"}}>{LocalizeComponent.user_11}</Link>
+                  </div>
+
+              </div>
+            )
+          }
+
 
           <div className="menuLogout"  onClick={Logout}>
               <div className="menuLeftMargin menuLogoutText">
@@ -163,7 +192,9 @@ const ExampleComponent = (props) => {
 
 
           {
-            bloggerPermission === 0 && (
+            bloggerPermission === 0 &&
+            businessMenuState === 0
+             && (
               <div>
                   <div className="menuLeftMargin">
                     <Link to={{pathname: "/creator"}}>{LocalizeComponent.Creator}</Link>
@@ -228,6 +259,19 @@ const ExampleComponent = (props) => {
             )
           }
 
+
+          {
+            businessMenuState === 1 &&
+            (
+              <div>
+                  <div className="menuLeftMargin">
+                    <a target="_blank" href="mailto:info@echohub.io">{LocalizeComponent.contactUs}</a>
+                  </div>
+              </div>
+
+            )
+          }
+
           {
             bloggerPermission === 1 &&
             approveStatus === 1 &&
@@ -287,7 +331,9 @@ const ExampleComponent = (props) => {
 
       {
         //not authorized_user
-        bloggerPermission === 0 && (
+        bloggerPermission === 0 &&
+        businessMenuState === 0 &&
+        (
           <div className="menuContainer">
 
             {
@@ -323,7 +369,8 @@ const ExampleComponent = (props) => {
 
       {
         //blogger dashboard
-        bloggerPermission === 1 && (
+        bloggerPermission === 1
+        && (
           <div className="menuContainer">
 
             <div className="leftMenuIcon" onClick={openNav}>
@@ -338,6 +385,26 @@ const ExampleComponent = (props) => {
           </div>
         )
         //blogger dashboard
+      }
+
+      {
+        //business dashboard
+        businessMenuState === 1
+        && (
+          <div className="menuContainer">
+
+            <div className="leftMenuIcon" onClick={openNav}>
+              <MenuIcon className="menuIconColor"/>
+            </div>
+
+
+
+            <div className="menuIcon" onClick={openNavR}>
+              <FilterListIcon className="menuIconColor"/>
+            </div>
+          </div>
+        )
+        //business dashboard
       }
 
 

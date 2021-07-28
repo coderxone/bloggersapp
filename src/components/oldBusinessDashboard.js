@@ -1,5 +1,5 @@
 import React, {useState,useEffect,useMemo,useCallback} from 'react';
-import MenuComponent from '../components/MenuComponents/MenuComponent';
+import clsx from 'clsx';
 // import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonInput, IonItem, IonLabel, IonList, IonItemDivider } from '@ionic/react';
 import '../css/businessDashboard.scss';
 import LocalizeComponent from '../localize/LocalizeComponent';
@@ -23,7 +23,10 @@ import AuthService from '../services/AuthService';
 import HomeService from '../services/Homeservice';
 import DialogComponent from '../components/DialogComponent';
 
-
+import Drawer from '@material-ui/core/Drawer';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
 import List from '@material-ui/core/List';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
@@ -53,11 +56,156 @@ import config from '../config/config.js';
 import {
   Link,useHistory,
 } from "react-router-dom";
+
 import Chart from "react-google-charts";
-import { useSelector, useDispatch } from 'react-redux'
-import {activateBusinessMenu} from '../features/counter-slice';
 
 
+
+
+function mapStateToProps(state,ownProps) {
+  return {
+    count: state.count,
+    email:state.email,
+    password:state.password
+  }
+}
+
+//const {regionsList: { data: list = [] } } = props;
+
+const mapDispatchToProps = dispatch => ({
+  increment,
+  decrement,
+  dispatch,
+  save_email
+});
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    flexGrow: 1,
+    backgroundColor:'#0083ff',
+  },
+  paper: {
+    padding: theme.spacing(2),
+    textAlign: 'center',
+    color: theme.palette.text.secondary,
+    backgroundColor:'#0083ff',
+  },
+}));
+
+
+const drawerWidth = 240;
+
+const useStylestwo = makeStyles((theme) => ({
+  root: {
+    display: 'flex',
+    height:'100%'
+  },
+  icon:{
+    color:"#0083ff"
+  },
+  appBar: {
+    transition: theme.transitions.create(['margin', 'width'], {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen,
+    }),
+
+  },
+  appBarShift: {
+    width: `calc(100% - ${drawerWidth}px)`,
+    marginLeft: drawerWidth,
+    transition: theme.transitions.create(['margin', 'width'], {
+      easing: theme.transitions.easing.easeOut,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+
+  },
+  menuButton: {
+    marginRight: theme.spacing(2),
+  },
+  hide: {
+    display: 'none',
+  },
+  drawer: {
+    width: drawerWidth,
+    flexShrink: 0,
+  },
+  drawerPaper: {
+    width: drawerWidth,
+    backgroundColor:"white",
+    color:"#0083ff",
+  },
+  drawerHeader: {
+    display: 'flex',
+    alignItems: 'center',
+    padding: theme.spacing(0, 1),
+    // necessary for content to be below app bar
+    ...theme.mixins.toolbar,
+    justifyContent: 'flex-end',
+    backgroundColor:'#0083ff',
+
+
+
+  },
+  content: {
+    flexGrow: 1,
+    padding: theme.spacing(0),
+    transition: theme.transitions.create('margin', {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen,
+    }),
+    marginLeft: -drawerWidth,
+    backgroundColor:"white",
+    color:"#0083ff",
+    height:"100%",
+  },
+  contentShift: {
+    transition: theme.transitions.create('margin', {
+      easing: theme.transitions.easing.easeOut,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+    marginLeft: 0,
+    height:'100%',
+  },
+}));
+
+
+const CssTextField = withStyles({
+  root: {
+    '& label.Mui-focused': {
+      color: '#8936f4',
+    },
+    '& label': {
+      color: '#8936f4',
+    },
+    '& .MuiInput-underline:after': {
+      borderBottomColor: '#8936f4',
+    },
+    '& .MuiOutlinedInput-root': {
+      '& fieldset': {
+        borderColor: 'red',
+      },
+      '&:hover fieldset': {
+        borderColor: 'yellow',
+      },
+      '&.Mui-focused fieldset': {
+        borderColor: '#8936f4',
+      },
+      '& input:valid + fieldset': {
+        borderColor: '#8936f4',
+      },
+      '& input:invalid + fieldset': {
+        borderColor: 'red',
+      },
+
+    },
+  },
+})(TextField);
+
+
+
+const schema = yup.object().shape({
+  email: yup.string().required("Required").email(),
+});
 
 
 const MessageComponent = (props) => {
@@ -100,23 +248,13 @@ const BlockComponent = (props) => {
 
   const items = props.items;
 
-  console.log(items)
-
-  const routePath = (item) => {
-    if(item.type === 1){
-      return "/mdetail";
-    }else{
-      return "/detail";
-    }
-  }
-
   const content = useMemo(() => {
 
     return items.map((item,index) =>
 
       <Link key={item.id} className="deleteUrlClass"
           to={{
-            pathname: routePath(item),
+            pathname: "/detail",
             data: item // your data array of objects
           }}
           >
@@ -179,10 +317,23 @@ const BlockComponent = (props) => {
 
 const BusinessDashboard = (props) => {
 
-  const dispatch = useDispatch();
+  const classestwo = useStylestwo();
+
+  const theme = useTheme();
   const [open, setOpen] = React.useState(false);
 
+  const handleDrawerOpen = () => {
+    setOpen(true);
+  };
 
+  const handleDrawerClose = () => {
+    setOpen(false);
+  };
+
+  const classes = useStyles();
+  const { register, handleSubmit, errors,setError } = useForm({
+    resolver: yupResolver(schema)
+  });
   var obj = {
     email:""
   };
@@ -407,8 +558,6 @@ const [dialogSwitcher,SetdialogSwitcher] = useState(0);
       BusinesService.RequestCheckTasks();
     });
 
-    dispatch(activateBusinessMenu());
-
     return () => {
       ListenCheckTasks.unsubscribe();
       DialogExecute.unsubscribe();
@@ -426,30 +575,80 @@ const [dialogSwitcher,SetdialogSwitcher] = useState(0);
 
   const [detailMessage,setDetailMessage] = useState("");
 
+  const CloseDrawer = () => {
+    setOpen(false);
+  }
 
 
   return (
 
-    <div id="opacityControl">
-      <MenuComponent />
-
-        <div className="projectContainer">
-          <BlockComponent items={listArray}/>
-          <ConfirmDialogComponent status={dialogStatus} left={leftbutton} right={rightbutton} text={dialogText}/>
+    <div className={classestwo.root}>
+      <CssBaseline />
+      <AppBar
+        position="fixed"
+        className={clsx(classestwo.appBar, {
+          [classestwo.appBarShift]: open,
+        })}
+      >
+        <Toolbar>
+          <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            onClick={handleDrawerOpen}
+            edge="start"
+            className={clsx(classestwo.menuButton, open && classestwo.hide)}
+          >
+            <MenuIcon />
+          </IconButton>
+          <Typography variant="h6"  onClick={event => CloseDrawer()} noWrap>
+            Business dashboard
+          </Typography>
+        </Toolbar>
+      </AppBar>
+      <Drawer
+        className={classestwo.drawer}
+        variant="persistent"
+        anchor="left"
+        open={open}
+        classes={{
+          paper: classestwo.drawerPaper,
+        }}
+      >
+        <div className={classestwo.drawerHeader}>
+          <IconButton onClick={handleDrawerClose}>
+            {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+          </IconButton>
         </div>
+        <Divider />
+        <List >
+          {['Contacts', 'New Request'].map((text, index) => (
+            <ListItem button key={text} onClick={event => changePage(text)}>
+              <ListItemIcon className={classestwo.icon}>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+              <ListItemText primary={text} />
+            </ListItem>
+          ))}
+        </List>
+        <Divider />
 
+      </Drawer>
+      <main
+        className={clsx(classestwo.content, {
+          [classestwo.contentShift]: open,
+        })}
+      >
+        <div className={classestwo.drawerHeader} />
+
+
+                <BlockComponent items={listArray}/>
+
+
+                <ConfirmDialogComponent status={dialogStatus} left={leftbutton} right={rightbutton} text={dialogText}/>
+      </main>
     </div>
-
-
-
-
-
-
-
 
 
   );
 };
 
 
- export default connect()(BusinessDashboard);
+ export default connect(mapStateToProps,mapDispatchToProps)(BusinessDashboard);

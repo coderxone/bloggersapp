@@ -19,6 +19,7 @@ import ReactGeoCodeComponent from './components/GeocodeComponent';
 import PaymentComponent from './components/PaymentComponent';
 import BusinessDashboard from './components/businessDashboard';
 import DetailComponent from './components/DetailComponent';
+import MDetailComponent from './components/businessComponents/MDetailComponent';
 import SubDetailComponent from './components/SubDetailComponent';
 import ProfileComponent from './components/ProfileComponent';
 import RateComponent from './components/RateComponent';
@@ -50,6 +51,7 @@ import Model1DetailTaskComponent from './components/ApplyComponents_model1/Model
 import creatorComponent from './components/introductionComponents/creatorComponent';
 import BusinessIntroComponent from './components/introductionComponents/BusinessIntroComponent';
 import userProfileComponent from './components/profileComponents/userProfileComponent';
+import businessUserProfileComponent from './components/profileComponents/businessUserProfileComponent';
 import userProfilePhotoUpload from './components/profileComponents/userProfilePhotoUpload';
 import WhyEchohubComponent from './components/introductionComponents/WhyEchohubComponent';
 
@@ -75,6 +77,7 @@ const App = () => {
                 <Route path="/payment" component={PaymentComponent} exact={true} />
                 <Route path="/business" component={BusinessDashboard} exact={true} />
                 <Route path="/detail" component={DetailComponent} exact={true} />
+                <Route path="/mdetail" component={MDetailComponent} exact={true} />
                 <Route path="/subdetail" component={SubDetailComponent} exact={true} />
                 <Route path="/profile" component={ProfileComponent} exact={true} />
                 <Route path="/rate" component={RateComponent} exact={true} />
@@ -104,6 +107,7 @@ const App = () => {
                 <Route path="/creator" back={true} component={creatorComponent} exact={true} />
                 <Route path="/businessintro" back={true} component={BusinessIntroComponent} exact={true} />
                 <Route path="/userprofile" back={true} component={userProfileComponent} exact={true} />
+                <Route path="/businessprofile" back={true} component={businessUserProfileComponent} exact={true} />
                 <Route path="/why" back={true} component={WhyEchohubComponent} exact={true} />
                 <Route exact path="/" render={() => <Redirect to="/main" />} />
                 </LastLocationProvider>

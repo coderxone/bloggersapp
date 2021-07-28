@@ -5,7 +5,9 @@ const initialState = {
   value: 0,
   IMAGE_DATA:{},
   BACKGROUND_IMAGE_DATA:{},
-
+  businessDashboard:{
+    menuState:0,
+  },
   bloggerDashboard:{
     blogger_autorization_menu:0,
     swithState:false,
@@ -134,6 +136,9 @@ const counterSlice = createSlice({
 
 
     },
+    activateBusinessMenu(state){
+      state.businessDashboard.menuState = 1;
+    },
   },
 })
 
@@ -161,6 +166,7 @@ export const { increment,
   SetChangeStep,
   CancelSSNCheck,
   CancelSubscribersCheck,
+  activateBusinessMenu,
 
  } = counterSlice.actions
 export default counterSlice.reducer;

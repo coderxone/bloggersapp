@@ -20,21 +20,11 @@ const BottomFunc = (props) => {
     <div id="opacityControl">
       <MenuComponent />
 
-      <Grid container className="projectContainer"  >
+        <div className="projectContainer">
 
+        </div>
 
-
-
-
-
-
-
-
-
-
-    </Grid>
-
-  </div>
+    </div>
 
 
 
