@@ -126,7 +126,7 @@ const BannedList = ((props) => {
     return (
       <div className="banBox">
           <div className="banBoxTitle">
-              {LocalizeComponent.banBoxTitle}
+              {LocalizeComponent.videoDontexistCreatorSide}
           </div>
             <div className="boxIconPosition">
               <ExpandMoreIcon className="boxIconStyle"/>

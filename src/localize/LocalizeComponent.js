@@ -377,6 +377,8 @@ let strings = new LocalizedStrings({
    select_age:"Please write your age",
    socialNetworkAge:"how old is your social network account",
    newReq:"New Request",
+   videoDontexist:"not exist",
+   videoDontexistCreatorSide:"Your video post was not found Please insert a working link from network below",
  },
 
 
@@ -757,6 +759,8 @@ let strings = new LocalizedStrings({
    select_age:"Сколько вам лет",
    socialNetworkAge:"Cколько лет вашему аккаунту социальной сети",
    newReq:"Новый запрос",
+   videoDontexist:"not exist",
+
  },
 
  it: {

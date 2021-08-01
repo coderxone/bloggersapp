@@ -61,7 +61,6 @@ const FacebookWebLoginComponent = (props) => {
     firebase.auth()
     .signInWithPopup(googleProvider)
     .then((result) => {
-      /** @type {firebase.auth.OAuthCredential} */
       var credential = result.credential;
       // This gives you a Google Access Token. You can use it to access the Google API.
       var token = credential.accessToken;

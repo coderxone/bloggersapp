@@ -54,6 +54,7 @@ import userProfileComponent from './components/profileComponents/userProfileComp
 import businessUserProfileComponent from './components/profileComponents/businessUserProfileComponent';
 import userProfilePhotoUpload from './components/profileComponents/userProfilePhotoUpload';
 import WhyEchohubComponent from './components/introductionComponents/WhyEchohubComponent';
+import MSubdetailComponent from './components/businessComponents/MSubdetailComponent';
 
 
 const App = () => {
@@ -79,6 +80,7 @@ const App = () => {
                 <Route path="/detail" component={DetailComponent} exact={true} />
                 <Route path="/mdetail" component={MDetailComponent} exact={true} />
                 <Route path="/subdetail" component={SubDetailComponent} exact={true} />
+                <Route path="/msubdetail" component={MSubdetailComponent} exact={true} />
                 <Route path="/profile" component={ProfileComponent} exact={true} />
                 <Route path="/rate" component={RateComponent} exact={true} />
                 <Route path="/role" component={SelectRoleComponent} exact={true} />

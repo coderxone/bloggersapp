@@ -319,7 +319,7 @@ const BlogListComponent = (props) => {
                         <div className="left_button_one_name">
                         <Link className="removeUrlStyles"
                           to={{
-                            pathname: "/subdetail",
+                            pathname: "/msubdetail",
                             data: item // your data array of objects
                           }}
                         >
@@ -343,7 +343,36 @@ const BlogListComponent = (props) => {
                   </div>
 
 
-                
+                  <div className="buttons_block_three">
+                    {item.status === 2 ? (
+                      <div className="left_button_confirm">
+                        <div className="left_button_one_name">
+
+                          <div  className="left_button_one_name_confirm" onClick={event => ConfirmTask(item.user_email)}>
+                             {LocalizeComponent.Confirm_task}
+                          </div>
+
+
+                        </div>
+                      </div>
+                     ) : (
+                       <div className="left_button_confirmed">
+                         <div className="left_button_one_name">
+
+                           <div  className="left_button_one_name_confirmed" >
+                              <DoneIcon className="done_button_one_name_size_two" /><div className="confirmed_text">{LocalizeComponent.Confirmed_task}</div>
+                           </div>
+
+
+                         </div>
+                       </div>
+
+                     )}
+
+                  </div>
+
+
+
               </div>
           </div>
        ) : (
