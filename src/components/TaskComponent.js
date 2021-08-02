@@ -35,6 +35,7 @@ import StepLabel from '@material-ui/core/StepLabel';
 import StepConnector from '@material-ui/core/StepConnector';
 import clsx from 'clsx';
 import Check from '@material-ui/icons/Check';
+import M1BloggerProgressComponent from '../components/ApplyComponents_model1/M1BloggerProgressWithoutStatus';
 
 
 
@@ -348,10 +349,35 @@ const CompleteBlockComponent = (props) => {
 
 
   return (
-    <div className="fullWidth withoutScroll" >
+    <div className="fullWidth withoutScroll projectMarginTopDescription" >
       {content}
     </div>
   );
+
+}
+
+const GetType = (items) => {
+  if(items.length > 0){
+    return items[0].type;
+  }else{
+    return 1;
+  }
+}
+
+const DistributeProgressComponent = (props) => {
+
+  const listArrayComplete = props.items;
+
+  const type = GetType(listArrayComplete);
+
+  if(type === 1){
+    return <M1BloggerProgressComponent items={listArrayComplete} />;
+  }else{
+    return <CompleteBlockComponent items={listArrayComplete} />;
+  }
+
+  console.log(listArrayComplete);
+
 
 }
 
@@ -495,7 +521,7 @@ const TaskComponent = (props) => {
   return (
 
    	<div className={classes.root}>
-        <Grid container >
+        <div container >
           <AppBar position="static">
           <Tabs value={value} onChange={tabsChange} aria-label="simple tabs example">
               <Tab label={LocalizeComponent.currentTasks} {...a11yProps(0)} />
@@ -506,14 +532,14 @@ const TaskComponent = (props) => {
             <BlockComponent items={listArray} />
           </TabPanel>
           <TabPanel value={value} index={1}>
-            <CompleteBlockComponent items={listArrayComplete} />
+            <DistributeProgressComponent  items={listArrayComplete} />
           </TabPanel>
 
             <GoBackAbsoluteComponent/>
 
 
 
-          </Grid>
+          </div>
       </div>
 
 

@@ -11,6 +11,7 @@ const observ_subjectfive = new Subject();
 const observ_subjectfive44 = new Subject();
 const observ_subjectfive45 = new Subject();
 const observ_subjectfive46 = new Subject();
+const observ_subjectfive47 = new Subject();
 
 const detailservice = {
 
@@ -81,6 +82,28 @@ const detailservice = {
         });
 
         return observ_subjectfive;
+      },
+
+      checkUserVerifiedDays:(data) => {
+        var datas = {
+          "deviceid":config.getdeviceid(),
+          "email":config.getUserEmail(),
+          "role":config.getUserRole(),
+          "data":data
+        }
+
+        var encryptedData = cryptLibrary.encrypt(datas);
+
+        socket.emit("checkVerifiedDays",encryptedData);
+      },
+
+      listenCheckUserVerifiedDays:() => {
+        socket.on("checkVerifiedDays",(data) => {
+            //console.log(data);
+            observ_subjectfive47.next(cryptLibrary.decrypt(data));
+        });
+
+        return observ_subjectfive47;
       },
 
 

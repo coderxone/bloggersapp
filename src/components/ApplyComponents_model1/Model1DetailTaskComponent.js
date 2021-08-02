@@ -170,7 +170,7 @@ const DetailTaskComponent = (props) => {
   },[props]);
 
 
-  console.log(detailData)
+//  console.log(detailData)
 
 
   //video upload notifier

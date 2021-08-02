@@ -228,7 +228,7 @@ const SubComponent = (props) => {
     if(editMode === true){
       ObservableService.sendData_subject(sendObject);
     }else{
-      SetdangerText(LocalizeComponent.editMode);
+      SetdangerText(LocalizeComponent.editMode7Days);
       SetdangerState(true);
       closeAlert();
 
@@ -423,6 +423,19 @@ const DetailComponent = (props) => {
 
   }
 
+  const checkUserVerifiedDays = () => {
+
+    var senddata = {
+      "project_id":Project_id,
+      "blogger_email":blogger_email
+    }
+
+    //console.log(senddata);
+
+    DetailService.checkUserVerifiedDays(senddata);
+
+  }
+
 
 
 
@@ -436,6 +449,7 @@ const DetailComponent = (props) => {
 
 
   });
+
 
   const [ listArray, setListArray ] = useState([]);
   const [ listArrayApprove, setListApproveArray ] = useState([]);
@@ -487,7 +501,7 @@ const DetailComponent = (props) => {
         if(data.editmode === false){
           //setEditMode(false);
         }else{
-          setEditMode(true);
+          //setEditMode(true);
         }
         SetListX(data,listArray);
       }
@@ -542,6 +556,15 @@ const DetailComponent = (props) => {
       getDetailData();
     });
 
+//xxxx user verified days
+    const listenCheckUserVerifiedDays = DetailService.listenCheckUserVerifiedDays().subscribe(data => {
+      let verifiedDays = data.verifiedDays;
+      //console.log(verifiedDays);
+      if(verifiedDays >= 7){
+        setEditMode(false);
+      }
+    });
+
 
 
 
@@ -552,6 +575,7 @@ const DetailComponent = (props) => {
       listenBan.unsubscribe();
       observable.unsubscribe();
       intervalObservable.unsubscribe();
+      listenCheckUserVerifiedDays.unsubscribe();
     }
 
     //unsubscribe
@@ -585,6 +609,7 @@ const DetailComponent = (props) => {
 
     //initiase functions
     getDetailData();
+    checkUserVerifiedDays();
     config.checkUserAuthorization(2);
 
 

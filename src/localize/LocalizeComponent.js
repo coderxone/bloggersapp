@@ -379,6 +379,7 @@ let strings = new LocalizedStrings({
    newReq:"New Request",
    videoDontexist:"not exist",
    videoDontexistCreatorSide:"Your video post was not found Please insert a working link from network below",
+   editMode7Days:"Editing mode is not available because the system has already counted 7 days since the user posted video.",
  },
 
 
@@ -759,7 +760,9 @@ let strings = new LocalizedStrings({
    select_age:"Сколько вам лет",
    socialNetworkAge:"Cколько лет вашему аккаунту социальной сети",
    newReq:"Новый запрос",
-   videoDontexist:"not exist",
+   videoDontexist:"нет видео",
+   videoDontexistCreatorSide:"Ваше видео не найдено. Пожалуйста, вставьте рабочую ссылку из социальной сети ниже.",
+   editMode7Days:"Режим редактирования недоступен, потому что система уже отсчитала 7 дней с момента публикации видео пользователем",
 
  },
 
