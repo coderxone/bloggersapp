@@ -17,6 +17,8 @@ const ExampleComponent = (props) => {
 
 
   const status = props.status;
+  const verifiedDays = props.verifiedDays;
+  const DayCounter = Number(config.getUserItemName("execute_day")) - verifiedDays;
 
   //console.log(status)
 
@@ -77,7 +79,7 @@ const ExampleComponent = (props) => {
 
 
                   {
-                    LocalizeComponent.currentStatus + LocalizeComponent.step3_5
+                    LocalizeComponent.currentStatus + LocalizeComponent.step3_5 + DayCounter + LocalizeComponent.step3_5_2
                   }
 
 

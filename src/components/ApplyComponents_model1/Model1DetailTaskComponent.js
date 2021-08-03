@@ -611,6 +611,7 @@ const CountTaskFunction = (data) => {
 
 const [listArrayComplete,setListArrayComplete] = useState([]);
 const [currentTaskStatus,setCurrentTaskStatus] = useState(0);
+const [verifiedDays,SetVerifiedDays] = useState(0);
 
 const [downloadUrl,SetDownloadUrl] = useState('');
 
@@ -633,8 +634,8 @@ useEffect(() => {
   //manage statuses
   const listenCurrentStatusL = DetailTaskService.listenCurrentStatus().subscribe(data => {
 
-    //console.log(data);
-//xxx
+    console.log(data);
+//xxxx
     if(data.data.length > 0){
 
       const newlistArray = [...listArrayComplete];
@@ -643,6 +644,7 @@ useEffect(() => {
 
           //change status
           let currentStatus = data.data[i].status;
+          let verifiedDays = data.data[i].verifiedDays;
           if(currentStatus === 2){ //under consideration by business
             setCurrentTaskStatus(1);
             SetSucessState(false);
@@ -654,10 +656,12 @@ useEffect(() => {
           }else if(currentStatus === 4){
             SetSucessState(false);
             setCurrentTaskStatus(1);
+            SetVerifiedDays(verifiedDays);
           }else if(currentStatus === 5){
             setCurrentTaskStatus(2);
             SetalertText(LocalizeComponent.readyToWithdrawal);//setText in Alert
             SetSucessState(true);//show alert
+            SetVerifiedDays(verifiedDays);
           }
           //change status
           var found = 0;
@@ -1165,7 +1169,7 @@ const EditNetwork = (data) => {
             {
               // instruction block for model2
             }
-            <M1_instructionComponent status={currentTaskStatus}/>
+            <M1_instructionComponent status={currentTaskStatus} verifiedDays={verifiedDays}/>
 
             {
               swithbutton === false ||

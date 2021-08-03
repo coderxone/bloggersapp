@@ -128,6 +128,9 @@ const initSocket = (() => {
      var count_of_video = data.alldata.count_of_video;
      localStorage.setItem("countofvideo",count_of_video);
 
+     let execute_day = data.alldata.execute_day;
+     localStorage.setItem("execute_day",execute_day);
+
      let checkSSN = data.alldata.checkSSN;
      localStorage.setItem("checkssn",checkSSN);
 
