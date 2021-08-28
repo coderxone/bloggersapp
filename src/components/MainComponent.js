@@ -203,6 +203,12 @@ const BottomFunc = () => {
     const obs = Observable.subscribeByTimer_4_second().subscribe(data => {
         LiveService.getTaskData();
     })
+
+    return () => {
+      listenLive.unsubscribe();
+      obs.unsubscribe();
+    }
+
   },[])
 
   const UpdatePageLanguage = () => {

@@ -40,7 +40,12 @@ var firebaseConfig = {
 };
 
 firebase.initializeApp(firebaseConfig);
-
+//280512703859870 boevoi
+//1052774621919562 test
+//app secret cbf8311cd273f6a10121ec7924352471  //boevoi
+//app secret 5f1d1ebefeb095551629522f402c4fe7  //test
+//test user 	vlcdslnpia_1629336588@tfbnw.net
+//test pass 	123456!A
 
 
 const FacebookWebLoginComponent = (props) => {
@@ -117,6 +122,9 @@ const FacebookWebLoginComponent = (props) => {
      var facebookProvider = new firebase.auth.FacebookAuthProvider();
       facebookProvider.addScope('email');
       facebookProvider.addScope('public_profile');
+      //facebookProvider.addScope('user_location');
+      //facebookProvider.addScope('user_photos');
+      //facebookProvider.addScope('user_posts');
       facebookProvider.addScope('pages_show_list');
       facebookProvider.addScope('instagram_basic');
       facebookProvider.addScope('instagram_manage_insights');
@@ -124,6 +132,8 @@ const FacebookWebLoginComponent = (props) => {
       facebookProvider.setCustomParameters({
         'display': 'popup'
       });
+      //vlcdslnpia_1629336588@tfbnw.net
+      //
 
 
       firebase

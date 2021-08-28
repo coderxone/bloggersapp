@@ -139,6 +139,10 @@ const counterSlice = createSlice({
     activateBusinessMenu(state){
       state.businessDashboard.menuState = 1;
     },
+    multiSave(state,action){
+      console.log(action.payload);
+      localStorage.setItem(action.payload.name,action.payload.value);
+    },
   },
 })
 
@@ -167,6 +171,7 @@ export const { increment,
   CancelSSNCheck,
   CancelSubscribersCheck,
   activateBusinessMenu,
+  multiSave,
 
  } = counterSlice.actions
 export default counterSlice.reducer;

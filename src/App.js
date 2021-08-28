@@ -55,6 +55,7 @@ import businessUserProfileComponent from './components/profileComponents/busines
 import userProfilePhotoUpload from './components/profileComponents/userProfilePhotoUpload';
 import WhyEchohubComponent from './components/introductionComponents/WhyEchohubComponent';
 import MSubdetailComponent from './components/businessComponents/MSubdetailComponent';
+import BloggerListComponent from './components/BloggerPullComponents/BloggerListComponent';
 
 
 const App = () => {
@@ -71,46 +72,47 @@ const App = () => {
               <Router>
                 <LastLocationProvider>
                 <Route path="/home" component={Home} exact={true} />
-                <Route path="/login" component={AuthorizationComponent} exact={true} />
-                <Route path="/restore" component={RestorepasswordComponent} exact={true} />
-                <Route path="/apply" component={ApplyComponent} exact={true} />
-                <Route path="/applyn" component={NewApplyComponent} exact={true} />
-                <Route path="/payment" component={PaymentComponent} exact={true} />
-                <Route path="/business" component={BusinessDashboard} exact={true} />
-                <Route path="/detail" component={DetailComponent} exact={true} />
-                <Route path="/mdetail" component={MDetailComponent} exact={true} />
-                <Route path="/subdetail" component={SubDetailComponent} exact={true} />
-                <Route path="/msubdetail" component={MSubdetailComponent} exact={true} />
-                <Route path="/profile" component={ProfileComponent} exact={true} />
-                <Route path="/rate" component={RateComponent} exact={true} />
-                <Route path="/role" component={SelectRoleComponent} exact={true} />
-                <Route path="/blogger" component={BloggerDashboardComponent} exact={true} />
-                <Route path="/detailtask" component={DetailTaskComponent} exact={true} />
-                <Route path="/mdetailtask" component={Model1DetailTaskComponent} exact={true} />
-                <Route path="/suggest" component={SuggestComponent} exact={true} />
-                <Route path="/contactlist" component={ContactListComponent} exact={true} />
-                <Route path="/mytasks" component={TaskComponent} exact={true} />
-                <Route path="/dandelion" component={DandelionComponent} exact={true} />
-                <Route path="/maindandelion" component={MainPageDandelion} exact={true} />
-                <Route path="/animation" component={AnimationComponent} exact={true} />
-                <Route path="/animationtwo" component={AnimationTwoComponent} exact={true} />
-                <Route path="/animationtwof" component={AnimationTwoFactory } exact={true} />
-                <Route path="/animationblogger" component={BloggerAnimationComponent } exact={true} />
-                <Route path="/blogger-answers" component={BloggerAnswersComponent } exact={true} />
-                <Route path="/approve" component={AdminComponent } exact={true} />
-                <Route path="/emailtemplate" component={ActivationEmail } exact={true} />
-                <Route path="/test" component={userProfilePhotoUpload} exact={true} />
-                <Route path="/chooseway" component={ChooseWayComponent} exact={true} />
-                <Route path="/main" component={MainComponent} exact={true} />
-                <Route path="/about" component={AboutUsComponent} exact={true} />
-                <Route path="/follow/:id" component={RedirectComponent} exact={true} />
-                <Route path="/confirm/:id" component={ConfirmComponent} exact={true} />
+                <Route path="/login" back={true} component={AuthorizationComponent} exact={true} />
+                <Route path="/restore" back={true} component={RestorepasswordComponent} exact={true} />
+                <Route path="/apply" back={true} component={ApplyComponent} exact={true} />
+                <Route path="/applyn" back={true} component={NewApplyComponent} exact={true} />
+                <Route path="/payment" back={true} component={PaymentComponent} exact={true} />
+                <Route path="/business" back={true} component={BusinessDashboard} exact={true} />
+                <Route path="/detail" back={true} component={DetailComponent} exact={true} />
+                <Route path="/mdetail" back={true} component={MDetailComponent} exact={true} />
+                <Route path="/subdetail" back={true} component={SubDetailComponent} exact={true} />
+                <Route path="/msubdetail" back={true} component={MSubdetailComponent} exact={true} />
+                <Route path="/profile" back={true} component={ProfileComponent} exact={true} />
+                <Route path="/rate"  back={true} component={RateComponent} exact={true} />
+                <Route path="/role"  back={true} component={SelectRoleComponent} exact={true} />
+                <Route path="/blogger"  back={true} component={BloggerDashboardComponent} exact={true} />
+                <Route path="/detailtask"  back={true} component={DetailTaskComponent} exact={true} />
+                <Route path="/mdetailtask"  back={true} component={Model1DetailTaskComponent} exact={true} />
+                <Route path="/suggest"  back={true} component={SuggestComponent} exact={true} />
+                <Route path="/contactlist"  back={true} component={ContactListComponent} exact={true} />
+                <Route path="/mytasks"  back={true} component={TaskComponent} exact={true} />
+                <Route path="/dandelion"  back={true} component={DandelionComponent} exact={true} />
+                <Route path="/maindandelion"  back={true} component={MainPageDandelion} exact={true} />
+                <Route path="/animation"  back={true} component={AnimationComponent} exact={true} />
+                <Route path="/animationtwo"  back={true} component={AnimationTwoComponent} exact={true} />
+                <Route path="/animationtwof"  back={true} component={AnimationTwoFactory } exact={true} />
+                <Route path="/animationblogger"  back={true} component={BloggerAnimationComponent } exact={true} />
+                <Route path="/blogger-answers"  back={true} component={BloggerAnswersComponent } exact={true} />
+                <Route path="/approve"  back={true} component={AdminComponent } exact={true} />
+                <Route path="/emailtemplate"  back={true} component={ActivationEmail } exact={true} />
+                <Route path="/test"  back={true} component={userProfilePhotoUpload} exact={true} />
+                <Route path="/chooseway"  back={true} component={ChooseWayComponent} exact={true} />
+                <Route path="/main"  component={MainComponent} exact={true} />
+                <Route path="/about"  back={true} component={AboutUsComponent} exact={true} />
+                <Route path="/follow/:id" back={true} component={RedirectComponent} exact={true} />
+                <Route path="/confirm/:id" back={true} component={ConfirmComponent} exact={true} />
                 <Route path="/video" back={true} component={VideoComponent} exact={true} />
                 <Route path="/creator" back={true} component={creatorComponent} exact={true} />
                 <Route path="/businessintro" back={true} component={BusinessIntroComponent} exact={true} />
                 <Route path="/userprofile" back={true} component={userProfileComponent} exact={true} />
                 <Route path="/businessprofile" back={true} component={businessUserProfileComponent} exact={true} />
                 <Route path="/why" back={true} component={WhyEchohubComponent} exact={true} />
+                <Route path="/bloggerlist" back={true} component={BloggerListComponent} exact={true} />
                 <Route exact path="/" render={() => <Redirect to="/main" />} />
                 </LastLocationProvider>
               </Router>

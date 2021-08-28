@@ -327,6 +327,7 @@ const RateComponent = (props) => {
               <div  onClick={(e) => rateEvent(3)} ><StarIcon  className={"secondStar " + rateArrayStatus[2].class} /></div>
               <div  onClick={(e) => rateEvent(4)} ><StarIcon  className={"secondStar " + rateArrayStatus[3].class} /></div>
               <div  onClick={(e) => rateEvent(5)} ><StarIcon  className={"secondStar " + rateArrayStatus[4].class} /></div>
+              
           </div>
 
           <div className="commentBox">

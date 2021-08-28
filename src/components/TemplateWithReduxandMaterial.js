@@ -1,39 +1,33 @@
-import React, {useState,useEffect,useMemo} from 'react';
-import TextField from '@material-ui/core/TextField';
-import Autocomplete from '@material-ui/lab/Autocomplete';
-import config from '../config/config.js';
-import { connect } from 'react-redux';
+import React, { useCallback,useEffect,useState,useMemo,useRef } from 'react';
+import LocalizeComponent from '../../localize/LocalizeComponent';
 import Grid from '@material-ui/core/Grid';
-
-import { multiSave } from '../actions/actions';
+import config from '../../config/config';
 import {
-  Link,
+  Link,useHistory
 } from "react-router-dom";
 
+ //LocalizeComponent.setLanguage("ru");
 
-const mapStateToProps = (state) => {
-  return {
-      somethingFromStore: state.somethingFromStore
-  }
-}
 
-const ExampleComponent = (props) => {
+const BottomFunc = (props) => {
 
-  const stateFromprops = props.somethingFromStore;
+
 
 
   return (
 
-    <Grid container >
+    <div>
 
 
+    </div>
 
 
-    </Grid>
 
 
   );
-};
+
+}
 
 
- export default connect(mapStateToProps)(ExampleComponent);
+
+export default BottomFunc;

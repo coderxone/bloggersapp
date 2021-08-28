@@ -381,6 +381,10 @@ let strings = new LocalizedStrings({
    videoDontexist:"not exist",
    videoDontexistCreatorSide:"Your video post was not found Please insert a working link from network below",
    editMode7Days:"Editing mode is not available because the system has already counted 7 days since the user posted video.",
+   chooseBlogger:"Choose creators",
+   startCompaign:"Start Compaign",
+   budget:"your budget (usd)",
+   minSum:"minimum sum should be at least 1$",
  },
 
 

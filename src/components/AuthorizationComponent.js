@@ -193,21 +193,32 @@ const AuthorizationComponent = (props) => {
           //
           // return false;
 
-          if(checkUserAuthorization.role == 1){
-              if(checkUserAuthorization.additionalData == "0"){
-                SetRoute("/blogger-answers");
+          var enablelogin = localStorage.getItem("enablelogin");
+
+          if(enablelogin == 1 && enablelogin){
+            localStorage.setItem("enablelogin",2);
+            localStorage.setItem("role",2);
+            SetRoute("/payment");
+            Setredirect(true);
+          }else{
+              if(checkUserAuthorization.role == 1){
+                  if(checkUserAuthorization.additionalData == "0"){
+                    SetRoute("/blogger-answers");
+                    Setredirect(true);
+                  }else{
+                    SetRoute("/blogger");
+                    Setredirect(true);
+                  }
+              }else if(checkUserAuthorization.role == 2){
+                SetRoute("/business");
                 Setredirect(true);
-              }else{
-                SetRoute("/blogger");
+              }else if(checkUserAuthorization.role == 3){
+                SetRoute("/approve");
                 Setredirect(true);
               }
-          }else if(checkUserAuthorization.role == 2){
-            SetRoute("/business");
-            Setredirect(true);
-          }else if(checkUserAuthorization.role == 3){
-            SetRoute("/approve");
-            Setredirect(true);
           }
+
+
 
       }
 

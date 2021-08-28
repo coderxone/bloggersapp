@@ -8,6 +8,7 @@ $greyFontColor:#979797;
 $successGreenColor:#34eb83;
 $pushNotificationBackground:white;
 $designTextColor:#000000;
+$lightWhite:rgba(255, 255, 255, 0.1);
 $fontSize:18px;
 @font-face {
   font-family: 'AppFont';
@@ -901,7 +902,7 @@ body{
 
 .switchBox{
   width: 100%;
-  height: 40px;
+  height: 50px;
    // background-color: yellow;
    margin-top:12px;
   overflow: hidden;
@@ -1275,6 +1276,22 @@ ion-item {
   text-align: center;
 }
 
+.creatorStarDiv{
+  width:100%;
+  height: 35px;
+  margin-top:5px;
+  padding-left:10px;
+}
+
+.creatorsStar{
+  width:15%;
+  float: left;
+  font-size: 22px !important;
+  margin-left:2px;
+
+  text-align: center;
+}
+
 .secondStar{
   width:15%;
   font-size: 35px !important;
@@ -1295,6 +1312,9 @@ ion-item {
   color: $base-app-color;
 }
 
+.yellowColorStatus{
+  color:yellow;
+}
 .yellowColorStatus{
   color:yellow;
 }
@@ -2205,6 +2225,13 @@ body {
   padding:14px 10px 14px 10px;
   border-radius: 5px;
 }
+.creatorBox{
+  margin-top:25px;
+  background: rgba(255, 255, 255, 0.1);
+  width:100%;
+  padding:14px 10px 14px 10px;
+  border-radius: 5px;
+}
 
 
 .BoxbuttonDiv{
@@ -2224,6 +2251,19 @@ body {
 	border-radius:10px;
   color:#000000;
   border:0px;
+  font-family:RobotoLight;
+  font-size: 16px;
+}
+
+.CreatorsButtonStyle{
+    /* base styles */
+	width:100%;
+	height: 100%;
+	/* background:linear-gradient(to right, #8936f4, $base-app-color); */
+	background-color:$lightWhite;
+	border-radius:10px;
+  border:1px solid white;
+  color:white;
   font-family:RobotoLight;
   font-size: 16px;
 }

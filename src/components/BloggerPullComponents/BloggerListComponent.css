@@ -1,0 +1,369 @@
+
+.mainListCore{
+  /* background: linear-gradient(to right, #021a2a, #052642, #021a2a); */
+  background: #1A48A6;
+  /* height: 100%; */
+  /* height: 700px; */
+  /* padding:20px; */
+  padding:15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.titleFrame{
+  width: 100%;
+  /* height: 500px; */
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 30px;
+  /* padding:30px; */
+  padding:22px;
+  font-family: Roboto;
+  font-size: 24px;
+  max-width: 437px;
+  min-width: 350px;
+}
+
+.titleFrameText{
+  padding-left:5px;
+}
+
+.listFrame{
+
+}
+
+.mainListS{
+
+
+    /* margin-top:5%; */
+    margin-top:17px;
+    margin-bottom:0.5%;
+    border-radius: 15px;
+
+    /* -webkit-box-shadow: 0px 0px 11px 0px rgba(217,217,217,1);
+    -moz-box-shadow: 0px 0px 11px 0px rgba(217,217,217,1);
+    box-shadow: 0px 0px 11px 0px rgba(217,217,217,1); */
+    width: 100% !important;
+
+    max-width: 392px;
+    min-width: 300px;
+    height: 90px;
+    z-index: 200 !important;
+    font-family: Roboto;
+    /* background-color: lightblue !important; */
+    /* background: RGBA(23,181,238,0.89); */
+    background: rgba(255, 255, 255, 0.1);
+
+}
+
+@media only screen and (max-width : 2000px)  and (max-height:1450px){
+
+  .pleftBlockS{
+
+      float:left;
+      width:25%;
+      height: 100%;
+
+  }
+
+  .pleftBlockOneTwo{
+
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 60px;
+    height: 60px;
+    margin-left: 20%;
+    margin-right: 15%;
+    border-radius: 50px;
+    margin-top: 17%;
+  }
+
+  .pleftBlockTwo{
+
+    width: 18%;
+    height: 18%;
+    margin-left: 68%;
+    font-size: 0.9em;
+    position: relative;
+    top: -15%;
+  }
+
+
+
+  .prightBlock{
+
+      float:left;
+      width:73%;
+      height: 100%;
+  }
+
+  .prightBlockOne{
+
+      width:100%;
+      height: 50%;
+  }
+  .prightBlockTwo{
+
+    width:100%;
+    height: 50%;
+  }
+
+  .prightBlockTwoOneTwo{
+    color:$base-app-color;
+    width:78%;
+    height: 100%;
+    float:left;
+    font-size: 1.05em;
+    font-weight: 500;
+    opacity: 0.8;
+  }
+
+  .prightBlockTwoOneText{
+    margin-top:5px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color:#FFFFFF;
+    font-family: Roboto;
+    font-size: 18px;
+    width:15%;
+    float: left;
+  }
+
+  .prightBlockTwoOneSecond{
+    width:85%;
+    height: 100%;
+    /* background-color: white; */
+    float: left;
+  }
+  .prightBlockTwoTwo{
+
+    width: 15%;
+    height: 70%;
+    float: left;
+    opacity: 0.8;
+    font-size: 1.05em;
+    font-weight: 500;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    background-color: #3880ff;
+    text-align: center;
+    border-radius: 10px;
+    color:white;
+  }
+
+  .prightBlockTwoTwoNumber{
+    margin-top:6px;
+  }
+
+  .prightBlockOneTwo{
+
+    float:left;
+    width:70%;
+    height: 100%;
+    font-size: 1.3em;
+    font-weight: 500;
+    opacity: 0.8;
+
+  }
+
+  .prightBlockOneTwoTextTwo{
+    font-size: 18px;
+    font-family: Roboto;
+    color:#FFFFFF;
+    margin-top:10%;
+    color:$base-app-color;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+
+  .prightBlockOneThree{
+
+    float: left;
+    width: 30%;
+    height: 100%;
+    font-size: 1em;
+    font-weight: 500;
+    opacity: 0.8;
+  }
+
+  .prightBlockOneThreeText{
+    color:$base-app-color;
+    margin-top:27%;
+  }
+
+  .mysizes{
+    color: #00cc00 !important;
+    font-size: 16px !important;
+  }
+  .mysize_offlines{
+    color: #bfbfbf !important;
+    font-size: 16px !important;
+  }
+
+
+
+}
+
+@media only screen and (max-width : 420px)  and (max-height:1450px){
+
+
+.pleftBlockS{
+
+    float:left;
+    width:25%;
+    height: 100%;
+
+}
+
+.pleftBlockOneTwo{
+
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 60px;
+  height: 60px;
+  margin-left: 20%;
+  margin-right: 15%;
+  border-radius: 50px;
+  margin-top: 17%;
+}
+
+.pleftBlockTwo{
+
+  width: 18%;
+  height: 18%;
+  margin-left: 68%;
+  font-size: 0.9em;
+  position: relative;
+  top: -15%;
+}
+
+
+
+.prightBlock{
+
+    float:left;
+    width:73%;
+    height: 100%;
+}
+
+.prightBlockOne{
+
+    width:100%;
+    height: 50%;
+}
+.prightBlockTwo{
+
+  width:100%;
+  height: 50%;
+}
+
+.prightBlockTwoOneTwo{
+  color:$base-app-color;
+  width:78%;
+  height: 100%;
+  float:left;
+  font-size: 1.05em;
+  font-weight: 500;
+  opacity: 0.8;
+}
+
+.prightBlockTwoOneText{
+  margin-top:5px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color:#FFFFFF;
+  font-family: Roboto;
+  font-size: 18px;
+  width:15%;
+  float: left;
+}
+
+.prightBlockTwoOneSecond{
+  width:85%;
+  height: 100%;
+  /* background-color: white; */
+  float: left;
+}
+.prightBlockTwoTwo{
+
+  width: 15%;
+  height: 70%;
+  float: left;
+  opacity: 0.8;
+  font-size: 1.05em;
+  font-weight: 500;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  background-color: #3880ff;
+  text-align: center;
+  border-radius: 10px;
+  color:white;
+}
+
+.prightBlockTwoTwoNumber{
+  margin-top:6px;
+}
+
+.prightBlockOneTwo{
+
+  float:left;
+  width:70%;
+  height: 100%;
+  font-size: 1.3em;
+  font-weight: 500;
+  opacity: 0.8;
+
+}
+
+.prightBlockOneTwoTextTwo{
+  font-size: 18px;
+  font-family: Roboto;
+  color:#FFFFFF;
+  margin-top:10%;
+  color:$base-app-color;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.prightBlockOneThree{
+
+  float: left;
+  width: 30%;
+  height: 100%;
+  font-size: 1em;
+  font-weight: 500;
+  opacity: 0.8;
+}
+
+.prightBlockOneThreeText{
+  color:$base-app-color;
+  margin-top:27%;
+}
+
+.mysizes{
+  color: #00cc00 !important;
+  font-size: 16px !important;
+}
+.mysize_offlines{
+  color: #bfbfbf !important;
+  font-size: 16px !important;
+}
+
+}
+
+.mysizes{
+  color: #00cc00 !important;
+  font-size: 16px !important;
+}
+.mysize_offlines{
+  color: #bfbfbf !important;
+  font-size: 16px !important;
+}
