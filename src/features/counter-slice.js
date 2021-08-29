@@ -18,6 +18,16 @@ const initialState = {
     role:1,
     authorization:false,
   },
+  ConfirmReduxUniversalComponent:{
+    confirm:LocalizeComponent.confirm_small,
+    cancel:LocalizeComponent.cancel_small,
+    status:false,
+    text:LocalizeComponent.dialogDefaultText,
+    command:{
+      creatorsFromCheckbox:false,
+      redirect:false,
+    },
+  },
   bloggersAnswers:{
     steps:['1', '2', '3','4','5','6','7','8','9','10','11','12'],
     multisaveArray:['location', 'category', 'age','firstName','lastName','accountage','nickName','sociallink','subscribers_count','paypal','ssn','identity'],
@@ -143,6 +153,32 @@ const counterSlice = createSlice({
       console.log(action.payload);
       localStorage.setItem(action.payload.name,action.payload.value);
     },
+
+    openSystemDialog(state,action){
+      if(action.payload == 1){
+        state.ConfirmReduxUniversalComponent.status = true;
+      }
+
+      if(action.payload == 0){
+        state.ConfirmReduxUniversalComponent.status = false;
+      }
+    },
+
+    turnOnCreatorsFormCheckbox(state){
+        state.ConfirmReduxUniversalComponent.command.creatorsFromCheckbox = true;
+    },
+    turnOffCreatorsFormCheckbox(state){
+        state.ConfirmReduxUniversalComponent.command.creatorsFromCheckbox = false;
+    },
+    redirectToPayment(state){
+        state.ConfirmReduxUniversalComponent.command.redirect = true;
+
+        // setTimeout(function(){
+        //   state.ConfirmReduxUniversalComponent.command.redirect = false;
+        // },2000);
+    },
+
+
   },
 })
 
@@ -172,6 +208,10 @@ export const { increment,
   CancelSubscribersCheck,
   activateBusinessMenu,
   multiSave,
+  openSystemDialog,
+  turnOnCreatorsFormCheckbox,
+  turnOffCreatorsFormCheckbox,
+  redirectToPayment,
 
  } = counterSlice.actions
 export default counterSlice.reducer;

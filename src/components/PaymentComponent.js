@@ -109,7 +109,7 @@ const PaymentComponent = (props) => {
           if(data.status == "ok"){
             var promotion = localStorage.getItem("promotion");
             if(promotion){
-              SetRoute("/apply");
+              SetRoute("/chooseway");
               Setredirect(true);
             }else{
               SetRoute("/business");
@@ -137,7 +137,7 @@ const PaymentComponent = (props) => {
           }else if(data.status == "ok"){
             var promotion = localStorage.getItem("promotion");
             if(promotion){
-              SetRoute("/apply");
+              SetRoute("/chooseway");
               Setredirect(true);
             }else{
               SetRoute("/business");

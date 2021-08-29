@@ -419,30 +419,56 @@ const ApplyComponent = (props) => {
 
            }
 
+           if(promotion){
+             var peopleCount = config.getUserItemName("people");
 
+             var finalObject = {
+               updateId:config.getUserItemName("insertId"),
+               coord:config.getUserCoordinates(),
+               peopleCount:peopleCount,
+               countvideo:peopleCount,
+               subscribers:config.getUserItemName("subscribers"),
+               gps:gps,
+               famous:famous,
+               url:config.getUserItemName("companyUrl"),
+               description:config.getUserItemName("description"),
+               companyName:config.getUserItemName("companyName"),
+               category:config.getUserItemName("category"),
+               businessAnswers:config.getbusinessCategory(),
+               type:5
 
-           var peopleCount = config.getUserItemName("people");
+             }
 
-           var finalObject = {
-             coord:config.getUserCoordinates(),
-             amount:config.getUserItemName("amount"),
-             peopleCount:peopleCount,
-             countvideo:peopleCount,
-             subscribers:config.getUserItemName("subscribers"),
-             gps:gps,
-             famous:famous,
-             url:config.getUserItemName("companyUrl"),
-             date:config.getUserItemName("date"),
-             time:config.getUserItemName("time"),
-             description:config.getUserItemName("description"),
-             companyName:config.getUserItemName("companyName"),
-             category:config.getUserItemName("category"),
-             businessAnswers:config.getbusinessCategory(),
-             type:2
+             return finalObject;
 
+           }else{
+             var peopleCount = config.getUserItemName("people");
+
+             var finalObject = {
+               coord:config.getUserCoordinates(),
+               amount:config.getUserItemName("amount"),
+               peopleCount:peopleCount,
+               countvideo:peopleCount,
+               subscribers:config.getUserItemName("subscribers"),
+               gps:gps,
+               famous:famous,
+               url:config.getUserItemName("companyUrl"),
+               date:config.getUserItemName("date"),
+               time:config.getUserItemName("time"),
+               description:config.getUserItemName("description"),
+               companyName:config.getUserItemName("companyName"),
+               category:config.getUserItemName("category"),
+               businessAnswers:config.getbusinessCategory(),
+               type:2
+
+             }
+
+             return finalObject;
            }
 
-           return finalObject;
+
+
+
          }catch (e){
              //handle errors as needed
          }

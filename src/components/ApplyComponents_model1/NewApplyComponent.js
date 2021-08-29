@@ -364,26 +364,54 @@ const ApplyComponent = (props) => {
       const FinalLogic = async function(){
          try {
 
-           var postamount = config.getUserItemName("postamount");
-           var obj = {
-             name:"amount",
-             value:postamount
-           }
-           props.dispatch(multiSave(obj));
-           //Tue Jun 08 2021 13:40:06 GMT-0700 (Pacific Daylight Time)
+           var promotion = config.getUserItemName("promotion");
 
-           var finalObject = {
-             coord:config.getUserCoordinates(),
-             amount:parseInt(postamount),//get current system amount
-             subscribers:config.getUserItemName("subscribers"),//get current all system subscribers
-             url:config.getUserItemName("companyUrl"),
-             description:config.getUserItemName("description"),
-             companyName:config.getUserItemName("companyName"),
-             videourl:config.getUserItemName("video"),
-             type:1,
+           let type = 1;
+
+           if(promotion && promotion == 1){
+             var postamount = config.getUserItemName("postamount");
+             var obj = {
+               name:"amount",
+               value:postamount
+             }
+             props.dispatch(multiSave(obj));
+             //Tue Jun 08 2021 13:40:06 GMT-0700 (Pacific Daylight Time)
+
+             var finalObject = {
+               updateId:config.getUserItemName("insertId"),
+               coord:config.getUserCoordinates(),
+               subscribers:config.getUserItemName("subscribers"),//get current all system subscribers
+               url:config.getUserItemName("companyUrl"),
+               description:config.getUserItemName("description"),
+               companyName:config.getUserItemName("companyName"),
+               videourl:config.getUserItemName("video"),
+               type:4,
+             }
+
+             return finalObject;
+           }else{
+             var postamount = config.getUserItemName("postamount");
+             var obj = {
+               name:"amount",
+               value:postamount
+             }
+             props.dispatch(multiSave(obj));
+             //Tue Jun 08 2021 13:40:06 GMT-0700 (Pacific Daylight Time)
+
+             var finalObject = {
+               coord:config.getUserCoordinates(),
+               amount:parseInt(postamount),//get current system amount
+               subscribers:config.getUserItemName("subscribers"),//get current all system subscribers
+               url:config.getUserItemName("companyUrl"),
+               description:config.getUserItemName("description"),
+               companyName:config.getUserItemName("companyName"),
+               videourl:config.getUserItemName("video"),
+               type:1,
+             }
+
+             return finalObject;
            }
 
-           return finalObject;
          }catch (e){
              //handle errors as needed
          }
@@ -418,22 +446,28 @@ const ApplyComponent = (props) => {
   },[]);
 
   useEffect(() => {
-
+//xxxx
       const firstListener = HomeService.listenApplyData().subscribe(data => {
 
           if(data.status === "ok"){
               //data.insertId
-              localStorage.setItem("insertId",data.insertId);
-              config.deleteUserItemName("video");
-              config.deleteUserItemName("step");
+              if(data.type == 4){
+                config.deleteUserItemName("video");
+                config.deleteUserItemName("step");
+                config.deleteUserItemName("promotion");
+                config.deleteUserItemName("enablelogin");
 
+                SetRoute("/business");
+                Setredirect(true);
+              }else{
+                localStorage.setItem("insertId",data.insertId);
+                config.deleteUserItemName("video");
+                config.deleteUserItemName("step");
 
-              SetRoute("/payment");
-              Setredirect(true);
+                SetRoute("/payment");
+                Setredirect(true);
+              }
 
-
-
-              //console.log(data);
           }
       });
 

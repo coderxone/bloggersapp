@@ -385,6 +385,10 @@ let strings = new LocalizedStrings({
    startCompaign:"Start Compaign",
    budget:"your budget (usd)",
    minSum:"minimum sum should be at least 1$",
+   dialogDefaultText:"AI Echohub.io will choose best bloggers for you and will distribute your budget. Do you want to do it?",
+   dialogDefaultTextCheckbox:"AI Echohub.io will choose best bloggers for you and will distribute your budget",
+   confirm_small:"confirm",
+   cancel_small:"cancel",
  },
 
 

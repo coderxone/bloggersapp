@@ -20,7 +20,7 @@ import CenterFocusStrongIcon from '@material-ui/icons/CenterFocusStrong';
 import TrendingUpIcon from '@material-ui/icons/TrendingUp';
 import WorkIcon from '@material-ui/icons/Work';
 import {useSelector,useDispatch} from 'react-redux';
-
+import BloggerListComponent from '../components/BloggerPullComponents/BloggerListComponent';
 
 import PushComponent from '../helperComponents/NativePushNotificationComponent';
 import WebPushNotification from '../helperComponents/WebPushComponent';
@@ -343,6 +343,11 @@ const BottomFunc = () => {
 
               )
             }
+
+            <div className="projectMarginTopDescription">
+                <BloggerListComponent />
+            </div>
+
 
 
             <div className="mainPageDeviderBlock">
