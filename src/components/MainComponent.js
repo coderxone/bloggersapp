@@ -295,16 +295,22 @@ const BottomFunc = () => {
       <Grid container className="businessContainer"  >
 
 
+            <div className="firstBlockN centerElements">
+                <div className="firstBlockText GilroyBlackFont blueColor centerText">
+                    {LocalizeComponent.creators_business}
+                </div>
+            </div>
 
-            <div className="firstBlock centerElements">
-                <div className="firstBlockText robotoFont blackColor centerText">
+            <div className="SecondBlock_ centerElements">
+                <div className="firstBlockText_N GilroyBlackFont TitleColor centerText">
                     {LocalizeComponent.bb_11}<br/>
-                    {LocalizeComponent.bb_12}
+                  <span className="blueColor">{LocalizeComponent.know}</span> {LocalizeComponent.bb_12}<br/>
+                    {LocalizeComponent.business_continue}
                 </div>
             </div>
 
             <div className="centerElements blockTwoPadding">
-                <div className="robotoFont blackColor centerText blockTwo projectFontSize">
+                <div className="GilroyRegularFont DescribtionColor centerText blockTwo_N projectFontSize">
                   {LocalizeComponent.a_3}
                 </div>
             </div>
@@ -312,8 +318,8 @@ const BottomFunc = () => {
             {
               authorization === false ? (
                 <div className="centerElements getStartedButtonMargin"  onClick={goToLogin}>
-                  <div className="getStartedButtonFrame">
-                    <div className="getStartedButton robotoFont smallFontSize blackColor centerText">
+                  <div className="getStartedButtonFrame_N">
+                    <div className="getStartedButton GilroyBoldFont smallXFontSize whiteColor centerText">
                         {LocalizeComponent.a_4}
                     </div>
                   </div>
@@ -323,16 +329,16 @@ const BottomFunc = () => {
                 {
                   userRole === 1 ? (
 
-                      <div className="getStartedButtonFrame"   onClick={goToBloggerDashBoard}>
-                        <div className="getStartedButton robotoFont smallFontSize blackColor centerText">
+                      <div className="getStartedButtonFrame_N"   onClick={goToBloggerDashBoard}>
+                        <div className="getStartedButton GilroyBoldFont smallXFontSize whiteColor centerText">
                             {LocalizeComponent.user_14}
                         </div>
                       </div>
 
                   ) : (
 
-                      <div className="getStartedButtonFrame"  onClick={goToBusinessDashBoard}>
-                        <div className="getStartedButton robotoFont smallFontSize blackColor centerText">
+                      <div className="getStartedButtonFrame_N"  onClick={goToBusinessDashBoard}>
+                        <div className="getStartedButton GilroyBoldFont smallXFontSize whiteColor centerText">
                             {LocalizeComponent.user_14}
                         </div>
                       </div>
@@ -344,7 +350,56 @@ const BottomFunc = () => {
               )
             }
 
-            <div className="projectMarginTopDescription">
+            <div className="millionBlock">
+              <div className="millionBlockOne">
+                  <div className="millionBlockOneCentral">
+                      <div className="millionBlockOneCentralOne">
+                          <div className="millionBlockOneCentralOneTop">
+                              <div className="greenDot">
+                              </div>
+                          </div>
+                          <div className="millionBlockOneCentralOneBottom"></div>
+                      </div>
+                      <div className="millionBlockOneCentralTwo">
+                            <div className="millionBlockOneCentralOneTopCopy">
+                                <div className="GilroyBold smallFontSize TitleColor millionBlockOneCentralOneTopCopyText">
+                                  10<span className="plusMiddle">+</span> {LocalizeComponent.millionN}
+                                </div>
+                            </div>
+                            <div className="millionBlockOneCentralOneBottomCopy">
+                                <div className="DescribtionColor GilroyLightFont xsmallFontSize millionBlockOneCentralOneBottomCopyText">
+                                    {LocalizeComponent.inSystem}
+                                </div>
+                            </div>
+                      </div>
+                  </div>
+              </div>
+              <div className="millionBlockTwo">
+                <div className="millionBlockOneCentral">
+                    <div className="millionBlockOneCentralOne">
+                        <div className="millionBlockOneCentralOneTop">
+                            <div className="greenDot">
+                            </div>
+                        </div>
+                        <div className="millionBlockOneCentralOneBottom"></div>
+                    </div>
+                    <div className="millionBlockOneCentralTwo">
+                          <div className="millionBlockOneCentralOneTopCopy">
+                              <div className="GilroyBold smallFontSize TitleColor millionBlockOneCentralOneTopCopyText">
+                                11<span className="plusMiddle">+</span> {LocalizeComponent.millionN}
+                              </div>
+                          </div>
+                          <div className="millionBlockOneCentralOneBottomCopy">
+                              <div className="DescribtionColor GilroyLightFont xsmallFontSize millionBlockOneCentralOneBottomCopyTextTwo">
+                                  {LocalizeComponent.total_N}
+                              </div>
+                          </div>
+                    </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="projectMarginTopDescription centerElements">
                 <BloggerListComponent />
             </div>
 

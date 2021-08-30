@@ -17,6 +17,28 @@ $fontSize:18px;
 }
 
 @font-face {
+  font-family: 'GilroyBlack';
+  src: url('../fonts/gilroy/Gilroy-Black.ttf') format('ttf'),
+       url('../fonts/gilroy/Gilroy-Black.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'GilroyLight';
+  src: url('../fonts/gilroy/Gilroy-Light.ttf') format('ttf'),
+       url('../fonts/gilroy/Gilroy-Light.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'GilroyBold';
+  src: url('../fonts/gilroy/Gilroy-Bold.ttf') format('ttf'),
+       url('../fonts/gilroy/Gilroy-Bold.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'GilroyRegular';
+  src: url('../fonts/gilroy/Gilroy-Regular.ttf') format('ttf'),
+       url('../fonts/gilroy/Gilroy-Regular.ttf') format('truetype');
+}
+
+@font-face {
   font-family: 'Roboto';
   src: url('../fonts/roboto/Roboto-Regular.ttf') format('ttf'),
        url('../fonts/roboto/Roboto-Regular.ttf') format('truetype');
@@ -2445,6 +2467,10 @@ body {
   text-overflow: ellipsis;
 }
 
+.blueColor{
+  color:#2D69F6;
+}
+
 .projectPadding{
   padding:10px;
 }
@@ -2469,8 +2495,38 @@ body {
   font-style: normal;
 
 }
+.robotoBoldFont{
+  font-family: Roboto;
+  font-style: normal;
+
+}
+
+.GilroyBlackFont{
+  font-family: GilroyBlack;
+}
+.GilroyRegularFont{
+  font-family: GilroyRegular;
+}
+.GilroyLightFont{
+  font-family: GilroyLight;
+}
+.GilroyBoldFont{
+  font-family: GilroyBold;
+}
+
 .blackColor{
   color: #000000;
+}
+.whiteColor{
+  color: white;
+}
+
+.TitleColor{
+  color:#110E0E;
+}
+
+.DescribtionColor{
+  color:#3F3A3A;
 }
 
 .centerText{
@@ -2515,8 +2571,14 @@ body {
   color:white;
 }
 
+.xsmallFontSize{
+  font-size:14px;
+}
 .smallFontSize{
   font-size:16px;
+}
+.smallXFontSize{
+  font-size:18px;
 }
 
 .fullSize{

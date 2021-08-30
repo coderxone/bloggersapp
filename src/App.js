@@ -56,6 +56,7 @@ import userProfilePhotoUpload from './components/profileComponents/userProfilePh
 import WhyEchohubComponent from './components/introductionComponents/WhyEchohubComponent';
 import MSubdetailComponent from './components/businessComponents/MSubdetailComponent';
 import BloggerListComponent from './components/BloggerPullComponents/BloggerListComponent';
+import CreatorsAnimComponent from './components/MainPageComponents/CreatorsAnimComponent';
 
 
 const App = () => {
@@ -100,7 +101,7 @@ const App = () => {
                 <Route path="/blogger-answers"  back={true} component={BloggerAnswersComponent } exact={true} />
                 <Route path="/approve"  back={true} component={AdminComponent } exact={true} />
                 <Route path="/emailtemplate"  back={true} component={ActivationEmail } exact={true} />
-                <Route path="/test"  back={true} component={userProfilePhotoUpload} exact={true} />
+                <Route path="/test"  back={true} component={CreatorsAnimComponent} exact={true} />
                 <Route path="/chooseway"  back={true} component={ChooseWayComponent} exact={true} />
                 <Route path="/main"  component={MainComponent} exact={true} />
                 <Route path="/about"  back={true} component={AboutUsComponent} exact={true} />

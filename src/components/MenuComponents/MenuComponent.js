@@ -103,7 +103,7 @@ const ExampleComponent = (props) => {
 
 
 
-  const logoStatus = 1;
+  const logoStatus = 0;
 
 
 
@@ -349,12 +349,15 @@ const ExampleComponent = (props) => {
             }
 
 
-            <div className="menuSignUp"  onClick={GoToLogin}>
+            <div className="menuSignUpCover"  onClick={GoToLogin}>
               {
                 authorization === false && (
-                  <div className="menuSignUpText rightText">
-                      {LocalizeComponent.Sign_up}
+                  <div className="menuSignUp"  onClick={GoToLogin}>
+                    <div className="menuSignUpText rightText">
+                        {LocalizeComponent.Sign_up}
+                    </div>
                   </div>
+
                 )
               }
             </div>
