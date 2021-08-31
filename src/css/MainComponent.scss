@@ -550,8 +550,39 @@ $mainTextColor:#00002F;
     font-size: 40px;
     margin-top:10px;
     margin-bottom:17px;
+    padding:0px 22px 0 22px;
+}
+.LastBlock_{
+    font-size: 36px;
+    margin-top:10px;
+    margin-bottom:17px;
+    padding:0px 22px 0 22px;
 }
 
+.blockTwoPaddingDevided{
+    margin:15px 15px 0px 15px;
+}
+
+.leftShadowBorder{
+  background: rgb(45,105,246);
+  background: linear-gradient(90deg, rgba(45,105,246,1) 0%, rgba(255,255,255,1) 11%);
+  width:100%;
+  padding: 1.5px 1.5px 2px 1.5px;
+  border-radius: 2px;
+}
+
+.rightShadowBorder{
+  background: rgb(255,255,255);
+  background: linear-gradient(90deg, rgba(255,255,255,1) 89%, rgba(45,105,246,1) 100%);
+  width:100%;
+  padding: 1.5px 1.5px 2px 1.5px;
+  border-radius: 2px;
+}
+.whiteBackgroundSquare{
+  padding:17px;
+  width: 100%;
+  background-color: white;
+}
 
 .firstBlockText{
   line-height: 1.5;
@@ -617,7 +648,6 @@ $mainTextColor:#00002F;
   // background-color: lightblue;
   border-top:2px solid #AAADB4;
   margin-top:46px;
-  margin-bottom:46px;
 }
 .millionBlockOne{
   float: left;

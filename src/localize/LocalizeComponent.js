@@ -395,6 +395,13 @@ let strings = new LocalizedStrings({
    millionN:"million",
    inSystem:"Bloggers in the system",
    total_N:"Total subscribers",
+   who_we_are:"Who we are and what we offer to",
+   who_we_areN:"solve",
+   who_we_areN2:"your problems",
+   who_we_areN3:"We are a young startup development team from Silicon Valley, California, with an enormous love for what we do.",
+   who_we_areN4:"Our story began when Dulat, the company's founder, had a spark and then a dream to become a game-changer and create a new approach to the interaction of businesses with Influencers and content creators.",
+   who_we_areN5:"We want to change the current inefficient system (as Uber - taxi service did) and introduce a new one to the world - by replacing the model of business interaction with one content creator with simultaneous cooperation with an unlimited number.",
+   who_we_areN6:"We created Echohub.io - the innovative platform,  the new tool for a massive and instant video distribution about your brand between all active users of social networks in our system.",
  },
 
 
@@ -795,6 +802,14 @@ let strings = new LocalizedStrings({
    millionN:"миллион",
    inSystem:"Создателей в системе",
    total_N:"Всего подписчиков",
+
+   who_we_are:"Кто мы и как наша платформа решит",
+   who_we_areN:"решит",
+   who_we_areN2:"Ваши проблемы",
+   who_we_areN3:"Мы — молодая и одержимая своим делом команда разработчиков стартапа из Кремниевой долины, Калифорнии.",
+   who_we_areN4:"Наша история началась с того, что у Дулата , основателя компании, появилась мечта стать гейм-чейнджером, создать новый подход к взаимодействию бизнесов с инфлюенсерами и создателями контента.",
+   who_we_areN5:"Мы хотим изменить текущую неэффективную систему (как это сделал Uber - сервис такси) и представить миру новую - путем замены модели взаимодействия бизнеса с одним контент-криейтором на одновременное сотрудничество сразу с неограниченным количеством.",
+   who_we_areN6:"Мы создали Echohub.io - инновационную платформу, инструмент для массового и мгновенного распространения видео о Вашем бренде между всеми активными пользователями социальных сетей в нашей системе.",
  },
 
  it: {

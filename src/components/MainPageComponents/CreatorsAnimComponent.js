@@ -23,6 +23,9 @@ import youtube1 from '../../images/central_images/youtube1.png';
 import Emoji_1 from '../../images/central_images/Emoji-1.png';
 import Emoji_6 from '../../images/central_images/Emoji-6.png';
 import instagram1 from '../../images/central_images/instagram1.png';
+import piechart2 from '../../images/central_images/pie-chart2.png';
+import Emoji4 from '../../images/central_images/Emoji-4.png';
+import growth2 from '../../images/central_images/growth2.png';
 
 import Observable from '../../services/Observable';
 
@@ -41,6 +44,9 @@ let line, renderer, scene,scene2, camera, controls;
 
 const backgroundColor = "#ffffff";
 const ASPECT_RATIO = window.innerWidth / window.innerHeight;
+
+//const ASPECT_RATIO = window.innerWidth / 89;
+//const ASPECT_RATIO = window.innerWidth / 400;
 const WhiteTextColor = "#ffffff";
 
 //const LinesColor = "rgb(3, 148, 252)";//2090cc
@@ -64,6 +70,7 @@ const NewComponent = (props) => {
 		renderer.setPixelRatio( window.devicePixelRatio );
 		renderer.setClearColor( 0x000000, 0.0 );
 		renderer.setSize( window.innerWidth, window.innerHeight );
+		//renderer.setSize( window.innerWidth, 896 );
 
 
 		scene = new THREE.Scene();
@@ -72,7 +79,8 @@ const NewComponent = (props) => {
 		//camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 1000 );
     var Deep = 0;
 
-    camera.position.set( 0, 0, 1000 );
+    camera.position.set( 0, -260, 1000 );
+    //camera.position.set( 0, 0, 1000 );
 
 
 
@@ -209,19 +217,19 @@ const NewComponent = (props) => {
     tiktok1Image_mesh.scale.set(0.05,0.05,0.05);
     scene.add(tiktok1Image_mesh);
 
-    const EmojiImage = new THREE.MeshBasicMaterial({
-        map:new THREE.TextureLoader().load(Emoji)
-    });
-    EmojiImage.transparent = true;
-    var EmojiImage_mesh = new THREE.Mesh(new THREE.PlaneGeometry(512, 512),EmojiImage);
-    EmojiImage_mesh.overdraw = true;
-
-    EmojiImage_mesh.geometry.center();
-    // cloud_mesh.material.needsUpdate = true;
-    EmojiImage_mesh.position.x = 175;
-    EmojiImage_mesh.position.y = 80;//
-    EmojiImage_mesh.scale.set(0.06,0.06,0.06);
-    scene.add(EmojiImage_mesh);
+    // const EmojiImage = new THREE.MeshBasicMaterial({
+    //     map:new THREE.TextureLoader().load(Emoji)
+    // });
+    // EmojiImage.transparent = true;
+    // var EmojiImage_mesh = new THREE.Mesh(new THREE.PlaneGeometry(512, 512),EmojiImage);
+    // EmojiImage_mesh.overdraw = true;
+    //
+    // EmojiImage_mesh.geometry.center();
+    // // cloud_mesh.material.needsUpdate = true;
+    // EmojiImage_mesh.position.x = 175;
+    // EmojiImage_mesh.position.y = 80;//
+    // EmojiImage_mesh.scale.set(0.06,0.06,0.06);
+    // scene.add(EmojiImage_mesh);
 
 
     const youtube1Image = new THREE.MeshBasicMaterial({
@@ -253,19 +261,19 @@ const NewComponent = (props) => {
     Emoji_1Image_mesh.scale.set(0.07,0.07,0.07);
     scene.add(Emoji_1Image_mesh);
 
-    const Emoji_6Image = new THREE.MeshBasicMaterial({
-        map:new THREE.TextureLoader().load(Emoji_6)
-    });
-    Emoji_6Image.transparent = true;
-    var Emoji_6Image_mesh = new THREE.Mesh(new THREE.PlaneGeometry(512, 512),Emoji_6Image);
-    Emoji_6Image_mesh.overdraw = true;
-
-    Emoji_6Image_mesh.geometry.center();
-    // cloud_mesh.material.needsUpdate = true;
-    Emoji_6Image_mesh.position.x = -10;
-    Emoji_6Image_mesh.position.y = -95;//
-    Emoji_6Image_mesh.scale.set(0.06,0.06,0.06);
-    scene.add(Emoji_6Image_mesh);
+    // const Emoji_6Image = new THREE.MeshBasicMaterial({
+    //     map:new THREE.TextureLoader().load(Emoji_6)
+    // });
+    // Emoji_6Image.transparent = true;
+    // var Emoji_6Image_mesh = new THREE.Mesh(new THREE.PlaneGeometry(512, 512),Emoji_6Image);
+    // Emoji_6Image_mesh.overdraw = true;
+    //
+    // Emoji_6Image_mesh.geometry.center();
+    // // cloud_mesh.material.needsUpdate = true;
+    // Emoji_6Image_mesh.position.x = -10;
+    // Emoji_6Image_mesh.position.y = -95;//
+    // Emoji_6Image_mesh.scale.set(0.06,0.06,0.06);
+    // scene.add(Emoji_6Image_mesh);
 
     var Emoji_1Image_meshCopy = Emoji_1Image_mesh.clone();
 
@@ -289,11 +297,63 @@ const NewComponent = (props) => {
     scene.add(instagram1Image_mesh);
 
 
-    var EmojiImage_meshCopy = EmojiImage_mesh.clone();
+    // var EmojiImage_meshCopy = EmojiImage_mesh.clone();
+    //
+    // EmojiImage_meshCopy.position.x = 10;
+    // EmojiImage_meshCopy.position.y = -245;
+    // scene.add(EmojiImage_meshCopy);
 
-    EmojiImage_meshCopy.position.x = 10;
-    EmojiImage_meshCopy.position.y = -245;
-    scene.add(EmojiImage_meshCopy);
+    const piechart2Image = new THREE.MeshBasicMaterial({
+        map:new THREE.TextureLoader().load(piechart2)
+    });
+    piechart2Image.transparent = true;
+    var piechart2Image_mesh = new THREE.Mesh(new THREE.PlaneGeometry(512, 512),piechart2Image);
+    piechart2Image_mesh.overdraw = true;
+
+    piechart2Image_mesh.geometry.center();
+    // cloud_mesh.material.needsUpdate = true;
+    piechart2Image_mesh.position.x = 145;
+    piechart2Image_mesh.position.y = -75;//
+    piechart2Image_mesh.scale.set(0.07,0.07,0.07);
+    scene.add(piechart2Image_mesh);
+
+    const Emoji_1Image_meshcopyTwo = Emoji_1Image_mesh.clone();
+
+    Emoji_1Image_meshcopyTwo.position.x = 145;
+    Emoji_1Image_meshcopyTwo.position.y = -130;
+    Emoji_1Image_meshcopyTwo.scale.set(0.055,0.055,0.055);
+    scene.add(Emoji_1Image_meshcopyTwo);
+
+    const Emoji4Image = new THREE.MeshBasicMaterial({
+        map:new THREE.TextureLoader().load(Emoji4)
+    });
+    Emoji4Image.transparent = true;
+    var Emoji4Image_mesh = new THREE.Mesh(new THREE.PlaneGeometry(512, 512),Emoji4Image);
+    Emoji4Image_mesh.overdraw = true;
+
+    Emoji4Image_mesh.geometry.center();
+    // cloud_mesh.material.needsUpdate = true;
+    Emoji4Image_mesh.position.x = 145;
+    Emoji4Image_mesh.position.y = -200;
+    Emoji4Image_mesh.scale.set(0.045,0.045,0.045);
+    scene.add(Emoji4Image_mesh);
+
+    const growth2Image = new THREE.MeshBasicMaterial({
+        map:new THREE.TextureLoader().load(growth2)
+    });
+    growth2Image.transparent = true;
+    var growth2Image_mesh = new THREE.Mesh(new THREE.PlaneGeometry(512, 512),growth2Image);
+    growth2Image_mesh.overdraw = true;
+
+    growth2Image_mesh.geometry.center();
+    // cloud_mesh.material.needsUpdate = true;
+    growth2Image_mesh.position.x = 142;
+    growth2Image_mesh.position.y = -255;
+    growth2Image_mesh.scale.set(0.07,0.07,0.07);
+    scene.add(growth2Image_mesh);
+
+
+
 
 
 
@@ -338,7 +398,7 @@ const NewComponent = (props) => {
   }, [])
 
 
-  return <div className="vis scrollChange secondThird"  ref={mount}/>;
+  return <div className="creatFix"  ref={mount}/>;
 }
 
 

@@ -155,29 +155,51 @@ const BottomFunc = (props) => {
 
   useEffect(() => {
     const listenLive = LiveService.listenUserDataTask().subscribe(data => {
-      //console.log(data);
-      //var bloggerList = data.results.reverse();
+
       var bloggerList = data.results;
 
-      for(let i = 0;i < bloggerList.length;i++){
-        bloggerList[i].checked = false;
-        bloggerList[i].index = i;
+      let oldList = [...list];
+
+      if(bloggerList.length > oldList.length || bloggerList.length < oldList.length){
+        //setList([]);
+
+        for(let i = 0;i < bloggerList.length;i++){
+
+          bloggerList[i].index = i;
+          bloggerList[i].checked = false;
+
+          for(let j = 0;j < oldList.length;j++){
+
+            if(oldList[j].checked && oldList[j].id == bloggerList[i].id && j == i){
+              bloggerList[i].checked = true;
+            }
+
+          }
+        }
+
+        setList([]);
+        setList(bloggerList);
       }
 
-      setList(bloggerList);
-      //LiveService
+
     });
 
     // const obs = Observable.subscribeByTimer_4_second().subscribe(data => {
     //     //LiveService.getTaskData();
     // })
 
-    LiveService.getTaskData();
+
 
     return () => {
       listenLive.unsubscribe();
       // obs.unsubscribe();
     }
+  },[list]);
+
+  useEffect(() => {
+
+    LiveService.getTaskData();
+
   },[]);
 
 

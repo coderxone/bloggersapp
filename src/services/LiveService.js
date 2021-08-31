@@ -5,6 +5,7 @@ import config from '../config/config.js';
 import cryptLibrary from '../helpers/CryptLibrary';
 const observ_subject = new Subject();
 const observ_subject2 = new Subject();
+const observ_subjectThree = new Subject();
 const timer10s = new Subject();
 
 const liveService = {
@@ -25,10 +26,10 @@ const liveService = {
           listenUserDataTask:() => {
             socket.on("liveTimeData",(data) => {
                 //console.log(data);
-                observ_subject.next(cryptLibrary.decrypt(data));
+                observ_subjectThree.next(cryptLibrary.decrypt(data));
             });
 
-            return observ_subject;
+            return observ_subjectThree;
           },
 
 

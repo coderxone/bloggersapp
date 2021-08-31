@@ -21,6 +21,7 @@ import TrendingUpIcon from '@material-ui/icons/TrendingUp';
 import WorkIcon from '@material-ui/icons/Work';
 import {useSelector,useDispatch} from 'react-redux';
 import BloggerListComponent from '../components/BloggerPullComponents/BloggerListComponent';
+import CreatorsAnimComponent from '../components/MainPageComponents/CreatorsAnimComponent';
 
 import PushComponent from '../helperComponents/NativePushNotificationComponent';
 import WebPushNotification from '../helperComponents/WebPushComponent';
@@ -398,6 +399,60 @@ const BottomFunc = () => {
                 </div>
               </div>
             </div>
+
+            <div className="creatorAnim">
+              <CreatorsAnimComponent/>
+            </div>
+
+
+            <div className="LastBlock_ centerElements">
+                <div className="firstBlockText_N GilroyBlackFont TitleColor centerText">
+                    {LocalizeComponent.who_we_are}<br/>
+                  <span className="blueColor">{LocalizeComponent.who_we_areN}</span> {LocalizeComponent.who_we_areN2}
+                </div>
+            </div>
+
+            <div className="centerElements blockTwoPaddingDevided">
+              <div className="leftShadowBorder">
+                <div className="whiteBackgroundSquare">
+                  <div className="GilroyRegularFont DescribtionColor centerText blockTwo_N projectFontSize">
+                    {LocalizeComponent.who_we_areN3}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+            <div className="centerElements blockTwoPaddingDevided">
+              <div className="rightShadowBorder">
+                <div className="whiteBackgroundSquare">
+                  <div className="GilroyRegularFont DescribtionColor centerText blockTwo_N projectFontSize">
+                    {LocalizeComponent.who_we_areN4}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="centerElements blockTwoPaddingDevided">
+              <div className="leftShadowBorder">
+                <div className="whiteBackgroundSquare">
+                  <div className="GilroyRegularFont DescribtionColor centerText blockTwo_N projectFontSize">
+                    {LocalizeComponent.who_we_areN5}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="centerElements blockTwoPaddingDevided">
+              <div className="rightShadowBorder">
+                <div className="whiteBackgroundSquare">
+                  <div className="GilroyRegularFont DescribtionColor centerText blockTwo_N projectFontSize">
+                    {LocalizeComponent.who_we_areN6}
+                  </div>
+                </div>
+              </div>
+            </div>
+
 
             <div className="projectMarginTopDescription centerElements">
                 <BloggerListComponent />
