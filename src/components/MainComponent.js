@@ -29,6 +29,10 @@ import ParseContactsComponent from '../helperComponents/ParseContactsComponent';
 import PermissionRequestComponent from '../helperComponents/PermissionRequestComponent.js';
 import IosPermissionRequestComponent from '../helperComponents/IosPermissionRequestComponent';
 
+import worldImage from '../images/world.png';
+import grow_chart from '../images/grow_chart.png';
+import opportunites from '../images/opportunites.png';
+
 import LanguageComponent from '../helperComponents/language/LanguageComponent.js';
 import Observable from '../services/Observable';
 import config from '../config/config';
@@ -452,6 +456,68 @@ const BottomFunc = () => {
                 </div>
               </div>
             </div>
+
+            <div className="centerElements">
+              <div className="worldImage">
+                  <img src={worldImage} width="100%" height="100%" alt="echohub.io world large business and bloggers platform"/>
+              </div>
+            </div>
+
+            <div className="LastBlock_subtitles_ centerElements">
+                <div className="firstBlockText_N GilroyBlackFont TitleColor centerText">
+                  <span className="blueColor">{LocalizeComponent.increase}</span>
+                    <span> {LocalizeComponent.increase2}</span>
+                    <div>{LocalizeComponent.increase3}</div>
+                </div>
+            </div>
+
+            <div className="centerElements blockTwoPadding">
+                <div className="GilroyRegularFont DescribtionColor centerText blockTwo_N projectFontSize">
+                  {LocalizeComponent.increase4}
+                </div>
+            </div>
+
+            <div className="centerElements">
+              <div className="growChartImage projectMarginTopDescription">
+                  <img src={grow_chart} width="100%" height="100%" alt="echohub.io world large business and bloggers platform"/>
+              </div>
+            </div>
+
+            <div className="LastBlock_subtitles_ centerElements ">
+                <div className="firstBlockText_N GilroyBlackFont TitleColor centerText projectMarginTopDescription">
+                  <div>{LocalizeComponent.giveContent}</div>
+                  {LocalizeComponent.giveContent1}<span className="blueColor"> {LocalizeComponent.giveContent2}</span>
+                    <div>{LocalizeComponent.giveContent3}</div>
+                </div>
+            </div>
+
+            <div className="centerElements blockTwoPadding">
+                <div className="GilroyRegularFont DescribtionColor centerText blockTwo_N projectFontSize">
+                  {LocalizeComponent.giveContent4}
+                </div>
+            </div>
+
+            <div className="centerElements">
+              <div className="growChartImage projectMarginTopDescription">
+                  <img src={opportunites} width="100%" height="100%" alt="echohub.io world large business and bloggers platform"/>
+              </div>
+            </div>
+
+
+            <div className="LastBlock_subtitles_ centerElements ">
+                <div className="firstBlockText_N GilroyBlackFont TitleColor centerText projectMarginTopDescription">
+                  {LocalizeComponent.simplify}<span className="blueColor"> {LocalizeComponent.simplify1}</span>
+                    <div>{LocalizeComponent.simplify2}</div>
+                </div>
+            </div>
+
+            <div className="centerElements blockTwoPadding">
+                <div className="GilroyRegularFont DescribtionColor centerText blockTwo_N projectFontSize">
+                  {LocalizeComponent.simplify3}
+                </div>
+            </div>
+
+
 
 
             <div className="projectMarginTopDescription centerElements">

@@ -402,6 +402,19 @@ let strings = new LocalizedStrings({
    who_we_areN4:"Our story began when Dulat, the company's founder, had a spark and then a dream to become a game-changer and create a new approach to the interaction of businesses with Influencers and content creators.",
    who_we_areN5:"We want to change the current inefficient system (as Uber - taxi service did) and introduce a new one to the world - by replacing the model of business interaction with one content creator with simultaneous cooperation with an unlimited number.",
    who_we_areN6:"We created Echohub.io - the innovative platform,  the new tool for a massive and instant video distribution about your brand between all active users of social networks in our system.",
+   increase:"Increase",
+   increase2:"Brand",
+   increase3:"Awareness and Sales",
+   increase4:"We make videos about your business to attract the attention of people all over the world",
+   giveContent:"Give content creators and",
+   giveContent1:"influencers",
+   giveContent2:"opportunities",
+   giveContent3:"to post and create videos with brands and get paid",
+   giveContent4:"We help social media users monetize their creative ideas and generate passive income",
+   simplify:"Simplify and",
+   simplify1:" automate",
+   simplify2:" the distribution process of your videos to influencers and content creators",
+   simplify3:"No more searching and costly actions to contact and interact with active social media users",
  },
 
 
@@ -810,6 +823,7 @@ let strings = new LocalizedStrings({
    who_we_areN4:"Наша история началась с того, что у Дулата , основателя компании, появилась мечта стать гейм-чейнджером, создать новый подход к взаимодействию бизнесов с инфлюенсерами и создателями контента.",
    who_we_areN5:"Мы хотим изменить текущую неэффективную систему (как это сделал Uber - сервис такси) и представить миру новую - путем замены модели взаимодействия бизнеса с одним контент-криейтором на одновременное сотрудничество сразу с неограниченным количеством.",
    who_we_areN6:"Мы создали Echohub.io - инновационную платформу, инструмент для массового и мгновенного распространения видео о Вашем бренде между всеми активными пользователями социальных сетей в нашей системе.",
+
  },
 
  it: {
