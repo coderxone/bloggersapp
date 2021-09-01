@@ -29,9 +29,14 @@ import ParseContactsComponent from '../helperComponents/ParseContactsComponent';
 import PermissionRequestComponent from '../helperComponents/PermissionRequestComponent.js';
 import IosPermissionRequestComponent from '../helperComponents/IosPermissionRequestComponent';
 
+import AnimationComponent from '../components/AnimationComponent';
+
 import worldImage from '../images/world.png';
 import grow_chart from '../images/grow_chart.png';
 import opportunites from '../images/opportunites.png';
+import screens from '../images/screens.png';
+import track from '../images/track.png';
+import country from '../images/country.png';
 
 import LanguageComponent from '../helperComponents/language/LanguageComponent.js';
 import Observable from '../services/Observable';
@@ -516,6 +521,88 @@ const BottomFunc = () => {
                   {LocalizeComponent.simplify3}
                 </div>
             </div>
+
+            <div className="centerElements">
+              <div className="screenImage projectMarginTopDescription">
+                  <img src={screens} width="100%" height="100%" alt="echohub.io world large business and bloggers platform"/>
+              </div>
+            </div>
+
+            <div className="LastBlock_subtitles_ centerElements ">
+                <div className="firstBlockText_N GilroyBlackFont TitleColor centerText projectMarginTopDescription">
+                  {LocalizeComponent.make0} <span className="blueColor"> {LocalizeComponent.make1}</span> {LocalizeComponent.make2}
+                    <span className="blueColor"> {LocalizeComponent.make3} </span> {LocalizeComponent.make4}
+                </div>
+            </div>
+
+            <div className="centerElements blockTwoPadding">
+                <div className="GilroyRegularFont DescribtionColor centerText blockTwo_N projectFontSize">
+                  {LocalizeComponent.make5}
+                </div>
+            </div>
+
+            <div className="centerElements">
+              <div className="screenImage projectMarginTopDescription">
+                  <img src={track} width="100%" height="100%" alt="echohub.io world large business and bloggers platform"/>
+              </div>
+            </div>
+
+            <div className="LastBlock_subtitles_ centerElements ">
+                <div className="firstBlockText_N GilroyBlackFont TitleColor centerText projectMarginTopDescription">
+                   {LocalizeComponent.reports}<span className="blueColor"> {LocalizeComponent.reports0}</span>
+                </div>
+            </div>
+
+            <div className="centerElements blockTwoPadding">
+                <div className="GilroyRegularFont DescribtionColor centerText blockTwo_N projectFontSize">
+                  {LocalizeComponent.reports1}
+                </div>
+            </div>
+
+            <div className="centerElements">
+              <div className="screenImage projectMarginTopDescription">
+                  <img src={country} width="100%" height="100%" alt="echohub.io world large business and bloggers platform"/>
+              </div>
+            </div>
+
+            <div className="LastBlock_subtitles_ centerElements ">
+                <div className="firstBlockText_N GilroyBlackFont TitleColor centerText projectMarginTopDescription">
+                   <span className="blueColor"> {LocalizeComponent.improve0}</span> {LocalizeComponent.improve1}
+                </div>
+            </div>
+
+            <div className="centerElements blockTwoPadding">
+                <div className="GilroyRegularFont DescribtionColor centerText blockTwo_N projectFontSize">
+                  {LocalizeComponent.improve2}
+                </div>
+            </div>
+
+            <AnimationComponent />
+
+              <div className="LastBlock_subtitles_ centerElements ">
+                  <div className="firstBlockText_N GilroyBlackFont TitleColor centerText projectMarginTopDescription">
+                    {LocalizeComponent.dontWait} <span className="blueColor"> {LocalizeComponent.dontWait1}</span> {LocalizeComponent.dontWait2}
+                    <span className="blueColor"> {LocalizeComponent.dontWait2_1} </span>{LocalizeComponent.dontWait2_2}
+                    <span className="blueColor"> {LocalizeComponent.dontWait2_3} </span>{LocalizeComponent.dontWait3}
+                  </div>
+              </div>
+              <div className="LastBlock_subtitles_ centerElements ">
+                  <div className="firstBlockText_N GilroyBlackFont TitleColor centerText projectMarginTopDescription">
+                    {LocalizeComponent.order} <span className="blueColor"> {LocalizeComponent.order0}</span> {LocalizeComponent.order0_1}
+                    <span className="blueColor"> {LocalizeComponent.order0_2}</span> {LocalizeComponent.order1_1}
+                    <span className="blueColor"> {LocalizeComponent.order1_2}</span> {LocalizeComponent.order1_3}
+                  </div>
+              </div>
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -31,22 +31,20 @@ const AnimationLineColor = "rgba(0,131,255,0.08)";
 const AnimationLineColorOriginal = "#e3e3e3";
 //const AnimationLineColorOriginal = "rgba(0,131,255,0.08)";
 //const AnimationLineColorOriginal = "#0083ff";
-
-const ASPECT_RATIO = window.innerWidth / window.innerHeight;
+var h = 500;
+const ASPECT_RATIO = window.innerWidth / h;
 const WIDTH = ( window.innerWidth ) * window.devicePixelRatio;
-const HEIGHT = ( window.innerHeight ) * window.devicePixelRatio;
+const HEIGHT = ( h ) * window.devicePixelRatio;
 
 const group = new THREE.Object3D();
 const scene = new THREE.Scene();
 const width = window.innerWidth;
-const height = window.innerHeight;
+const height = h;
 const camera = new THREE.PerspectiveCamera(45,ASPECT_RATIO, 1, 1000);
 const renderer = new THREE.WebGLRenderer({ antialias: true })
 //var viewPosition = {x:0,y:-150,z:200};
-var viewPosition = {x:0,y:-150,z:550};//for mobiles
-if(config.getDeployData().deployPlatform == "android"){
-  viewPosition = {x:0,y:-150,z:590};//for android
-}
+var viewPosition = {x:0,y:-135,z:550};//for mobiles
+
 
 //console.log(viewPosition);
 var viewPositionAnimation = {x:0,y:0,z:0};
@@ -477,7 +475,7 @@ const NewHookComponent = () => {
         var PeoplePosition = {x:0,y:-300};
 
         //Peoples
-        
+
         const roundPeoples = new THREE.MeshBasicMaterial({
             map:new THREE.TextureLoader().load(Peoples)
         });

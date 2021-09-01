@@ -338,7 +338,10 @@ const ExampleComponent = (props) => {
 
             {
               logoStatus === 0 ? (
-                <img className="menuLogoStyle" src={logo} alt="echohub.io logo"/>
+                <Link to={{pathname: "/main"}}>
+                  <img className="menuLogoStyle" src={logo} alt="echohub.io logo"/>
+                </Link>
+
               ) : (
                 <div className="menuLogoStyleTwo">
                   <div className="menuLogoStyleTwoText">
