@@ -399,7 +399,7 @@ let strings = new LocalizedStrings({
    who_we_areN:"solve",
    who_we_areN2:"your problems",
    who_we_areN3:"We are a young startup development team from Silicon Valley, California, with an enormous love for what we do.",
-   who_we_areN4:"Our story began when Dulat, the company's founder, had a spark and then a dream to become a game-changer and create a new approach to the interaction of businesses with Influencers and content creators.",
+   who_we_areN4:"Our story began when David, the company's founder, had a spark and then a dream to become a game-changer and create a new approach to the interaction of businesses with Influencers and content creators.",
    who_we_areN5:"We want to change the current inefficient system (as Uber - taxi service did) and introduce a new one to the world - by replacing the model of business interaction with one content creator with simultaneous cooperation with an unlimited number.",
    who_we_areN6:"We created Echohub.io - the innovative platform,  the new tool for a massive and instant video distribution about your brand between all active users of social networks in our system.",
    increase:"Increase",
@@ -441,6 +441,9 @@ let strings = new LocalizedStrings({
    order1_1:"(just like Elon Musk's tweet!) ",
    order1_2:"post or video content ",
    order1_3:"for your business right now.",
+   profile_link:"Social network url",
+   profile_link2:"Click to see ",
+   profile_link3:"Social network profile ",
  },
 
 

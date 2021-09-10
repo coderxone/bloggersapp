@@ -580,10 +580,10 @@ const NewHookComponent = () => {
             var correctXposition;
             var correctYposition;
             if(j == 0){
-              console.log(j);
+              //console.log(j);
               correctXposition = PeoplePosition.x - 10;
               correctYposition = PeoplePosition.y + 40;
-              console.log(correctYposition);
+            //  console.log(correctYposition);
             }else if(j == 1){
               correctXposition = PeoplePosition.x;
               correctYposition = PeoplePosition.y - 50;

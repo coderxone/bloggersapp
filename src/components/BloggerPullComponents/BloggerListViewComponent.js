@@ -9,6 +9,7 @@ import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
 import '../../components/BloggerPullComponents/BloggerListComponent.css';
+
 import {
   Link,useHistory
 } from "react-router-dom";
@@ -151,6 +152,8 @@ const MapList = ((props) => {
 
     const list = props.list;
 
+    const history = useHistory();
+
     const handleChange = (event,item,index) => {
       let checked = event.target.checked;
       item.index = index;
@@ -239,13 +242,30 @@ const MapList = ((props) => {
       }
     }
 
+    const checkName = (name) => {
+
+      if(name != 0){
+        return name;
+      }else{
+        return "new blogger";
+      }
+    }
+
+
+      const goToProfilePage = useCallback((item) => {
+        //return history.push({pathname: '/detailtask',data:item}), [history];
+        return history.push({pathname: '/explore_profile',data:item}), [history]
+
+      });
+
+
     const ListConst = list.map((item,index) =>
 
           <div
 
            key={item.id} className="mainListS deleteUrlClass">
             <div className="pleftBlockS">
-              <div style ={ { backgroundPosition: "center",backgroundRepeat:"no-repeat",backgroundSize:"cover",background: checkImage(item.image_url) }  } className="pleftBlockOneTwo"></div>
+              <div style = {{ backgroundPosition: "center",backgroundRepeat:"no-repeat",backgroundSize:"cover",background: checkImage(item.image_url) }  } className="pleftBlockOneTwo"></div>
               <div className="pleftBlockTwo">
               {item.online == 1 ? (
                     <FiberManualRecordIcon className="mysizes "/>
@@ -257,9 +277,9 @@ const MapList = ((props) => {
             </div>
             <div className="prightBlock">
               <div className="prightBlockOne" >
-                <div className="prightBlockOneTwo">
+                <div className="prightBlockOneTwo" onClick={event => goToProfilePage(item)}>
                   <div className="prightBlockOneTwoTextTwo">
-                    {item.email}
+                    {checkName(item.firstName)}
                   </div>
                 </div>
                 <div className="prightBlockOneThree">

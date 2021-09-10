@@ -223,7 +223,14 @@ const BottomFunc = () => {
 
   const UpdatePageLanguage = () => {
     setTimeout(function(){
-      window.location.reload();
+
+      var lang = config.getUserItemName("lang");
+      if(lang != false){
+        if(lang !== "eng"){
+          window.location.reload();
+        }
+      }
+
     },2000);
 
   }
@@ -276,7 +283,7 @@ const BottomFunc = () => {
         setTimeout(function(){
           dispatch(SetMobileDialogStatus(true));
           localStorage.setItem("mobile","1");
-        },6000);
+        },15000);
       }
 
     }
@@ -639,9 +646,9 @@ const BottomFunc = () => {
                <ParseContactsComponent/>
                <PermissionRequestComponent/>
                {
-                 Capacitor.platform === 'ios' && (
-                   <IosPermissionRequestComponent/>
-                 )
+                 // Capacitor.platform === 'ios' && (
+                 //   <IosPermissionRequestComponent/>
+                 // )
                }
              </div>
 

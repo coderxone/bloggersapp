@@ -66,7 +66,12 @@ const NewComponent = (props) => {
 
   function init() {
 
-		renderer = new THREE.WebGLRenderer( { antialias: true } );
+    try{
+      renderer = new THREE.WebGLRenderer( { antialias: true } );
+    }catch(e){
+      
+    }
+
 		renderer.setPixelRatio( window.devicePixelRatio );
 		renderer.setClearColor( 0x000000, 0.0 );
 		renderer.setSize( window.innerWidth, window.innerHeight );

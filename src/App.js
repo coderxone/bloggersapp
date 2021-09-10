@@ -51,6 +51,7 @@ import Model1DetailTaskComponent from './components/ApplyComponents_model1/Model
 import creatorComponent from './components/introductionComponents/creatorComponent';
 import BusinessIntroComponent from './components/introductionComponents/BusinessIntroComponent';
 import userProfileComponent from './components/profileComponents/userProfileComponent';
+import exploreProfileComponent from './components/profileComponents/exploreProfileComponent';
 import businessUserProfileComponent from './components/profileComponents/businessUserProfileComponent';
 import userProfilePhotoUpload from './components/profileComponents/userProfilePhotoUpload';
 import WhyEchohubComponent from './components/introductionComponents/WhyEchohubComponent';
@@ -112,6 +113,7 @@ const App = () => {
                 <Route path="/creator" back={true} component={creatorComponent} exact={true} />
                 <Route path="/businessintro" back={true} component={BusinessIntroComponent} exact={true} />
                 <Route path="/userprofile" back={true} component={userProfileComponent} exact={true} />
+                <Route path="/explore_profile" back={true} component={exploreProfileComponent} exact={true} />
                 <Route path="/businessprofile" back={true} component={businessUserProfileComponent} exact={true} />
                 <Route path="/why" back={true} component={WhyEchohubComponent} exact={true} />
                 <Route path="/bloggerlist" back={true} component={BloggerListComponent} exact={true} />
