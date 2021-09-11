@@ -1,4 +1,4 @@
-import React, {useState,useEffect,useMemo} from 'react';
+import React, {useState,useEffect,useMemo,useRef} from 'react';
 import { PayPalButton } from "react-paypal-button-v2";
 // import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonInput, IonItem, IonLabel, IonList, IonItemDivider } from '@ionic/react';
 import '../css/mainStyles.scss';
@@ -67,9 +67,11 @@ const PaymentComponent = (props) => {
 
   const [redirect,Setredirect] = useState(false);
   const [route,SetRoute] = useState("");
+  const paypalB = useRef(null);
 
   const ProductionClientId = "AW3Q8YTzK6AblOoFcJ9kCI5aXq51N_1KeJh-SgbQ3a28knHp8TmFE4JPy6lnzTv9pLZaYiaBDrWJMQ1-";
-  const DevelopmentClientId = "AWNN2lrrAjKYkq0AsXM656L_AoQuQuJFSFeuEXAOyHdyqCmlkaajVIpyKrInFxHfNrGzmzb9l8vnN_GN";
+  //const DevelopmentClientId = "AWNN2lrrAjKYkq0AsXM656L_AoQuQuJFSFeuEXAOyHdyqCmlkaajVIpyKrInFxHfNrGzmzb9l8vnN_GN";
+  const DevelopmentClientId = "AQBizLLv9gVfG0uMcTMIDHqXhbviVFaAAi-bhlPDJbOaSsaudsPjSf88-ac-czpp9AR-FsqFaZUoUuEw";
 
   const classes = useStyles();
   const { register, handleSubmit, errors,setError } = useForm({
@@ -163,6 +165,22 @@ const PaymentComponent = (props) => {
     },[]);
 
 
+    const paypalSubscribe = (data, actions) => {
+
+          return actions.subscription.create({
+            /* Creates the subscription */
+            plan_id: 'P-9CD531006F2107427ME6GE4Q',
+            subscriber: {
+              name: {
+                given_name: "John",
+                surname: "Doe"
+              },
+              email_address: "customer@example.com"
+            },
+          });
+      };
+
+
   return (
 
    	<div className={classes.root}>
@@ -183,21 +201,41 @@ const PaymentComponent = (props) => {
             <Paper  className={classes.paper}>
 
               <Box mt={1} className="mainCentralDiv">
-              <PayPalButton
-                    amount={amountSum}
-
-                    onSuccess={(details, data) => {
+                <PayPalButton
+                  amount={amountSum}
+                  vault={true}
+                  createSubscription={paypalSubscribe}
+                  onApprove={(details, data) => {
 
                        console.log(details);
                       // console.log("-----------");
                        console.log(data);
-                      // console.log("-----------");
-                      // console.log("Transaction completed by " + details.payer.name.given_name);
 
+                      //one time payment
+                      // var insertId = localStorage.getItem("insertId");
+                      // var transactionId = details.id;
+                      // var orderId = data.orderID;
+                      // var payerID = data.payerID;
+                      // var payerEmail = details.payer.email_address;
+                      // var given_name = details.payer.name.given_name;
+                      // var surname = details.payer.name.surname;
+                      // var amount = details.purchase_units[0].amount.value;
+                      // var create_time = details.create_time;
+
+                      //subscribtion
+                      // billingToken: "BA-8UC14793AL6457456"
+                      // facilitatorAccessToken: "A21AAJF6yKHlMCBK7ZvA1_r1uRIw8UNA4d0eS48Nh2yDyAkI3Prx77jEOYgec1jiX3JwEOD3WvEvx4ALtjio7rrP8rDJh6rZA"
+                      // orderID: "6US02800038091236"
+                      // paymentID: null
+                      // subscriptionID: "I-YX82X91BYUWU"
+
+                      if(data.paymentID == null){
+                        data.paymentID = 999;
+                      }
                       var insertId = localStorage.getItem("insertId");
-                      var transactionId = details.id;
+                      var transactionId = details.orderID;
                       var orderId = data.orderID;
-                      var payerID = data.payerID;
+                      var payerID = data.paymentID;
                       var payerEmail = details.payer.email_address;
                       var given_name = details.payer.name.given_name;
                       var surname = details.payer.name.surname;
@@ -218,32 +256,29 @@ const PaymentComponent = (props) => {
                         "create_time":create_time
                       }
 
-                      PaymentService.sendPayment(sendObject);
+                      //PaymentService.sendPayment(sendObject);
 
-
-                      // OPTIONAL: Call your server to save the transaction
-                      // return fetch("/paypal-transaction-complete", {
-                      //   method: "post",
-                      //   body: JSON.stringify({
-                      //     orderID: data.orderID
-                      //   })
-                      // });
                     }}
 
-                    options={{
-                      clientId: ProductionClientId,
+
+                  options={{
+                      clientId: DevelopmentClientId,
                       currency:"USD",
+                      vault:true,
+                      intent:"subscription"
 
                     }}
 
-                    style={{
-                      shape: 'rect',
-                      color: 'white',
-                      layout: 'horizontal',
-                      label: 'paypal',
-                    }}
+                  style={{
+                    shape: 'rect',
+                    color: 'blue',
+                    layout: 'vertical',
+                    label: 'subscribe'
+                  }}
                   />
               </Box>
+
+
 
             </Paper>
           </Grid>
