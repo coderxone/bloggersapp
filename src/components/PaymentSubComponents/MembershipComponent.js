@@ -1,11 +1,11 @@
 import React, {useState,useEffect,useMemo,useRef} from 'react';
 import { PayPalButton } from "react-paypal-button-v2";
 // import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonInput, IonItem, IonLabel, IonList, IonItemDivider } from '@ionic/react';
-import '../css/mainStyles.scss';
-import LocalizeComponent from '../localize/LocalizeComponent';
+import '../../css/mainStyles.scss';
+import LocalizeComponent from '../../localize/LocalizeComponent';
 import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
-import config from '../config/config';
+import config from '../../config/config';
 import * as yup from "yup";
 import {
   makeStyles,
@@ -14,8 +14,8 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import { connect } from 'react-redux';
-import PaymentService from '../services/PaymentService';
-import { increment, decrement,save_email } from '../actions/actions';
+import PaymentService from '../../services/PaymentService';
+import { increment, decrement,save_email } from '../../actions/actions';
 import {
   Redirect
 } from "react-router-dom";
@@ -47,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(2),
     textAlign: 'center',
     color: theme.palette.text.secondary,
-    backgroundColor:'#161730'
+    backgroundColor:'#161730',
   },
 }));
 
@@ -166,97 +166,98 @@ const PaymentComponent = (props) => {
     },[]);
 
 
-    
+    const paypalSubscribe = (data, actions) => {
+
+          return actions.subscription.create({
+            /* Creates the subscription */
+            plan_id: 'P-41442501Y1533215YME6FZJY',
+          });
+      };
 
 
   return (
 
-        <Grid container >
+    <Grid container >
 
 
-          <div className="payTitle">
-            <div className="payText">
-                {LocalizeComponent.choose_payment}
-            </div>
+      <div className="payTitle">
+        <div className="payText">
+            {LocalizeComponent.choose_payment}
+        </div>
+      </div>
+
+
+        <div className="mainCentralDiv projectMarginTopDescription">
+                <PayPalButton
+                  amount={amountSum}
+                  vault={true}
+                  createSubscription={paypalSubscribe}
+                  onApprove={(details, data) => {
+
+
+                        let email = config.getUserItemName("email");
+
+
+
+                      if(data.paymentID == null){
+                        data.paymentID = 999;
+                      }
+
+                      var insertId = localStorage.getItem("insertId");
+                      var billingToken = details.billingToken;
+                      var facilitatorAccessToken = details.facilitatorAccessToken;
+                      var orderID = details.orderID;
+                      var paymentID = data.paymentID;
+                      var subscriptionID = details.subscriptionID;
+                      var amount = 100;
+
+                      var sendObject = {
+                        "insertId":insertId,
+                        "billingToken":billingToken,
+                        "facilitatorAccessToken":facilitatorAccessToken,
+                        "orderID":orderID,
+                        "paymentID":paymentID,
+                        "subscriptionID":subscriptionID,
+                        "email":email,
+                        "amount":amount,
+                        "type":"subscription"
+                      }
+
+                      PaymentService.sendPayment(sendObject);
+
+                    }}
+
+
+                  options={{
+                      clientId: DevelopmentClientId,
+                      currency:"USD",
+                      vault:true,
+                      intent:"subscription"
+
+                    }}
+
+                  style={{
+                    shape: 'rect',
+                    color: 'blue',
+                    layout: 'vertical',
+                    label: 'subscribe'
+                  }}
+                  />
           </div>
 
 
-            <div className="mainCentralDiv projectMarginTopDescription">
-                  <PayPalButton
-                      amount={amountSum}
 
-                      onSuccess={(details, data) => {
+      {redirect === false ? (
+        <Box>
 
-                         //console.log(details);
-                        // console.log("-----------");
-                         //console.log(data);
-                        // console.log("-----------");
-                        // console.log("Transaction completed by " + details.payer.name.given_name);
+        </Box>
+       ) : (
+         <Redirect to={route} />
+       )}
 
-                        var insertId = localStorage.getItem("insertId");
-                        var transactionId = details.id;
-                        var orderId = data.orderID;
-                        var payerID = data.payerID;
-                        var payerEmail = details.payer.email_address;
-                        var given_name = details.payer.name.given_name;
-                        var surname = details.payer.name.surname;
-                        var amount = details.purchase_units[0].amount.value;
-                        var create_time = details.create_time;
-
-                        //console.log(amount);
-
-                        var sendObject = {
-                          "insertId":insertId,
-                          "transactionId":transactionId,
-                          "orderId":orderId,
-                          "payerID":payerID,
-                          "payerEmail":payerEmail,
-                          "given_name":given_name,
-                          "surname":surname,
-                          "amount":amount,
-                          "create_time":create_time,
-                          "type":"payment"
-                        }
-
-                        PaymentService.sendPayment(sendObject);
+      </Grid>
 
 
-                        // OPTIONAL: Call your server to save the transaction
-                        // return fetch("/paypal-transaction-complete", {
-                        //   method: "post",
-                        //   body: JSON.stringify({
-                        //     orderID: data.orderID
-                        //   })
-                        // });
-                      }}
-
-                      options={{
-                        clientId: DevelopmentClientId,
-                        currency:"USD",
-
-                      }}
-
-                      style={{
-                        shape: 'rect',
-                        color: 'blue',
-                        layout: 'vertical',
-                        label: 'paypal'
-                      }}
-                    />
-
-                </div>
-
-
-
-          {redirect === false ? (
-            <Box>
-
-            </Box>
-           ) : (
-             <Redirect to={route} />
-           )}
-
-          </Grid>
 
 
   );

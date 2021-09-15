@@ -100,7 +100,7 @@ const BlockComponent = (props) => {
 
   const items = props.items;
 
-  console.log(items)
+  //console.log(items)
 
   const routePath = (item) => {
     if(item.type === 1){
