@@ -36,6 +36,13 @@ const initialState = {
     questions:[LocalizeComponent.bl1,LocalizeComponent.bl2,LocalizeComponent.bl3,LocalizeComponent.bl4,LocalizeComponent.bl5,LocalizeComponent.socialNetworkAge,LocalizeComponent.bl6,LocalizeComponent.bl7,LocalizeComponent.bl8,LocalizeComponent.bl9,LocalizeComponent.bl10,LocalizeComponent.bl11]
   },
   mobileDialogStatus:false,
+  membership:false,
+  membershipDialog:{
+    membershipDialogStatus:false,
+    confirm:LocalizeComponent.membershipDialogConfirm,
+    cancel:LocalizeComponent.membershipDialogCancel,
+  }
+
  }
 
 const counterSlice = createSlice({
@@ -150,8 +157,15 @@ const counterSlice = createSlice({
       state.businessDashboard.menuState = 1;
     },
     multiSave(state,action){
-      console.log(action.payload);
       localStorage.setItem(action.payload.name,action.payload.value);
+    },
+    //xxx
+    getMultiSave(state,action){
+
+      let getFromStore = localStorage.getItem(action);
+      if(getFromStore){
+        return getFromStore;
+      }
     },
 
     openSystemDialog(state,action){
@@ -177,6 +191,19 @@ const counterSlice = createSlice({
         //   state.ConfirmReduxUniversalComponent.command.redirect = false;
         // },2000);
     },
+    controlMembership(state,action){
+      if(action.payload === true){
+        state.membership = true;
+      }else{
+        state.membership = false;
+      }
+    },
+    closeMembershipDialog(state){
+      state.membershipDialog.membershipDialogStatus = false;
+    },
+    openMembershipDialog(state){
+      state.membershipDialog.membershipDialogStatus = true;
+    }
 
 
   },
@@ -208,10 +235,14 @@ export const { increment,
   CancelSubscribersCheck,
   activateBusinessMenu,
   multiSave,
+  getMultiSave,
   openSystemDialog,
   turnOnCreatorsFormCheckbox,
   turnOffCreatorsFormCheckbox,
   redirectToPayment,
+  controlMembership,
+  closeMembershipDialog,
+  openMembershipDialog,
 
  } = counterSlice.actions
 export default counterSlice.reducer;

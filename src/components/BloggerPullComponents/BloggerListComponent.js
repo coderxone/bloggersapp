@@ -13,7 +13,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 import clsx from 'clsx';
 import HomeService from '../../services/Homeservice';
 import { multiSave,openSystemDialog,turnOnCreatorsFormCheckbox,turnOffCreatorsFormCheckbox,redirectToPayment } from '../../features/counter-slice';
-
+import MembershipComponent from '../../helperComponents/MembershipComponent';
 import * as yup from "yup";
 import TextField from '@material-ui/core/TextField';
 import {
@@ -399,6 +399,7 @@ const BottomFunc = (props) => {
            </div>
 
            <ConfirmReduxUniversalComponent />
+           <MembershipComponent/>
 
         </Grid>
 

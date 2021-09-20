@@ -444,6 +444,14 @@ let strings = new LocalizedStrings({
    profile_link:"Social network url",
    profile_link2:"Click to see ",
    profile_link3:"Social network profile ",
+   membershipDialogText1:"Try 1 month free membership",
+   membershipDialogText2:"See detail information",
+   membershipDialogText3:"Get any information faster",
+   membershipDialogText4:"Stay connected",
+   membershipDialogText5:"See prices and reviews",
+   membershipDialogText6:"Connect with our advisor",
+   membershipDialogConfirm:"continue ",
+   membershipDialogCancel:"cancel ",
  },
 
 
@@ -892,6 +900,17 @@ let strings = new LocalizedStrings({
    order1_1:"(как и твит Илона Маска!) ",
    order1_2:"видео-пост или создание видео ",
    order1_3:"для Вашего бизнеса прямо сейчас.",
+   profile_link:"Social network url",
+   profile_link2:"Click to see ",
+   profile_link3:"Social network profile ",
+   membershipDialogText1:"Try 1 month free membership",
+   membershipDialogText2:"See detail information",
+   membershipDialogText3:"Get any information faster",
+   membershipDialogText4:"Stay connected",
+   membershipDialogText5:"See prices and reviews",
+   membershipDialogText6:"Connect with our advisor",
+   membershipDialogConfirm:"continue ",
+   membershipDialogCancel:"cancel ",
  },
 
  it: {

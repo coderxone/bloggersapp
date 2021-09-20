@@ -9,6 +9,11 @@ import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
 import '../../components/BloggerPullComponents/BloggerListComponent.css';
+import { useSelector, useDispatch } from 'react-redux'
+import { multiSave,getMultiSave } from '../../features/counter-slice';
+import { openMembershipDialog } from '../../features/counter-slice';
+
+
 
 import {
   Link,useHistory
@@ -148,6 +153,9 @@ const StarBuilder = (props) => {
 
 const MapList = ((props) => {
 
+
+  const dispatch = useDispatch()
+
     const classes = useStyles();
 
     const list = props.list;
@@ -251,12 +259,50 @@ const MapList = ((props) => {
       }
     }
 
+      const membership = useSelector((state) => state.counter.membership);
 
-      const goToProfilePage = useCallback((item) => {
-        //return history.push({pathname: '/detailtask',data:item}), [history];
-        return history.push({pathname: '/explore_profile',data:item}), [history]
+
+
+      const checkProfile = ((item,membership) => {
+
+          let page = {
+            name:'page',
+            value:'explore_profile'
+          }
+
+          dispatch(multiSave(page));
+
+          let check = config.CheckIfAuthorized();
+
+          if(check !== false){
+
+              if(membership === true){
+                goToProfile(item,membership);
+              }else if(membership === false){
+                //request membership
+                dispatch(openMembershipDialog());
+
+              }
+
+          }else{
+            goToLogin();
+          }
 
       });
+
+      const goToProfile = useCallback((item,membership) => {
+
+          return history.push({pathname: '/explore_profile',data:item}), [history];
+
+      });
+      const goToLogin = useCallback(() => {
+
+          return history.push({pathname: '/login'}), [history];
+
+      });
+
+
+
 
 
     const ListConst = list.map((item,index) =>
@@ -277,7 +323,7 @@ const MapList = ((props) => {
             </div>
             <div className="prightBlock">
               <div className="prightBlockOne" >
-                <div className="prightBlockOneTwo" onClick={event => goToProfilePage(item)}>
+                <div className="prightBlockOneTwo" onClick={event => checkProfile(item,membership)}>
                   <div className="prightBlockOneTwoTextTwo">
                     {checkName(item.firstName)}
                   </div>
