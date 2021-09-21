@@ -59,7 +59,7 @@ import MSubdetailComponent from './components/businessComponents/MSubdetailCompo
 import BloggerListComponent from './components/BloggerPullComponents/BloggerListComponent';
 import CreatorsAnimComponent from './components/MainPageComponents/CreatorsAnimComponent';
 import LineChartComponent from './components/chartsComponents/LineChartComponent';
-import MembershipComponent from './components/PaymentSubComponents/MembershipComponent';
+import PaypalMembershipComponent from './components/PaymentSubComponents/PaypalMembershipComponent';
 
 
 const App = () => {
@@ -81,7 +81,7 @@ const App = () => {
                 <Route path="/apply" back={true} component={ApplyComponent} exact={true} />
                 <Route path="/applyn" back={true} component={NewApplyComponent} exact={true} />
                 <Route path="/payment" back={true} component={PaymentComponent} exact={true} />
-                <Route path="/subscribe" back={true} component={MembershipComponent} exact={true} />
+                <Route path="/subscribe" back={true} component={PaypalMembershipComponent} exact={true} />
                 <Route path="/business" back={true} component={BusinessDashboard} exact={true} />
                 <Route path="/detail" back={true} component={DetailComponent} exact={true} />
                 <Route path="/mdetail" back={true} component={MDetailComponent} exact={true} />

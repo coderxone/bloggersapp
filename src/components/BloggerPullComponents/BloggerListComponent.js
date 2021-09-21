@@ -9,6 +9,8 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import ConfirmReduxUniversalComponent from '../../helperComponents/ConfirmReduxUniversalComponent';
 import { useSelector, useDispatch } from 'react-redux'
+import { setList } from '../../features/counter-slice';
+
 import Checkbox from '@material-ui/core/Checkbox';
 import clsx from 'clsx';
 import HomeService from '../../services/Homeservice';
@@ -131,7 +133,7 @@ import {
 const BottomFunc = (props) => {
 
 
-  const [list,setList] = useState([]);
+  const list = useSelector(state => state.counter.bloggerList);
   const classes = useStyles();
   const dispatch = useDispatch();
   const history = useHistory();
@@ -149,7 +151,7 @@ const BottomFunc = (props) => {
       }
 
 
-      setList(newList);
+      dispatch(setList(newList));
 
   }
 
@@ -161,7 +163,6 @@ const BottomFunc = (props) => {
       let oldList = [...list];
 
       if(bloggerList.length > oldList.length || bloggerList.length < oldList.length){
-        //setList([]);
 
         for(let i = 0;i < bloggerList.length;i++){
 
@@ -177,8 +178,8 @@ const BottomFunc = (props) => {
           }
         }
 
-        setList([]);
-        setList(bloggerList);
+        dispatch(setList([]));
+        dispatch(setList(bloggerList));
       }
 
 
@@ -339,7 +340,7 @@ const BottomFunc = (props) => {
                   {LocalizeComponent.chooseBlogger}
               </div>
               <div className="listFrame">
-                  <BloggerListViewComponent  checkedUsers={item => checkedUsers(item)} list={list}/>
+                  <BloggerListViewComponent  checkedusers={ (item) => checkedUsers(item) } list={list} />
               </div>
 
 

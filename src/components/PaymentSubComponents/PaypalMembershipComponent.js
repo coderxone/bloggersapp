@@ -17,7 +17,8 @@ import { connect } from 'react-redux';
 import PaymentService from '../../services/PaymentService';
 import { increment, decrement,save_email } from '../../actions/actions';
 import {
-  Redirect
+  Redirect,
+  useHistory
 } from "react-router-dom";
 
 
@@ -69,6 +70,7 @@ const PaymentComponent = (props) => {
   const [redirect,Setredirect] = useState(false);
   const [route,SetRoute] = useState("");
   const paypalB = useRef(null);
+  const history = useHistory();
 
   const ProductionClientId = "AW3Q8YTzK6AblOoFcJ9kCI5aXq51N_1KeJh-SgbQ3a28knHp8TmFE4JPy6lnzTv9pLZaYiaBDrWJMQ1-";
   //const DevelopmentClientId = "AWNN2lrrAjKYkq0AsXM656L_AoQuQuJFSFeuEXAOyHdyqCmlkaajVIpyKrInFxHfNrGzmzb9l8vnN_GN";
@@ -110,14 +112,8 @@ const PaymentComponent = (props) => {
         const PaymentServiceSubscribe = PaymentService.listenSendPayment().subscribe(data => {
           console.log(data);
           if(data.status == "ok"){
-            var promotion = localStorage.getItem("promotion");
-            if(promotion){
-              SetRoute("/chooseway");
-              Setredirect(true);
-            }else{
-              SetRoute("/business");
-              Setredirect(true);
-            }
+
+            history.goBack();
 
           }
         });
@@ -127,7 +123,8 @@ const PaymentComponent = (props) => {
           var checkid = localStorage.getItem("insertId");
 
           var checkobj = {
-            "checkid":checkid
+            "checkid":checkid,
+            "type":"subscription"
           }
           PaymentService.checkPayment(checkobj);
         });
@@ -138,14 +135,16 @@ const PaymentComponent = (props) => {
           if(data.status == "false"){
 
           }else if(data.status == "ok"){
-            var promotion = localStorage.getItem("promotion");
-            if(promotion){
-              SetRoute("/chooseway");
-              Setredirect(true);
-            }else{
-              SetRoute("/business");
-              Setredirect(true);
-            }
+
+            history.goBack();
+            // var promotion = localStorage.getItem("promotion");
+            // if(promotion){
+            //   SetRoute("/chooseway");
+            //   Setredirect(true);
+            // }else{
+            //   SetRoute("/business");
+            //   Setredirect(true);
+            // }
           }
 
           // SetRoute("/business");
@@ -187,7 +186,7 @@ const PaymentComponent = (props) => {
       </div>
 
 
-        <div className="mainCentralDiv projectMarginTopDescription">
+        <div className="payPalDiv projectMarginTopDescription">
                 <PayPalButton
                   amount={amountSum}
                   vault={true}

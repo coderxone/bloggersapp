@@ -18,6 +18,7 @@ const initialState = {
     role:1,
     authorization:false,
   },
+  bloggerList:[],
   ConfirmReduxUniversalComponent:{
     confirm:LocalizeComponent.confirm_small,
     cancel:LocalizeComponent.cancel_small,
@@ -160,13 +161,6 @@ const counterSlice = createSlice({
       localStorage.setItem(action.payload.name,action.payload.value);
     },
     //xxx
-    getMultiSave(state,action){
-
-      let getFromStore = localStorage.getItem(action);
-      if(getFromStore){
-        return getFromStore;
-      }
-    },
 
     openSystemDialog(state,action){
       if(action.payload == 1){
@@ -203,7 +197,11 @@ const counterSlice = createSlice({
     },
     openMembershipDialog(state){
       state.membershipDialog.membershipDialogStatus = true;
-    }
+    },
+    setList(state,action){
+      state.bloggerList = action.payload;
+    },
+
 
 
   },
@@ -235,7 +233,6 @@ export const { increment,
   CancelSubscribersCheck,
   activateBusinessMenu,
   multiSave,
-  getMultiSave,
   openSystemDialog,
   turnOnCreatorsFormCheckbox,
   turnOffCreatorsFormCheckbox,
@@ -243,6 +240,7 @@ export const { increment,
   controlMembership,
   closeMembershipDialog,
   openMembershipDialog,
+  setList,
 
  } = counterSlice.actions
 export default counterSlice.reducer;

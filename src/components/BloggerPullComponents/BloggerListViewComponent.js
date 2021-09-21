@@ -154,6 +154,8 @@ const StarBuilder = (props) => {
 const MapList = ((props) => {
 
 
+
+
   const dispatch = useDispatch()
 
     const classes = useStyles();
@@ -163,9 +165,11 @@ const MapList = ((props) => {
     const history = useHistory();
 
     const handleChange = (event,item,index) => {
+
       let checked = event.target.checked;
       item.index = index;
-      props.checkedUsers(item);
+      const {checkedusers} = props;
+      checkedusers(item);
       //console.log(checked,item.id);
     }
     //console.log(list)

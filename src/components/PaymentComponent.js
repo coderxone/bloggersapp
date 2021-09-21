@@ -127,7 +127,8 @@ const PaymentComponent = (props) => {
           var checkid = localStorage.getItem("insertId");
 
           var checkobj = {
-            "checkid":checkid
+            "checkid":checkid,
+            "type":"payment"
           }
           PaymentService.checkPayment(checkobj);
         });
@@ -166,7 +167,7 @@ const PaymentComponent = (props) => {
     },[]);
 
 
-    
+
 
 
   return (

@@ -1,6 +1,6 @@
 import React,{useEffect,useCallback} from 'react';
 import Observable from '../services/Observable';
-import { controlMembership,closeMembershipDialog } from '../features/counter-slice';
+import { controlMembership,closeMembershipDialog,openSystemDialog,turnOnCreatorsFormCheckbox,multiSave } from '../features/counter-slice';
 import { useSelector, useDispatch } from 'react-redux';
 import ProfileService  from '../services/ProfileService';
 
@@ -12,8 +12,8 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import LocalizeComponent from '../localize/LocalizeComponent';
 import CheckIcon from '@material-ui/icons/Check';
-import { openSystemDialog,turnOnCreatorsFormCheckbox } from '../features/counter-slice';
 import { useHistory } from "react-router-dom";
+import config from '../config/config';
 
 const MembershipComponent = (props) => {
 
@@ -52,8 +52,16 @@ const MembershipComponent = (props) => {
     useEffect(() => {
 
       let listenProfile = ProfileService.listenUserDataG().subscribe(data => {
+        console.log(data)
         if(data.result.membership == 1){
           dispatch(controlMembership(true));
+
+          let membershipStatus = config.getUserItemName('membership');
+
+          if(membershipStatus == false){
+            dispatch(multiSave({name:'membership',value:'1'}));
+          }
+          //multiSave
         }else if(data.result.membership == 0){
           dispatch(controlMembership(false));
         }
@@ -65,12 +73,20 @@ const MembershipComponent = (props) => {
 
       });
 
+      ProfileService.getOwnData();
+
+      let membershipStatus = config.getUserItemName('membership');
+      console.log(membershipStatus)
+      if(membershipStatus !== false && membershipStatus == "1"){
+        dispatch(controlMembership(true));
+      }
+
+
       return () => {
         listenProfile.unsubscribe();
         listenObserve.unsubscribe();
       }
 
-      ProfileService.getOwnData();
 
     },[]);
 

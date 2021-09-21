@@ -184,7 +184,7 @@ const BottomFunc = (props) => {
 
   const checkSocialObject = (obj) => {
 
-    if(obj !== undefined){
+    if(obj !== undefined && obj != null){
       let array = Object.entries(obj);
       if(array[0][0] == "Instagram"){
         if(array[0][1].indexOf('instagram') >= 0){

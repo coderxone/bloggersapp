@@ -44,6 +44,7 @@ const paymentService = {
           "deviceid":config.getdeviceid(),
           "email":config.getUserEmail(),
           "id": comingData.checkid,
+          "type":comingData.type
         }
 
         var encryptedData = cryptLibrary.encrypt(data);
