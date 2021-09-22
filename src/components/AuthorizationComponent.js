@@ -262,45 +262,65 @@ const AuthorizationComponent = (props) => {
               SetRoute("/payment");
               Setredirect(true);
             }else{
-              if(data.role === 2){
-                  SetRoute("/business");
-                  Setredirect(true);
-              }else if(data.role === 1){
 
-                if(data.additionalData == "0"){
-                  SetRoute("/blogger-answers");
-                  Setredirect(true);
-                }else{
-                  SetRoute("/blogger");
-                  Setredirect(true);
-                }
-
-              }else if(data.role == 3){
-                SetRoute("/approve");
-                Setredirect(true);
-              }
-            }
-          }else{
-            if(data.role === 2){
-                SetRoute("/business");
-                Setredirect(true);
-            }else if(data.role === 1){
-
-              if(data.additionalData == "0"){
-                SetRoute("/blogger-answers");
+              let page = config.getUserItemName('page');
+              //membership transfer
+              if(page && page === "main"){
+                SetRoute("/subscribe");
                 Setredirect(true);
               }else{
-                SetRoute("/blogger");
-                Setredirect(true);
+                //standart transfers
+                if(data.role === 2){
+                    SetRoute("/business");
+                    Setredirect(true);
+                }else if(data.role === 1){
+
+                  if(data.additionalData == "0"){
+                    SetRoute("/blogger-answers");
+                    Setredirect(true);
+                  }else{
+                    SetRoute("/blogger");
+                    Setredirect(true);
+                  }
+
+                }else if(data.role == 3){
+                  SetRoute("/approve");
+                  Setredirect(true);
+                }
               }
 
-            }else if(data.role == 3){
-              SetRoute("/approve");
-              Setredirect(true);
-            }else if(data.role == 0){
-              SetRoute("/role");
-              Setredirect(true);
             }
+          }else{
+
+            let page = config.getUserItemName('page');
+            //membership transfer
+            if(page && page === "main"){
+              SetRoute("/subscribe");
+              Setredirect(true);
+            }else{
+                //standart transfers
+                if(data.role === 2){
+                    SetRoute("/business");
+                    Setredirect(true);
+                }else if(data.role === 1){
+
+                  if(data.additionalData == "0"){
+                    SetRoute("/blogger-answers");
+                    Setredirect(true);
+                  }else{
+                    SetRoute("/blogger");
+                    Setredirect(true);
+                  }
+
+                }else if(data.role == 3){
+                  SetRoute("/approve");
+                  Setredirect(true);
+                }else if(data.role == 0){
+                  SetRoute("/role");
+                  Setredirect(true);
+                }
+            }
+
           }
 
 
@@ -333,23 +353,34 @@ const AuthorizationComponent = (props) => {
   //xx
                 props.dispatch(save_email(storageData));
 
-                var enablelogin = localStorage.getItem("enablelogin");
+                let page = config.getUserItemName('page');
+                //membership transfer
+                if(page && page === "main"){
+                  SetRoute("/subscribe");
+                  Setredirect(true);
+                }else{
+                    //standart transfers
+                    var enablelogin = localStorage.getItem("enablelogin");
 
-                if(enablelogin){
-                  if(enablelogin == "1"){
-                    localStorage.setItem("enablelogin",2);
-                    localStorage.setItem("role",2);
+                    if(enablelogin){
+                        if(enablelogin == "1"){
+                          localStorage.setItem("enablelogin",2);
+                          localStorage.setItem("role",2);
 
-                    SetRoute("/payment");
-                    Setredirect(true);
-                  }else{
-                    SetRoute("/role");
-                    Setredirect(true);
-                  }
-              }else{
-                SetRoute("/role");
-                Setredirect(true);
-              }
+                          SetRoute("/payment");
+                          Setredirect(true);
+                        }else{
+                          SetRoute("/role");
+                          Setredirect(true);
+                        }
+                    }else{
+                      SetRoute("/role");
+                      Setredirect(true);
+                    }
+
+                }
+
+
 
 
 

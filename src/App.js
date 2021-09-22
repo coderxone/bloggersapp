@@ -60,6 +60,7 @@ import BloggerListComponent from './components/BloggerPullComponents/BloggerList
 import CreatorsAnimComponent from './components/MainPageComponents/CreatorsAnimComponent';
 import LineChartComponent from './components/chartsComponents/LineChartComponent';
 import PaypalMembershipComponent from './components/PaymentSubComponents/PaypalMembershipComponent';
+import BloggerListWhiteComponent from './components/BloggerPullComponents/BloggerListWhiteComponent';
 
 
 const App = () => {
@@ -105,7 +106,7 @@ const App = () => {
                 <Route path="/blogger-answers"  back={true} component={BloggerAnswersComponent } exact={true} />
                 <Route path="/approve"  back={true} component={AdminComponent } exact={true} />
                 <Route path="/emailtemplate"  back={true} component={ActivationEmail } exact={true} />
-                <Route path="/test"  back={true} component={LineChartComponent} exact={true} />
+                <Route path="/test"  back={true} component={BloggerListWhiteComponent} exact={true} />
                 <Route path="/chooseway"  back={true} component={ChooseWayComponent} exact={true} />
                 <Route path="/main"  component={MainComponent} exact={true} />
                 <Route path="/about"  back={true} component={AboutUsComponent} exact={true} />

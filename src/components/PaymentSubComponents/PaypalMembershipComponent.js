@@ -1,4 +1,4 @@
-import React, {useState,useEffect,useMemo,useRef} from 'react';
+import React, {useState,useEffect,useMemo,useRef,useCallback} from 'react';
 import { PayPalButton } from "react-paypal-button-v2";
 // import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonInput, IonItem, IonLabel, IonList, IonItemDivider } from '@ionic/react';
 import '../../css/mainStyles.scss';
@@ -105,6 +105,9 @@ const PaymentComponent = (props) => {
 
   });
 
+  const goToMainPage = useCallback(() => {
+      return history.push({pathname: '/main'}), [history];
+  });
 
 
   useEffect(() => {
@@ -113,7 +116,15 @@ const PaymentComponent = (props) => {
           console.log(data);
           if(data.status == "ok"){
 
-            history.goBack();
+            let page = config.getUserItemName('page');
+
+            if(page && page === "main"){
+              config.deleteUserItemName('page');
+              goToMainPage();
+            }else{
+              history.goBack();
+            }
+
 
           }
         });
@@ -136,7 +147,15 @@ const PaymentComponent = (props) => {
 
           }else if(data.status == "ok"){
 
-            history.goBack();
+            let page = config.getUserItemName('page');
+
+            if(page && page === "main"){
+              config.deleteUserItemName('page');
+              goToMainPage();
+            }else{
+              history.goBack();
+            }
+
             // var promotion = localStorage.getItem("promotion");
             // if(promotion){
             //   SetRoute("/chooseway");

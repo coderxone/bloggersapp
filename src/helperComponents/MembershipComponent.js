@@ -76,7 +76,7 @@ const MembershipComponent = (props) => {
       ProfileService.getOwnData();
 
       let membershipStatus = config.getUserItemName('membership');
-      console.log(membershipStatus)
+
       if(membershipStatus !== false && membershipStatus == "1"){
         dispatch(controlMembership(true));
       }

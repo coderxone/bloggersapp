@@ -271,7 +271,7 @@ const MapList = ((props) => {
 
           let page = {
             name:'page',
-            value:'explore_profile'
+            value:'main'
           }
 
           dispatch(multiSave(page));
