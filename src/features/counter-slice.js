@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 import LocalizeComponent from '../localize/LocalizeComponent';
 
-const initialState = {
+let initialState = {
   value: 0,
   IMAGE_DATA:{},
   BACKGROUND_IMAGE_DATA:{},

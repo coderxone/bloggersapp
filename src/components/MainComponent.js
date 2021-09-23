@@ -30,6 +30,8 @@ import PermissionRequestComponent from '../helperComponents/PermissionRequestCom
 import IosPermissionRequestComponent from '../helperComponents/IosPermissionRequestComponent';
 
 import AnimationComponent from '../components/AnimationComponent';
+import BloggerListWhiteComponent from '../components/BloggerPullComponents/BloggerListWhiteComponent';
+import LastCreatorsPostComponent from '../components/BloggerPullComponents/LastCreatorsPostComponent';
 
 import worldImage from '../images/world.png';
 import grow_chart from '../images/grow_chart.png';
@@ -617,6 +619,14 @@ const BottomFunc = () => {
             <div className="projectMarginTopDescription centerElements">
                 <BloggerListComponent />
             </div>
+
+
+            <BloggerListWhiteComponent/>
+
+            <LastCreatorsPostComponent/>
+
+
+
 
 
 

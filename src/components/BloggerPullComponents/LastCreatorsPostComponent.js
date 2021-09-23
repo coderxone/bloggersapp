@@ -6,11 +6,11 @@ import {
   Link,useHistory
 } from "react-router-dom";
 
-import '../../css/BloggerListWhiteComponent.scss';
+import '../../css/lastCreatorsPostsComponent.scss';
  //LocalizeComponent.setLanguage("ru");
 
 
-const BloggerListWhiteComponent = (props) => {
+const LastCreatorsPostsComponent = (props) => {
 
   let colorIndex = 0;
   let colorArray = ["#FFA24D","#78D993","#F9A3BE"];
@@ -46,17 +46,11 @@ const BloggerListWhiteComponent = (props) => {
 
   return (
 
-    <div className="BusinessTemplate ">
+    <div className="BusinessTemplate">
 
         <div className="gridTitle">
           <div className="gridTitleText">
-            {LocalizeComponent.lastBusinessPost}
-          </div>
-        </div>
-
-        <div className="gridTitle">
-          <div className="gridSmallText">
-            {LocalizeComponent.postearnMoney}
+            {LocalizeComponent.lastCreatorPosts}
           </div>
         </div>
 
@@ -80,11 +74,11 @@ const BloggerListWhiteComponent = (props) => {
                           background: checkImage("photo-1630421056829")
                         }}>
                 </div>
-                <div className="gridSubItem rightRadius">
-                      <div className="gridSubItemBlockText">Promote Business App</div>
+                <div className="gridSubItemDoubleRow rightRadius">
+                      <div className="gridSubItemDoubleRowText gridSubItemDoubleRowTextEndAlign">Tiana Vetrovs</div>
+                      <div className="gridSubItemDoubleRowText gridSubItemDoubleRowTextStartAlign">Posted 12 hours ago</div>
                 </div>
               </div>
-
               <div className="gridItem">
                 <div className="gridSubItem leftRadius"
                 style = {{
@@ -94,11 +88,11 @@ const BloggerListWhiteComponent = (props) => {
                           background: checkImage("photo-1630421056829")
                         }}>
                 </div>
-                <div className="gridSubItem rightRadius">
-                      <div className="gridSubItemBlockText">Promote Business App</div>
+                <div className="gridSubItemDoubleRow rightRadius">
+                      <div className="gridSubItemDoubleRowText gridSubItemDoubleRowTextEndAlign">Tiana Vetrovs</div>
+                      <div className="gridSubItemDoubleRowText gridSubItemDoubleRowTextStartAlign">Posted 12 hours ago</div>
                 </div>
               </div>
-
               <div className="gridItem">
                 <div className="gridSubItem leftRadius"
                 style = {{
@@ -108,11 +102,11 @@ const BloggerListWhiteComponent = (props) => {
                           background: checkImage("photo-1630421056829")
                         }}>
                 </div>
-                <div className="gridSubItem rightRadius">
-                      <div className="gridSubItemBlockText">Promote Business App</div>
+                <div className="gridSubItemDoubleRow rightRadius">
+                      <div className="gridSubItemDoubleRowText gridSubItemDoubleRowTextEndAlign">Tiana Vetrovs</div>
+                      <div className="gridSubItemDoubleRowText gridSubItemDoubleRowTextStartAlign">Posted 12 hours ago</div>
                 </div>
               </div>
-
               <div className="gridItem">
                 <div className="gridSubItem leftRadius"
                 style = {{
@@ -122,11 +116,11 @@ const BloggerListWhiteComponent = (props) => {
                           background: checkImage("photo-1630421056829")
                         }}>
                 </div>
-                <div className="gridSubItem rightRadius">
-                      <div className="gridSubItemBlockText">Promote Business App</div>
+                <div className="gridSubItemDoubleRow rightRadius">
+                      <div className="gridSubItemDoubleRowText gridSubItemDoubleRowTextEndAlign">Tiana Vetrovs</div>
+                      <div className="gridSubItemDoubleRowText gridSubItemDoubleRowTextStartAlign">Posted 12 hours ago</div>
                 </div>
               </div>
-
               <div className="gridItem">
                 <div className="gridSubItem leftRadius"
                 style = {{
@@ -136,11 +130,11 @@ const BloggerListWhiteComponent = (props) => {
                           background: checkImage("photo-1630421056829")
                         }}>
                 </div>
-                <div className="gridSubItem rightRadius">
-                      <div className="gridSubItemBlockText">Promote Business App</div>
+                <div className="gridSubItemDoubleRow rightRadius">
+                      <div className="gridSubItemDoubleRowText gridSubItemDoubleRowTextEndAlign">Tiana Vetrovs</div>
+                      <div className="gridSubItemDoubleRowText gridSubItemDoubleRowTextStartAlign">Posted 12 hours ago</div>
                 </div>
               </div>
-
               <div className="gridItem">
                 <div className="gridSubItem leftRadius"
                 style = {{
@@ -150,52 +144,13 @@ const BloggerListWhiteComponent = (props) => {
                           background: checkImage("photo-1630421056829")
                         }}>
                 </div>
-                <div className="gridSubItem rightRadius">
-                      <div className="gridSubItemBlockText">Promote Business App</div>
+                <div className="gridSubItemDoubleRow rightRadius">
+                      <div className="gridSubItemDoubleRowText gridSubItemDoubleRowTextEndAlign">Tiana Vetrovs</div>
+                      <div className="gridSubItemDoubleRowText gridSubItemDoubleRowTextStartAlign">Posted 12 hours ago</div>
                 </div>
               </div>
 
-              <div className="gridItem">
-                <div className="gridSubItem leftRadius"
-                style = {{
-                          backgroundPosition: "center",
-                          backgroundRepeat:"no-repeat",
-                          backgroundSize:"cover",
-                          background: checkImage("photo-1630421056829")
-                        }}>
-                </div>
-                <div className="gridSubItem rightRadius">
-                      <div className="gridSubItemBlockText">Promote Business App</div>
-                </div>
-              </div>
 
-              <div className="gridItem">
-                <div className="gridSubItem leftRadius"
-                style = {{
-                          backgroundPosition: "center",
-                          backgroundRepeat:"no-repeat",
-                          backgroundSize:"cover",
-                          background: checkImage("photo-1630421056829")
-                        }}>
-                </div>
-                <div className="gridSubItem rightRadius">
-                      <div className="gridSubItemBlockText">Promote Business App</div>
-                </div>
-              </div>
-
-              <div className="gridItem">
-                <div className="gridSubItem leftRadius"
-                style = {{
-                          backgroundPosition: "center",
-                          backgroundRepeat:"no-repeat",
-                          backgroundSize:"cover",
-                          background: checkImage("photo-1630421056829")
-                        }}>
-                </div>
-                <div className="gridSubItem rightRadius">
-                      <div className="gridSubItemBlockText">Promote Business App</div>
-                </div>
-              </div>
 
 
 
@@ -212,4 +167,4 @@ const BloggerListWhiteComponent = (props) => {
 
 
 
-export default BloggerListWhiteComponent;
+export default LastCreatorsPostsComponent;

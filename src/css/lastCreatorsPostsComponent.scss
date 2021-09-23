@@ -57,17 +57,32 @@ $BlueTextColor:#2D69F6;
   box-shadow: 0px 5px 20px rgba(38, 50, 56, 0.1);
 }
 
-.gridSubItem{
+.gridSubItemDoubleRow{
   display: grid;
   grid-template-columns: 100%;
+  grid-template-rows: 47% 50%;
+  row-gap:12px;
+  padding-left:20px;
 }
 
-.gridSubItemBlockText{
-  place-self:center;
+.gridSubItemDoubleRowText{
   font-family: Roboto;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.gridSubItemDoubleRowTextEndAlign{
+  align-self: end;
   font-size: 18px;
   color:#263238;
+
 }
+.gridSubItemDoubleRowTextStartAlign{
+  align-self: start;
+  color:#26323880;
+  font-size: 14px;
+}
+
+
 
 .leftRadius{
   border-radius: 5px 0px 0px 5px;

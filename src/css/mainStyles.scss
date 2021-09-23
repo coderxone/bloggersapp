@@ -2587,6 +2587,29 @@ body {
   font-family: AppFont;
 }
 
+.fullView{
+    width:140px;
+    background-color: #2d69f6;
+    border-radius: 30px;
+    place-self:center;
+    margin-top:10px;
+    margin-bottom:10px;
+}
+.fullViewText{
+  font-family: RobotoLight;
+  font-style: normal;
+  font-weight: 100;
+  font-size: 14px;
+  color: #fff;
+  line-height: 30px;
+  text-align: center;
+}
+
+.limiter{
+  width: 100%;
+  height: 700px;
+  overflow: auto;
+}
 
 // project common styles
 

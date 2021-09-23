@@ -167,9 +167,10 @@ const MapList = ((props) => {
     const handleChange = (event,item,index) => {
 
       let checked = event.target.checked;
-      item.index = index;
+      let copy = {...item};
+      copy.index = index;
       const {checkedusers} = props;
-      checkedusers(item);
+      checkedusers(copy);
       //console.log(checked,item.id);
     }
     //console.log(list)

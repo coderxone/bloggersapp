@@ -452,6 +452,10 @@ let strings = new LocalizedStrings({
    membershipDialogText6:"Connect with our advisor",
    membershipDialogConfirm:"continue ",
    membershipDialogCancel:"cancel ",
+   lastBusinessPost:"Last Business Video Orders",
+   postearnMoney:"*Post this task and earn money right now",
+   fullView:"Go to full view",
+   lastCreatorPosts:"Last Creators Posts",
  },
 
 
