@@ -129,9 +129,9 @@ const StarBuilder = (props) => {
         <div key={index}>
         {
           index < starRate ? (
-            <StarIcon className={"creatorsStar yellowColorStatus"} />
+            <StarIcon className={"creatorsStar blueColorStatus"} />
           ) : (
-            <StarBorderIcon className={"creatorsStar yellowColorStatus"} />
+            <StarBorderIcon className={"creatorsStar blueColorStatus"} />
           )
         }
         </div>
@@ -315,7 +315,7 @@ const MapList = ((props) => {
 
           <div
 
-           key={item.id} className="mainListS deleteUrlClass">
+           key={item.id} className="mainListS_W deleteUrlClass">
             <div className="pleftBlockS">
               <div style = {{ backgroundPosition: "center",backgroundRepeat:"no-repeat",backgroundSize:"cover",background: checkImage(item.image_url) }  } className="pleftBlockOneTwo"></div>
               <div className="pleftBlockTwo">
@@ -330,7 +330,7 @@ const MapList = ((props) => {
             <div className="prightBlock">
               <div className="prightBlockOne" >
                 <div className="prightBlockOneTwo" onClick={event => checkProfile(item,membership)}>
-                  <div className="prightBlockOneTwoTextTwo">
+                  <div className="prightBlockOneTwoTextTwo_W">
                     {checkName(item.firstName)}
                   </div>
                 </div>
@@ -343,7 +343,7 @@ const MapList = ((props) => {
 
               <div className="prightBlockTwo">
                 <div className="prightBlockTwoOneTwo">
-                  <div className="prightBlockTwoOneText">
+                  <div className="prightBlockTwoOneText_W">
                     {checkCountry(item.country)}
                   </div>
                   <div className="prightBlockTwoOneSecond">

@@ -20,7 +20,7 @@ import CenterFocusStrongIcon from '@material-ui/icons/CenterFocusStrong';
 import TrendingUpIcon from '@material-ui/icons/TrendingUp';
 import WorkIcon from '@material-ui/icons/Work';
 import {useSelector,useDispatch} from 'react-redux';
-import BloggerListComponent from '../components/BloggerPullComponents/BloggerListComponent';
+import BloggerListComponent from '../components/BloggerPullComponents/BloggerListWComponent';
 import CreatorsAnimComponent from '../components/MainPageComponents/CreatorsAnimComponent';
 
 import PushComponent from '../helperComponents/NativePushNotificationComponent';
@@ -613,10 +613,26 @@ const BottomFunc = () => {
 
 
 
+          <div className="gridFrameTitle">
+
+            <div className="gridTitle">
+              <div className="gridTitleText">
+                {LocalizeComponent.chooseBlogger}
+              </div>
+            </div>
+
+            <div className="gridTitle">
+              <div className="fullView">
+                <div className="fullViewText">
+                  {LocalizeComponent.fullView}
+                </div>
+              </div>
+            </div>
+
+          </div>
 
 
-
-            <div className="projectMarginTopDescription centerElements">
+            <div className="centerElements">
                 <BloggerListComponent />
             </div>
 

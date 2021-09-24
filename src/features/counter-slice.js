@@ -201,6 +201,9 @@ const counterSlice = createSlice({
     setList(state,action){
       state.bloggerList = action.payload;
     },
+    markListItem(state,action){
+      state.bloggerList[action.payload.index].checked = action.payload.status;
+    },
 
 
 
@@ -241,6 +244,7 @@ export const { increment,
   closeMembershipDialog,
   openMembershipDialog,
   setList,
-
+  markListItem,
+  
  } = counterSlice.actions
 export default counterSlice.reducer;

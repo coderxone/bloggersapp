@@ -56,7 +56,7 @@ import businessUserProfileComponent from './components/profileComponents/busines
 import userProfilePhotoUpload from './components/profileComponents/userProfilePhotoUpload';
 import WhyEchohubComponent from './components/introductionComponents/WhyEchohubComponent';
 import MSubdetailComponent from './components/businessComponents/MSubdetailComponent';
-import BloggerListComponent from './components/BloggerPullComponents/BloggerListComponent';
+import BloggerListComponent from './components/BloggerPullComponents/BloggerListWComponent';
 import CreatorsAnimComponent from './components/MainPageComponents/CreatorsAnimComponent';
 import LineChartComponent from './components/chartsComponents/LineChartComponent';
 import PaypalMembershipComponent from './components/PaymentSubComponents/PaypalMembershipComponent';
@@ -107,7 +107,7 @@ const App = () => {
                 <Route path="/blogger-answers"  back={true} component={BloggerAnswersComponent } exact={true} />
                 <Route path="/approve"  back={true} component={AdminComponent } exact={true} />
                 <Route path="/emailtemplate"  back={true} component={ActivationEmail } exact={true} />
-                <Route path="/test"  back={true} component={LastCreatorsPostComponent} exact={true} />
+                <Route path="/test"  back={true} component={BloggerListComponent} exact={true} />
                 <Route path="/chooseway"  back={true} component={ChooseWayComponent} exact={true} />
                 <Route path="/main"  component={MainComponent} exact={true} />
                 <Route path="/about"  back={true} component={AboutUsComponent} exact={true} />

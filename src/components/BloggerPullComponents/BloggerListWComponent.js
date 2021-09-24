@@ -62,7 +62,7 @@ import {
          borderColor: '#78D993',
        },
        '& input': {
-         backgroundColor: '#1A48A6',
+         backgroundColor: '#2d69f6',
          color:'white',
          borderRadius:'5px',
          fontFamily:'Roboto',
@@ -100,8 +100,8 @@ import {
      },
    },
    checkedIcondefault: {
-     backgroundColor: '#1A48A6',
-     backgroundImage: '#1A48A6',
+     backgroundColor: '#2d69f6',
+     backgroundImage: '#2d69f6',
      '&:before': {
        display: 'block',
        width: 20,
@@ -113,7 +113,7 @@ import {
        content: '""',
      },
      'input:hover ~ &': {
-       backgroundColor: '#1A48A6',
+       backgroundColor: '#2d69f6',
      },
    },
    rootx: {
@@ -318,11 +318,10 @@ const BottomFunc = (props) => {
   return (
 
 
-        <Grid container className="mainListCore">
-           <div className="titleFrame">
-              <div className="titleFrameText">
-                  {LocalizeComponent.chooseBlogger}
-              </div>
+        <Grid container className="mainListCore_W">
+
+           <div className="titleFrame_W">
+
               <div className="listFrame">
                   <BloggerListViewWhiteComponent  list={list} />
               </div>
@@ -348,7 +347,7 @@ const BottomFunc = (props) => {
                           </div>
 
                           <div className="creatorCheckboxFrameTwo">
-                              <div className="creatorCheckboxFrameTwoText">
+                              <div className="creatorCheckboxFrameTwoText_W">
                                   {LocalizeComponent.dialogDefaultTextCheckbox}
                               </div>
                           </div>
