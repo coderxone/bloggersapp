@@ -212,13 +212,13 @@ const BottomFunc = () => {
     //check app language
     checkMemoryLang();
 
-    const obs = Observable.subscribeByTimer_4_second().subscribe(data => {
-        LiveService.getTaskData();
-    })
+    // const obs = Observable.subscribeByTimer_10_second().subscribe(data => {
+    //     LiveService.getTaskData();
+    // })
 
     return () => {
       listenLive.unsubscribe();
-      obs.unsubscribe();
+      //obs.unsubscribe();
     }
 
   },[])
@@ -621,13 +621,17 @@ const BottomFunc = () => {
               </div>
             </div>
 
-            <div className="gridTitle">
+            <Link className="gridTitle deleteUrlClass"
+              to={{
+                pathname: "/choose-creator"
+              }}
+              >
               <div className="fullView">
                 <div className="fullViewText">
                   {LocalizeComponent.fullView}
                 </div>
               </div>
-            </div>
+            </Link>
 
           </div>
 

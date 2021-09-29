@@ -107,7 +107,8 @@ const App = () => {
                 <Route path="/blogger-answers"  back={true} component={BloggerAnswersComponent } exact={true} />
                 <Route path="/approve"  back={true} component={AdminComponent } exact={true} />
                 <Route path="/emailtemplate"  back={true} component={ActivationEmail } exact={true} />
-                <Route path="/test"  back={true} component={BloggerListComponent} exact={true} />
+                <Route path="/choose-creator"  back={true} component={BloggerListComponent} exact={true} />
+                <Route path="/test"  back={true} component={BloggerListWhiteComponent} exact={true} />
                 <Route path="/chooseway"  back={true} component={ChooseWayComponent} exact={true} />
                 <Route path="/main"  component={MainComponent} exact={true} />
                 <Route path="/about"  back={true} component={AboutUsComponent} exact={true} />

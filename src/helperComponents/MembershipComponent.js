@@ -52,7 +52,7 @@ const MembershipComponent = (props) => {
     useEffect(() => {
 
       let listenProfile = ProfileService.listenUserDataG().subscribe(data => {
-        console.log(data)
+      //  console.log(data)
         if(data.result.membership == 1){
           dispatch(controlMembership(true));
 

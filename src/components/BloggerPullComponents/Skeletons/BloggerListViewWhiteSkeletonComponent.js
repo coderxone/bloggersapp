@@ -1,17 +1,18 @@
 import React, { useCallback,useEffect,useState,useMemo,useRef } from 'react';
-import LocalizeComponent from '../../localize/LocalizeComponent';
+import LocalizeComponent from '../../../localize/LocalizeComponent';
 import Grid from '@material-ui/core/Grid';
-import config from '../../config/config';
+import config from '../../../config/config';
 import Checkbox from '@material-ui/core/Checkbox';
 import StarIcon from '@material-ui/icons/Star';
 import StarBorderIcon from '@material-ui/icons/StarBorder';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
-import '../../components/BloggerPullComponents/BloggerListComponent.css';
+import '../../../components/BloggerPullComponents/BloggerListComponent.css';
 import { useSelector, useDispatch } from 'react-redux'
-import { multiSave,getMultiSave } from '../../features/counter-slice';
-import { openMembershipDialog,markListItem } from '../../features/counter-slice';
+import { multiSave,getMultiSave } from '../../../features/counter-slice';
+import { openMembershipDialog,markListItem } from '../../../features/counter-slice';
+import Skeleton from '@material-ui/lab/Skeleton';
 
 import {
   Link,useHistory
@@ -155,154 +156,18 @@ const MapList = ((props) => {
 
     const classes = useStyles();
 
-    const list = props.list;
+    let list = props.list;
 
     const history = useHistory();
-
-    const handleChange = (event,item,index) => {
-
-      let checked = event.target.checked;
-
-      let changeObj = {
-        index:index,
-        status:checked
-      }
-      dispatch(markListItem(changeObj));
-
-    }
 
     const eliotIco = "no-image.png";
 
     const [messageCount,setMessageCount] = useState(3);
     const [online,setOnline] = useState(1);
-    var contactObj = {
-      name:"testName",
-      date:"someDate",
-      message:"newMessage",
-      count:3
-
-    }
-    const [contact,setContact] = useState(contactObj);
-
-    let colorIndex = 0;
-    let colorArray = ["#FFA24D","#78D993","#F9A3BE"];
-    let colorCheckboxClasses = [classes.checkedIcon0,classes.checkedIcon1,classes.checkedIcon2,classes.checkedIcondefault];
-
-    const colorTracker = () => {
-        if(colorIndex > 2){
-          colorIndex = 0;
-        }
-
-        let item = colorArray[colorIndex];
-        colorIndex++;
-        return item;
-    }
-
-    let classColorIndex = 0;
-    const colorClassTracker = (imageUrl) => {
-
-      if(imageUrl.indexOf('graph') >= 0){
-
-        return colorCheckboxClasses[3];
-
-      }else{
-        if(imageUrl == 0 || imageUrl == "no-image.png"){
-
-            let returnClass = colorCheckboxClasses[classColorIndex];
-            classColorIndex++;
-            if(classColorIndex > 2){
-              classColorIndex = 0;
-            }
-            return returnClass;
-
-        }else{
-          return colorCheckboxClasses[3];
-        }
-
-      }
 
 
-
-    }
-
-    const checkImage = (imageUrl) => {
-
-      if(imageUrl.indexOf('graph') >= 0){
-
-        let str = "url(" + imageUrl + ") no-repeat center/cover";
-        return str;
-      }else{
-        if(imageUrl == 0 || imageUrl == "no-image.png"){
-            let str = colorTracker();
-            return str;
-        }else{
-          let str = "url(" + config.getServerImagePath() + imageUrl + ") no-repeat center/cover";
-          return str;
-        }
-
-      }
-    }
-
-    const checkCountry = (country) => {
-      if(country != 0){
-        return country;
-      }else{
-        return "US";
-      }
-    }
-
-    const checkName = (name) => {
-
-      if(name != 0){
-        return name;
-      }else{
-        return "new blogger";
-      }
-    }
 
       const membership = useSelector((state) => state.counter.membership);
-
-
-
-      const checkProfile = ((item,membership) => {
-
-          let page = {
-            name:'page',
-            value:'main'
-          }
-
-          dispatch(multiSave(page));
-
-          let check = config.CheckIfAuthorized();
-
-          if(check !== false){
-
-              if(membership === true){
-                goToProfile(item,membership);
-              }else if(membership === false){
-                //request membership
-                dispatch(openMembershipDialog());
-
-              }
-
-          }else{
-            goToLogin();
-          }
-
-      });
-
-      const goToProfile = useCallback((item,membership) => {
-
-          return history.push({pathname: '/explore_profile',data:item}), [history];
-
-      });
-      const goToLogin = useCallback(() => {
-
-          return history.push({pathname: '/login'}), [history];
-
-      });
-
-
 
 
 
@@ -312,21 +177,19 @@ const MapList = ((props) => {
 
            key={item.id} className="mainListS_W deleteUrlClass">
             <div className="pleftBlockS">
-              <div style = {{ backgroundPosition: "center",backgroundRepeat:"no-repeat",backgroundSize:"cover",background: checkImage(item.image_url) }  } className="pleftBlockOneTwo"></div>
+              <div className="pleftBlockOneTwo">
+                  <Skeleton variant="rect" width="100%" height="100%" />
+              </div>
               <div className="pleftBlockTwo">
-              {item.online == 1 ? (
-                    <FiberManualRecordIcon className="mysizes "/>
-               ) : (
-                    <FiberManualRecordIcon className="mysize-offlines"/>
-               )}
+
 
               </div>
             </div>
             <div className="prightBlock">
               <div className="prightBlockOne" >
-                <div className="prightBlockOneTwo" onClick={event => checkProfile(item,membership)}>
+                <div className="prightBlockOneTwo">
                   <div className="prightBlockOneTwoTextTwo_W">
-                    {checkName(item.firstName)}
+                    <Skeleton variant="text" width="100%" height="100%" />
                   </div>
                 </div>
                 <div className="prightBlockOneThree">
@@ -339,28 +202,18 @@ const MapList = ((props) => {
               <div className="prightBlockTwo">
                 <div className="prightBlockTwoOneTwo">
                   <div className="prightBlockTwoOneText_W">
-                    {checkCountry(item.country)}
+                    <Skeleton variant="text" width="100%" height="100%" />
                   </div>
                   <div className="prightBlockTwoOneSecond">
 
-                    <StarBuilder rate={item.raiting_stars} />
+                    <Skeleton variant="text" width="100%" height="100%" />
 
                   </div>
 
                 </div>
 
                   <div className="prightBlockTwoTwoS">
-                    <Checkbox
-                        className={classes.root}
-                        disableRipple
-                        checked={item.checked}
-                        onChange={event => handleChange(event,item,index)}
-                        color="default"
-                        checkedIcon={<span className={clsx(classes.icon, colorClassTracker(item.image_url))} />}
-                        icon={<span className={classes.icon} />}
-                        inputProps={{ 'aria-label': 'decorative checkbox' }}
-                        {...props}
-                      />
+
                   </div>
 
 

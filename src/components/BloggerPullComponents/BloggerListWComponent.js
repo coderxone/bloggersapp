@@ -1,6 +1,7 @@
 import React, { useCallback,useEffect,useState,useMemo,useRef } from 'react';
 import BloggerListViewComponent from '../../components/BloggerPullComponents/BloggerListViewComponent';
 import BloggerListViewWhiteComponent from '../../components/BloggerPullComponents/BloggerListViewWhiteComponent';
+import BloggerListViewWhiteSkeletonComponent from '../../components/BloggerPullComponents/Skeletons/BloggerListViewWhiteSkeletonComponent';
 import LocalizeComponent from '../../localize/LocalizeComponent';
 import Grid from '@material-ui/core/Grid';
 import config from '../../config/config';
@@ -9,13 +10,12 @@ import Observable from '../../services/Observable';
 import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import ConfirmReduxUniversalComponent from '../../helperComponents/ConfirmReduxUniversalComponent';
-import { useSelector, useDispatch } from 'react-redux'
-import { setList } from '../../features/counter-slice';
-
 import Checkbox from '@material-ui/core/Checkbox';
 import clsx from 'clsx';
 import HomeService from '../../services/Homeservice';
-import { multiSave,openSystemDialog,turnOnCreatorsFormCheckbox,turnOffCreatorsFormCheckbox,redirectToPayment,markListItem } from '../../features/counter-slice';
+
+import { useSelector, useDispatch } from 'react-redux'
+import { multiSave,openSystemDialog,turnOnCreatorsFormCheckbox,turnOffCreatorsFormCheckbox,redirectToPayment,markListItem,setList,SwitchbloggerListSkeletonStatus } from '../../features/counter-slice';
 import MembershipComponent from '../../helperComponents/MembershipComponent';
 import * as yup from "yup";
 import TextField from '@material-ui/core/TextField';
@@ -135,14 +135,33 @@ const BottomFunc = (props) => {
 
 
   const list = useSelector(state => state.counter.bloggerList);
+  const bloggerListSkeletonStatus = useSelector(state => state.counter.bloggerListSkeletonStatus);
   const classes = useStyles();
   const dispatch = useDispatch();
   const history = useHistory();
+
+  //if current url is main page
+  const currentUrl = useMemo(() => {
+
+      let url = window.location.href;
+      if(url.indexOf('main') >= 0){
+        return true;
+      }else{
+        return false;
+      }
+
+  },[]);
 
   useEffect(() => {
     const listenLive = LiveService.listenUserDataTask().subscribe(data => {
 
       var bloggerList = data.results;
+
+      if(currentUrl){
+        bloggerList = bloggerList.slice(0,5);
+      }
+
+      dispatch(SwitchbloggerListSkeletonStatus(false));
 
       let oldList = [...list];
 
@@ -164,6 +183,8 @@ const BottomFunc = (props) => {
 
         dispatch(setList([]));
         dispatch(setList(bloggerList));
+
+
       }
 
 
@@ -184,6 +205,15 @@ const BottomFunc = (props) => {
   useEffect(() => {
 
     LiveService.getTaskData();
+
+    const obs = Observable.subscribeByTimer_30_second().subscribe(data => {
+        LiveService.getTaskData();
+        dispatch(SwitchbloggerListSkeletonStatus(true));
+    });
+
+    return () => {
+      obs.unsubscribe();
+    }
 
   },[]);
 
@@ -320,10 +350,28 @@ const BottomFunc = (props) => {
 
         <Grid container className="mainListCore_W">
 
+          {
+            currentUrl === false && (
+              <div className="gridTitle projectMarginBottom">
+                <div className="gridTitleText">
+                  {LocalizeComponent.chooseBlogger}
+                </div>
+              </div>
+            )
+          }
+
+
            <div className="titleFrame_W">
 
               <div className="listFrame">
-                  <BloggerListViewWhiteComponent  list={list} />
+                  {
+                    bloggerListSkeletonStatus === false ? (
+                      <BloggerListViewWhiteComponent  list={list} />
+                    ) : (
+                      <BloggerListViewWhiteSkeletonComponent list={list} />
+                    )
+                  }
+
               </div>
 
 
