@@ -200,7 +200,7 @@ const PaymentComponent = (props) => {
 
       <div className="payTitle">
         <div className="payText">
-            {LocalizeComponent.choose_payment}
+            {LocalizeComponent.trial_payment}
         </div>
       </div>
 

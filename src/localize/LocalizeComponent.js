@@ -456,6 +456,7 @@ let strings = new LocalizedStrings({
    postearnMoney:"*Post this task and earn money right now",
    fullView:"Go to full view",
    lastCreatorPosts:"Last Creators Posts",
+   trial_payment:"Subscribe with free month trial period",
  },
 
 

@@ -11,11 +11,15 @@ import BloggerService from '../../services/BloggersService';
  //LocalizeComponent.setLanguage("ru");
 
  import { useSelector, useDispatch } from 'react-redux'
- import { SetBusinessOrdersList } from '../../features/counter-slice'
+ import { SetBusinessOrdersList,SwitchBusinessOrdersSkeletonStatus,multiSave,openMembershipDialog } from '../../features/counter-slice'
+ import Observable from '../../services/Observable';
+ import Skeleton from '@material-ui/lab/Skeleton';
+
+import MembershipComponent from '../../helperComponents/MembershipComponent';
 
 
 
-const ListMatrix = ((props) => {
+const ListSkeletonMatrix = ((props) => {
 
 
   let colorIndex = 0;
@@ -55,6 +59,122 @@ const ListMatrix = ((props) => {
   const iterList = list.map((item,index) =>
 
       <div key={index} className="gridItem">
+            <div className="gridSubItem leftRadius" >
+                    <Skeleton variant="rect" width="100%" height="100%" />
+            </div>
+            <div className="gridSubItem rightRadius">
+                  <Skeleton variant="text" width="100%" height="100%" />
+            </div>
+      </div>
+
+  );
+
+
+  return (
+    <div className="gridMatrix">
+        {iterList}
+    </div>
+  );
+
+
+
+
+});
+
+
+const ListMatrix = ((props) => {
+
+
+  let colorIndex = 0;
+  let colorArray = ["#FFA24D","#78D993","#F9A3BE"];
+  const dispatch = useDispatch();
+  const history = useHistory();
+
+  const colorTracker = () => {
+      if(colorIndex > 2){
+        colorIndex = 0;
+      }
+
+      let item = colorArray[colorIndex];
+      colorIndex++;
+      return item;
+  }
+
+  const checkImage = (imageUrl) => {
+
+    if(imageUrl.indexOf('graph') >= 0){
+
+      let str = "url(" + imageUrl + ") no-repeat center/cover";
+      return str;
+    }else{
+      if(imageUrl == 0 || imageUrl == "no-image.png"){
+          let str = colorTracker();
+          return str;
+      }else{
+        let str = "url(" + config.getServerImagePath() + imageUrl + ") no-repeat center/cover";
+        return str;
+      }
+
+    }
+  }
+
+  const goToBusinessDetail = useCallback((item) => {
+
+      return history.push({pathname: '/blogger'}), [history];
+
+  });
+
+  const goToLogin = useCallback(() => {
+
+      return history.push({pathname: '/login'}), [history];
+
+  });
+
+  const membership = useSelector((state) => state.counter.membership);
+
+  const checkProfile = ((item) => {
+
+      let page = {
+        name:'page',
+        value:'bloggerDashboard'
+      }
+
+      dispatch(multiSave(page));
+
+      let check = config.CheckIfAuthorized();
+
+      if(check !== false){
+
+            let role = config.getUserRole();
+
+            if(role === 1){
+              goToBusinessDetail(item);
+            }else{
+              if(membership === true){
+                //goToBusinessDetail(item);
+                //go to business detail page
+              }else if(membership === false){
+                //request membership
+                dispatch(openMembershipDialog());
+
+              }
+
+            }
+
+
+
+      }else{
+        goToLogin();
+      }
+
+  });
+
+
+  const list = props.list;
+
+  const iterList = list.map((item,index) =>
+
+      <div key={index} className="gridItem" onClick={event => checkProfile(item) }>
             <div className="gridSubItem leftRadius"
             style = {{
                       backgroundPosition: "center",
@@ -88,6 +208,20 @@ const BloggerListWhiteComponent = (props) => {
   const list = useSelector((state) => state.counter.businessOrders);
   const dispatch = useDispatch();
 
+  //if current url is main page
+  const currentUrl = useMemo(() => {
+
+      let url = window.location.href;
+      if(url.indexOf('main') >= 0){
+        return true;
+      }else{
+        return false;
+      }
+
+  },[]);
+
+
+  const businessOrdersSkeletonStatus = useSelector(state => state.counter.businessOrdersSkeletonStatus);
 
 
   useEffect(() => {
@@ -96,12 +230,16 @@ const BloggerListWhiteComponent = (props) => {
 
       let businessOrders = data.sdata;
 
+      if(currentUrl){
+        businessOrders = businessOrders.slice(0,5);
+      }
+
       let oldList = [...list];
+      dispatch(SwitchBusinessOrdersSkeletonStatus(false));
 
       if(oldList.length > businessOrders.length || oldList.length < businessOrders.length){
         dispatch(SetBusinessOrdersList([]));
         dispatch(SetBusinessOrdersList(businessOrders));
-        console.log(businessOrders)
       }
 
     });
@@ -113,6 +251,21 @@ const BloggerListWhiteComponent = (props) => {
     }
 
   },[list]);
+
+
+  useEffect(() => {
+
+
+    const obs = Observable.subscribeByTimer_30_second().subscribe(data => {
+        BloggerService.setAllDataBusinessOrders();
+        dispatch(SwitchBusinessOrdersSkeletonStatus(true));
+    });
+
+    return () => {
+      obs.unsubscribe();
+    }
+
+  },[]);
 
 
   return (
@@ -140,8 +293,26 @@ const BloggerListWhiteComponent = (props) => {
         </div>
 
         <div className="gridFrame">
-            <ListMatrix list={list} />
+          {
+            businessOrdersSkeletonStatus === false ? (
+              <ListMatrix list={list} />
+            ) : (
+              <ListSkeletonMatrix list={list} />
+            )
+          }
+
         </div>
+
+        {
+          businessOrdersSkeletonStatus
+        }
+
+        {
+          currentUrl === false && (
+            <MembershipComponent/>
+          )
+        }
+
 
     </div>
 
