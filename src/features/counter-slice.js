@@ -22,6 +22,7 @@ let initialState = {
   bloggerListSkeletonStatus:true,
   businessOrders:[],
   businessOrdersSkeletonStatus:true,
+  managementList:[],
   ConfirmReduxUniversalComponent:{
     confirm:LocalizeComponent.confirm_small,
     cancel:LocalizeComponent.cancel_small,
@@ -218,6 +219,9 @@ const counterSlice = createSlice({
     SwitchBusinessOrdersSkeletonStatus(state,action){
       state.businessOrdersSkeletonStatus = action.payload;
     },
+    SetManagementList(state,action){
+      state.managementList = action.payload;
+    },
 
 
 
@@ -261,7 +265,8 @@ export const { increment,
   markListItem,
   SwitchbloggerListSkeletonStatus,
   SetBusinessOrdersList,
-  SwitchBusinessOrdersSkeletonStatus
+  SwitchBusinessOrdersSkeletonStatus,
+  SetManagementList,
 
  } = counterSlice.actions
 export default counterSlice.reducer;

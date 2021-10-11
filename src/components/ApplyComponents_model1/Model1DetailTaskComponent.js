@@ -236,6 +236,7 @@ const DetailTaskComponent = (props) => {
     setTimeout(function(){
       SetSucessState(false);
       SetdangerState(false);
+      SetinputtextErrorStatus(false);
     },5000);
   }
 
@@ -261,6 +262,8 @@ const DetailTaskComponent = (props) => {
 
   const [inputtext,SetInputText] = useState("");
   const [howmanysteps,SethowManySteps] = useState(5);
+  const [inputtextErrorStatus,SetinputtextErrorStatus] = useState(false);
+  
 
   const setText = ((string) => {
       SetInputText(string);
@@ -493,6 +496,10 @@ const DetailTaskComponent = (props) => {
               }
           }
 
+      }else{
+        SetinputtextErrorStatus(true);
+        hideAlert();
+
       }
 
   });
@@ -713,7 +720,7 @@ const CheckcheckBannedVideoF = ((id) => {
 });
 
 
-const ExecutelistencheckBannedVideo = (data) => {
+const ExecutelistencheckBannedVideo = (data,banArray) => {
 
       if(data.status == "ok"){
 
@@ -751,7 +758,8 @@ const ExecutelistencheckBannedVideo = (data) => {
           SetcompletedTask(false);
 
       }else if(data.status == "false"){
-        if(banVideo.length > 0){
+        console.log(banVideo.length)
+        if(banArray.length > 0){
           SetBanVideo([]);
         }
       }
@@ -760,15 +768,15 @@ const ExecutelistencheckBannedVideo = (data) => {
 
 useEffect(() => {
   const listencheckBannedVideo = DetailTaskService.listencheckBannedVideo().subscribe(data => {
-      //console.log(data);
-      ExecutelistencheckBannedVideo(data);
+      
+      ExecutelistencheckBannedVideo(data,banVideo);
 
   });
 
   return () => {
     listencheckBannedVideo.unsubscribe();
   }
-},[])
+},[banVideo])
 
   useEffect(() => {
     //xx //inserted video after upload
@@ -1351,7 +1359,10 @@ const EditNetwork = (data) => {
                            value={inputtext}
                            onChange={event => setText(event.target.value)}
                            className="setInputStyle"
-                           label={LocalizeComponent.step3_9} />
+                           label={LocalizeComponent.step3_9}
+                           error={inputtextErrorStatus}
+                           />
+                           
                        </div>
 
 

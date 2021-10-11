@@ -1644,8 +1644,19 @@ body {
   width: 100%;
 }
 // app styles
-.MuiInput-underline:after{
+.MuiInput-underline{
   border-color:$base-app-color !important;
+}
+.MuiInputBase-input{
+  border-color:$base-app-color !important;
+  
+}
+
+.Mui-error :before{
+  background-color: $base-app-color;
+}
+.Mui-error :after{
+  background-color:  red;
 }
 .MuiButton-containedPrimary {
   background-color: $base-app-color !important;
@@ -2039,6 +2050,7 @@ body {
 //admin
 
 // TaskComponent
+
 
 .MuiStepper-root {
   padding:2px !important;
@@ -2620,7 +2632,16 @@ body {
 }
 
 
+.card {
+    margin-bottom: 10px !important;
+}
+
 // project common styles
+
+.MuiTypography-root{
+  color:$base-app-color !important;
+}
+
 
 
 
@@ -2689,7 +2710,18 @@ body {
   color: #000000;
 }
 .whiteColor{
-  color: white;
+  color: white !important;
+}
+
+.whiteColor th{
+  color: white !important;
+}
+
+.whiteColor td{
+  color: white !important;
+}
+.table > tbody > tr > td{
+  color:white !important;
 }
 
 .TitleColor{
@@ -2716,7 +2748,7 @@ body {
 }
 
 .projectTextColor{
-  color:$base-app-color;
+  color:$base-app-color !important;
 }
 
 .projectContainer{
@@ -2812,6 +2844,25 @@ body {
   border: 1px solid white;
 
 
+}
+
+.projectPaddingLi li{
+  color:$base-app-color;
+}
+.ShareNameText li{
+  color:$base-app-color;
+}
+
+.PurpleColor{
+  color:#e14eca !important;
+}
+
+.BlueColor{
+  color:#0083ff !important;
+}
+
+.RedColor{
+  color:red !important;
 }
 
 

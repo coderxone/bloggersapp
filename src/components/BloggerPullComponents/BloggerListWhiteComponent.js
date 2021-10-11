@@ -284,13 +284,18 @@ const BloggerListWhiteComponent = (props) => {
           </div>
         </div>
 
-        <div className="gridTitle">
-          <div className="fullView">
-            <div className="fullViewText">
-              {LocalizeComponent.fullView}
+        {
+          currentUrl === true && (
+            <div className="gridTitle">
+              <div className="fullView">
+                <div className="fullViewText">
+                  {LocalizeComponent.fullView}
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
+          )
+        }
+
 
         <div className="gridFrame">
           {

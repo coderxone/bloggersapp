@@ -457,7 +457,12 @@ let strings = new LocalizedStrings({
    fullView:"Go to full view",
    lastCreatorPosts:"Last Creators Posts",
    trial_payment:"Subscribe with free month trial period",
- },
+   email_Translate:"Email", 
+   email_Milestone:"Milestone", 
+   email_Actions:"Actions", 
+   action_required:"This blogger changing video",
+
+  },
 
 
  ru:{

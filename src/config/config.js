@@ -1,6 +1,7 @@
 import generateModule from '../helpers/GenerateNumber';
 import React from 'react';
 import Obfuscate from 'react-obfuscate';
+import LocalizeComponent from '../localize/LocalizeComponent';
 const deployMode = "development";//development//production
 const deployPlatform = "browser";//browser//android
 const routeUrl = "https://echohub.io";
@@ -24,6 +25,10 @@ const userRole = "2"; //business owner
 //app secret production
 //cbf8311cd273f6a10121ec7924352471
 //facebook test
+
+//generated Color Index
+let colorIndex = 0;
+//generated Color Index
 
 
 //localStorage.setItem("role",action.email);
@@ -93,6 +98,41 @@ const newmodule = {
       },
       getServerImageBackgroundPath:() => {
         return serverImageBackgroundPath;
+      },
+
+      getGeneratedImagePath:(urlPath) => {
+
+          let colorArray = ["#FFA24D","#78D993","#F9A3BE"];
+
+          const colorTracker = () => {
+              if(colorIndex > 2){
+                colorIndex = 0;
+              }
+
+              let item = colorArray[colorIndex];
+              colorIndex++;
+              return item;
+          }
+
+          const checkImage = (imageUrl) => {
+
+            if(imageUrl.indexOf('graph') >= 0){
+
+              let str = "url(" + imageUrl + ") no-repeat center/cover";
+              return str;
+            }else{
+              if(imageUrl == 0 || imageUrl == "no-image.png"){
+                  let str = colorTracker();
+                  return str;
+              }else{
+                let str = "url(" + newmodule.getServerImagePath() + imageUrl + ") no-repeat center/cover";
+                return str;
+              }
+
+            }
+          }
+
+          return checkImage(urlPath);
       },
 
       getCurrentUrl:() => {
@@ -440,6 +480,33 @@ const newmodule = {
           deployMode:deployMode,
           deployPlatform:deployPlatform
         };
+      },
+      //xxx
+      getCurrentStatus: (status) => {
+
+          var rData = newmodule.getJSONFromMemory("appstatus");
+      
+          let number = status;
+          number = number - 1;
+       
+            if(rData[number].text == "open task"){
+              rData[number].text = LocalizeComponent.open_task;
+            }
+            if(rData[number].text == "under consideration by business"){
+              rData[number].text = LocalizeComponent.under_consideration;
+            }
+            if(rData[number].text == "approved by business"){
+              rData[number].text = LocalizeComponent.approved_b;
+            }
+            if(rData[number].text == "waiting system approval"){
+              rData[number].text = LocalizeComponent.waiting_system_appr;
+            }
+            if(rData[number].text == "ready for withdrawal"){
+              rData[number].text = LocalizeComponent.statuswithdrawal;
+            }
+          
+          return rData[number].text;
+        
       }
 
 }

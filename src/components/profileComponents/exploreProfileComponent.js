@@ -38,10 +38,18 @@ const BottomFunc = (props) => {
 
     if(!props.history.location.data){
       let storeEmail = config.getUserItemName('exploreemail');
+
       return storeEmail;
     }else{
-      dispatch(multiSave({name:'exploreemail',value:props.history.location.data.email}));
-      return props.history.location.data.email;
+      //undefined
+      if(props.history.location.data.email){
+        dispatch(multiSave({name:'exploreemail',value:props.history.location.data.email}));
+        return props.history.location.data.email;
+      }else{
+        dispatch(multiSave({name:'exploreemail',value:props.history.location.data.user_email}));
+        return props.history.location.data.user_email;
+      }
+
     }
 
   },[]);

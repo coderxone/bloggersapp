@@ -904,7 +904,8 @@ useEffect(() => {
                 {
                   (
                     status == false &&
-                    onlineStatus == 1
+                    onlineStatus == 1 &&
+                    currentTask === 0
                   ) && (
 
                     <div>

@@ -67,6 +67,8 @@ $BlueTextColor:#2D69F6;
   font-family: Roboto;
   font-size: 18px;
   color:#263238;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .leftRadius{

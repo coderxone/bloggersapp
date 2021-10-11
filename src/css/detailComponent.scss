@@ -1,4 +1,5 @@
 $base-app-color:#0083ff;
+$whiteColor:white;
 $base-app-colorRight:#0083ff;
 $fontSize:#0083ff;
 $buttonColor:white;
@@ -218,40 +219,40 @@ $successColor:#7dec62;
   width:100%;
   height: 30px;
   text-align:center;
-  font-family:AppFont;
+  font-family:Roboto;
   font-size: 1.5em;
-  color:$base-app-color;
+  color:$whiteColor;
   margin-top:20px;
   margin-bottom:10px;
 }
 .project_description{
   width:90%;
 
-  font-family:AppFont;
+  font-family:Roboto;
   font-size: 1em;
   padding-top:10px;
   margin:5px;
   margin-left:5%;
 
   // border:2px solid $base-app-color;
-  color:$base-app-color;
+  color:$whiteColor;
   font-size: $fontSize;
   border-radius: 10px;
 }
 
 .project_double{
   width:100%;
-  font-family:AppFont;
+  font-family:Roboto;
   height: 30px;
-  color:$base-app-color;
+  color:$whiteColor;
   font-size: 14px;
 
 }
 .project_double_l{
   width:100%;
-  font-family:AppFont;
+  font-family:Roboto;
   height: 90px;
-  color:$base-app-color;
+  color:$whiteColor;
   font-size: 14px;
 }
 
@@ -279,10 +280,10 @@ $successColor:#7dec62;
 }
 
 .list_of_bloggers{
-  font-family:AppFont;
+  font-family:Roboto;
   width:100%;
   text-align: center;
-  color:$base-app-color;
+  color:$whiteColor;
 }
 
 .blogger_block_margin{
@@ -440,11 +441,11 @@ $successColor:#7dec62;
 .completitionBlock{
   width: 100%;
   height: 30px;
-  font-family:AppFont;
+  font-family:Roboto;
   margin-left: 2px;
   margin-top:10px;
   margin-bottom: 10px;
-  color:$base-app-color;
+  color:$whiteColor;
 }
 
 .left_childCompletitionBlock{
@@ -465,6 +466,7 @@ $successColor:#7dec62;
   background-color: white;
   border-radius: 5px;
   border:1px solid $base-app-color;
+  overflow: hidden;
 
 }
 .leftprogressButton{
@@ -496,4 +498,10 @@ $successColor:#7dec62;
 .removeUrlStyles{
   text-decoration: none;
   color:white;
+}
+
+.dashboardWrapper{
+  width: 90%;
+  margin-left:5%;
+  margin-top:20px;
 }
