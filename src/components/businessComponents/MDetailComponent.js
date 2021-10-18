@@ -342,174 +342,6 @@ const SubDetail = (item,e) => {
 
 
 
-
-const BlogListComponent = (props) => {
-
-  const items = props.items;
-
-  //console.log(items);
-
-  const ConfirmTask = (user_email) => {
-
-      var sendObject = {
-        from:2,
-        user_email:user_email
-      }
-      ObservableService.sendData_subject(sendObject);
-  }
-
-  const content = items.map((item) =>
-
-      <div key={item.id} onClick={(e) => navigateToDetail(item, e)} className="blogger_block_main">
-  {item.complete === 1 ? (
-          <div className="blogger_block_two">
-              <div className="circle_image" style ={ { backgroundPosition: "center",backgroundRepeat:"no-repeat",backgroundSize:"cover",background: "url("+item.image_url+") no-repeat center/cover" }  }>
-              </div>
-              <div className="bl_name_center">
-                  <div className="bl_email_text_two">{item.user_email}</div>
-                  <div className="buttons_block_two">
-                    <div className="left_button">
-                      <div className="left_button_one">
-                        <div className="left_button_one_name">
-                          <Link
-                            className="removeUrlStyles"
-                            to={{
-                              pathname: "/profile",
-                              data: item // your data array of objects
-                            }}
-                          >
-                            <div  className="left_button_one_name">
-                               {LocalizeComponent.profile}
-                            </div>
-                        </Link>
-                        </div>
-                      </div>
-                      <div className="left_button_two">
-                        <div className="left_button_one_name">
-                        <Link className="removeUrlStyles"
-                          to={{
-                            pathname: "/msubdetail",
-                            data: item // your data array of objects
-                          }}
-                        >
-                         {LocalizeComponent.detail}
-                       </Link>
-                        </div>
-                      </div>
-                      <div className="left_button_three">
-                        {item.complete === 1 ? (
-                          <div className="done_button_one_name">
-                            <DoneIcon className="done_button_one_name_size" />
-                          </div>
-                         ) : (
-                           <div className="left_button_one_name">
-                             {item.CountTasks}/{item.taskList.length}
-                           </div>
-                         )}
-
-                      </div>
-                    </div>
-                  </div>
-
-
-                  <div className="buttons_block_three">
-                    {item.status === 2 ? (
-                      <div className="left_button_confirm">
-                        <div className="left_button_one_name">
-
-                          <div  className="left_button_one_name_confirm" onClick={event => ConfirmTask(item.user_email)}>
-                             {LocalizeComponent.Confirm_task}
-                          </div>
-
-
-                        </div>
-                      </div>
-                     ) : (
-                       <div className="left_button_confirmed">
-                         <div className="left_button_one_name">
-
-                           <div  className="left_button_one_name_confirmed" >
-                              <DoneIcon className="done_button_one_name_size_two" /><div className="confirmed_text">{LocalizeComponent.Confirmed_task}</div>
-                           </div>
-
-
-                         </div>
-                       </div>
-
-                     )}
-
-                  </div>
-
-
-
-              </div>
-          </div>
-       ) : (
-         <div className="blogger_block">
-               <div className="circle_image" style ={ { backgroundPosition: "center",backgroundRepeat:"no-repeat",backgroundSize:"cover",background: "url("+item.image_url+") no-repeat center/cover" }  }>
-               </div>
-               <div className="bl_name_center">
-                   <div className="bl_email_text">{item.user_email}</div>
-                   <div className="buttons_block">
-                     <div className="left_button">
-                       <div className="left_button_one">
-                         <div className="left_button_one_name">
-                           <Link
-                             className="removeUrlStyles"
-                             to={{
-                               pathname: "/profile",
-                               data: item // your data array of objects
-                             }}
-                           >
-                             <div  className="left_button_one_name">
-                                {LocalizeComponent.profile}
-                             </div>
-                         </Link>
-                         </div>
-                       </div>
-                       <div className="left_button_two">
-                         <div className="left_button_one_name">
-                         <Link className="removeUrlStyles"
-                           to={{
-                             pathname: "/subdetail",
-                             data: item // your data array of objects
-                           }}
-                         >
-                          {LocalizeComponent.detail}
-                        </Link>
-                         </div>
-                       </div>
-                       <div className="left_button_three">
-                         {item.complete === 1 ? (
-                           <div className="done_button_one_name">
-                             <DoneIcon className="done_button_one_name_size" />
-                           </div>
-                          ) : (
-                            <div className="left_button_one_name">
-                              {item.CountTasks}/{item.taskList.length}
-                            </div>
-                          )}
-
-                       </div>
-                     </div>
-                   </div>
-
-               </div>
-           </div>
-       )}
-       </div>
-
-  );
-
-  return (
-
-    <div className="blogger_block_margin">
-      {content}
-    </div>
-
-  );
-}
-
 //xxx
 //new blogger Management component
 
@@ -529,8 +361,6 @@ const countPercent = (userExecuteDay) => {
 const ManageTable = (props) => {
 
   const list = props.list;
-
-  console.log(list)
 
   const ConfirmTask = (user_email) => {
 
@@ -604,7 +434,7 @@ const ManageTable = (props) => {
               >
               <Link className="removeUrlStyles"
                 to={{
-                  pathname: "/subdetail",
+                  pathname: "/msubdetail",
                   data: item // your data array of objects
                 }}
               >
@@ -676,7 +506,7 @@ const ManageTable = (props) => {
     <div className="dashboardWrapper">
       <div className="content">
         <Row>
-          <Col lg="7">
+          <Col lg="7" xl="11" sm="12">
             <Card>
               <CardHeader>
 
@@ -753,7 +583,7 @@ const DetailComponent = (props) => {
     }
   },[]);
 
-  console.log(checkDetailId)
+  //console.log(checkDetailId)
 
 
   const ItemData = useMemo(function(){
@@ -1166,15 +996,8 @@ useEffect(() => {
 
           <div className="BlockDivider"></div>
 
-          <div className="list_of_bloggers">
-                {LocalizeComponent.list_of_bloggers}
-          </div>
-
-          
-
             <ManageTable list={listArray} />
-
-
+            
         <div className="BlockDivider"></div>
 
           <div className="completitionBlock">
@@ -1207,8 +1030,8 @@ useEffect(() => {
                       <CardHeader>
                         <Row>
                           <Col className="text-left" sm="6">
-                            <h5 className="card-category">Total Shipments</h5>
-                            <CardTitle tag="h2">Performance</CardTitle>
+                            <h5 className="card-category">{ LocalizeComponent.posts_efficiency }</h5>
+                            <CardTitle tag="h2">{ LocalizeComponent.performance }</CardTitle>
                           </Col>
                           <Col sm="6">
                             <ButtonGroup
@@ -1226,7 +1049,7 @@ useEffect(() => {
                                 onClick={() => setBgChartData("data1")}
                               >
                                 <span className="d-none d-sm-block d-md-block d-lg-block d-xl-block">
-                                  Accounts
+                                  { LocalizeComponent.Accounts }
                                 </span>
                                 <span className="d-block d-sm-none">
                                   <i className="tim-icons icon-single-02" />
@@ -1243,7 +1066,7 @@ useEffect(() => {
                                 onClick={() => setBgChartData("data2")}
                               >
                                 <span className="d-none d-sm-block d-md-block d-lg-block d-xl-block">
-                                  Purchases
+                                  { LocalizeComponent.conversion }
                                 </span>
                                 <span className="d-block d-sm-none">
                                   <i className="tim-icons icon-gift-2" />
@@ -1260,7 +1083,7 @@ useEffect(() => {
                                 onClick={() => setBgChartData("data3")}
                               >
                                 <span className="d-none d-sm-block d-md-block d-lg-block d-xl-block">
-                                  Sessions
+                                { LocalizeComponent.efficiency_views }
                                 </span>
                                 <span className="d-block d-sm-none">
                                   <i className="tim-icons icon-tap-02" />
@@ -1291,7 +1114,7 @@ useEffect(() => {
                           </Col>
                           <Col xs="7">
                             <div className="numbers">
-                              <p className="card-category">Number</p>
+                              <p className="card-category">{ LocalizeComponent.incomingConversion }</p>
                               <CardTitle tag="h3">150GB</CardTitle>
                             </div>
                           </Col>
@@ -1316,7 +1139,7 @@ useEffect(() => {
                           </Col>
                           <Col xs="7">
                             <div className="numbers">
-                              <p className="card-category">Followers</p>
+                              <p className="card-category">{ LocalizeComponent.newFollowers }</p>
                               <CardTitle tag="h3">+45k</CardTitle>
                             </div>
                           </Col>
@@ -1341,7 +1164,7 @@ useEffect(() => {
                           </Col>
                           <Col xs="7">
                             <div className="numbers">
-                              <p className="card-category">Users</p>
+                              <p className="card-category">{ LocalizeComponent.visited_users }</p>
                               <CardTitle tag="h3">150,000</CardTitle>
                             </div>
                           </Col>
@@ -1350,7 +1173,7 @@ useEffect(() => {
                       <CardFooter>
                         <hr />
                         <div className="stats">
-                          <i className="tim-icons icon-trophy" /> Customers feedback
+                          <i className="tim-icons icon-trophy" /> { LocalizeComponent.Customers_feedback }
                         </div>
                       </CardFooter>
                     </Card>
@@ -1366,7 +1189,7 @@ useEffect(() => {
                           </Col>
                           <Col xs="7">
                             <div className="numbers">
-                              <p className="card-category">Errors</p>
+                              <p className="card-category">{ LocalizeComponent.errors }</p>
                               <CardTitle tag="h3">12</CardTitle>
                             </div>
                           </Col>
@@ -1375,7 +1198,7 @@ useEffect(() => {
                       <CardFooter>
                         <hr />
                         <div className="stats">
-                          <i className="tim-icons icon-watch-time" /> In the last hours
+                          <i className="tim-icons icon-watch-time" /> { LocalizeComponent.last_hour }
                         </div>
                       </CardFooter>
                     </Card>
@@ -1383,7 +1206,7 @@ useEffect(() => {
                   <Col lg="4">
                     <Card className="card-chart">
                       <CardHeader>
-                        <h5 className="card-category">Total Shipments</h5>
+                        <h5 className="card-category">{ LocalizeComponent.TotalPosts }</h5>
                         <CardTitle tag="h3">
                           <i className="tim-icons icon-bell-55 text-primary" /> 763,215
                         </CardTitle>
@@ -1401,10 +1224,10 @@ useEffect(() => {
                   <Col lg="4">
                     <Card className="card-chart">
                       <CardHeader>
-                        <h5 className="card-category">Daily Sales</h5>
+                        <h5 className="card-category">{ LocalizeComponent.projected_income }</h5>
                         <CardTitle tag="h3">
                           <i className="tim-icons icon-delivery-fast text-info" />{" "}
-                          3,500€
+                          3,500$
                         </CardTitle>
                       </CardHeader>
                       <CardBody>
@@ -1420,7 +1243,7 @@ useEffect(() => {
                   <Col lg="4">
                     <Card className="card-chart">
                       <CardHeader>
-                        <h5 className="card-category">Completed Tasks</h5>
+                        <h5 className="card-category">{ LocalizeComponent.completedTasks }</h5>
                         <CardTitle tag="h3">
                           <i className="tim-icons icon-send text-success" /> 12,100K
                         </CardTitle>
@@ -1437,273 +1260,11 @@ useEffect(() => {
                   </Col>
                 </Row>
                 <Row>
-                  <Col lg="5">
-                    <Card className="card-tasks">
-                      <CardHeader>
-                        <h6 className="title d-inline">Tasks(5)</h6>
-                        <p className="card-category d-inline">today</p>
-                        <UncontrolledDropdown>
-                          <DropdownToggle
-                            caret
-                            className="btn-icon"
-                            color="link"
-                            data-toggle="dropdown"
-                            type="button"
-                          >
-                            <i className="tim-icons icon-settings-gear-63" />
-                          </DropdownToggle>
-                          <DropdownMenu right>
-                            <DropdownItem
-                              href="#pablo"
-                              onClick={(e) => e.preventDefault()}
-                            >
-                              Action
-                            </DropdownItem>
-                            <DropdownItem
-                              href="#pablo"
-                              onClick={(e) => e.preventDefault()}
-                            >
-                              Another action
-                            </DropdownItem>
-                            <DropdownItem
-                              href="#pablo"
-                              onClick={(e) => e.preventDefault()}
-                            >
-                              Something else
-                            </DropdownItem>
-                          </DropdownMenu>
-                        </UncontrolledDropdown>
-                      </CardHeader>
-                      <CardBody>
-                        <div className="table-full-width table-responsive">
-                          <Table>
-                            <tbody>
-                              <tr>
-                                <td>
-                                  <FormGroup check>
-                                    <Label check>
-                                      <Input defaultValue="" type="checkbox" />
-                                      <span className="form-check-sign">
-                                        <span className="check" />
-                                      </span>
-                                    </Label>
-                                  </FormGroup>
-                                </td>
-                                <td>
-                                  <p className="title">Update the Documentation</p>
-                                  <p className="text-muted">
-                                    Dwuamish Head, Seattle, WA 8:47 AM
-                                  </p>
-                                </td>
-                                <td className="td-actions text-right">
-                                  <Button
-                                    color="link"
-                                    id="tooltip786630859"
-                                    title=""
-                                    type="button"
-                                  >
-                                    <i className="tim-icons icon-pencil" />
-                                  </Button>
-                                  <UncontrolledTooltip
-                                    delay={0}
-                                    target="tooltip786630859"
-                                  >
-                                    Edit Task
-                                  </UncontrolledTooltip>
-                                </td>
-                              </tr>
-                              <tr>
-                                <td>
-                                  <FormGroup check>
-                                    <Label check>
-                                      <Input
-                                        defaultChecked
-                                        defaultValue=""
-                                        type="checkbox"
-                                      />
-                                      <span className="form-check-sign">
-                                        <span className="check" />
-                                      </span>
-                                    </Label>
-                                  </FormGroup>
-                                </td>
-                                <td>
-                                  <p className="title">GDPR Compliance</p>
-                                  <p className="text-muted">
-                                    The GDPR is a regulation that requires businesses to
-                                    protect the personal data and privacy of Europe
-                                    citizens for transactions that occur within EU
-                                    member states.
-                                  </p>
-                                </td>
-                                <td className="td-actions text-right">
-                                  <Button
-                                    color="link"
-                                    id="tooltip155151810"
-                                    title=""
-                                    type="button"
-                                  >
-                                    <i className="tim-icons icon-pencil" />
-                                  </Button>
-                                  <UncontrolledTooltip
-                                    delay={0}
-                                    target="tooltip155151810"
-                                  >
-                                    Edit Task
-                                  </UncontrolledTooltip>
-                                </td>
-                              </tr>
-                              <tr>
-                                <td>
-                                  <FormGroup check>
-                                    <Label check>
-                                      <Input defaultValue="" type="checkbox" />
-                                      <span className="form-check-sign">
-                                        <span className="check" />
-                                      </span>
-                                    </Label>
-                                  </FormGroup>
-                                </td>
-                                <td>
-                                  <p className="title">Solve the issues</p>
-                                  <p className="text-muted">
-                                    Fifty percent of all respondents said they would be
-                                    more likely to shop at a company
-                                  </p>
-                                </td>
-                                <td className="td-actions text-right">
-                                  <Button
-                                    color="link"
-                                    id="tooltip199559448"
-                                    title=""
-                                    type="button"
-                                  >
-                                    <i className="tim-icons icon-pencil" />
-                                  </Button>
-                                  <UncontrolledTooltip
-                                    delay={0}
-                                    target="tooltip199559448"
-                                  >
-                                    Edit Task
-                                  </UncontrolledTooltip>
-                                </td>
-                              </tr>
-                              <tr>
-                                <td>
-                                  <FormGroup check>
-                                    <Label check>
-                                      <Input defaultValue="" type="checkbox" />
-                                      <span className="form-check-sign">
-                                        <span className="check" />
-                                      </span>
-                                    </Label>
-                                  </FormGroup>
-                                </td>
-                                <td>
-                                  <p className="title">Release v2.0.0</p>
-                                  <p className="text-muted">
-                                    Ra Ave SW, Seattle, WA 98116, SUA 11:19 AM
-                                  </p>
-                                </td>
-                                <td className="td-actions text-right">
-                                  <Button
-                                    color="link"
-                                    id="tooltip989676508"
-                                    title=""
-                                    type="button"
-                                  >
-                                    <i className="tim-icons icon-pencil" />
-                                  </Button>
-                                  <UncontrolledTooltip
-                                    delay={0}
-                                    target="tooltip989676508"
-                                  >
-                                    Edit Task
-                                  </UncontrolledTooltip>
-                                </td>
-                              </tr>
-                              <tr>
-                                <td>
-                                  <FormGroup check>
-                                    <Label check>
-                                      <Input defaultValue="" type="checkbox" />
-                                      <span className="form-check-sign">
-                                        <span className="check" />
-                                      </span>
-                                    </Label>
-                                  </FormGroup>
-                                </td>
-                                <td>
-                                  <p className="title">Export the processed files</p>
-                                  <p className="text-muted">
-                                    The report also shows that consumers will not easily
-                                    forgive a company once a breach exposing their
-                                    personal data occurs.
-                                  </p>
-                                </td>
-                                <td className="td-actions text-right">
-                                  <Button
-                                    color="link"
-                                    id="tooltip557118868"
-                                    title=""
-                                    type="button"
-                                  >
-                                    <i className="tim-icons icon-pencil" />
-                                  </Button>
-                                  <UncontrolledTooltip
-                                    delay={0}
-                                    target="tooltip557118868"
-                                  >
-                                    Edit Task
-                                  </UncontrolledTooltip>
-                                </td>
-                              </tr>
-                              <tr>
-                                <td>
-                                  <FormGroup check>
-                                    <Label check>
-                                      <Input defaultValue="" type="checkbox" />
-                                      <span className="form-check-sign">
-                                        <span className="check" />
-                                      </span>
-                                    </Label>
-                                  </FormGroup>
-                                </td>
-                                <td>
-                                  <p className="title">Arival at export process</p>
-                                  <p className="text-muted">
-                                    Capitol Hill, Seattle, WA 12:34 AM
-                                  </p>
-                                </td>
-                                <td className="td-actions text-right">
-                                  <Button
-                                    color="link"
-                                    id="tooltip143185858"
-                                    title=""
-                                    type="button"
-                                  >
-                                    <i className="tim-icons icon-pencil" />
-                                  </Button>
-                                  <UncontrolledTooltip
-                                    delay={0}
-                                    target="tooltip143185858"
-                                  >
-                                    Edit Task
-                                  </UncontrolledTooltip>
-                                </td>
-                              </tr>
-                            </tbody>
-                          </Table>
-                        </div>
-                      </CardBody>
-                    </Card>
-                  </Col>
-
                   <Col lg="12">
                     <Card>
                       <CardHeader>
-                        <CardTitle tag="h4">Global Sales by Top Locations</CardTitle>
-                        <p className="card-category">All products that were shipped</p>
+                        <CardTitle tag="h4">{ LocalizeComponent.global_posts_by_locations }</CardTitle>
+                        <p className="card-category">{ LocalizeComponent.all_posts_where_posted }</p>
                       </CardHeader>
                       <CardBody>
                         <Row>

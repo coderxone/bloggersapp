@@ -519,12 +519,7 @@ const DetailTaskComponent = (props) => {
 
 //xx
   const checkCurrentStatus = ((id) => {
-
-    var checkObj = {
-      id:id,
-    }
-
-    DetailTaskService.checkCurrentStatus(checkObj);
+    DetailTaskService.checkCurrentStatus(id);
   });
 
   const SubmittedTask = (id,stepNumber) => {
@@ -641,7 +636,7 @@ useEffect(() => {
   //manage statuses
   const listenCurrentStatusL = DetailTaskService.listenCurrentStatus().subscribe(data => {
 
-    console.log(data);
+    //console.log(data);
 //xxxx
     if(data.data.length > 0){
 
@@ -758,7 +753,7 @@ const ExecutelistencheckBannedVideo = (data,banArray) => {
           SetcompletedTask(false);
 
       }else if(data.status == "false"){
-        console.log(banVideo.length)
+        //console.log(banVideo.length)
         if(banArray.length > 0){
           SetBanVideo([]);
         }

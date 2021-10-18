@@ -376,7 +376,7 @@ let strings = new LocalizedStrings({
    select_age:"Please write your age",
    socialNetworkAge:"how old is your social network account",
    newReq:"New Request",
-   videoDontexist:"not exist",
+   videoDontexist:"video error?",
    videoDontexistCreatorSide:"Your video post was not found Please insert a working link from network below",
    editMode7Days:"Editing mode is not available because the system has already counted 7 days since the user posted video.",
    chooseBlogger:"Choose creators",
@@ -461,6 +461,23 @@ let strings = new LocalizedStrings({
    email_Milestone:"Milestone", 
    email_Actions:"Actions", 
    action_required:"This blogger changing video",
+   TotalPosts:"Total Posts",
+   posts_efficiency:"efficiency of posts",
+   performance:"Performance",
+   Accounts:"Accounts",
+   conversion:"Conversion",
+   efficiency_views:"Views",
+   incomingConversion:"Conversion in GB",
+   newFollowers:"Total New Followers",
+   visited_users:"Visited Users",
+   Customers_feedback:"Customers feedback",
+   errors:"Not followed",
+   last_hour:"In the last hours",
+   projected_income:"Projected company income",
+   completedTasks:"Completed Tasks",
+   global_posts_by_locations:"Global Sales by Locations",
+   all_posts_where_posted:"All Posts where posted"
+
 
   },
 
@@ -842,7 +859,7 @@ let strings = new LocalizedStrings({
    select_age:"Сколько вам лет",
    socialNetworkAge:"Cколько лет вашему аккаунту социальной сети",
    newReq:"Новый запрос",
-   videoDontexist:"нет видео",
+   videoDontexist:"заменить пост?",
    videoDontexistCreatorSide:"Ваше видео не найдено. Пожалуйста, вставьте рабочую ссылку из социальной сети ниже.",
    editMode7Days:"Режим редактирования недоступен, потому что система уже отсчитала 7 дней с момента публикации видео пользователем",
 

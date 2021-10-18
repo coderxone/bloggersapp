@@ -1,5 +1,4 @@
 import React, {useState,useEffect,useMemo,useCallback} from 'react';
-// import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonInput, IonItem, IonLabel, IonList, IonItemDivider } from '@ionic/react';
 import '../css/detailComponent.scss';
 
 import "../assets/css/nucleo-icons.css";
@@ -22,7 +21,7 @@ import Box from '@material-ui/core/Box';
 import { connect } from 'react-redux';
 import ObservableService from '../services/Observable';
 import DetailService from '../services/DetailService';
-import config from '../config/config.js';
+import config from '../config/config';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import DoneOutlineIcon from '@material-ui/icons/DoneOutline';
@@ -36,9 +35,13 @@ import HomeService from '../services/Homeservice';
 import BusinesService from '../services/BusinessService';
 import DoneIcon from '@material-ui/icons/Done';
 import { increment, decrement,save_email } from '../actions/actions';
+import { useSelector, useDispatch } from 'react-redux'
+import { SetManagementList } from '../features/counter-slice';
+
 import {
   Link,useHistory,
 } from "react-router-dom";
+
 
 import UsIcon from '../assets/img/US.png';
 import DeIcon from '../assets/img/DE.png';
@@ -97,6 +100,7 @@ var mapData = {
   RU: 300,
   US: 2920,
 };
+
 
 
 
@@ -159,8 +163,7 @@ const CssTextField = withStyles({
         borderColor: 'red',
       },
 
-    }
-
+    },
   },
 })(TextField);
 
@@ -339,169 +342,242 @@ const SubDetail = (item,e) => {
 
 
 
-//xx
-const BlogListComponent = (props) => {
+//xxx
+//new blogger Management component
 
-  const items = props.items;
+const countPercent = (userExecuteDay) => {
 
-  //console.log(items);
+  if(userExecuteDay == 0){
+    userExecuteDay = 1;
+  }
+  let executeDay = parseInt(config.getUserItemName("execute_day"));//100%
+
+  let getPercent = (userExecuteDay / executeDay) * 100;
+
+  return parseInt(getPercent);
+
+}
+
+const ManageTable = (props) => {
+
+  const list = props.list;
+
+  console.log(list)
 
   const ConfirmTask = (user_email) => {
 
-      var sendObject = {
-        from:2,
-        user_email:user_email
-      }
-      ObservableService.sendData_subject(sendObject);
-  }
-
-  const content = items.map((item) =>
-
-      <div key={item.id} onClick={(e) => navigateToDetail(item, e)} className="blogger_block_main">
-  {item.complete === 1 ? (
-          <div className="blogger_block_two">
-              <div className="circle_image" style ={ { backgroundPosition: "center",backgroundRepeat:"no-repeat",backgroundSize:"cover",background: "url("+item.image_url+") no-repeat center/cover" }  }>
-              </div>
-              <div className="bl_name_center">
-                  <div className="bl_email_text_two">{item.user_email}</div>
-                  <div className="buttons_block_two">
-                    <div className="left_button">
-                      <div className="left_button_one">
-                        <div className="left_button_one_name">
-                          <Link
-                            className="removeUrlStyles"
-                            to={{
-                              pathname: "/profile",
-                              data: item // your data array of objects
-                            }}
-                          >
-                            <div  className="left_button_one_name">
-                               {LocalizeComponent.profile}
-                            </div>
-                        </Link>
-                        </div>
-                      </div>
-                      <div className="left_button_two">
-                        <div className="left_button_one_name">
-                        <Link className="removeUrlStyles"
-                          to={{
-                            pathname: "/subdetail",
-                            data: item // your data array of objects
-                          }}
-                        >
-                         {LocalizeComponent.detail}
-                       </Link>
-                        </div>
-                      </div>
-                      <div className="left_button_three">
-                        {item.complete === 1 ? (
-                          <div className="done_button_one_name">
-                            <DoneIcon className="done_button_one_name_size" />
-                          </div>
-                         ) : (
-                           <div className="left_button_one_name">
-                             {item.CountTasks}/{item.taskList.length}
-                           </div>
-                         )}
-
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="buttons_block_three">
-                    {item.status === 2 ? (
-                      <div className="left_button_confirm">
-                        <div className="left_button_one_name">
-
-                          <div  className="left_button_one_name_confirm" onClick={event => ConfirmTask(item.user_email)}>
-                             {LocalizeComponent.Confirm_task}
-                          </div>
-
-
-                        </div>
-                      </div>
-                     ) : (
-                       <div className="left_button_confirmed">
-                         <div className="left_button_one_name">
-
-                           <div  className="left_button_one_name_confirmed" >
-                              <DoneIcon className="done_button_one_name_size_two" /><div className="confirmed_text">{LocalizeComponent.Confirmed_task}</div>
-                           </div>
-
-
-                         </div>
-                       </div>
-
-                     )}
-
-                  </div>
-              </div>
-          </div>
-       ) : (
-         <div className="blogger_block">
-               <div className="circle_image" style ={ { backgroundPosition: "center",backgroundRepeat:"no-repeat",backgroundSize:"cover",background: "url("+item.image_url+") no-repeat center/cover" }  }>
-               </div>
-               <div className="bl_name_center">
-                   <div className="bl_email_text">{item.user_email}</div>
-                   <div className="buttons_block">
-                     <div className="left_button">
-                       <div className="left_button_one">
-                         <div className="left_button_one_name">
-                           <Link
-                             className="removeUrlStyles"
-                             to={{
-                               pathname: "/profile",
-                               data: item // your data array of objects
-                             }}
-                           >
-                             <div  className="left_button_one_name">
-                                {LocalizeComponent.profile}
-                             </div>
-                         </Link>
-                         </div>
-                       </div>
-                       <div className="left_button_two">
-                         <div className="left_button_one_name">
-                         <Link className="removeUrlStyles"
-                           to={{
-                             pathname: "/subdetail",
-                             data: item // your data array of objects
-                           }}
-                         >
-                          {LocalizeComponent.detail}
-                        </Link>
-                         </div>
-                       </div>
-                       <div className="left_button_three">
-                         {item.complete === 1 ? (
-                           <div className="done_button_one_name">
-                             <DoneIcon className="done_button_one_name_size" />
-                           </div>
-                          ) : (
-                            <div className="left_button_one_name">
-                              {item.CountTasks}/{item.taskList.length}
-                            </div>
-                          )}
-
-                       </div>
-                     </div>
-                   </div>
-
-               </div>
-           </div>
-       )}
-       </div>
-
-  );
-
-  return (
-
-    <div className="blogger_block_margin">
-      {content}
-    </div>
-
-  );
+    var sendObject = {
+      from:2,
+      user_email:user_email
+    }
+    ObservableService.sendData_subject(sendObject);
 }
+
+  const renderList = list.map((item) =>
+
+          <tr key={item.id} onClick={(e) => navigateToDetail(item, e)} >
+            <td className="text-center">
+              <div className="photo"
+                style = {{
+                          backgroundPosition: "center",
+                          backgroundRepeat:"no-repeat",
+                          backgroundSize:"cover",
+                          background: config.getGeneratedImagePath(item.image_url)
+                        }}
+                >
+
+              </div>
+            </td>
+            <td style={{color:'white'}} >{item.user_email}</td>
+
+            <td className="text-center">
+
+              <div className="progress-container progress-sm">
+                <span className="progress-value  whiteColor">{countPercent(item.verifiedDays)} %</span>
+                <Progress multi>
+                  <Progress bar max="100" value={countPercent(item.verifiedDays)} />
+                </Progress>
+              </div>
+            </td>
+
+            <td className="text-right">
+              <Button
+                className="btn-link btn-icon btn-neutral"
+                color="success"
+                id="tooltip618296632"
+                size="sm"
+                title="Refresh"
+                type="button"
+              >
+              <Link
+                className="removeUrlStyles"
+                to={{
+                  pathname: "/explore_profile",
+                  data: item // your data array of objects
+                }}
+              >
+                <i className="tim-icons icon-single-02 BlueColor" />
+            </Link>
+
+              </Button>
+              <UncontrolledTooltip
+                delay={0}
+                target="tooltip618296632"
+              >
+                {LocalizeComponent.profile}
+              </UncontrolledTooltip>
+              <Button
+                className="btn-link btn-icon btn-neutral"
+                color="danger"
+                id="tooltip707467505"
+                size="sm"
+                title="Delete"
+                type="button"
+              >
+              <Link className="removeUrlStyles"
+                to={{
+                  pathname: "/subdetail",
+                  data: item // your data array of objects
+                }}
+              >
+               <i className="tim-icons icon-settings PurpleColor" />
+             </Link>
+
+              </Button>
+              <UncontrolledTooltip
+                delay={0}
+                target="tooltip707467505"
+              >
+                {LocalizeComponent.detail}
+              </UncontrolledTooltip>
+
+
+              {
+                //need to confirm
+                item.uniquenames_status === 2 && (
+                  <>
+                    <Button
+                      className="btn-link btn-icon btn-neutral"
+                      color="danger"
+                      id="tooltip707467505"
+                      size="sm"
+                      title="Delete"
+                      type="button"
+                      onClick={ConfirmTask(item.user_email)}
+                    >
+                      <i className="tim-icons icon-alert-circle-exc blink_me orangeColor" />
+                    </Button>
+                    <UncontrolledTooltip
+                      delay={0}
+                      target="tooltip707467505"
+                    >
+                      {LocalizeComponent.Confirm_task}
+                    </UncontrolledTooltip>
+                  </>
+                )
+              }
+
+              {
+                //bloger changing video
+                item.status === 3 && (
+                  <>
+                    <Button
+                      className="btn-link btn-icon btn-neutral"
+                      color="danger"
+                      id="tooltip707467505"
+                      size="sm"
+                      title="Delete"
+                      type="button"
+                    >
+                      <i className="tim-icons icon-alert-circle-exc blink_me RedColor" />
+                    </Button>
+                    <UncontrolledTooltip
+                      delay={0}
+                      target="tooltip707467505"
+                    >
+                      {LocalizeComponent.action_required}
+                    </UncontrolledTooltip>
+                  </>
+                  
+                )
+              }
+
+                  {
+                    item.uniquenames_status !== 2 && (
+                      <>
+                        <Button
+                          className="btn-link btn-icon btn-neutral"
+                          color="danger"
+                          id="tooltip707467505"
+                          size="sm"
+                          title="Delete"
+                          type="button"
+                        >
+                          <i  onClick={event => ConfirmTask(item.user_email)} className="tim-icons icon-check-2 done_button_one_name" />
+                        </Button>
+                        <UncontrolledTooltip
+                          delay={0}
+                          target="tooltip707467505"
+                        >
+                          {
+                            config.getCurrentStatus(item.uniquenames_status)
+                          }
+                        </UncontrolledTooltip>
+                      </>
+                    ) 
+                  }
+                  
+                
+              
+
+
+
+            </td>
+          </tr>
+
+
+  );
+
+  const content = (
+    <div className="dashboardWrapper">
+      <div className="content">
+        <Row>
+          <Col lg="7" xl="11" sm="12">
+            <Card>
+              <CardHeader>
+
+                <CardTitle tag="h5">{LocalizeComponent.list_of_bloggers}</CardTitle>
+              </CardHeader>
+              <CardBody>
+                <Table responsive>
+                  <thead className="text-primary">
+                    <tr className="whiteColor">
+                      <th className="text-center">#</th>
+                      <th>{ LocalizeComponent.email_Translate }</th>
+
+                      <th>{ LocalizeComponent.email_Milestone }</th>
+
+                      <th className="text-right">{ LocalizeComponent.email_Actions } </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+
+                    {renderList}
+
+                  </tbody>
+                </Table>
+              </CardBody>
+            </Card>
+          </Col>
+        </Row>
+      </div>
+    </div>
+  );
+
+  return content;
+
+}
+//new blogger Management component
 //BlogList Component
 
 const SocialNetworkComponent = (props) => {
@@ -542,6 +618,8 @@ const DetailComponent = (props) => {
       return localStorage.getItem("savedId");
     }
   },[]);
+
+  //console.log(checkDetailId)
 
 
   const ItemData = useMemo(function(){
@@ -605,7 +683,10 @@ const DetailComponent = (props) => {
 
   });
 
-  const [ listArray, setListArray ] = useState([]);
+  const dispatch = useDispatch();
+
+  const listArray = useSelector(state => state.counter.managementList);
+
   const [ listArrayApprove, setListApproveArray ] = useState([]);
   const [ viewsCount,setViewsCount ] = useState(0);
 
@@ -615,11 +696,10 @@ const DetailComponent = (props) => {
 
   const [progressBarValue,SetprogressBarValue] = useState(10);
 
-  var widthValueFirst = progressBarValue + "%";
-  var widthValueSecond = 70 + "%";
+  let widthValueFirst = progressBarValue + "%";
+  let widthValueSecond = 70 + "%";
 
   const CountPercentFunction = (data) => {
-    //console.log(data);
     //SetprogressBarValue
     //ItemData.peoplecount
     var completeTasks = 0;
@@ -628,13 +708,18 @@ const DetailComponent = (props) => {
         completeTasks++;
       }
     }
-    var result = Math.round((completeTasks / ItemData.peoplecount) * 100);
+
+    let bloggerCount = localStorage.getItem("bloggerCount");
+    // console.log(bloggerCount)
+
+    var result = Math.round((completeTasks / parseInt(bloggerCount)) * 100);
 
     if(result > progressBarValue){
       SetprogressBarValue(result);
     }
 
   }
+//xxx
 
   useEffect(() => {
 
@@ -645,15 +730,32 @@ const DetailComponent = (props) => {
 
         var modifiedArray = data.data;
 
-        CountPercentFunction(modifiedArray);
+        let oldArray = [...listArray];
 
-        const list = listArray.concat(modifiedArray);
+        //console.log(oldArray)
 
-        setListArray(list);
+        if(oldArray.length > modifiedArray.length || oldArray.length < modifiedArray.length){
+          CountPercentFunction(modifiedArray);
+
+          dispatch(SetManagementList([]));
+          dispatch(SetManagementList(modifiedArray));
+
+        }
+
+      }else{
+        dispatch(SetManagementList([]));
       }
 
     });
 
+    return () => {
+      listenDetailService.unsubscribe();
+    }
+
+  },[listArray]);
+
+
+  useEffect(() => {
 
 
     // const listenApprove = DetailService.listenApprove().subscribe(data => {
@@ -712,11 +814,10 @@ const DetailComponent = (props) => {
         getDetailData();
     });
 
-
     //unsubscribe
 
     return () => {
-      listenDetailService.unsubscribe();
+
       observable.unsubscribe();
       intervalObservable.unsubscribe();
       intervalObservableThory.unsubscribe();
@@ -873,6 +974,7 @@ useEffect(() => {
     setbigChartData(name);
   };
 
+
   return (
 
     <div className={classes.root}>
@@ -930,12 +1032,8 @@ useEffect(() => {
 
           <div className="BlockDivider"></div>
 
-          <div className="list_of_bloggers">
-                {LocalizeComponent.list_of_bloggers}
-          </div>
-
-          <BlogListComponent items={listArray}/>
-
+            <ManageTable list={listArray} />
+            
         <div className="BlockDivider"></div>
 
           <div className="completitionBlock">
@@ -959,1025 +1057,373 @@ useEffect(() => {
 
           <div className="BlockDivider"></div>
 
+            <div className="dashboardWrapper">
+              <div className="content">
+                <Row>
 
-        <div className="dashboardWrapper">
-          <div className="content">
-            <Row>
-              <Col xs="12">
-                <Card className="card-chart">
-                  <CardHeader>
-                    <Row>
-                      <Col className="text-left" sm="6">
-                        <h5 className="card-category">Total Shipments</h5>
-                        <CardTitle tag="h2">Performance</CardTitle>
-                      </Col>
-                      <Col sm="6">
-                        <ButtonGroup
-                          className="btn-group-toggle float-right"
-                          data-toggle="buttons"
-                        >
-                          <Button
-                            color="info"
-                            id="0"
-                            size="sm"
-                            tag="label"
-                            className={classNames("btn-simple", {
-                              active: bigChartData === "data1",
-                            })}
-                            onClick={() => setBgChartData("data1")}
-                          >
-                            <span className="d-none d-sm-block d-md-block d-lg-block d-xl-block">
-                              Accounts
-                            </span>
-                            <span className="d-block d-sm-none">
+                  <Col xs="12">
+                    <Card className="card-chart">
+                      <CardHeader>
+                        <Row>
+                          <Col className="text-left" sm="6">
+                            <h5 className="card-category">{ LocalizeComponent.posts_efficiency }</h5>
+                            <CardTitle tag="h2">{ LocalizeComponent.performance }</CardTitle>
+                          </Col>
+                          <Col sm="6">
+                            <ButtonGroup
+                              className="btn-group-toggle float-right"
+                              data-toggle="buttons"
+                            >
+                              <Button
+                                color="info"
+                                id="0"
+                                size="sm"
+                                tag="label"
+                                className={classNames("btn-simple", {
+                                  active: bigChartData === "data1",
+                                })}
+                                onClick={() => setBgChartData("data1")}
+                              >
+                                <span className="d-none d-sm-block d-md-block d-lg-block d-xl-block">
+                                  { LocalizeComponent.Accounts }
+                                </span>
+                                <span className="d-block d-sm-none">
+                                  <i className="tim-icons icon-single-02" />
+                                </span>
+                              </Button>
+                              <Button
+                                color="info"
+                                id="1"
+                                size="sm"
+                                tag="label"
+                                className={classNames("btn-simple", {
+                                  active: bigChartData === "data2",
+                                })}
+                                onClick={() => setBgChartData("data2")}
+                              >
+                                <span className="d-none d-sm-block d-md-block d-lg-block d-xl-block">
+                                  { LocalizeComponent.conversion }
+                                </span>
+                                <span className="d-block d-sm-none">
+                                  <i className="tim-icons icon-gift-2" />
+                                </span>
+                              </Button>
+                              <Button
+                                color="info"
+                                id="2"
+                                size="sm"
+                                tag="label"
+                                className={classNames("btn-simple", {
+                                  active: bigChartData === "data3",
+                                })}
+                                onClick={() => setBgChartData("data3")}
+                              >
+                                <span className="d-none d-sm-block d-md-block d-lg-block d-xl-block">
+                                { LocalizeComponent.efficiency_views }
+                                </span>
+                                <span className="d-block d-sm-none">
+                                  <i className="tim-icons icon-tap-02" />
+                                </span>
+                              </Button>
+                            </ButtonGroup>
+                          </Col>
+                        </Row>
+                      </CardHeader>
+                      <CardBody>
+                        <div className="chart-area">
+                          <Line
+                            data={chartExample1[bigChartData]}
+                            options={chartExample1.options}
+                          />
+                        </div>
+                      </CardBody>
+                    </Card>
+                  </Col>
+                  <Col lg="3" md="6">
+                    <Card className="card-stats">
+                      <CardBody>
+                        <Row>
+                          <Col xs="5">
+                            <div className="info-icon text-center icon-warning">
+                              <i className="tim-icons icon-chat-33" />
+                            </div>
+                          </Col>
+                          <Col xs="7">
+                            <div className="numbers">
+                              <p className="card-category">{ LocalizeComponent.incomingConversion }</p>
+                              <CardTitle tag="h3">150GB</CardTitle>
+                            </div>
+                          </Col>
+                        </Row>
+                      </CardBody>
+                      <CardFooter>
+                        <hr />
+                        <div className="stats">
+                          <i className="tim-icons icon-refresh-01" /> Update Now
+                        </div>
+                      </CardFooter>
+                    </Card>
+                  </Col>
+                  <Col lg="3" md="6">
+                    <Card className="card-stats">
+                      <CardBody>
+                        <Row>
+                          <Col xs="5">
+                            <div className="info-icon text-center icon-primary">
+                              <i className="tim-icons icon-shape-star" />
+                            </div>
+                          </Col>
+                          <Col xs="7">
+                            <div className="numbers">
+                              <p className="card-category">{ LocalizeComponent.newFollowers }</p>
+                              <CardTitle tag="h3">+45k</CardTitle>
+                            </div>
+                          </Col>
+                        </Row>
+                      </CardBody>
+                      <CardFooter>
+                        <hr />
+                        <div className="stats">
+                          <i className="tim-icons icon-sound-wave" /> Last Research
+                        </div>
+                      </CardFooter>
+                    </Card>
+                  </Col>
+                  <Col lg="3" md="6">
+                    <Card className="card-stats">
+                      <CardBody>
+                        <Row>
+                          <Col xs="5">
+                            <div className="info-icon text-center icon-success">
                               <i className="tim-icons icon-single-02" />
-                            </span>
-                          </Button>
-                          <Button
-                            color="info"
-                            id="1"
-                            size="sm"
-                            tag="label"
-                            className={classNames("btn-simple", {
-                              active: bigChartData === "data2",
-                            })}
-                            onClick={() => setBgChartData("data2")}
-                          >
-                            <span className="d-none d-sm-block d-md-block d-lg-block d-xl-block">
-                              Purchases
-                            </span>
-                            <span className="d-block d-sm-none">
-                              <i className="tim-icons icon-gift-2" />
-                            </span>
-                          </Button>
-                          <Button
-                            color="info"
-                            id="2"
-                            size="sm"
-                            tag="label"
-                            className={classNames("btn-simple", {
-                              active: bigChartData === "data3",
-                            })}
-                            onClick={() => setBgChartData("data3")}
-                          >
-                            <span className="d-none d-sm-block d-md-block d-lg-block d-xl-block">
-                              Sessions
-                            </span>
-                            <span className="d-block d-sm-none">
-                              <i className="tim-icons icon-tap-02" />
-                            </span>
-                          </Button>
-                        </ButtonGroup>
-                      </Col>
-                    </Row>
-                  </CardHeader>
-                  <CardBody>
-                    <div className="chart-area">
-                      <Line
-                        data={chartExample1[bigChartData]}
-                        options={chartExample1.options}
-                      />
-                    </div>
-                  </CardBody>
-                </Card>
-              </Col>
-              <Col lg="3" md="6">
-                <Card className="card-stats">
-                  <CardBody>
-                    <Row>
-                      <Col xs="5">
-                        <div className="info-icon text-center icon-warning">
-                          <i className="tim-icons icon-chat-33" />
+                            </div>
+                          </Col>
+                          <Col xs="7">
+                            <div className="numbers">
+                              <p className="card-category">{ LocalizeComponent.visited_users }</p>
+                              <CardTitle tag="h3">150,000</CardTitle>
+                            </div>
+                          </Col>
+                        </Row>
+                      </CardBody>
+                      <CardFooter>
+                        <hr />
+                        <div className="stats">
+                          <i className="tim-icons icon-trophy" /> { LocalizeComponent.Customers_feedback }
                         </div>
-                      </Col>
-                      <Col xs="7">
-                        <div className="numbers">
-                          <p className="card-category">Number</p>
-                          <CardTitle tag="h3">150GB</CardTitle>
+                      </CardFooter>
+                    </Card>
+                  </Col>
+                  <Col lg="3" md="6">
+                    <Card className="card-stats">
+                      <CardBody>
+                        <Row>
+                          <Col xs="5">
+                            <div className="info-icon text-center icon-danger">
+                              <i className="tim-icons icon-molecule-40" />
+                            </div>
+                          </Col>
+                          <Col xs="7">
+                            <div className="numbers">
+                              <p className="card-category">{ LocalizeComponent.errors }</p>
+                              <CardTitle tag="h3">12</CardTitle>
+                            </div>
+                          </Col>
+                        </Row>
+                      </CardBody>
+                      <CardFooter>
+                        <hr />
+                        <div className="stats">
+                          <i className="tim-icons icon-watch-time" /> { LocalizeComponent.last_hour }
                         </div>
-                      </Col>
-                    </Row>
-                  </CardBody>
-                  <CardFooter>
-                    <hr />
-                    <div className="stats">
-                      <i className="tim-icons icon-refresh-01" /> Update Now
-                    </div>
-                  </CardFooter>
-                </Card>
-              </Col>
-              <Col lg="3" md="6">
-                <Card className="card-stats">
-                  <CardBody>
-                    <Row>
-                      <Col xs="5">
-                        <div className="info-icon text-center icon-primary">
-                          <i className="tim-icons icon-shape-star" />
+                      </CardFooter>
+                    </Card>
+                  </Col>
+                  <Col lg="4">
+                    <Card className="card-chart">
+                      <CardHeader>
+                        <h5 className="card-category">{ LocalizeComponent.TotalPosts }</h5>
+                        <CardTitle tag="h3">
+                          <i className="tim-icons icon-bell-55 text-primary" /> 763,215
+                        </CardTitle>
+                      </CardHeader>
+                      <CardBody>
+                        <div className="chart-area">
+                          <Line
+                            data={chartExample2.data}
+                            options={chartExample2.options}
+                          />
                         </div>
-                      </Col>
-                      <Col xs="7">
-                        <div className="numbers">
-                          <p className="card-category">Followers</p>
-                          <CardTitle tag="h3">+45k</CardTitle>
+                      </CardBody>
+                    </Card>
+                  </Col>
+                  <Col lg="4">
+                    <Card className="card-chart">
+                      <CardHeader>
+                        <h5 className="card-category">{ LocalizeComponent.projected_income }</h5>
+                        <CardTitle tag="h3">
+                          <i className="tim-icons icon-delivery-fast text-info" />{" "}
+                          3,500$
+                        </CardTitle>
+                      </CardHeader>
+                      <CardBody>
+                        <div className="chart-area">
+                          <Bar
+                            data={chartExample3.data}
+                            options={chartExample3.options}
+                          />
                         </div>
-                      </Col>
-                    </Row>
-                  </CardBody>
-                  <CardFooter>
-                    <hr />
-                    <div className="stats">
-                      <i className="tim-icons icon-sound-wave" /> Last Research
-                    </div>
-                  </CardFooter>
-                </Card>
-              </Col>
-              <Col lg="3" md="6">
-                <Card className="card-stats">
-                  <CardBody>
-                    <Row>
-                      <Col xs="5">
-                        <div className="info-icon text-center icon-success">
-                          <i className="tim-icons icon-single-02" />
+                      </CardBody>
+                    </Card>
+                  </Col>
+                  <Col lg="4">
+                    <Card className="card-chart">
+                      <CardHeader>
+                        <h5 className="card-category">{ LocalizeComponent.completedTasks }</h5>
+                        <CardTitle tag="h3">
+                          <i className="tim-icons icon-send text-success" /> 12,100K
+                        </CardTitle>
+                      </CardHeader>
+                      <CardBody>
+                        <div className="chart-area">
+                          <Line
+                            data={chartExample4.data}
+                            options={chartExample4.options}
+                          />
                         </div>
-                      </Col>
-                      <Col xs="7">
-                        <div className="numbers">
-                          <p className="card-category">Users</p>
-                          <CardTitle tag="h3">150,000</CardTitle>
-                        </div>
-                      </Col>
-                    </Row>
-                  </CardBody>
-                  <CardFooter>
-                    <hr />
-                    <div className="stats">
-                      <i className="tim-icons icon-trophy" /> Customers feedback
-                    </div>
-                  </CardFooter>
-                </Card>
-              </Col>
-              <Col lg="3" md="6">
-                <Card className="card-stats">
-                  <CardBody>
-                    <Row>
-                      <Col xs="5">
-                        <div className="info-icon text-center icon-danger">
-                          <i className="tim-icons icon-molecule-40" />
-                        </div>
-                      </Col>
-                      <Col xs="7">
-                        <div className="numbers">
-                          <p className="card-category">Errors</p>
-                          <CardTitle tag="h3">12</CardTitle>
-                        </div>
-                      </Col>
-                    </Row>
-                  </CardBody>
-                  <CardFooter>
-                    <hr />
-                    <div className="stats">
-                      <i className="tim-icons icon-watch-time" /> In the last hours
-                    </div>
-                  </CardFooter>
-                </Card>
-              </Col>
-              <Col lg="4">
-                <Card className="card-chart">
-                  <CardHeader>
-                    <h5 className="card-category">Total Shipments</h5>
-                    <CardTitle tag="h3">
-                      <i className="tim-icons icon-bell-55 text-primary" /> 763,215
-                    </CardTitle>
-                  </CardHeader>
-                  <CardBody>
-                    <div className="chart-area">
-                      <Line
-                        data={chartExample2.data}
-                        options={chartExample2.options}
-                      />
-                    </div>
-                  </CardBody>
-                </Card>
-              </Col>
-              <Col lg="4">
-                <Card className="card-chart">
-                  <CardHeader>
-                    <h5 className="card-category">Daily Sales</h5>
-                    <CardTitle tag="h3">
-                      <i className="tim-icons icon-delivery-fast text-info" />{" "}
-                      3,500€
-                    </CardTitle>
-                  </CardHeader>
-                  <CardBody>
-                    <div className="chart-area">
-                      <Bar
-                        data={chartExample3.data}
-                        options={chartExample3.options}
-                      />
-                    </div>
-                  </CardBody>
-                </Card>
-              </Col>
-              <Col lg="4">
-                <Card className="card-chart">
-                  <CardHeader>
-                    <h5 className="card-category">Completed Tasks</h5>
-                    <CardTitle tag="h3">
-                      <i className="tim-icons icon-send text-success" /> 12,100K
-                    </CardTitle>
-                  </CardHeader>
-                  <CardBody>
-                    <div className="chart-area">
-                      <Line
-                        data={chartExample4.data}
-                        options={chartExample4.options}
-                      />
-                    </div>
-                  </CardBody>
-                </Card>
-              </Col>
-            </Row>
-            <Row>
-              <Col lg="5">
-                <Card className="card-tasks">
-                  <CardHeader>
-                    <h6 className="title d-inline">Tasks(5)</h6>
-                    <p className="card-category d-inline">today</p>
-                    <UncontrolledDropdown>
-                      <DropdownToggle
-                        caret
-                        className="btn-icon"
-                        color="link"
-                        data-toggle="dropdown"
-                        type="button"
-                      >
-                        <i className="tim-icons icon-settings-gear-63" />
-                      </DropdownToggle>
-                      <DropdownMenu right>
-                        <DropdownItem
-                          href="#pablo"
-                          onClick={(e) => e.preventDefault()}
-                        >
-                          Action
-                        </DropdownItem>
-                        <DropdownItem
-                          href="#pablo"
-                          onClick={(e) => e.preventDefault()}
-                        >
-                          Another action
-                        </DropdownItem>
-                        <DropdownItem
-                          href="#pablo"
-                          onClick={(e) => e.preventDefault()}
-                        >
-                          Something else
-                        </DropdownItem>
-                      </DropdownMenu>
-                    </UncontrolledDropdown>
-                  </CardHeader>
-                  <CardBody>
-                    <div className="table-full-width table-responsive">
-                      <Table>
-                        <tbody>
-                          <tr>
-                            <td>
-                              <FormGroup check>
-                                <Label check>
-                                  <Input defaultValue="" type="checkbox" />
-                                  <span className="form-check-sign">
-                                    <span className="check" />
-                                  </span>
-                                </Label>
-                              </FormGroup>
-                            </td>
-                            <td>
-                              <p className="title">Update the Documentation</p>
-                              <p className="text-muted">
-                                Dwuamish Head, Seattle, WA 8:47 AM
-                              </p>
-                            </td>
-                            <td className="td-actions text-right">
-                              <Button
-                                color="link"
-                                id="tooltip786630859"
-                                title=""
-                                type="button"
-                              >
-                                <i className="tim-icons icon-pencil" />
-                              </Button>
-                              <UncontrolledTooltip
-                                delay={0}
-                                target="tooltip786630859"
-                              >
-                                Edit Task
-                              </UncontrolledTooltip>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <FormGroup check>
-                                <Label check>
-                                  <Input
-                                    defaultChecked
-                                    defaultValue=""
-                                    type="checkbox"
-                                  />
-                                  <span className="form-check-sign">
-                                    <span className="check" />
-                                  </span>
-                                </Label>
-                              </FormGroup>
-                            </td>
-                            <td>
-                              <p className="title">GDPR Compliance</p>
-                              <p className="text-muted">
-                                The GDPR is a regulation that requires businesses to
-                                protect the personal data and privacy of Europe
-                                citizens for transactions that occur within EU
-                                member states.
-                              </p>
-                            </td>
-                            <td className="td-actions text-right">
-                              <Button
-                                color="link"
-                                id="tooltip155151810"
-                                title=""
-                                type="button"
-                              >
-                                <i className="tim-icons icon-pencil" />
-                              </Button>
-                              <UncontrolledTooltip
-                                delay={0}
-                                target="tooltip155151810"
-                              >
-                                Edit Task
-                              </UncontrolledTooltip>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <FormGroup check>
-                                <Label check>
-                                  <Input defaultValue="" type="checkbox" />
-                                  <span className="form-check-sign">
-                                    <span className="check" />
-                                  </span>
-                                </Label>
-                              </FormGroup>
-                            </td>
-                            <td>
-                              <p className="title">Solve the issues</p>
-                              <p className="text-muted">
-                                Fifty percent of all respondents said they would be
-                                more likely to shop at a company
-                              </p>
-                            </td>
-                            <td className="td-actions text-right">
-                              <Button
-                                color="link"
-                                id="tooltip199559448"
-                                title=""
-                                type="button"
-                              >
-                                <i className="tim-icons icon-pencil" />
-                              </Button>
-                              <UncontrolledTooltip
-                                delay={0}
-                                target="tooltip199559448"
-                              >
-                                Edit Task
-                              </UncontrolledTooltip>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <FormGroup check>
-                                <Label check>
-                                  <Input defaultValue="" type="checkbox" />
-                                  <span className="form-check-sign">
-                                    <span className="check" />
-                                  </span>
-                                </Label>
-                              </FormGroup>
-                            </td>
-                            <td>
-                              <p className="title">Release v2.0.0</p>
-                              <p className="text-muted">
-                                Ra Ave SW, Seattle, WA 98116, SUA 11:19 AM
-                              </p>
-                            </td>
-                            <td className="td-actions text-right">
-                              <Button
-                                color="link"
-                                id="tooltip989676508"
-                                title=""
-                                type="button"
-                              >
-                                <i className="tim-icons icon-pencil" />
-                              </Button>
-                              <UncontrolledTooltip
-                                delay={0}
-                                target="tooltip989676508"
-                              >
-                                Edit Task
-                              </UncontrolledTooltip>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <FormGroup check>
-                                <Label check>
-                                  <Input defaultValue="" type="checkbox" />
-                                  <span className="form-check-sign">
-                                    <span className="check" />
-                                  </span>
-                                </Label>
-                              </FormGroup>
-                            </td>
-                            <td>
-                              <p className="title">Export the processed files</p>
-                              <p className="text-muted">
-                                The report also shows that consumers will not easily
-                                forgive a company once a breach exposing their
-                                personal data occurs.
-                              </p>
-                            </td>
-                            <td className="td-actions text-right">
-                              <Button
-                                color="link"
-                                id="tooltip557118868"
-                                title=""
-                                type="button"
-                              >
-                                <i className="tim-icons icon-pencil" />
-                              </Button>
-                              <UncontrolledTooltip
-                                delay={0}
-                                target="tooltip557118868"
-                              >
-                                Edit Task
-                              </UncontrolledTooltip>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <FormGroup check>
-                                <Label check>
-                                  <Input defaultValue="" type="checkbox" />
-                                  <span className="form-check-sign">
-                                    <span className="check" />
-                                  </span>
-                                </Label>
-                              </FormGroup>
-                            </td>
-                            <td>
-                              <p className="title">Arival at export process</p>
-                              <p className="text-muted">
-                                Capitol Hill, Seattle, WA 12:34 AM
-                              </p>
-                            </td>
-                            <td className="td-actions text-right">
-                              <Button
-                                color="link"
-                                id="tooltip143185858"
-                                title=""
-                                type="button"
-                              >
-                                <i className="tim-icons icon-pencil" />
-                              </Button>
-                              <UncontrolledTooltip
-                                delay={0}
-                                target="tooltip143185858"
-                              >
-                                Edit Task
-                              </UncontrolledTooltip>
-                            </td>
-                          </tr>
-                        </tbody>
-                      </Table>
-                    </div>
-                  </CardBody>
-                </Card>
-              </Col>
-              <Col lg="7">
-                <Card>
-                  <CardHeader>
-                    <div className="tools float-right">
-                      <UncontrolledDropdown>
-                        <DropdownToggle
-                          caret
-                          className="btn-icon"
-                          color="link"
-                          data-toggle="dropdown"
-                          type="button"
-                        >
-                          <i className="tim-icons icon-settings-gear-63" />
-                        </DropdownToggle>
-                        <DropdownMenu right>
-                          <DropdownItem
-                            href="#pablo"
-                            onClick={(e) => e.preventDefault()}
-                          >
-                            Action
-                          </DropdownItem>
-                          <DropdownItem
-                            href="#pablo"
-                            onClick={(e) => e.preventDefault()}
-                          >
-                            Another action
-                          </DropdownItem>
-                          <DropdownItem
-                            href="#pablo"
-                            onClick={(e) => e.preventDefault()}
-                          >
-                            Something else
-                          </DropdownItem>
-                          <DropdownItem
-                            className="text-danger"
-                            href="#pablo"
-                            onClick={(e) => e.preventDefault()}
-                          >
-                            Remove Data
-                          </DropdownItem>
-                        </DropdownMenu>
-                      </UncontrolledDropdown>
-                    </div>
-                    <CardTitle tag="h5">Management Table</CardTitle>
-                  </CardHeader>
-                  <CardBody>
-                    <Table responsive>
-                      <thead className="text-primary">
-                        <tr>
-                          <th className="text-center">#</th>
-                          <th>Name</th>
-                          <th>Job Position</th>
-                          <th>Milestone</th>
-                          <th className="text-right">Salary</th>
-                          <th className="text-right">Actions</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td className="text-center">
-                            <div className="photo">
-                              <img
-                                alt="..."
-                                src={require("../assets/img/tania.jpg").default}
-                              />
-                            </div>
-                          </td>
-                          <td>Tania Mike</td>
-                          <td>Develop</td>
-                          <td className="text-center">
-                            <div className="progress-container progress-sm">
-                              <Progress multi>
-                                <span className="progress-value">25%</span>
-                                <Progress bar max="100" value="25" />
-                              </Progress>
-                            </div>
-                          </td>
-                          <td className="text-right">€ 99,225</td>
-                          <td className="text-right">
-                            <Button
-                              className="btn-link btn-icon btn-neutral"
-                              color="success"
-                              id="tooltip618296632"
-                              size="sm"
-                              title="Refresh"
-                              type="button"
-                            >
-                              <i className="tim-icons icon-refresh-01" />
-                            </Button>
-                            <UncontrolledTooltip
-                              delay={0}
-                              target="tooltip618296632"
-                            >
-                              Tooltip on top
-                            </UncontrolledTooltip>
-                            <Button
-                              className="btn-link btn-icon btn-neutral"
-                              color="danger"
-                              id="tooltip707467505"
-                              size="sm"
-                              title="Delete"
-                              type="button"
-                            >
-                              <i className="tim-icons icon-simple-remove" />
-                            </Button>
-                            <UncontrolledTooltip
-                              delay={0}
-                              target="tooltip707467505"
-                            >
-                              Tooltip on top
-                            </UncontrolledTooltip>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td className="text-center">
-                            <div className="photo">
-                              <img
-                                alt="..."
-                                src={require("../assets/img/robi.jpg").default}
-                              />
-                            </div>
-                          </td>
-                          <td>John Doe</td>
-                          <td>CEO</td>
-                          <td className="text-center">
-                            <div className="progress-container progress-sm">
-                              <Progress multi>
-                                <span className="progress-value">77%</span>
-                                <Progress bar max="100" value="77" />
-                              </Progress>
-                            </div>
-                          </td>
-                          <td className="text-right">€ 89,241</td>
-                          <td className="text-right">
-                            <Button
-                              className="btn-link btn-icon btn-neutral"
-                              color="success"
-                              id="tooltip216846074"
-                              size="sm"
-                              title="Refresh"
-                              type="button"
-                            >
-                              <i className="tim-icons icon-refresh-01" />
-                            </Button>
-                            <UncontrolledTooltip
-                              delay={0}
-                              target="tooltip216846074"
-                            >
-                              Tooltip on top
-                            </UncontrolledTooltip>
-                            <Button
-                              className="btn-link btn-icon btn-neutral"
-                              color="danger"
-                              id="tooltip391990405"
-                              size="sm"
-                              title="Delete"
-                              type="button"
-                            >
-                              <i className="tim-icons icon-simple-remove" />
-                            </Button>
-                            <UncontrolledTooltip
-                              delay={0}
-                              target="tooltip391990405"
-                            >
-                              Tooltip on top
-                            </UncontrolledTooltip>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td className="text-center">
-                            <div className="photo">
-                              <img
-                                alt="..."
-                                src={require("../assets/img/lora.jpg").default}
-                              />
-                            </div>
-                          </td>
-                          <td>Alexa Mike</td>
-                          <td>Design</td>
-                          <td className="text-center">
-                            <div className="progress-container progress-sm">
-                              <Progress multi>
-                                <span className="progress-value">41%</span>
-                                <Progress bar max="100" value="41" />
-                              </Progress>
-                            </div>
-                          </td>
-                          <td className="text-right">€ 92,144</td>
-                          <td className="text-right">
-                            <Button
-                              className="btn-link btn-icon btn-neutral"
-                              color="success"
-                              id="tooltip191500186"
-                              size="sm"
-                              title="Refresh"
-                              type="button"
-                            >
-                              <i className="tim-icons icon-refresh-01" />
-                            </Button>
-                            <UncontrolledTooltip
-                              delay={0}
-                              target="tooltip191500186"
-                            >
-                              Tooltip on top
-                            </UncontrolledTooltip>
-                            <Button
-                              className="btn-link btn-icon btn-neutral"
-                              color="danger"
-                              id="tooltip320351170"
-                              size="sm"
-                              title="Delete"
-                              type="button"
-                            >
-                              <i className="tim-icons icon-simple-remove" />
-                            </Button>
-                            <UncontrolledTooltip
-                              delay={0}
-                              target="tooltip320351170"
-                            >
-                              Tooltip on top
-                            </UncontrolledTooltip>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td className="text-center">
-                            <div className="photo">
-                              <img
-                                alt="..."
-                                src={require("../assets/img/jana.jpg").default}
-                              />
-                            </div>
-                          </td>
-                          <td>Jana Monday</td>
-                          <td>Marketing</td>
-                          <td className="text-center">
-                            <div className="progress-container progress-sm">
-                              <Progress multi>
-                                <span className="progress-value">50%</span>
-                                <Progress bar max="100" value="50" />
-                              </Progress>
-                            </div>
-                          </td>
-                          <td className="text-right">€ 49,990</td>
-                          <td className="text-right">
-                            <Button
-                              className="btn-link btn-icon"
-                              color="success"
-                              id="tooltip345411997"
-                              size="sm"
-                              title="Refresh"
-                              type="button"
-                            >
-                              <i className="tim-icons icon-refresh-01" />
-                            </Button>
-                            <UncontrolledTooltip
-                              delay={0}
-                              target="tooltip345411997"
-                            >
-                              Tooltip on top
-                            </UncontrolledTooltip>
-                            <Button
-                              className="btn-link btn-icon"
-                              color="danger"
-                              id="tooltip601343171"
-                              size="sm"
-                              title="Delete"
-                              type="button"
-                            >
-                              <i className="tim-icons icon-simple-remove" />
-                            </Button>
-                            <UncontrolledTooltip
-                              delay={0}
-                              target="tooltip601343171"
-                            >
-                              Tooltip on top
-                            </UncontrolledTooltip>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td className="text-center">
-                            <div className="photo">
-                              <img
-                                alt="..."
-                                src={require("../assets/img/mike.jpg").default}
-                              />
-                            </div>
-                          </td>
-                          <td>Paul Dickens</td>
-                          <td>Develop</td>
-                          <td className="text-center">
-                            <div className="progress-container progress-sm">
-                              <Progress multi>
-                                <span className="progress-value">100%</span>
-                                <Progress bar max="100" value="100" />
-                              </Progress>
-                            </div>
-                          </td>
-                          <td className="text-right">€ 69,201</td>
-                          <td className="text-right">
-                            <Button
-                              className="btn-link btn-icon"
-                              color="success"
-                              id="tooltip774891382"
-                              size="sm"
-                              title="Refresh"
-                              type="button"
-                            >
-                              <i className="tim-icons icon-refresh-01" />
-                            </Button>
-                            <UncontrolledTooltip
-                              delay={0}
-                              target="tooltip774891382"
-                            >
-                              Tooltip on top
-                            </UncontrolledTooltip>
-                            <Button
-                              className="btn-link btn-icon"
-                              color="danger"
-                              id="tooltip949929353"
-                              size="sm"
-                              title="Delete"
-                              type="button"
-                            >
-                              <i className="tim-icons icon-simple-remove" />
-                            </Button>
-                            <UncontrolledTooltip
-                              delay={0}
-                              target="tooltip949929353"
-                            >
-                              Tooltip on top
-                            </UncontrolledTooltip>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td className="text-center">
-                            <div className="photo">
-                              <img
-                                alt="..."
-                                src={require("../assets/img/emilyz.jpg").default}
-                              />
-                            </div>
-                          </td>
-                          <td>Manuela Rico</td>
-                          <td>Manager</td>
-                          <td className="text-center">
-                            <div className="progress-container progress-sm">
-                              <Progress multi>
-                                <span className="progress-value">15%</span>
-                                <Progress bar max="100" value="15" />
-                              </Progress>
-                            </div>
-                          </td>
-                          <td className="text-right">€ 99,201</td>
-                          <td className="text-right">
-                            <Button
-                              className="btn-link btn-icon"
-                              color="success"
-                              id="tooltip30547133"
-                              size="sm"
-                              title="Refresh"
-                              type="button"
-                            >
-                              <i className="tim-icons icon-refresh-01" />
-                            </Button>
-                            <UncontrolledTooltip delay={0} target="tooltip30547133">
-                              Tooltip on top
-                            </UncontrolledTooltip>
-                            <Button
-                              className="btn-link btn-icon"
-                              color="danger"
-                              id="tooltip156899243"
-                              size="sm"
-                              title="Delete"
-                              type="button"
-                            >
-                              <i className="tim-icons icon-simple-remove" />
-                            </Button>
-                            <UncontrolledTooltip
-                              delay={0}
-                              target="tooltip156899243"
-                            >
-                              Tooltip on top
-                            </UncontrolledTooltip>
-                          </td>
-                        </tr>
-                      </tbody>
-                    </Table>
-                  </CardBody>
-                </Card>
-              </Col>
-              <Col lg="12">
-                <Card>
-                  <CardHeader>
-                    <CardTitle tag="h4">Global Sales by Top Locations</CardTitle>
-                    <p className="card-category">All products that were shipped</p>
-                  </CardHeader>
-                  <CardBody>
-                    <Row>
-                      <Col md="6">
-                        <Table responsive>
-                          <tbody>
-                            <tr>
-                              <td>
-                                <div className="flag">
-                                  <img
-                                    alt="US"
-                                    src={UsIcon}
-                                  />
-                                </div>
-                              </td>
-                              <td>USA</td>
-                              <td className="text-right">2.920</td>
-                              <td className="text-right">53.23%</td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <div className="flag">
-                                  <img
-                                    alt="..."
-                                    src={DeIcon}
-                                  />
-                                </div>
-                              </td>
-                              <td>Germany</td>
-                              <td className="text-right">1.300</td>
-                              <td className="text-right">20.43%</td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <div className="flag">
-                                  <img
-                                    alt="..."
-                                    src={AUIcon}
-                                  />
-                                </div>
-                              </td>
-                              <td>Australia</td>
-                              <td className="text-right">760</td>
-                              <td className="text-right">10.35%</td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <div className="flag">
-                                  <img
-                                    alt="..."
-                                    src={GBIcon}
-                                  />
-                                </div>
-                              </td>
-                              <td>United Kingdom</td>
-                              <td className="text-right">690</td>
-                              <td className="text-right">7.87%</td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <div className="flag">
-                                  <img
-                                    alt="..."
-                                    src={ROIcon}
-                                  />
-                                </div>
-                              </td>
-                              <td>Romania</td>
-                              <td className="text-right">600</td>
-                              <td className="text-right">5.94%</td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <div className="flag">
-                                  <img
-                                    alt="..."
-                                    src={BRIcon}
-                                  />
-                                </div>
-                              </td>
-                              <td>Brasil</td>
-                              <td className="text-right">550</td>
-                              <td className="text-right">4.34%</td>
-                            </tr>
-                          </tbody>
-                        </Table>
-                      </Col>
-                      <Col className="ml-auto mr-auto" md="6">
-                        <VectorMap
-                          map={"world_mill"}
-                          backgroundColor="transparent"
-                          zoomOnScroll={false}
-                          containerStyle={{
-                            width: "100%",
-                            height: "300px",
-                          }}
-                          regionStyle={{
-                            initial: {
-                              fill: "#e4e4e4",
-                              "fill-opacity": 0.9,
-                              stroke: "none",
-                              "stroke-width": 0,
-                              "stroke-opacity": 0,
-                            },
-                          }}
-                          series={{
-                            regions: [
-                              {
-                                values: mapData,
-                                scale: ["#AAAAAA", "#444444"],
-                                normalizeFunction: "polynomial",
-                              },
-                            ],
-                          }}
-                        />
-                      </Col>
-                    </Row>
-                  </CardBody>
-                </Card>
-              </Col>
-            </Row>
-          </div>
-        </div>
-
+                      </CardBody>
+                    </Card>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col lg="12">
+                    <Card>
+                      <CardHeader>
+                        <CardTitle tag="h4">{ LocalizeComponent.global_posts_by_locations }</CardTitle>
+                        <p className="card-category">{ LocalizeComponent.all_posts_where_posted }</p>
+                      </CardHeader>
+                      <CardBody>
+                        <Row>
+                          <Col md="6">
+                            <Table responsive>
+                              <tbody>
+                                <tr>
+                                  <td>
+                                    <div className="flag">
+                                      <img
+                                        alt="US"
+                                        src={UsIcon}
+                                      />
+                                    </div>
+                                  </td>
+                                  <td>USA</td>
+                                  <td className="text-right">2.920</td>
+                                  <td className="text-right">53.23%</td>
+                                </tr>
+                                <tr>
+                                  <td>
+                                    <div className="flag">
+                                      <img
+                                        alt="..."
+                                        src={DeIcon}
+                                      />
+                                    </div>
+                                  </td>
+                                  <td>Germany</td>
+                                  <td className="text-right">1.300</td>
+                                  <td className="text-right">20.43%</td>
+                                </tr>
+                                <tr>
+                                  <td>
+                                    <div className="flag">
+                                      <img
+                                        alt="..."
+                                        src={AUIcon}
+                                      />
+                                    </div>
+                                  </td>
+                                  <td>Australia</td>
+                                  <td className="text-right">760</td>
+                                  <td className="text-right">10.35%</td>
+                                </tr>
+                                <tr>
+                                  <td>
+                                    <div className="flag">
+                                      <img
+                                        alt="..."
+                                        src={GBIcon}
+                                      />
+                                    </div>
+                                  </td>
+                                  <td>United Kingdom</td>
+                                  <td className="text-right">690</td>
+                                  <td className="text-right">7.87%</td>
+                                </tr>
+                                <tr>
+                                  <td>
+                                    <div className="flag">
+                                      <img
+                                        alt="..."
+                                        src={ROIcon}
+                                      />
+                                    </div>
+                                  </td>
+                                  <td>Romania</td>
+                                  <td className="text-right">600</td>
+                                  <td className="text-right">5.94%</td>
+                                </tr>
+                                <tr>
+                                  <td>
+                                    <div className="flag">
+                                      <img
+                                        alt="..."
+                                        src={BRIcon}
+                                      />
+                                    </div>
+                                  </td>
+                                  <td>Brasil</td>
+                                  <td className="text-right">550</td>
+                                  <td className="text-right">4.34%</td>
+                                </tr>
+                              </tbody>
+                            </Table>
+                          </Col>
+                          <Col className="ml-auto mr-auto" md="6">
+                            <VectorMap
+                              map={"world_mill"}
+                              backgroundColor="transparent"
+                              zoomOnScroll={false}
+                              containerStyle={{
+                                width: "100%",
+                                height: "300px",
+                              }}
+                              regionStyle={{
+                                initial: {
+                                  fill: "#e4e4e4",
+                                  "fill-opacity": 0.9,
+                                  stroke: "none",
+                                  "stroke-width": 0,
+                                  "stroke-opacity": 0,
+                                },
+                              }}
+                              series={{
+                                regions: [
+                                  {
+                                    values: mapData,
+                                    scale: ["#AAAAAA", "#444444"],
+                                    normalizeFunction: "polynomial",
+                                  },
+                                ],
+                              }}
+                            />
+                          </Col>
+                        </Row>
+                      </CardBody>
+                    </Card>
+                  </Col>
+                </Row>
+              </div>
+            </div>
 
           <ConfirmDialogComponent status={dialogStatus} left={leftbutton} right={rightbutton} text={dialogText}/>
         </Grid>

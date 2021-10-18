@@ -139,7 +139,8 @@ const BannedList = ((props) => {
 
 //xx
 
-
+// localStorage.removeItem("video");
+// localStorage.removeItem("videostatus");
 
 
 const DetailTaskComponent = (props) => {
@@ -387,7 +388,7 @@ const DetailTaskComponent = (props) => {
                     videotype:"Echohub.io",
                     url:config.getUploadUrl() + "/" + video,
                     set:"set",
-                    action:0
+                    action:2
                   }
 
                   DetailTaskService.setUrl(obj);
@@ -498,12 +499,7 @@ const DetailTaskComponent = (props) => {
 
 //xx
   const checkCurrentStatus = ((id) => {
-
-    var checkObj = {
-      id:id,
-    }
-
-    DetailTaskService.checkCurrentStatus(checkObj);
+    DetailTaskService.checkCurrentStatus(id);
   });
 
   const SubmittedTask = (id,stepNumber) => {
@@ -621,7 +617,7 @@ useEffect(() => {
   //manage statuses
   const listenCurrentStatusL = DetailTaskService.listenCurrentStatus().subscribe(data => {
 
-    console.log(data);
+    //console.log(data);
 //xxx
     if(data.data.length > 0){
 
