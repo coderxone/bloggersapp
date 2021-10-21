@@ -151,6 +151,7 @@ const ListMatrix = ((props) => {
               goToBusinessDetail(item);
             }else{
               if(membership === true){
+                console.log(item)
                 //goToBusinessDetail(item);
                 //go to business detail page
               }else if(membership === false){

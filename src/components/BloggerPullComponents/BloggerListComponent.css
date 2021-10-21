@@ -232,6 +232,19 @@
     float: left;
   }
 
+  .prightBlockTwoOneText_W{
+    margin-top:5px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color:#263238 !important;
+    font-family: Roboto;
+    font-size: 18px;
+    width:15%;
+    float: left;
+    
+  }
+
   .prightBlockTwoOneSecond{
     width:85%;
     height: 100%;
@@ -399,11 +412,12 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  color:#263238;
+  color:#263238 !important;
   font-family: Roboto;
   font-size: 18px;
   width:15%;
   float: left;
+  
 }
 
 .prightBlockTwoOneSecond{
