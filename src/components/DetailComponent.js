@@ -183,7 +183,7 @@ const MessageComponent = (props) => {
 
 
 const ErrorDiv = (props) => {
-  console.log(props);
+  //console.log(props);
   const errorMessage = props.message;
 
   if(errorMessage != undefined){
@@ -362,7 +362,7 @@ const ManageTable = (props) => {
 
   const list = props.list;
 
-  console.log(list)
+  //console.log(list)
 
   const ConfirmTask = (user_email) => {
 
@@ -613,7 +613,6 @@ const DetailComponent = (props) => {
 
       localStorage.setItem("savedId",locationData.data.id);
       return locationData.data.id;
-
     }else{
       return localStorage.getItem("savedId");
     }

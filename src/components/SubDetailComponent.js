@@ -244,8 +244,8 @@ const SubComponent = (props) => {
   }
 
   const Suggest = (projectid,email) => {
-    console.log(projectid);
-    console.log(email);
+    //console.log(projectid);
+    //console.log(email);
   }
 //xx
 
@@ -482,7 +482,7 @@ const DetailComponent = (props) => {
   useEffect(() => {
     const listenDetailService = DetailService.listenCheckvideosByUser().subscribe(data => {
 
-      console.log(data);
+      //console.log(data);
       if(data.status === "ok"){
         if(data.editmode === false){
           setEditMode(false);

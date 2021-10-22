@@ -118,16 +118,18 @@ const ListMatrix = ((props) => {
     }
   }
 
-  const goToBusinessDetail = useCallback((item) => {
-
-      return history.push({pathname: '/blogger'}), [history];
-
-  });
 
   const goToLogin = useCallback(() => {
 
       return history.push({pathname: '/login'}), [history];
 
+  });
+
+  const GoToDetailM1 = useCallback((item) => {
+      return history.push({pathname: '/mdetail',data:item}), [history];
+  });
+  const GoToDetailM2 = useCallback((item) => {
+      return history.push({pathname: '/detail',data:item}), [history];
   });
 
   const membership = useSelector((state) => state.counter.membership);
@@ -145,13 +147,13 @@ const ListMatrix = ((props) => {
 
       if(check !== false){
 
-            let role = config.getUserRole();
-
-            if(role === 1){
-              goToBusinessDetail(item);
-            }else{
               if(membership === true){
-                console.log(item)
+                //console.log(item)
+                if(item.type === 1){
+                  GoToDetailM1(item);
+                }else if(item.type === 2){
+                  GoToDetailM2(item);
+                }
                 //goToBusinessDetail(item);
                 //go to business detail page
               }else if(membership === false){
@@ -159,10 +161,6 @@ const ListMatrix = ((props) => {
                 dispatch(openMembershipDialog());
 
               }
-
-            }
-
-
 
       }else{
         goToLogin();
@@ -287,16 +285,20 @@ const BloggerListWhiteComponent = (props) => {
 
         {
           currentUrl === true && (
-            <div className="gridTitle">
+            <Link className="gridTitle deleteUrlClass"
+              to={{
+                pathname: "/business-orders-for-bloggers"
+              }}
+              >
               <div className="fullView">
                 <div className="fullViewText">
                   {LocalizeComponent.fullView}
                 </div>
               </div>
-            </div>
+            </Link>
+            
           )
         }
-
 
         <div className="gridFrame">
           {

@@ -317,7 +317,7 @@ const MapList = ((props) => {
               {item.online == 1 ? (
                     <FiberManualRecordIcon className="mysizes "/>
                ) : (
-                    <FiberManualRecordIcon className="mysize-offlines"/>
+                    <FiberManualRecordIcon className="mysize_offlines"/>
                )}
 
               </div>

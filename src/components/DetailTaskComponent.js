@@ -475,7 +475,7 @@ const DetailTaskComponent = (props) => {
                   url:find,
                   set:"set"
                 }
-                console.log(obj);
+                //console.log(obj);
                 DetailTaskService.ReplaceUrl(obj);
               }
           }

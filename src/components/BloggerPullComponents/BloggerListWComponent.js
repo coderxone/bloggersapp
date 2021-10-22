@@ -350,16 +350,18 @@ const BottomFunc = (props) => {
 
         <Grid container className="mainListCore_W">
 
-          {
-            currentUrl === false && (
-              <div className="gridTitle projectMarginBottom">
-                <div className="gridTitleText">
-                  {LocalizeComponent.chooseBlogger}
+          
+            {
+              currentUrl === false && (
+                <div className="gridTitle projectMarginBottom">
+                  <div className="gridTitleText">
+                    {LocalizeComponent.chooseBlogger}
+                  </div>
                 </div>
-              </div>
-            )
-          }
+              )
+            }
 
+          
 
            <div className="titleFrame_W">
 

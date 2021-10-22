@@ -267,7 +267,7 @@ const BottomFunc = () => {
 
     })
     var ObservableLangListener = Observable.getData_subjectLang().subscribe(data => {
-      console.log(data);
+      //console.log(data);
       if(data == "closeLangDialog"){
         SetLanguageDialogStatus(false);
         UpdatePageLanguage();

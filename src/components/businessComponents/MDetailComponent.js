@@ -183,7 +183,7 @@ const MessageComponent = (props) => {
 
 
 const ErrorDiv = (props) => {
-  console.log(props);
+  //console.log(props);
   const errorMessage = props.message;
 
   if(errorMessage != undefined){
