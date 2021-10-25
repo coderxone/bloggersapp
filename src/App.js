@@ -2,20 +2,13 @@ import React, {useEffect} from 'react';
 import {
   BrowserRouter as Router,
   Redirect,
-  Switch,
-  Route,
-  Link
+  Route
 } from "react-router-dom";
 import { LastLocationProvider } from 'react-router-last-location';
-import { IonApp, IonRouterOutlet } from '@ionic/react';
-import { IonReactRouter } from '@ionic/react-router';
 import Home from './pages/Home';
-import MapComponent from './components/MapComponent';
 import AuthorizationComponent from './components/AuthorizationComponent';
 import RestorepasswordComponent from './components/RestorepasswordComponent';
 import ApplyComponent from './components/ApplyComponent';
-import ReactMapComponent from './components/MaterialMapComponent';
-import ReactGeoCodeComponent from './components/GeocodeComponent';
 import PaymentComponent from './components/PaymentComponent';
 import BusinessDashboard from './components/businessDashboard';
 import DetailComponent from './components/DetailComponent';
@@ -33,11 +26,6 @@ import TaskComponent from './components/TaskComponent';
 import RedirectComponent from './components/RedirectComponent';
 import MainComponent from './components/MainComponent';
 import DandelionComponent from './components/dandelionComponent';
-import AnimationTwoComponent from './components/AnimationTwoComponent';
-import AnimationTwoFactory from './components/businessComponents/AnimationTwoFactory';
-import BloggerAnimationComponent from './components/bloggerComponents/BloggerAnimationComponent';
-import AnimationComponent from './components/AnimationComponent';
-import MainPageDandelion from './components/MainPageDandelion';
 import BloggerAnswersComponent from './components/BloggerAnswersComponent';
 import AdminComponent from './components/adminComponents/AdminComponent';
 import TestComponent from './components/testComponents/TestComponents';
@@ -53,12 +41,9 @@ import BusinessIntroComponent from './components/introductionComponents/Business
 import userProfileComponent from './components/profileComponents/userProfileComponent';
 import exploreProfileComponent from './components/profileComponents/exploreProfileComponent';
 import businessUserProfileComponent from './components/profileComponents/businessUserProfileComponent';
-import userProfilePhotoUpload from './components/profileComponents/userProfilePhotoUpload';
 import WhyEchohubComponent from './components/introductionComponents/WhyEchohubComponent';
 import MSubdetailComponent from './components/businessComponents/MSubdetailComponent';
 import BloggerListComponent from './components/BloggerPullComponents/BloggerListWComponent';
-import CreatorsAnimComponent from './components/MainPageComponents/CreatorsAnimComponent';
-import LineChartComponent from './components/chartsComponents/LineChartComponent';
 import PaypalMembershipComponent from './components/PaymentSubComponents/PaypalMembershipComponent';
 import BloggerListWhiteComponent from './components/BloggerPullComponents/BloggerListWhiteComponent';
 import LastCreatorsPostComponent from './components/BloggerPullComponents/LastCreatorsPostComponent';
@@ -69,7 +54,7 @@ const App = () => {
   useEffect(() => {
 
     //connect to server
-    const service = HomeService.initialConnect();
+    HomeService.initialConnect();
     //connect to server
 
   },[]);
@@ -92,23 +77,19 @@ const App = () => {
                 <Route path="/profile" back={true} component={ProfileComponent} exact={true} />
                 <Route path="/rate"  back={true} component={RateComponent} exact={true} />
                 <Route path="/role"  back={true} component={SelectRoleComponent} exact={true} />
-                <Route path="/blogger"  back={true} component={BloggerDashboardComponent} exact={true} />
+                <Route path="/blogger"   component={BloggerDashboardComponent} exact={true} />
                 <Route path="/detailtask"  back={true} component={DetailTaskComponent} exact={true} />
                 <Route path="/mdetailtask"  back={true} component={Model1DetailTaskComponent} exact={true} />
                 <Route path="/suggest"  back={true} component={SuggestComponent} exact={true} />
                 <Route path="/contactlist"  back={true} component={ContactListComponent} exact={true} />
                 <Route path="/mytasks"  back={true} component={TaskComponent} exact={true} />
                 <Route path="/dandelion"  back={true} component={DandelionComponent} exact={true} />
-                <Route path="/maindandelion"  back={true} component={MainPageDandelion} exact={true} />
-                <Route path="/animation"  back={true} component={AnimationComponent} exact={true} />
-                <Route path="/animationtwo"  back={true} component={AnimationTwoComponent} exact={true} />
-                <Route path="/animationtwof"  back={true} component={AnimationTwoFactory } exact={true} />
-                <Route path="/animationblogger"  back={true} component={BloggerAnimationComponent } exact={true} />
                 <Route path="/blogger-answers"  back={true} component={BloggerAnswersComponent } exact={true} />
                 <Route path="/approve"  back={true} component={AdminComponent } exact={true} />
                 <Route path="/emailtemplate"  back={true} component={ActivationEmail } exact={true} />
                 <Route path="/choose-creator"  back={true} component={BloggerListComponent} exact={true} />
                 <Route path="/business-orders-for-bloggers"  back={true} component={BloggerListWhiteComponent} exact={true} />
+                <Route path="/last-bloggers-posts"  back={true} component={LastCreatorsPostComponent} exact={true} />
                 <Route path="/test"  back={true} component={LastCreatorsPostComponent} exact={true} />
                 <Route path="/chooseway"  back={true} component={ChooseWayComponent} exact={true} />
                 <Route path="/main"  component={MainComponent} exact={true} />

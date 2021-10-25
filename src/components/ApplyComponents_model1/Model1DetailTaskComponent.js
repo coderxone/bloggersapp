@@ -12,7 +12,6 @@ import ListIcon from '@material-ui/icons/List';
 import FormControl from '@material-ui/core/FormControl';
 
 import {
-  withStyles,
   makeStyles,
 } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
@@ -31,11 +30,6 @@ import clsx from 'clsx';
 
 import Drawer from '@material-ui/core/Drawer';
 import Button from '@material-ui/core/Button';
-import List from '@material-ui/core/List';
-import Divider from '@material-ui/core/Divider';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import FormDialogComponent from '../../helperComponents/FormDialogComponent';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
@@ -45,7 +39,6 @@ import M1_instructionComponent  from './../bloggerDetailComponents/M1_instructio
 import DoneAllIcon from '@material-ui/icons/DoneAll';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import TextField from '@material-ui/core/TextField';
-import FileCopyIcon from '@material-ui/icons/FileCopy';
 import EditIcon from '@material-ui/icons/Edit';
 import ChatIcon from '@material-ui/icons/Chat';
 import BusinessPoster from '../../images/businessPoster.png';
@@ -291,19 +284,7 @@ const DetailTaskComponent = (props) => {
       return array;
 
   },[]);
-  const SocialListWithoutEchohub = useMemo(function(){
 
-      var array = [];
-      var cycleAr = JSON.parse(localStorage.getItem("soc"));
-      cycleAr.map(item => {
-        if(item.name != "Echohub"){
-          array.push(item.name);
-        }
-
-      });
-      return array;
-
-  },[]);
   const OrigNTwo = useMemo(function(){
 
       var array = [];
@@ -532,12 +513,7 @@ const DetailTaskComponent = (props) => {
   }
 //from step 1 to 2
 //xx
-  const videostatus = useMemo(() => {
-    const videostatus = config.getUserItemName("videostatus");
-    if(videostatus){
-      sendUploadedVideo();//send video after upload
-    }
-  },[]);
+
 
   const deleteVideoStatus = () => {
     config.deleteUserItemName("videostatus")
@@ -614,8 +590,6 @@ const CountTaskFunction = (data) => {
 const [listArrayComplete,setListArrayComplete] = useState([]);
 const [currentTaskStatus,setCurrentTaskStatus] = useState(0);
 const [verifiedDays,SetVerifiedDays] = useState(0);
-
-const [downloadUrl,SetDownloadUrl] = useState('');
 
 //xxx checking video from from video table
 useEffect(() => {

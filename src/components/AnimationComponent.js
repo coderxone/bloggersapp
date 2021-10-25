@@ -1,13 +1,10 @@
 import React, { useRef,useEffect, useState,useMemo } from 'react';
-import { Canvas, useFrame } from 'react-three-fiber';
 import * as THREE from "three";
 // import {
 //   Mesh, Vector3, SplineCurve, Geometry, Color,
 // } from 'three';
 
-import { MeshLine, MeshLineMaterial, MeshLineRaycast } from 'three.meshline';
-import sample from '../images/sample1.jpeg';
-import sample2 from '../images/sample2.jpg';
+import { MeshLine, MeshLineMaterial } from 'three.meshline';
 import instagramIcon from '../images/instagram.png';
 import YoutubeIcon from '../images/youtube.png';
 import FacebookIcon from '../images/facebook.png';
@@ -33,10 +30,6 @@ const AnimationLineColorOriginal = "#e3e3e3";
 //const AnimationLineColorOriginal = "#0083ff";
 var h = 500;
 const ASPECT_RATIO = window.innerWidth / h;
-const WIDTH = ( window.innerWidth ) * window.devicePixelRatio;
-const HEIGHT = ( h ) * window.devicePixelRatio;
-
-const group = new THREE.Object3D();
 const scene = new THREE.Scene();
 const width = window.innerWidth;
 const height = h;
@@ -47,7 +40,6 @@ var viewPosition = {x:0,y:-135,z:550};//for mobiles
 
 
 //console.log(viewPosition);
-var viewPositionAnimation = {x:0,y:0,z:0};
 
 var enableAnimation = 0;//control video animation from business to bloggers
 var enableAnimationVideo = 0;//control video animation from bloggers to video
@@ -84,8 +76,6 @@ const NewHookComponent = () => {
   },[ManageStep])
 
   const mount = useRef(null)
-  const [isAnimating, setAnimating] = useState(true)
-  const controls = useRef(null)
 
 
   const SetCameraPosition = () => {
@@ -111,7 +101,6 @@ const NewHookComponent = () => {
 
   }
 
-  var step = 0;
 
   const Core = () => {
 
@@ -491,7 +480,12 @@ const NewHookComponent = () => {
         //load 3d earth
         //
         var textureLoaderF = new THREE.TextureLoader();
-        var textureF = textureLoaderF.load('https://echohub.io/videos/earth_texture_two.png');
+        var textureF = textureLoaderF.load(
+          'https://echohub.io/videos/earth_texture_two.png',
+          function (object){
+            scene.add( earthmesh );
+          }
+        );
         textureF.flipY = false;
         //Earthtexture
 //xx
@@ -502,7 +496,7 @@ const NewHookComponent = () => {
         earthmesh.position.x = PeoplePosition.x;
         earthmesh.position.y = PeoplePosition.y;
         earthmesh.geometry.center();
-        scene.add( earthmesh );
+        
 
         //Social Icons Animation Line
 
@@ -874,8 +868,8 @@ const NewHookComponent = () => {
 
   useEffect(() => {
 
-    Core();
-    StartApp();
+    let clearCore = Core();
+    let clearStart = StartApp();
       //onWindowResize();
 
       //window.addEventListener( 'resize', onWindowResize, false );
@@ -885,6 +879,8 @@ const NewHookComponent = () => {
     return () => {
 
       mount.current.removeChild(renderer.domElement)
+      clearStart = null;
+      clearCore = null;
 
     }
 

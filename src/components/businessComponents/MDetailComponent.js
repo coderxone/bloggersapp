@@ -22,18 +22,11 @@ import { connect } from 'react-redux';
 import ObservableService from '../../services/Observable';
 import DetailService from '../../services/DetailService';
 import config from '../../config/config';
-import ExpandLessIcon from '@material-ui/icons/ExpandLess';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import DoneOutlineIcon from '@material-ui/icons/DoneOutline';
-import VisibilityIcon from '@material-ui/icons/Visibility';
-import List from '@material-ui/core/List';
 import PropTypes from 'prop-types';
-import Typography from '@material-ui/core/Typography';
 import GoBackAbsoluteComponent from '../../helperComponents/goBackAbsoluteComponent';
 import ConfirmDialogComponent from '../../helperComponents/ConfirmDialogComponent';
 import HomeService from '../../services/Homeservice';
 import BusinesService from '../../services/BusinessService';
-import DoneIcon from '@material-ui/icons/Done';
 import { increment, decrement,save_email } from '../../actions/actions';
 import { useSelector, useDispatch } from 'react-redux'
 import { SetManagementList } from '../../features/counter-slice';
@@ -65,13 +58,6 @@ import {
   CardBody,
   CardFooter,
   CardTitle,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
-  UncontrolledDropdown,
-  Label,
-  FormGroup,
-  Input,
   Progress,
   Table,
   Row,
@@ -195,21 +181,7 @@ const ErrorDiv = (props) => {
 }
 
 
-const useStylesthree = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-    maxWidth: 752,
-  },
-  demo: {
-    // backgroundColor: "black",
-  },
-  title: {
-    margin: theme.spacing(2, 0, 2),
-  },
-}));
 
-
-var historyId = 9900;
 
 
 
@@ -222,63 +194,6 @@ const View = (url) => {
   win.focus();
 }
 
-
-
-const SubComponent = (props) => {
-
-  var status = props.condition.status;
-  var id = props.condition.id;
-
-  var url = props.condition.url;
-
-  const Approve = (id) => {
-
-    var sendObject = {
-      from:10
-    }
-    ObservableService.sendData_subject(sendObject);
-    DetailService.setApprove(id);
-
-  }
-
-
-
-  if(status === true){
-      //$(".dynamicClass" + id).css("height","6em");
-  }else if(status === false){
-    //$(".dynamicClass" + id).css("height","3.7em");
-  }
-
-  return (
-    <div>
-
-    {status === false ? (
-       <div>
-
-       </div>
-     ) : (
-       <div className="subComponentDown">
-
-          <div className="centrDiv" onClick={(e) => Approve(id)}>
-              <DoneOutlineIcon className="leftSide"/>
-              <div className="rightSide">
-                  Approve
-              </div>
-          </div>
-          <div className="centrDivCopy" onClick={(e) => View(url)}>
-              <VisibilityIcon className="leftSide"/>
-              <div className="rightSide">
-                  View
-              </div>
-          </div>
-
-
-       </div>
-     )}
-
-    </div>
-  );
-}
 
 
 
@@ -316,12 +231,6 @@ TabPanel.propTypes = {
   value: PropTypes.any.isRequired,
 };
 
-function a11yProps(index) {
-  return {
-    id: `simple-tab-${index}`,
-    'aria-controls': `simple-tabpanel-${index}`,
-  };
-}
 
 const useStylesh = makeStyles((theme) => ({
   root: {
@@ -333,10 +242,6 @@ const useStylesh = makeStyles((theme) => ({
 //BlogList Component
 
 const navigateToDetail = (item,e) => {
-
-}
-
-const SubDetail = (item,e) => {
 
 }
 
@@ -615,22 +520,12 @@ const DetailComponent = (props) => {
     email:""
   };
 
-
-  const [storageData,setStorageData] = useState(obj);
-
-  const [cancelDoubleEvent,setCancelDoubleEvent] = useState(0);
-
-  const [closeDialog,setCloseDialog] = useState(false);
-
   const getDetailData = () => {
-
-
 
     var senddata = {
       "project_id":checkDetailId,
       "email":config.getUserEmail()
     }
-
 
     DetailService.getDetailData(senddata);
     DetailService.getDetailApprovedData(senddata);
@@ -638,20 +533,10 @@ const DetailComponent = (props) => {
 
   }
 
-
-  const onSubmit = ((data) => {
-
-      setStorageData(prevState => {
-          return obj.email = data.email;
-      });
-
-  });
-
   const dispatch = useDispatch();
 
   const listArray = useSelector(state => state.counter.managementList);
 
-  const [ listArrayApprove, setListApproveArray ] = useState([]);
   const [ viewsCount,setViewsCount ] = useState(0);
 
   const SendConfirmTask = (user_email) => {
@@ -801,8 +686,6 @@ useEffect(() => {
 },[])
 
 
-
-  const classesh = useStylesh();
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {

@@ -4,6 +4,8 @@ import LocalizeComponent from '../../localize/LocalizeComponent';
 import Grid from '@material-ui/core/Grid';
 import AuthorizationBox from '../../helperComponents/AuthorizationBox';
 import CheckIcon from '@material-ui/icons/Check';
+import BloggerListWhiteComponent from '../../components/BloggerPullComponents/BloggerListWhiteComponent';
+import LastCreatorsPostComponent from '../../components/BloggerPullComponents/LastCreatorsPostComponent';
 import {
   Link,useHistory
 } from "react-router-dom";
@@ -215,6 +217,11 @@ const BottomFunc = () => {
         </div>
 
       </div>
+
+
+      <BloggerListWhiteComponent/>
+
+      <LastCreatorsPostComponent/>
 
 
 

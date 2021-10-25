@@ -4,57 +4,26 @@ import MenuComponent from '../components/MenuComponents/MenuComponent';
 import '../css/businessDashboard.scss';
 import LocalizeComponent from '../localize/LocalizeComponent';
 import BusinesService from '../services/BusinessService';
-import { useForm } from "react-hook-form";
-import { yupResolver } from '@hookform/resolvers/yup';
 import Observable from '../services/Observable';
 import ConfirmDialogComponent from '../helperComponents/ConfirmDialogComponent';
-import * as yup from "yup";
 import {
-  withStyles,
   makeStyles,
-  useTheme,
 } from '@material-ui/core/styles';
-import TextField from '@material-ui/core/TextField';
-import Grid from '@material-ui/core/Grid';
-import Logo from '../icons/logo_circle_new_circle.png';
-import Box from '@material-ui/core/Box';
+
 import { connect } from 'react-redux';
 import AuthService from '../services/AuthService';
 import HomeService from '../services/Homeservice';
-import DialogComponent from '../components/DialogComponent';
 
 
-import List from '@material-ui/core/List';
-import Typography from '@material-ui/core/Typography';
-import Divider from '@material-ui/core/Divider';
-import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
-import ListItemAvatar from '@material-ui/core/ListItemAvatar';
-import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 
-import Avatar from '@material-ui/core/Avatar';
 
-import FormGroup from '@material-ui/core/FormGroup';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-
-import FolderIcon from '@material-ui/icons/Folder';
-import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
-import { increment, decrement,save_email } from '../actions/actions';
 import config from '../config/config.js';
 
 import {
   Link,useHistory,
 } from "react-router-dom";
-import Chart from "react-google-charts";
-import { useSelector, useDispatch } from 'react-redux'
+
+import { useDispatch } from 'react-redux'
 import {activateBusinessMenu} from '../features/counter-slice';
 
 
@@ -81,18 +50,6 @@ const ErrorDiv = (props) => {
 
 }
 
-const useStylesthree = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-    maxWidth: 752,
-  },
-  demo: {
-    // backgroundColor: "black",
-  },
-  title: {
-    margin: theme.spacing(4, 0, 2),
-  },
-}));
 
 
 
@@ -192,25 +149,6 @@ const BusinessDashboard = (props) => {
 
 
 
-  const [cancelDoubleEvent,setCancelDoubleEvent] = useState(0);
-
-  const [closeDialog,setCloseDialog] = useState(false);
-
-
-
-  const onSubmit = ((data) => {
-
-      const newValue = {...storageData};
-      newValue.email = data.email;
-      setStorageData(newValue);
-
-    AuthService.sendRestorePassword(data);//find user
-
-  });
-
-
-
-
   const [ listArray, setListArray ] = useState([]);
 
   useEffect(() => {
@@ -263,20 +201,9 @@ const BusinessDashboard = (props) => {
     config.checkUserAuthorization(2);
   },[])
 
-  var w = window.innerWidth / 2;
-  var h = window.innerHeight / 3;
 
   const history = useHistory();
 
-  const changePage = useCallback((Contacts) => {
-
-    if(Contacts == "Contacts"){
-      return history.push('/contactlist'), [history]
-    }else if(Contacts == "New Request"){
-      return history.push('/chooseway'), [history]
-    }
-
-  });
 
   //notification part
 
@@ -332,8 +259,6 @@ const [dialogSwitcher,SetdialogSwitcher] = useState(0);
       DialogNotif.unsubscribe();
     }
   },[dialogSwitcher]);
-
- const [dialogAction,SetDialogAction] = useState(0);
 
   const OneTimeNotification = (data) => {
 
@@ -439,13 +364,6 @@ const [dialogSwitcher,SetdialogSwitcher] = useState(0);
         </div>
 
     </div>
-
-
-
-
-
-
-
 
 
   );

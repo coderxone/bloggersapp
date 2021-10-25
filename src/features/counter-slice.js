@@ -20,6 +20,8 @@ let initialState = {
   },
   bloggerList:[],
   bloggerListSkeletonStatus:true,
+  bloggerLastPostsList:[],
+  bloggerLastPostsListSkeletonStatus:true,
   businessOrders:[],
   businessOrdersSkeletonStatus:true,
   managementList:[],
@@ -222,6 +224,12 @@ const counterSlice = createSlice({
     SetManagementList(state,action){
       state.managementList = action.payload;
     },
+    SetLastPosts(state,action){
+      state.bloggerLastPostsList = action.payload;
+    },
+    SetbloggerLastPostsListSkeletonStatus(state,action){
+      state.bloggerLastPostsListSkeletonStatus = action.payload;
+    },
 
 
 
@@ -267,6 +275,8 @@ export const { increment,
   SetBusinessOrdersList,
   SwitchBusinessOrdersSkeletonStatus,
   SetManagementList,
+  SetLastPosts,
+  SetbloggerLastPostsListSkeletonStatus,
 
  } = counterSlice.actions
 export default counterSlice.reducer;

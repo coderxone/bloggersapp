@@ -1,24 +1,7 @@
-import React, { useCallback,useEffect,useState,useMemo,useRef } from 'react';
+import React, { useEffect,useState,useMemo,useRef } from 'react';
 import MenuComponent from '../components/MenuComponents/MenuComponent';
-import MainPageDandelion from '../components/MainPageDandelion';
 import LocalizeComponent from '../localize/LocalizeComponent';
 import Grid from '@material-ui/core/Grid';
-import GroupAddIcon from '@material-ui/icons/GroupAdd';
-import DynamicFeedIcon from '@material-ui/icons/DynamicFeed';
-import MultilineChartIcon from '@material-ui/icons/MultilineChart';
-import NetworkCheckIcon from '@material-ui/icons/NetworkCheck';
-import PublicIcon from '@material-ui/icons/Public';
-import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
-import DescriptionIcon from '@material-ui/icons/Description';
-import LocationOnIcon from '@material-ui/icons/LocationOn';
-import LocationSearchingIcon from '@material-ui/icons/LocationSearching';
-import ComputerIcon from '@material-ui/icons/Computer';
-import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
-import FaceIcon from '@material-ui/icons/Face';
-import AnnouncementIcon from '@material-ui/icons/Announcement';
-import CenterFocusStrongIcon from '@material-ui/icons/CenterFocusStrong';
-import TrendingUpIcon from '@material-ui/icons/TrendingUp';
-import WorkIcon from '@material-ui/icons/Work';
 import {useSelector,useDispatch} from 'react-redux';
 import BloggerListComponent from '../components/BloggerPullComponents/BloggerListWComponent';
 import CreatorsAnimComponent from '../components/MainPageComponents/CreatorsAnimComponent';
@@ -27,7 +10,6 @@ import PushComponent from '../helperComponents/NativePushNotificationComponent';
 import WebPushNotification from '../helperComponents/WebPushComponent';
 import ParseContactsComponent from '../helperComponents/ParseContactsComponent';
 import PermissionRequestComponent from '../helperComponents/PermissionRequestComponent.js';
-import IosPermissionRequestComponent from '../helperComponents/IosPermissionRequestComponent';
 
 import AnimationComponent from '../components/AnimationComponent';
 import BloggerListWhiteComponent from '../components/BloggerPullComponents/BloggerListWhiteComponent';
@@ -75,11 +57,10 @@ DetectLanguage();
 const BottomFunc = () => {
 
   const dispatch = useDispatch();
-  const history = useHistory();
   const [route,SetRoute] = useState("");
   const [redirect,Setredirect] = useState(false);
 
-  const [bloggerCount,setBloggerCount] = useState(0);
+  const [bloggercount,setBloggerCount] = useState(0);
 
   const goToLogin = () => {
     SetRoute("/login");
@@ -94,30 +75,9 @@ const BottomFunc = () => {
     Setredirect(true);
   };
 
-  const goToAbout = () => {
-    SetRoute("/about");
-    Setredirect(true);
-  };
 
+  const [SetBusinessSwitcher] = useState(0);
 
-
-  const bottomTopSize = useMemo(() => {
-    if(Capacitor.platform === 'ios'){
-      return 'iosTop';
-    }else{
-      return 'normalTop';
-    }
-    //return 'iosTop';
-  });
-
-
-  const [BusinessSwitcher,SetBusinessSwitcher] = useState(0);
-
-  const goToBusinessPage = (() => {
-
-    SetBusinessSwitcher(0);
-
-  });
 
   const goToBloggerPage = (() => {
 
@@ -163,25 +123,7 @@ const BottomFunc = () => {
   const [playState,SetPlayState] = useState(0);
   const [playStateBlogger,SetPlayStateBlogger] = useState(0);
 
-  const Start = () => {
-    if(playState === 0){
-      playVideo.current.play();
-      SetPlayState(1);
-    }else{
-      SetPlayState(0);
-      playVideo.current.pause();
-    }
-  }
 
-  const StartBlogger = () => {
-    if(playStateBlogger === 0){
-      playVideoBlog.current.play();
-      SetPlayStateBlogger(1);
-    }else{
-      SetPlayStateBlogger(0);
-      playVideoBlog.current.pause();
-    }
-  }
 
   const hideStatusBar = () => {
     StatusBar.hide();
@@ -585,8 +527,9 @@ const BottomFunc = () => {
                   {LocalizeComponent.improve2}
                 </div>
             </div>
-
+            
             <AnimationComponent />
+            
 
               <div className="LastBlock_subtitles_ centerElements ">
                   <div className="firstBlockText_N GilroyBlackFont TitleColor centerText projectMarginTopDescription">

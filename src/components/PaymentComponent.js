@@ -71,7 +71,7 @@ const PaymentComponent = (props) => {
   const paypalB = useRef(null);
 
   const ProductionClientId = "AW3Q8YTzK6AblOoFcJ9kCI5aXq51N_1KeJh-SgbQ3a28knHp8TmFE4JPy6lnzTv9pLZaYiaBDrWJMQ1-";
-  //const DevelopmentClientId = "AWNN2lrrAjKYkq0AsXM656L_AoQuQuJFSFeuEXAOyHdyqCmlkaajVIpyKrInFxHfNrGzmzb9l8vnN_GN";
+
   const DevelopmentClientId = "AQBizLLv9gVfG0uMcTMIDHqXhbviVFaAAi-bhlPDJbOaSsaudsPjSf88-ac-czpp9AR-FsqFaZUoUuEw";
 
   const classes = useStyles();
@@ -232,7 +232,7 @@ const PaymentComponent = (props) => {
                       }}
 
                       options={{
-                        clientId: DevelopmentClientId,
+                        clientId: ProductionClientId,
                         currency:"USD",
 
                       }}

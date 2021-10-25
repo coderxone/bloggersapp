@@ -11,12 +11,12 @@ const serverImageBackgroundPath = "https://echohub.io/backgroundImages/";
 const serverVideoPath = "https://echohub.io/videoUploads/";
 
 
-//const baseurl = 'https://echohub.io:3004';//browser https
-const baseurl = 'https://localhost:3004';
+const baseurl = 'https://echohub.io:3004';//browser https
+//const baseurl = 'https://localhost:3004';
 const redirectUrl = "https://echohub.io/main"; //android
 //const redirectUrl = "http://localhost:8080/main";
 //const userRole = "1"; blogger
-const userRole = "2"; //business owner
+//const userRole = "2"; //business owner
 //newBusiness@gmail.com
 //testblogger@gmail.com
 //const userRole = "1"; //blogger
@@ -54,7 +54,7 @@ const newmodule = {
         //if((phoneid == null) && (fixdevicememory == 0)){
         if(fixdevicememory == 0){
 
-          console.log("checked1");
+         // console.log("checked1");
 
           var generatevalue = generateModule.generateRandomNumber(1,5555555555555);
 

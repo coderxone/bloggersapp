@@ -22,38 +22,7 @@ import MembershipComponent from '../../helperComponents/MembershipComponent';
 const ListSkeletonMatrix = ((props) => {
 
 
-  let colorIndex = 0;
-  let colorArray = ["#FFA24D","#78D993","#F9A3BE"];
-
-  const colorTracker = () => {
-      if(colorIndex > 2){
-        colorIndex = 0;
-      }
-
-      let item = colorArray[colorIndex];
-      colorIndex++;
-      return item;
-  }
-
-  const checkImage = (imageUrl) => {
-
-    if(imageUrl.indexOf('graph') >= 0){
-
-      let str = "url(" + imageUrl + ") no-repeat center/cover";
-      return str;
-    }else{
-      if(imageUrl == 0 || imageUrl == "no-image.png"){
-          let str = colorTracker();
-          return str;
-      }else{
-        let str = "url(" + config.getServerImagePath() + imageUrl + ") no-repeat center/cover";
-        return str;
-      }
-
-    }
-  }
-
-
+  
   const list = props.list;
 
   const iterList = list.map((item,index) =>
@@ -311,9 +280,6 @@ const BloggerListWhiteComponent = (props) => {
 
         </div>
 
-        {
-          businessOrdersSkeletonStatus
-        }
 
         {
           currentUrl === false && (

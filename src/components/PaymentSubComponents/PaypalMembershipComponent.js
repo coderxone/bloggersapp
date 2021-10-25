@@ -73,7 +73,7 @@ const PaymentComponent = (props) => {
   const history = useHistory();
 
   const ProductionClientId = "AW3Q8YTzK6AblOoFcJ9kCI5aXq51N_1KeJh-SgbQ3a28knHp8TmFE4JPy6lnzTv9pLZaYiaBDrWJMQ1-";
-  //const DevelopmentClientId = "AWNN2lrrAjKYkq0AsXM656L_AoQuQuJFSFeuEXAOyHdyqCmlkaajVIpyKrInFxHfNrGzmzb9l8vnN_GN";
+
   const DevelopmentClientId = "AQBizLLv9gVfG0uMcTMIDHqXhbviVFaAAi-bhlPDJbOaSsaudsPjSf88-ac-czpp9AR-FsqFaZUoUuEw";
 
   const classes = useStyles();
@@ -188,7 +188,7 @@ const PaymentComponent = (props) => {
 
           return actions.subscription.create({
             /* Creates the subscription */
-            plan_id: 'P-41442501Y1533215YME6FZJY',
+            plan_id: 'P-9JV25226L55686621MF3HVHI',
           });
       };
 
@@ -247,7 +247,7 @@ const PaymentComponent = (props) => {
 
 
                   options={{
-                      clientId: DevelopmentClientId,
+                      clientId: ProductionClientId,
                       currency:"USD",
                       vault:true,
                       intent:"subscription"

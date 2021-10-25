@@ -476,7 +476,9 @@ let strings = new LocalizedStrings({
    projected_income:"Projected company income",
    completedTasks:"Completed Tasks",
    global_posts_by_locations:"Global Sales by Locations",
-   all_posts_where_posted:"All Posts where posted"
+   all_posts_where_posted:"All Posts where posted",
+   b_posted:"Posted",
+   b_hours:"hours ago",
 
 
   },

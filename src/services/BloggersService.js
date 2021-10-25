@@ -3,6 +3,7 @@ import socket from '../config/socket.js';
 import config from '../config/config.js';
 import cryptLibrary from '../helpers/CryptLibrary';
 const observ_subject = new Subject();
+const observ_subjectSecondEmitter = new Subject();
 
 const BloggerService = {
 
@@ -58,6 +59,28 @@ const BloggerService = {
             });
 
             return observ_subject;
+          },
+          
+          
+          checkLastBloggersPosts:async () => {
+
+            var data = {
+              deviceId:config.getdeviceid(),
+              email:config.getUserEmail(),
+            }
+
+            var encryptedData = cryptLibrary.encrypt(data);
+
+            socket.emit("lastCreatorPosts",encryptedData);
+          },
+
+          listencheckLastBloggersPosts:() => {
+            socket.on("lastCreatorPosts",(data) => {
+                //console.log(data);
+                observ_subjectSecondEmitter.next(cryptLibrary.decrypt(data));
+            });
+
+            return observ_subjectSecondEmitter;
           },
 
 

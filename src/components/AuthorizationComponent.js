@@ -242,8 +242,6 @@ const AuthorizationComponent = (props) => {
 //xx
         const authSubscribe = AuthService.getAuthData().subscribe(data => {
 
-          console.log(data);
-
           if((data.status === "olduser") && (data.password === true)){
 
 

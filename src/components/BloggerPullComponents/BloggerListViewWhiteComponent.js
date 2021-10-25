@@ -1,5 +1,4 @@
 import React, { useCallback,useEffect,useState,useMemo,useRef } from 'react';
-import LocalizeComponent from '../../localize/LocalizeComponent';
 import Grid from '@material-ui/core/Grid';
 import config from '../../config/config';
 import Checkbox from '@material-ui/core/Checkbox';
@@ -10,11 +9,10 @@ import { makeStyles } from '@material-ui/core/styles';
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
 import '../../components/BloggerPullComponents/BloggerListComponent.css';
 import { useSelector, useDispatch } from 'react-redux'
-import { multiSave,getMultiSave } from '../../features/counter-slice';
-import { openMembershipDialog,markListItem } from '../../features/counter-slice';
+import { openMembershipDialog,markListItem,multiSave } from '../../features/counter-slice';
 
 import {
-  Link,useHistory
+  useHistory
 } from "react-router-dom";
 
  //LocalizeComponent.setLanguage("ru");
@@ -171,18 +169,7 @@ const MapList = ((props) => {
 
     }
 
-    const eliotIco = "no-image.png";
 
-    const [messageCount,setMessageCount] = useState(3);
-    const [online,setOnline] = useState(1);
-    var contactObj = {
-      name:"testName",
-      date:"someDate",
-      message:"newMessage",
-      count:3
-
-    }
-    const [contact,setContact] = useState(contactObj);
 
     let colorIndex = 0;
     let colorArray = ["#FFA24D","#78D993","#F9A3BE"];
@@ -268,7 +255,7 @@ const MapList = ((props) => {
 
           let page = {
             name:'page',
-            value:'main'
+            value:'choose-creator'
           }
 
           dispatch(multiSave(page));
@@ -278,7 +265,7 @@ const MapList = ((props) => {
           if(check !== false){
 
               if(membership === true){
-                goToProfile(item,membership);
+                goToProfile(item);
               }else if(membership === false){
                 //request membership
                 dispatch(openMembershipDialog());
@@ -291,7 +278,7 @@ const MapList = ((props) => {
 
       });
 
-      const goToProfile = useCallback((item,membership) => {
+      const goToProfile = useCallback((item) => {
 
           return history.push({pathname: '/explore_profile',data:item}), [history];
 
@@ -312,7 +299,11 @@ const MapList = ((props) => {
 
            key={item.id} className="mainListS_W deleteUrlClass">
             <div className="pleftBlockS">
-              <div style = {{ backgroundPosition: "center",backgroundRepeat:"no-repeat",backgroundSize:"cover",background: checkImage(item.image_url) }  } className="pleftBlockOneTwo"></div>
+              <div 
+              style = {{ backgroundPosition: "center",backgroundRepeat:"no-repeat",backgroundSize:"cover",background: checkImage(item.image_url) }  }
+              className="pleftBlockOneTwo"
+              onClick={event => checkProfile(item,membership)}
+              ></div>
               <div className="pleftBlockTwo">
               {item.online == 1 ? (
                     <FiberManualRecordIcon className="mysizes "/>
