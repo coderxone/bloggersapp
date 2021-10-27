@@ -336,6 +336,7 @@ const AuthorizationComponent = (props) => {
                   "html":content
                 }
 
+                //send activation link
                 sendMailService.sendMailToUser(sendObject);
 
                 //send to admin
