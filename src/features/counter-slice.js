@@ -43,6 +43,7 @@ let initialState = {
     questions:[LocalizeComponent.bl1,LocalizeComponent.bl2,LocalizeComponent.bl3,LocalizeComponent.bl4,LocalizeComponent.bl5,LocalizeComponent.socialNetworkAge,LocalizeComponent.bl6,LocalizeComponent.bl7,LocalizeComponent.bl8,LocalizeComponent.bl9,LocalizeComponent.bl10,LocalizeComponent.bl11]
   },
   mobileDialogStatus:false,
+  backButtonStatus:false,
   membership:false,
   membershipDialog:{
     membershipDialogStatus:false,
@@ -230,6 +231,9 @@ const counterSlice = createSlice({
     SetbloggerLastPostsListSkeletonStatus(state,action){
       state.bloggerLastPostsListSkeletonStatus = action.payload;
     },
+    EnableBackButton(state,action){
+      state.backButtonStatus = action.payload;
+    },
 
 
 
@@ -277,6 +281,7 @@ export const { increment,
   SetManagementList,
   SetLastPosts,
   SetbloggerLastPostsListSkeletonStatus,
+  EnableBackButton,
 
  } = counterSlice.actions
 export default counterSlice.reducer;

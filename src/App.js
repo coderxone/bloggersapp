@@ -47,6 +47,7 @@ import BloggerListComponent from './components/BloggerPullComponents/BloggerList
 import PaypalMembershipComponent from './components/PaymentSubComponents/PaypalMembershipComponent';
 import BloggerListWhiteComponent from './components/BloggerPullComponents/BloggerListWhiteComponent';
 import LastCreatorsPostComponent from './components/BloggerPullComponents/LastCreatorsPostComponent';
+import NewsComponent from './components/NewsComponents/NewsComponent';
 
 
 const App = () => {
@@ -104,6 +105,7 @@ const App = () => {
                 <Route path="/businessprofile" back={true} component={businessUserProfileComponent} exact={true} />
                 <Route path="/why" back={true} component={WhyEchohubComponent} exact={true} />
                 <Route path="/bloggerlist" back={true} component={BloggerListComponent} exact={true} />
+                <Route path="/news" back={true} component={NewsComponent} exact={true} />
                 <Route exact path="/" render={() => <Redirect to="/main" />} />
                 </LastLocationProvider>
               </Router>

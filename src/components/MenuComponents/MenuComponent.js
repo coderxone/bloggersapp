@@ -20,6 +20,7 @@ import {useSelector,useDispatch} from 'react-redux';
 import {handleSwitch,handleSwitchOnlineStatusSwitcher,SetUserRole,SetUserAuthorization} from '../../features/counter-slice';
 import MobileAppComponent from '../../helperComponents/mobileAppComponent';
 import { Capacitor } from '@capacitor/core';
+import GoBackAbsoluteComponent from '../../helperComponents/goBackAbsoluteComponent';
 
 
 
@@ -41,6 +42,7 @@ const ExampleComponent = (props) => {
   const approveStatus = useSelector(state => state.counter.bloggerDashboard.approveStatus);
   const emailStatus = useSelector(state => state.counter.bloggerDashboard.emailStatus);
   const mobileDialogStatus = useSelector(state => state.counter.mobileDialogStatus);
+  const backButtonStatus = useSelector(state => state.counter.backButtonStatus);
   const dispatch = useDispatch();
 
   const history = useHistory();
@@ -337,12 +339,19 @@ const ExampleComponent = (props) => {
           <div className="menuContainer">
 
             {
-              logoStatus === 0 ? (
+              logoStatus === 0 && 
+              backButtonStatus === false
+               && (
                 <Link to={{pathname: "/main"}}>
                   <img className="menuLogoStyle" src={logo} alt="echohub.io logo"/>
                 </Link>
 
-              ) : (
+              )
+            }
+            {
+              logoStatus === 1 && 
+              backButtonStatus === false &&
+              (
                 <div className="menuLogoStyleTwo">
                   <div className="menuLogoStyleTwoText">
                       ECHOHUB.IO
@@ -350,6 +359,15 @@ const ExampleComponent = (props) => {
                 </div>
               )
             }
+
+            {
+              //back button enable redux variable
+              backButtonStatus === true && (
+                  <GoBackAbsoluteComponent />
+              )
+            }
+              
+            
 
 
             <div className="menuSignUpCover"  onClick={GoToLogin}>
