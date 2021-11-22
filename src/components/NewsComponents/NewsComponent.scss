@@ -32,6 +32,14 @@
     padding:15px;
     overflow: hidden;
   }
+  .editFrame{
+    position:absolute;
+    bottom: 20px;
+    width: 100%;
+    background: linear-gradient(to top, rgba(0, 0, 0, 1) 0%,  rgba(0, 0, 0, 0.1) 100%);
+    padding:15px;
+    overflow: hidden;
+  }
 
   .newsGridContainer{
     display: grid;
@@ -75,6 +83,10 @@
   }
   .newsDescription{
     margin-top:20px;
+  }
+
+  .editInputBackground{
+    background-color: white;
   }
 
   

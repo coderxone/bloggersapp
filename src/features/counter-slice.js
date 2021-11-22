@@ -49,7 +49,9 @@ let initialState = {
     membershipDialogStatus:false,
     confirm:LocalizeComponent.membershipDialogConfirm,
     cancel:LocalizeComponent.membershipDialogCancel,
-  }
+  },
+  adminMode:true,
+  newsEditMode:0
 
  }
 

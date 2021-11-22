@@ -9,7 +9,7 @@ import './NewsComponent.scss';
 import ProgressIndicator from '../../helperComponents/progressIndicator';
 import ProfileService from '../../services/ProfileService';
 import EditIcon from '@material-ui/icons/Edit';
-
+import TextareaAutosize from '@material-ui/core/TextareaAutosize';
 import {
   Link,useHistory
 } from "react-router-dom";
@@ -22,8 +22,7 @@ import { EnableBackButton } from '../../features/counter-slice';
 import background from '../../images/background.jpeg';
 import AccessTimeIcon from '@material-ui/icons/AccessTime';
 import RemoveRedEyeIcon from '@material-ui/icons/RemoveRedEye';
-import TextField from '@mui/material/TextField';
-import NewsService from '../../services/NewsService';
+import { Input } from '@mui/material';
 
 
 
@@ -165,128 +164,47 @@ const NewsComponent = (props) => {
     ProfileService.getOwnData();
     //enable backButton
     dispatch(EnableBackButton(true));
-    
 
-    let listenRequestNewsData = NewsService.listenRequestNewsData().subscribe(data => {
-      if(data.status === "ok"){
-          SetTitle(data.results[0].title);
-          SetDescription(data.results[0].description);
-          SetCategory(data.results[0].category);
-          SetDate(data.results[0].date + " hours ago");
-      }
-    })
 
     // props.reduxStorage.getState(res => {
     //   console.log(res);
     // })
-    NewsService.requestNewsData(id);
+
 
 
     return () => {
         util.unsubscribe();
         utilTwo.unsubscribe();
-        listenRequestNewsData.unsubscribe();
         dispatch(EnableBackButton(false));
     }
-  },[id]);
+  },[])
 
-  const hibrydClass = newsEditMode === 1 ? "GilroyBlackFont whiteColor editFrame" : "GilroyBlackFont whiteColor newsFrame";
-  const [category,SetCategory] = useState("Sport");
-  const [title,SetTitle] = useState("Example Title");
-  const [description,SetDescription] = useState("example description");
-  const [date,SetDate] = useState("4 hours ago");
-
-  const changeItem = (itemName,value) => {
-
-    
-      switch (itemName) {
-        case 'category':
-          SetCategory(value);
-        break;
-        
-        case 'title':
-          SetTitle(value);
-        break;
-
-        case 'description':
-          SetDescription(value);
-        break;
-      }
-    
-      
-  }
-
-  useMemo(() => {
-
-    let obj = {
-      category:category,
-      title:title,
-      description:description,
-      id:id
-    }
-
-    if(category.length > 2 && title.length > 2 && description.length > 2){
-      NewsService.updateNewsData(obj);
-    }
-
-  },[category,title,description,id]);
+  const category = { 'aria-label': 'category' };
 
   return (
 
     <div id="opacityControl">
       <MenuComponent />
 
+
       <Grid container className="projectContainer"  >
 
         {
           switchDownloadedBackgroundImage === 0 ? (
             <div className="news_u_background" style={ { backgroundPosition: "center",backgroundRepeat:"no-repeat",backgroundSize:"cover",background: "url(" + background + ") no-repeat center/cover" }}>
-              <div className={hibrydClass}>
+              <div className="GilroyBlackFont whiteColor newsFrame">
                 {
                   newsEditMode === 1 ? (
-                    
-                    <div className="editInputBackground">
-                      <TextField
-                        label="Category"
-                        variant="standard"
-                        multiline
-                        className="fullSelect"
-                        value={category}
-                        onChange={event => changeItem('category',event.target.value)}
-                      />
-                    </div>
-                    
+                    <Input defaultValue="Hello world" inputProps={category} />
                   ):(
-                    <div >{category}</div>
+                    <div >Space</div>
                   )
                 }
                 
-                <div className="textOpacity">{date}</div>
-
-                {
-                  newsEditMode === 1 ? (
-                    
-                    <div className="editInputBackground">
-                      <TextField
-                        label="Title"
-                        variant="standard"
-                        multiline
-                        className="fullSelect"
-                        onChange={event => changeItem('title',event.target.value)}
-                        value={title}
-                      />
-                    </div>
-                    
-                  ):(
-                    <h2 className="whiteOpacity">
-                      {
-                        title
-                      }
-                    </h2>
-                  )
-                }
-
-                
+                <div className="textOpacity">4 hours ago</div>
+                <h2 className="whiteOpacity">
+                  SpaceX sends first regular Crew Dragon mission to ISS
+                </h2>
               </div>
             </div>
           ) : (
@@ -336,30 +254,9 @@ const NewsComponent = (props) => {
                 </div>
               </div>
 
-              {
-                  newsEditMode === 1 ? (
-                    
-                    <div className="editInputBackground newsDescription">
-                      <TextField
-                        label="Decription"
-                        variant="standard"
-                        multiline
-                        className="fullSelect"
-                        onChange={event => changeItem('description',event.target.value)}
-                        value={description}
-                      />
-                    </div>
-                    
-                  ):(
-                    <div className="GilroyRegularFont smallFontSize newsDescription">
-                      {
-                        description
-                      }
-                    </div>
-                  )
-                }
-
-              
+              <div className="GilroyRegularFont smallFontSize newsDescription">
+                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Porro, ea error? Corporis, minima? Quas illo ipsa quasi nulla officia nobis, aspernatur consectetur reprehenderit quisquam impedit quis eveniet architecto aliquid voluptates.
+              </div>
 
 
 
