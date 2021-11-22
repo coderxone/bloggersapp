@@ -20,6 +20,9 @@ import DoneAllIcon from '@material-ui/icons/DoneAll';
 import UserProfilePhotoUpload from '../profileComponents/userProfilePhotoUpload';
 import { useSelector, useDispatch } from 'react-redux'
 import { EnableBackButton } from '../../features/counter-slice';
+import background from '../../images/background.jpeg';
+import AccessTimeIcon from '@material-ui/icons/AccessTime';
+import RemoveRedEyeIcon from '@material-ui/icons/RemoveRedEye';
 
 
 
@@ -176,8 +179,14 @@ const NewsComponent = (props) => {
 
         {
           switchDownloadedBackgroundImage === 0 ? (
-            <div className="news_u_background" style={ { backgroundPosition: "center",backgroundRepeat:"no-repeat",backgroundSize:"cover",background: "url(" + backgroundImageUrl + ") no-repeat center/cover" }}>
-
+            <div className="news_u_background" style={ { backgroundPosition: "center",backgroundRepeat:"no-repeat",backgroundSize:"cover",background: "url(" + background + ") no-repeat center/cover" }}>
+              <div className="GilroyBlackFont whiteColor newsFrame">
+                <div >Space</div>
+                <div className="textOpacity">4 hours ago</div>
+                <h2 className="whiteOpacity">
+                  SpaceX sends first regular Crew Dragon mission to ISS
+                </h2>
+              </div>
             </div>
           ) : (
             <img className="news_u_background" src={BACKGROUND_IMAGE_DATA}  />
@@ -197,6 +206,39 @@ const NewsComponent = (props) => {
 
         <div className="newsInfoPanelCover">
             <div className="newsInfoPanel robotoFont blackColor">
+
+              <div className="newsGridContainer GilroyRegularFont">
+                <div className="newsGridItems">
+                  <div className="subGridItems">
+                      <div className="author_image" style={ { backgroundPosition: "center",backgroundRepeat:"no-repeat",backgroundSize:"cover",background: "url(" + background + ") no-repeat center/cover" }}>
+                      </div>
+                  </div>
+                  <div className="subGridItems">
+                      <div className="author_text">John Agger</div>
+                  </div>
+                </div>
+                <div className="newsGridItemsTwo">
+                  <div className="subGridItems">
+                      <AccessTimeIcon className="newsClock"/>
+                  </div>
+                  <div className="subGridItems">
+                    <div className="author_text">2 min</div>
+                  </div>
+                </div>
+                <div className="newsGridItems">
+                  <div className="subGridItems">
+                      <RemoveRedEyeIcon className="newsClock" />
+                  </div>
+                  <div className="subGridItems">
+                    <div className="author_text">234 views</div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="GilroyRegularFont smallFontSize newsDescription">
+                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Porro, ea error? Corporis, minima? Quas illo ipsa quasi nulla officia nobis, aspernatur consectetur reprehenderit quisquam impedit quis eveniet architecto aliquid voluptates.
+              </div>
+
 
 
 
