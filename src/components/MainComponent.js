@@ -14,6 +14,7 @@ import PermissionRequestComponent from '../helperComponents/PermissionRequestCom
 import AnimationComponent from '../components/AnimationComponent';
 import BloggerListWhiteComponent from '../components/BloggerPullComponents/BloggerListWhiteComponent';
 import LastCreatorsPostComponent from '../components/BloggerPullComponents/LastCreatorsPostComponent';
+import NewsListComponent from '../components/NewsComponents/NewsListComponent';
 
 import worldImage from '../images/world.png';
 import grow_chart from '../images/grow_chart.png';
@@ -22,7 +23,7 @@ import screens from '../images/screens.png';
 import track from '../images/track.png';
 import country from '../images/country.png';
 
-import LanguageComponent from '../helperComponents/language/LanguageComponent.js';
+import LanguageComponent from '../helperComponents/Language/LanguageComponent.js';
 import Observable from '../services/Observable';
 import config from '../config/config';
 import LiveService from '../services/LiveService';
@@ -588,7 +589,7 @@ const BottomFunc = () => {
 
             <LastCreatorsPostComponent/>
 
-
+            <NewsListComponent />
 
 
 

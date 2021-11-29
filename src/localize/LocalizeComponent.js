@@ -479,6 +479,7 @@ let strings = new LocalizedStrings({
    all_posts_where_posted:"All Posts where posted",
    b_posted:"Posted",
    b_hours:"hours ago",
+   latestNews:"Latest News",
 
 
   },

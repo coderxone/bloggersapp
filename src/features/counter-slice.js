@@ -50,8 +50,13 @@ let initialState = {
     confirm:LocalizeComponent.membershipDialogConfirm,
     cancel:LocalizeComponent.membershipDialogCancel,
   },
-  adminMode:true,
-  newsEditMode:0
+  adminMode:false,
+  newsEditMode:0,
+  newsBackgroundImage:{},
+  alertState:false,
+  alertText:'',
+  latestNews:[],
+  latestNewsStatus:false,
 
  }
 
@@ -236,6 +241,25 @@ const counterSlice = createSlice({
     EnableBackButton(state,action){
       state.backButtonStatus = action.payload;
     },
+    SetNewsEditMode(state,action){
+      state.newsEditMode = action.payload;
+    },
+    SetNewsBackgroundImage(state,action){
+      state.newsBackgroundImage = action.payload;
+    },
+    setAlertState(state,action){
+      state.alertState = action.payload.status;
+      state.alertText = action.payload.text;
+    },
+    setNewsList(state,action){
+      state.latestNews = action.payload;
+    },
+    setNewsSkeletonStatus(state,action){
+      state.latestNewsStatus = action.payload;
+    },
+    setAdminMode(state,action){
+      state.adminMode = action.payload;
+    },
 
 
 
@@ -284,6 +308,12 @@ export const { increment,
   SetLastPosts,
   SetbloggerLastPostsListSkeletonStatus,
   EnableBackButton,
+  SetNewsEditMode,
+  SetNewsBackgroundImage,
+  setAlertState,
+  setNewsList,
+  setNewsSkeletonStatus,
+  setAdminMode,
 
  } = counterSlice.actions
 export default counterSlice.reducer;

@@ -1,6 +1,5 @@
-import React, { useCallback,useEffect,useState,useMemo,useRef } from 'react';
+import React, { useCallback,useEffect,useMemo } from 'react';
 import LocalizeComponent from '../../localize/LocalizeComponent';
-import Grid from '@material-ui/core/Grid';
 import config from '../../config/config';
 import {
   Link,useHistory
@@ -9,11 +8,9 @@ import {
 import '../../css/lastCreatorsPostsComponent.scss';
 
 import Observable from '../../services/Observable';
-import BloggerService from '../../services/BloggersService';
 import { useSelector, useDispatch } from 'react-redux'
-import { SetLastPosts,SetbloggerLastPostsListSkeletonStatus,openMembershipDialog,multiSave } from '../../features/counter-slice';
+import { setNewsList,setNewsSkeletonStatus,multiSave,setAdminMode } from '../../features/counter-slice';
 import Skeleton from '@material-ui/lab/Skeleton';
-import MembershipComponent from '../../helperComponents/MembershipComponent';
 import background from '../../images/background.jpeg';
 import NewsService from '../../services/NewsService';
 
@@ -42,81 +39,47 @@ import NewsService from '../../services/NewsService';
           let str = colorTracker();
           return str;
       }else{
-        let str = "url(" + config.getServerImagePath() + imageUrl + ") no-repeat center/cover";
+        let str = "url(" + config.getServerNewsImagePath() + imageUrl + ") no-repeat center/cover";
         return str;
       }
 
     }
   }
 
-  const checkName = (name) => {
-
-    if(name != 0){
-      return name;
-    }else{
-      return "new blogger";
-    }
-  }
 
 const RenderList = (props) => {
 
   const list = props.list;
-  const membership = useSelector((state) => state.counter.membership);
   const adminMode = useSelector((state) => state.counter.adminMode);
   const dispatch = useDispatch();
   const history = useHistory();
-
-  const checkProfile = ((item,membership) => {
+  
+const goToNewsPage = useCallback((item) => {
 
     let page = {
       name:'page',
-      value:'last-bloggers-posts'
+      value:'last-news'
     }
 
     dispatch(multiSave(page));
 
-    let check = config.CheckIfAuthorized();
-
-    if(check !== false){
-
-        if(membership === true){
-          goToProfile(item);
-        }else if(membership === false){
-          //request membership
-          dispatch(openMembershipDialog());
-
-        }
-
-    }else{
-      goToLogin();
-    }
-
-});
-
-const goToProfile = useCallback((item) => {
-
-    return history.push({pathname: '/explore_profile',data:item}), [history];
-
-});
-const goToLogin = useCallback(() => {
-
-    return history.push({pathname: '/login'}), [history];
+    return history.push({pathname: '/news/' + item.id}), [history];
 
 });
 
   const finalList = list.map((item) => 
 
-        <div key={item.id} className="gridItem"  onClick={event => checkProfile(item,membership)}>
+        <div key={item.id} className="gridItem"  onClick={event => goToNewsPage(item)}>
           <div className="gridSubItem leftRadius"
           style = {{
                     backgroundPosition: "center",
                     backgroundRepeat:"no-repeat",
                     backgroundSize:"cover",
-                    background: checkImage(item.image_url)
+                    background: checkImage(item.image)
                   }}>
           </div>
           <div className="gridSubItemDoubleRow rightRadius">
-                <div className="gridSubItemDoubleRowText gridSubItemDoubleRowTextEndAlign">{checkName(item.firstName)}</div>
+                <div className="gridSubItemDoubleRowText gridSubItemDoubleRowTextEndAlign">{item.title}</div>
                 <div className="gridSubItemDoubleRowText gridSubItemDoubleRowTextStartAlign">{LocalizeComponent.b_posted} {item.postedTime} {LocalizeComponent.b_hours}</div>
           </div>
         </div>
@@ -127,6 +90,9 @@ const goToLogin = useCallback(() => {
   const createNewAds = () => {
     NewsService.addNews();
   }
+
+
+
 
 
   return (
@@ -192,8 +158,8 @@ const LastCreatorsPostsComponent = (props) => {
 
   const dispatch = useDispatch();
   const history = useHistory();
-  const bloggerLastPostsList = useSelector((state) => state.counter.bloggerLastPostsList);
-  const bloggerLastPostsListSkeletonStatus = useSelector((state) => state.counter.bloggerLastPostsListSkeletonStatus);
+  const latestNews = useSelector((state) => state.counter.latestNews);
+  const latestNewsStatus = useSelector((state) => state.counter.latestNewsStatus);
 
  
 
@@ -201,20 +167,20 @@ const LastCreatorsPostsComponent = (props) => {
     //if current url is main page
     const currentUrl = useMemo(() => {
 
-      let url = window.location.href;
-      if(url.indexOf('main') >= 0){
-        return true;
-      }else{
-        return false;
-      }
+        let url = window.location.href;
+        if(url.indexOf('main') >= 0){
+          return true;
+        }else{
+          return false;
+        }
 
-  },[]);
+    },[]);
 
 
 
   const goNewAds = useCallback((id) => {
 
-        return history.push({pathname: '/news/' + id}), [history];
+        return history.push({pathname: '/create-news/' + id}), [history];
 
     });
 
@@ -223,20 +189,20 @@ const LastCreatorsPostsComponent = (props) => {
 
   useEffect(() => {
 
-    const listenBloggersData = BloggerService.listencheckLastBloggersPosts().subscribe(data => {
+    const listenBloggersData = NewsService.listenGetNews().subscribe(data => {
 
-        let lastPorsts = data.data;
+        let lastNews = data.data;
 
         if(currentUrl){
-          lastPorsts = lastPorsts.slice(0,5);
+          lastNews = lastNews.slice(0,5);
         }
 
-        let oldList = [...bloggerLastPostsList];
-        dispatch(SetbloggerLastPostsListSkeletonStatus(false));
+        let oldList = [...latestNews];
+        dispatch(setNewsSkeletonStatus(false));
 
-        if(oldList.length > lastPorsts.length || oldList.length < lastPorsts.length){
-          dispatch(SetLastPosts([]));
-          dispatch(SetLastPosts(lastPorsts));
+        if(oldList.length > lastNews.length || oldList.length < lastNews.length){
+          dispatch(setNewsList([]));
+          dispatch(setNewsList(lastNews));
         }
     });
 
@@ -244,11 +210,18 @@ const LastCreatorsPostsComponent = (props) => {
       listenBloggersData.unsubscribe();
     }
 
-  },[bloggerLastPostsList]);
+  },[latestNews]);
 
 
   useEffect(() => {
-    BloggerService.checkLastBloggersPosts();
+    NewsService.getNews();
+
+    //set admin mode
+    const checkAdminPermit = config.checkAdminAuthorization(3);
+    if(checkAdminPermit){
+        dispatch(setAdminMode(true));
+    }
+    //set admin mode
 
     //listen new ads
     let newsUnsub = NewsService.listenAddNews().subscribe(data => {
@@ -265,8 +238,8 @@ const LastCreatorsPostsComponent = (props) => {
   useEffect(() => {
 
     const obs = Observable.subscribeByTimer_30_second().subscribe(data => {
-        BloggerService.checkLastBloggersPosts();
-        dispatch(SetbloggerLastPostsListSkeletonStatus(true));
+        NewsService.getNews();
+        dispatch(setNewsSkeletonStatus(true));
     });
 
     return () => {
@@ -282,7 +255,7 @@ const LastCreatorsPostsComponent = (props) => {
 
         <div className="gridTitle">
           <div className="gridTitleText">
-            {LocalizeComponent.lastCreatorPosts}
+            {LocalizeComponent.latestNews}
           </div>
         </div>
 
@@ -290,7 +263,7 @@ const LastCreatorsPostsComponent = (props) => {
           currentUrl === true && (
             <Link className="gridTitle deleteUrlClass"
               to={{
-                pathname: "/last-bloggers-posts"
+                pathname: "/latest-news"
               }}
               >
               <div className="fullView">
@@ -307,23 +280,14 @@ const LastCreatorsPostsComponent = (props) => {
 
         
           {
-            bloggerLastPostsListSkeletonStatus === false ? (
-              <RenderList list={bloggerLastPostsList} />
+            latestNewsStatus === false ? (
+              <RenderList list={latestNews} />
             ) : (
-              <RenderSkeletonList list={bloggerLastPostsList} />
+              <RenderSkeletonList list={latestNews} />
             )
           }
 
-          {
-            currentUrl === false && (
-              <MembershipComponent/>
-            )
-          }
           
-
-
-            
-
             
         </div>
 

@@ -8,13 +8,14 @@ const routeUrl = "https://echohub.io";
 const serverNewImages = "https://echohub.io/newimages/";
 const serverImagePath = "https://echohub.io/profileImages/";
 const serverImageBackgroundPath = "https://echohub.io/backgroundImages/";
+const serverNewsPath = "https://echohub.io/newsImages/";
 const serverVideoPath = "https://echohub.io/videoUploads/";
 
 
-//const baseurl = 'https://echohub.io:3004';//browser https
-const baseurl = 'https://localhost:3004';
-//const redirectUrl = "https://echohub.io/main"; //android
-const redirectUrl = "http://localhost:8080/main";
+const baseurl = 'https://echohub.io:3004';//browser https
+//const baseurl = 'https://localhost:3004';
+const redirectUrl = "https://echohub.io/main"; //android
+//const redirectUrl = "http://localhost:8080/main";
 //const userRole = "1"; blogger
 //const userRole = "2"; //business owner
 //newBusiness@gmail.com
@@ -98,6 +99,9 @@ const newmodule = {
       },
       getServerImageBackgroundPath:() => {
         return serverImageBackgroundPath;
+      },
+      getServerNewsImagePath:() => {
+        return serverNewsPath;
       },
 
       getGeneratedImagePath:(urlPath) => {
@@ -410,6 +414,21 @@ const newmodule = {
             }
           }else{
             window.location.href = redirectUrl;
+          }
+
+      },
+
+      checkAdminAuthorization:(pageRole) => {
+          var role = localStorage.getItem("role");
+
+          if(role){
+            if(parseInt(role) === pageRole){
+                return true;
+            }else{
+              return false;
+            }
+          }else{
+            return false;
           }
 
       },

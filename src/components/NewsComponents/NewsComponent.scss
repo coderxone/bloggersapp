@@ -1,19 +1,20 @@
+@import '../../css/mainStyles.scss';
+
 .newsInfoPanelCover{
 
     width:100%;
     height:500px;
     padding:0px 0px 0px 0px;
-    background-color: white;
     z-index: 10;
   }
 
 .newsInfoPanel{
     margin-top:-15px;
     width:100%;
-    height:500px;
+    min-height: 200px;
     border-radius: 20px;
     background-color: #F6F6F6;
-    padding:20px;
+    padding:20px 20px 40px 20px;
   
   }
 
@@ -28,17 +29,15 @@
     position:absolute;
     bottom: -5px;
     width: 100%;
-    background: linear-gradient(to top, rgba(0, 0, 0, 1) 0%,  rgba(0, 0, 0, 0.1) 100%);
+    background: $darkOpacity;
     padding:15px;
-    overflow: hidden;
   }
   .editFrame{
     position:absolute;
     bottom: 20px;
     width: 100%;
-    background: linear-gradient(to top, rgba(0, 0, 0, 1) 0%,  rgba(0, 0, 0, 0.1) 100%);
+    background: $darkOpacity;
     padding:15px;
-    overflow: hidden;
   }
 
   .newsGridContainer{
@@ -87,6 +86,85 @@
 
   .editInputBackground{
     background-color: white;
+  }
+
+  .editNewsPanel{
+    position: absolute;
+    top:-50px;
+    right:15px;
+    width:70px !important;
+    height: 40px !important;
+    padding:5px 5px 5px 10px;
+    background: $darkOpacity;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    display:grid;
+    grid-template-columns: 30% 70%;
+  }
+  .readyNewsPanel{
+    position: absolute;
+    top:-50px;
+    right:15px;
+    width:150px !important;
+    height: 40px !important;
+    padding:5px 5px 5px 10px;
+    background: $darkOpacity;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    display:grid;
+    grid-template-columns: 30% 70%;
+  }
+
+  .editNewsIcon{
+
+    width:25px !important;
+    height: 25px !important;
+    color: $whiteFontColor;
+    
+  }
+  .doneNewsIcon{
+    width:25px !important;
+    height: 25px !important;
+    color: $whiteFontColor;
+  }
+
+  .newsCameraCover{
+    position:absolute;
+    width:100%;
+    left:-70%;
+    top:-130px;
+    display: grid;
+  }
+  .newsCameraBox{
+    width:70px;
+    height: 70px;
+    background: $darkOpacity;
+    justify-self: center;
+    display:grid;
+  }
+
+  .newsCameraIcon{
+    width:80% !important;
+    height: 80% !important;
+    color:$whiteColor;
+    place-self: center;
+  }
+
+  .newsProgressCover{
+    position: absolute;
+    width: 100%;
+    height: 20px;
+    top:-50px;
+    left:-70%;
+  }
+
+  .successNewsUploadIcon{
+    position: absolute;
+    left:15px;
+    top:-110px;
+    width: 24px;
+    font-size: 30px !important;
+    color:$successGreenColor;
   }
 
   

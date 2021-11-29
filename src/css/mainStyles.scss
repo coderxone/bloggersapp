@@ -10,6 +10,10 @@ $pushNotificationBackground:white;
 $designTextColor:#000000;
 $lightWhite:rgba(255, 255, 255, 0.1);
 $fontSize:18px;
+$darkOpacity:linear-gradient(to top, rgba(0, 0, 0, 1) 0%,  rgba(0, 0, 0, 0.1) 100%);
+$whiteOpacity:linear-gradient(to left, rgba(255, 255, 255,0.5) 0%,  rgba(255, 255, 255, 0.2) 100%);
+$whiteColor:rgba(255, 255, 255,0.7);
+
 @font-face {
   font-family: 'AppFont';
   src: url('../fonts/roboto/Roboto-Light.ttf') format('ttf'),

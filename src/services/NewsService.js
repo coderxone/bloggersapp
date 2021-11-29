@@ -4,6 +4,8 @@ import config from '../config/config.js';
 import cryptLibrary from '../helpers/CryptLibrary';
 const observ_subject = new Subject();
 const observ_subjectSecondEmitter = new Subject();
+const observ_subjectThirdEmitter = new Subject();
+const newsEmitter = new Subject();
 
 const BloggerService = {
 
@@ -66,6 +68,56 @@ const BloggerService = {
             });
 
             return observ_subjectSecondEmitter;
+          },
+          
+          
+          publishNews:async (id,title,description) => {
+
+            var data = {
+              deviceId:config.getdeviceid(),
+              email:config.getUserEmail(),
+              role:config.getUserRole(),
+              id:id,
+              title:title,
+              description:description,
+              status:1//change this status if you need unpublish
+            }
+
+            var encryptedData = cryptLibrary.encrypt(data);
+
+            socket.emit("publishNews",encryptedData);
+          },
+
+          listenPublishNews:() => {
+            socket.on("publishNews",(data) => {
+                //console.log(data);
+                observ_subjectThirdEmitter.next(cryptLibrary.decrypt(data));
+            });
+
+            return observ_subjectThirdEmitter;
+          },
+          
+          
+          getNews:async () => {
+
+            var data = {
+              deviceId:config.getdeviceid(),
+              email:config.getUserEmail(),
+              role:config.getUserRole(),
+            }
+
+            var encryptedData = cryptLibrary.encrypt(data);
+
+            socket.emit("getNews",encryptedData);
+          },
+
+          listenGetNews:() => {
+            socket.on("getNews",(data) => {
+                //console.log(data);
+                newsEmitter.next(cryptLibrary.decrypt(data));
+            });
+
+            return newsEmitter;
           },
 
           

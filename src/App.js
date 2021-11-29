@@ -49,6 +49,7 @@ import BloggerListWhiteComponent from './components/BloggerPullComponents/Blogge
 import LastCreatorsPostComponent from './components/BloggerPullComponents/LastCreatorsPostComponent';
 import NewsComponent from './components/NewsComponents/NewsComponent';
 import NewsListComponent from './components/NewsComponents/NewsListComponent';
+import ShowNewsComponent from './components/NewsComponents/ShowNewsComponent';
 
 
 const App = () => {
@@ -92,7 +93,6 @@ const App = () => {
                 <Route path="/choose-creator"  back={true} component={BloggerListComponent} exact={true} />
                 <Route path="/business-orders-for-bloggers"  back={true} component={BloggerListWhiteComponent} exact={true} />
                 <Route path="/last-bloggers-posts"  back={true} component={LastCreatorsPostComponent} exact={true} />
-                <Route path="/test"  back={true} component={NewsListComponent} exact={true} />
                 <Route path="/chooseway"  back={true} component={ChooseWayComponent} exact={true} />
                 <Route path="/main"  component={MainComponent} exact={true} />
                 <Route path="/about"  back={true} component={AboutUsComponent} exact={true} />
@@ -106,7 +106,10 @@ const App = () => {
                 <Route path="/businessprofile" back={true} component={businessUserProfileComponent} exact={true} />
                 <Route path="/why" back={true} component={WhyEchohubComponent} exact={true} />
                 <Route path="/bloggerlist" back={true} component={BloggerListComponent} exact={true} />
-                <Route path="/news/:id" back={true} component={NewsComponent} exact={true} />
+                <Route path="/create-news/:id" back={true} component={NewsComponent} exact={true} />
+                <Route path="/news/:id" back={true} component={ShowNewsComponent} exact={true} />
+                <Route path="/latest-news"  back={true} component={NewsListComponent} exact={true} />
+                <Route path="/test"  back={true} component={NewsListComponent} exact={true} />
                 <Route exact path="/" render={() => <Redirect to="/main" />} />
                 </LastLocationProvider>
               </Router>

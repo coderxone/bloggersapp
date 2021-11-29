@@ -68,7 +68,9 @@ $BlueTextColor:#2D69F6;
 .gridSubItemDoubleRowText{
   font-family: Roboto;
   text-overflow: ellipsis;
+  white-space: nowrap;
   overflow: hidden;
+  padding-right: 5px;
 }
 .gridSubItemDoubleRowTextEndAlign{
   align-self: end;
