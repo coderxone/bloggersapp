@@ -176,7 +176,7 @@ const BottomFunc = () => {
         }
       }
 
-    },2000);
+    },6000);
 
   }
 
@@ -225,10 +225,10 @@ const BottomFunc = () => {
       var mobile = localStorage.getItem("mobile");
 
       if((!mobile) && (mobile !== "1")){
-        setTimeout(function(){
-          dispatch(SetMobileDialogStatus(true));
-          localStorage.setItem("mobile","1");
-        },15000);
+        // setTimeout(function(){
+        //   dispatch(SetMobileDialogStatus(true));
+        //   localStorage.setItem("mobile","1");
+        // },15000);
       }
 
     }

@@ -81,15 +81,14 @@ const App = (props) => {
     },2000);
   }
 
-
-
   const uploadButton = (loadPath) => {
 
     //loadPath
     const formdata = new FormData();
 
     formdata.append('email',config.getUserEmail());
-
+    formdata.append('id',config.getUserItemName("id"));
+    
     let uploadUrl = config.getBaseDomainUrl() + "/newsimage";
 
     //return false;

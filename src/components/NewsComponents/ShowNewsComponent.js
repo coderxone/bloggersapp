@@ -10,6 +10,7 @@ import background from '../../images/background.jpeg';
 import AccessTimeIcon from '@material-ui/icons/AccessTime';
 import RemoveRedEyeIcon from '@material-ui/icons/RemoveRedEye';
 import NewsService from '../../services/NewsService';
+import Skeleton from '@mui/material/Skeleton';
 
 const NewsComponent = (props) => {
 
@@ -29,6 +30,16 @@ const NewsComponent = (props) => {
   const BACKGROUND_IMAGE_DATA = useSelector((state) => state.counter.newsBackgroundImage);
   const newsEditMode = useSelector((state) => state.counter.newsEditMode);
 
+  const hibrydClass = newsEditMode === 1 ? "GilroyBlackFont whiteColor editFrame" : "GilroyBlackFont whiteColor newsFrame";
+  const [category,SetCategory] = useState("");
+  const [title,SetTitle] = useState("");
+  const [description,SetDescription] = useState("");
+  const [date,SetDate] = useState("");
+  const [author,SetAuthor] = useState("");
+  const [views,SetViews] = useState(0);
+
+  const [ready, SetReady] = useState(false);
+
 
   useEffect(() => {
     //enable backButton
@@ -44,6 +55,7 @@ const NewsComponent = (props) => {
           SetAuthor(data.results[0].email);
           SetViews(data.results[0].views);
           dispatch(SetNewsBackgroundImage(config.getServerNewsImagePath() + data.results[0].image));
+          SetReady(true);
       }
     });
 
@@ -60,13 +72,6 @@ const NewsComponent = (props) => {
     }
   },[id]);
 
-  const hibrydClass = newsEditMode === 1 ? "GilroyBlackFont whiteColor editFrame" : "GilroyBlackFont whiteColor newsFrame";
-  const [category,SetCategory] = useState("");
-  const [title,SetTitle] = useState("");
-  const [description,SetDescription] = useState("");
-  const [date,SetDate] = useState("");
-  const [author,SetAuthor] = useState("");
-  const [views,SetViews] = useState(0);
 
 
 
@@ -78,23 +83,42 @@ const NewsComponent = (props) => {
 
       <Grid container className="projectContainer"  >
 
-        
-            <div className="news_u_background" style={ { backgroundPosition: "center",backgroundRepeat:"no-repeat",backgroundSize:"cover",background: "url(" + BACKGROUND_IMAGE_DATA + ") no-repeat center/cover" }}>
-              <div className={hibrydClass}>
 
-                <div >{category}</div>
-                
-                <div className="textOpacity">{date}</div>
+          {
+            ready ? (
+              <div className="news_u_background" style={ { backgroundPosition: "center",backgroundRepeat:"no-repeat",backgroundSize:"cover",background: "url(" + BACKGROUND_IMAGE_DATA + ") no-repeat center/cover" }}>
+                  <div className={hibrydClass}>
 
-                <h2 className="whiteOpacity">
-                      {
-                        title
-                      }
-                    </h2>
+                    <div >{category}</div>
+                    
+                    <div className="textOpacity">{date}</div>
 
-                
+                    <h2 className="whiteOpacity">
+                          {
+                            title
+                          }
+                        </h2>
+
+                    
+                  </div>
+                </div>
+            ) : (
+              <div className="news_u_background" >
+                <Skeleton variant="rectangular" width="100%" height="100%" />
+                <div className={hibrydClass}>
+
+                  <div ><Skeleton variant="text" /></div>
+                  
+                  <div className="textOpacity"><Skeleton variant="text" /></div>
+
+                  <h2 className="whiteOpacity">
+                      <Skeleton variant="text" />
+                  </h2>
+                </div>
               </div>
-            </div>
+            )
+          }
+            
           
         
 
@@ -116,36 +140,88 @@ const NewsComponent = (props) => {
               <div className="newsGridContainer GilroyRegularFont">
                 <div className="newsGridItems">
                   <div className="subGridItems">
-                      <div className="author_image" style={ { backgroundPosition: "center",backgroundRepeat:"no-repeat",backgroundSize:"cover",background: "url(" + background + ") no-repeat center/cover" }}>
-                      </div>
+                    
+                    {
+                      ready ? (
+                        <div className="author_image" style={ { backgroundPosition: "center",backgroundRepeat:"no-repeat",backgroundSize:"cover",background: "url(" + background + ") no-repeat center/cover" }}>
+                        </div>
+                      ) : (
+                        <div className="author_image">
+                            <Skeleton variant="rectangular" width="80%" height="100%" />
+                        </div>
+                      )
+                    }
+                      
+
+                      
                   </div>
                   <div className="subGridItems">
-                      <div className="author_text">{ author }</div>
+
+                    {
+                      ready ? (
+                        <div className="author_text">{ author }</div>
+                      ) : (
+                        <div className="author_text"><Skeleton variant="text" /></div>
+                      )
+                    }
+                    
+                      
                   </div>
                 </div>
                 <div className="newsGridItemsTwo">
                   <div className="subGridItems">
-                      <AccessTimeIcon className="newsClock"/>
+                    {
+                      ready && (
+                        <AccessTimeIcon className="newsClock"/>
+                      )
+                    }
                   </div>
                   <div className="subGridItems">
-                    <div className="author_text">2 min</div>
+                    {
+                      ready && (
+                        <div className="author_text">2 min</div>
+                      )
+                    }
                   </div>
                 </div>
                 <div className="newsGridItems">
                   <div className="subGridItems">
-                      <RemoveRedEyeIcon className="newsClock" />
+                    {
+                      ready && (
+                        <RemoveRedEyeIcon className="newsClock" />
+                      )
+                    }
+                      
                   </div>
                   <div className="subGridItems">
-                    <div className="author_text">{views} views</div>
+                    {
+                      ready ? (
+                        <div className="author_text">{views} views</div>
+                      ) : (
+                        <div className="author_text"><Skeleton variant="text" /></div>
+                      )
+                    }       
                   </div>
                 </div>
               </div>
-
-              <div className="GilroyRegularFont smallFontSize newsDescription">
-                      {
-                        description
-                      }
-                    </div>
+              
+                    {
+                      ready ? (
+                        <div className="GilroyRegularFont smallFontSize newsDescription">
+                          {
+                            description
+                          }
+                        </div>
+                      ) : (
+                        <div className="GilroyRegularFont smallFontSize newsDescription">
+                          <Skeleton variant="text" />
+                          <Skeleton variant="text" />
+                          <Skeleton variant="text" />
+                          <Skeleton variant="text" />
+                        </div>
+                      )
+                    }
+              
 
             </div>
         </div>
@@ -157,10 +233,6 @@ const NewsComponent = (props) => {
 
 
   </div>
-
-
-
-
   );
 
 }

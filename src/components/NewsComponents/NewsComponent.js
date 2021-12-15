@@ -15,7 +15,7 @@ import {
 import DoneAllIcon from '@material-ui/icons/DoneAll';
 import NewsUploadImageComponent from './NewsUploadImageComponent';
 import { useSelector, useDispatch } from 'react-redux'
-import { EnableBackButton,SetNewsEditMode,SetNewsBackgroundImage,setAlertState,setAdminMode } from '../../features/counter-slice';
+import { EnableBackButton,SetNewsEditMode,SetNewsBackgroundImage,setAlertState,setAdminMode,multiSave } from '../../features/counter-slice';
 import background from '../../images/background.jpeg';
 import AccessTimeIcon from '@material-ui/icons/AccessTime';
 import RemoveRedEyeIcon from '@material-ui/icons/RemoveRedEye';
@@ -25,19 +25,28 @@ import AlertSuccessComponent from '../../helperComponents/AlertSuccessComponent'
 
 const NewsComponent = (props) => {
 
+  const dispatch = useDispatch();
+
   var id = useMemo(() => {
 
       let reg = /^\d+$/;
       let hashId = props.match.params.id;
       let check = reg.test(hashId)
       if(check){
+
+        let saveObj = {
+          name:"id",
+          value:hashId
+        }
+
+        dispatch(multiSave(saveObj));
         return hashId;
       }
       return false;
 
   },[]);
 
-  const dispatch = useDispatch();
+  
   const BACKGROUND_IMAGE_DATA = useSelector((state) => state.counter.newsBackgroundImage);
   const newsEditMode = useSelector((state) => state.counter.newsEditMode);
   const alertState = useSelector((state) => state.counter.alertState);
