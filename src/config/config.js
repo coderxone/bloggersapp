@@ -14,6 +14,7 @@ const serverVideoPath = "https://echohub.io/videoUploads/";
 
 const baseurl = 'https://echohub.io:3004';//browser https
 //const baseurl = 'https://localhost:3004';
+
 const redirectUrl = "https://echohub.io/main"; //android
 //const redirectUrl = "http://localhost:8080/main";
 //const userRole = "1"; blogger
@@ -33,6 +34,8 @@ let colorIndex = 0;
 
 
 //localStorage.setItem("role",action.email);
+
+
 
 const cryptKey = <Obfuscate element="cryptoGraph2020"/>;
 const googleMapKey = <Obfuscate element="AIzaSyAZSEPAxXmoxpPVFbiTsFoqCvMQYPuR8Uk"/>;
@@ -526,6 +529,15 @@ const newmodule = {
           
           return rData[number].text;
         
+      },
+
+      getHeaderFetchPattern:() => {
+        const fetchPostHeader = {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        }
+
+        return fetchPostHeader;
       }
 
 }

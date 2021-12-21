@@ -1,4 +1,4 @@
-import { Subject } from 'rxjs';
+import { async, Subject } from 'rxjs';
 import socket from '../config/socket.js';
 import config from '../config/config.js';
 import cryptLibrary from '../helpers/CryptLibrary';
@@ -61,6 +61,8 @@ const BloggerService = {
             socket.emit("requestNewsData",encryptedData);
           },
 
+          
+
           listenRequestNewsData:() => {
             socket.on("requestNewsData",(data) => {
                 //console.log(data);
@@ -68,6 +70,30 @@ const BloggerService = {
             });
 
             return observ_subjectSecondEmitter;
+          },
+
+          requestFetchNewsData:async(id) => {
+
+            var data = {
+              deviceId:config.getdeviceid(),
+              email:config.getUserEmail(),
+              role:config.getUserRole(),
+              id:id
+            }
+
+            var encryptedData = cryptLibrary.encrypt(data);
+
+            return await fetch('https://localhost:3004/requestFetchNewsData', {
+                method: 'POST',
+                headers: config.getHeaderFetchPattern(),
+                body: JSON.stringify({data: encryptedData})
+              })
+              .then(response => response.json())
+              .then(data => {
+                //observ_subjectSecondEmitter.next();
+                return cryptLibrary.decrypt(data);
+              })
+            
           },
           
           

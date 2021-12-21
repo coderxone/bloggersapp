@@ -46,7 +46,36 @@ const NewsComponent = (props) => {
     dispatch(EnableBackButton(true));
     
 
-    let listenRequestNewsData = NewsService.listenRequestNewsData().subscribe(data => {
+    // let listenRequestNewsData = NewsService.listenRequestNewsData().subscribe(data => {
+    //   if(data.status === "ok"){
+    //       SetTitle(data.results[0].title);
+    //       SetDescription(data.results[0].description);
+    //       SetCategory(data.results[0].category);
+    //       SetDate(data.results[0].date + " hours ago");
+    //       SetAuthor(data.results[0].email);
+    //       SetViews(data.results[0].views);
+    //       dispatch(SetNewsBackgroundImage(config.getServerNewsImagePath() + data.results[0].image));
+    //       SetReady(true);
+    //   }
+    // });
+
+    // props.reduxStorage.getState(res => {
+    //   console.log(res);
+    // })
+    //NewsService.requestNewsData(id);
+    dispatch(SetNewsBackgroundImage(config.getServerNewsImagePath() + "background.jpeg"));
+
+
+    return () => {
+        //listenRequestNewsData.unsubscribe();
+        dispatch(EnableBackButton(false));
+    }
+  },[id]);
+
+  useEffect(() => {
+
+    
+    NewsService.requestFetchNewsData(id).then(data => {
       if(data.status === "ok"){
           SetTitle(data.results[0].title);
           SetDescription(data.results[0].description);
@@ -57,20 +86,9 @@ const NewsComponent = (props) => {
           dispatch(SetNewsBackgroundImage(config.getServerNewsImagePath() + data.results[0].image));
           SetReady(true);
       }
-    });
+    })
 
-    // props.reduxStorage.getState(res => {
-    //   console.log(res);
-    // })
-    NewsService.requestNewsData(id);
-    dispatch(SetNewsBackgroundImage(config.getServerNewsImagePath() + "background.jpeg"));
-
-
-    return () => {
-        listenRequestNewsData.unsubscribe();
-        dispatch(EnableBackButton(false));
-    }
-  },[id]);
+  },[])
 
 
 

@@ -1,20 +1,14 @@
-import React, { useEffect,useState,useMemo,useRef } from 'react';
+import React, { useEffect,useState,useMemo,useRef,lazy } from 'react';
 import MenuComponent from '../components/MenuComponents/MenuComponent';
 import LocalizeComponent from '../localize/LocalizeComponent';
 import Grid from '@material-ui/core/Grid';
 import {useSelector,useDispatch} from 'react-redux';
-import BloggerListComponent from '../components/BloggerPullComponents/BloggerListWComponent';
-import CreatorsAnimComponent from '../components/MainPageComponents/CreatorsAnimComponent';
+
 
 import PushComponent from '../helperComponents/NativePushNotificationComponent';
 import WebPushNotification from '../helperComponents/WebPushComponent';
 import ParseContactsComponent from '../helperComponents/ParseContactsComponent';
 import PermissionRequestComponent from '../helperComponents/PermissionRequestComponent.js';
-
-import AnimationComponent from '../components/AnimationComponent';
-import BloggerListWhiteComponent from '../components/BloggerPullComponents/BloggerListWhiteComponent';
-import LastCreatorsPostComponent from '../components/BloggerPullComponents/LastCreatorsPostComponent';
-import NewsListComponent from '../components/NewsComponents/NewsListComponent';
 
 import worldImage from '../images/world.png';
 import grow_chart from '../images/grow_chart.png';
@@ -35,6 +29,13 @@ import {
 } from "react-router-dom";
  const  { StatusBar } = Plugins;
  //LocalizeComponent.setLanguage("ru");
+
+const AnimationComponent = lazy(() => import('../components/AnimationComponent'));
+const BloggerListWhiteComponent = lazy(() => import('../components/BloggerPullComponents/BloggerListWhiteComponent'));
+const LastCreatorsPostComponent = lazy(() => import('../components/BloggerPullComponents/LastCreatorsPostComponent'));
+const NewsListComponent = lazy(() => import('../components/NewsComponents/NewsListComponent'));
+const BloggerListComponent = lazy(() => import('../components/BloggerPullComponents/BloggerListWComponent'));
+const CreatorsAnimComponent = lazy(() => import('../components/MainPageComponents/CreatorsAnimComponent'));
 
  const DetectLanguage = () => {
 
