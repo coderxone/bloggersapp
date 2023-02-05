@@ -38,7 +38,7 @@ let colorIndex = 0;
 
 
 const cryptKey = <Obfuscate element="cryptoGraph2020"/>;
-const googleMapKey = <Obfuscate element="AIzaSyAZSEPAxXmoxpPVFbiTsFoqCvMQYPuR8Uk"/>;
+const googleMapKey = <Obfuscate element="AIzaSyDw81pPsmAQXFZ0hHye4UI6Ax9DwlOc__I"/>;
 const newmodule = {
 
        setDeviceid: () => {
@@ -538,6 +538,14 @@ const newmodule = {
         }
 
         return fetchPostHeader;
+      },
+      convertTitlesToURL:(data) => {
+        for(let i = 0;i < data.length;i++){
+          let str = data[i].title;
+          data[i].url = str.replace(/\s/g,"-").toLowerCase();
+        }
+
+        return data;
       }
 
 }

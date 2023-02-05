@@ -83,7 +83,7 @@ const BloggerService = {
 
             var encryptedData = cryptLibrary.encrypt(data);
 
-            return await fetch('https://localhost:3004/requestFetchNewsData', {
+            return await fetch(config.getBaseDomainUrl() + '/requestFetchNewsData', {
                 method: 'POST',
                 headers: config.getHeaderFetchPattern(),
                 body: JSON.stringify({data: encryptedData})

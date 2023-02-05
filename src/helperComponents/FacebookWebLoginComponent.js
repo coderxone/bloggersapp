@@ -1,42 +1,27 @@
-import React, {useState,useEffect,useMemo,useCallback} from 'react';
-import TextField from '@material-ui/core/TextField';
-import Autocomplete from '@material-ui/lab/Autocomplete';
+import React, {useState,useCallback} from 'react';
 import config from '../config/config.js';
-import firebase from 'firebase/app';
+import firebase from 'firebase/compat/app';
 import LinearProgress from '@material-ui/core/LinearProgress';
-//import firebase from "../config/firebase";
-import "firebase/auth";
+// import firebase from "../config/firebase";
+import { getAuth, signInWithPopup, GoogleAuthProvider } from 'firebase/auth'; //v9
 // import { FacebookAuthProvider,getAuth,signInWithPopup } from "firebase/auth";
 
 import { connect } from 'react-redux';
-import Grid from '@material-ui/core/Grid';
 import { multiSave } from '../actions/actions';
-import FacebookLogin from 'react-facebook-login';
-import LocalizeComponent from '../localize/LocalizeComponent';
-import {
-  Link,
-} from "react-router-dom";
 
-import PropTypes from 'prop-types';
-import { makeStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import Dialog from '@material-ui/core/Dialog';
 import FacebookIcon from '@material-ui/icons/Facebook';
 
-import DialogActions from '@material-ui/core/DialogActions';
 import googleIcon from '../icons/googleIcon.png';
 import { useHistory } from "react-router-dom";
 
-
-var firebaseConfig = {
-  apiKey: "AIzaSyAUc1hzfw3s96B8LH_f1LBsE0jW4gCqJVU",
-  authDomain: "echohub.firebaseapp.com",
-  projectId: "echohub",
-  storageBucket: "echohub.appspot.com",
-  messagingSenderId: "992987530913",
-  appId: "1:992987530913:web:c69a82b2e841a44622d2e0",
-  measurementId: "G-871R9F8N2F"
+const firebaseConfig = {
+  apiKey: "AIzaSyB3gzojEsuJLDDobASHATDhnP7_gW4zuU8",
+  authDomain: "echohub-85ea5.firebaseapp.com",
+  projectId: "echohub-85ea5",
+  storageBucket: "echohub-85ea5.appspot.com",
+  messagingSenderId: "335772410045",
+  appId: "1:335772410045:web:1c1108d1c01b63a23cd7d4",
+  measurementId: "G-6XSB98RLQM"
 };
 
 firebase.initializeApp(firebaseConfig);
@@ -60,18 +45,16 @@ const FacebookWebLoginComponent = (props) => {
 
   const loginWithGoogle = () => {
 
-    var googleProvider = new firebase.auth.GoogleAuthProvider();
-
-    //EAACjh8klDZBEBANciXl8jP3THgvX05gKZBHrCqPJVu7I6EOcasY6aj3hMx4OyBzf8O8A6kPmMAO5k1dclfAU58q8ZA2Tw4FSmZApaOZC8flBeFLZCNpmcLUVUQtFbLRt7GaCxkL8toDG8bXjNZA2y13bO2459H0lgkXFNtW77ZBZAWWOoxDxu1JI7GcHtUQfwWwd8IKRqsVkl7D2urEHOGLPpKCNYexiQNe1tFfI2LdWQEAZDZD
-    firebase.auth()
-    .signInWithPopup(googleProvider)
-    .then((result) => {
-      var credential = result.credential;
-      // This gives you a Google Access Token. You can use it to access the Google API.
-      var token = credential.accessToken;
-      // The signed-in user info.
-      var user = result.user;
-
+    const provider = new GoogleAuthProvider();
+    
+    const auth = getAuth();
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        // This gives you a Google Access Token. You can use it to access the Google API.
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        const token = credential.accessToken;
+        // The signed-in user info.
+        const user = result.user;
 
         var email = user.email;
         if(email == null){
@@ -96,22 +79,26 @@ const FacebookWebLoginComponent = (props) => {
             GoToLogin();
         }
 
+        //console.log(user)
+
+      }).catch((error) => {
+        // Handle Errors here.
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // The email of the user's account used.
+        const email = error.email;
+        // The AuthCredential type that was used.
+        const credential = GoogleAuthProvider.credentialFromError(error);
+
+      });
+
+    
+      
 
 
 
-      //console.log(user);
-      // ...
-    }).catch((error) => {
-      // Handle Errors here.
-      var errorCode = error.code;
-      var errorMessage = error.message;
-      // The email of the user's account used.
 
-
-      // The firebase.auth.AuthCredential type that was used.
-      var credential = error.credential;
-      // ...
-    });
+  
 
 
   }
@@ -204,13 +191,7 @@ const FacebookWebLoginComponent = (props) => {
 
 
           <div className="socialBox">
-
-
-              <div className="facebookButton " onClick={loginWithFacebook}>
-                <FacebookIcon  className="faceBookLoginMT"/>
-                <div className="faceBookLoginText robotoText">Continue with Facebook</div>
-              </div>
-
+              
               <div className="facebookButton projectMarginTop" onClick={loginWithGoogle}>
                 <img src={googleIcon}  className="faceBookLoginMT"/>
                 <div className="faceBookLoginText robotoText">Sign in with Google</div>
@@ -231,4 +212,11 @@ const FacebookWebLoginComponent = (props) => {
 };
 
 
+{/* <div className="facebookButton " onClick={loginWithFacebook}>
+                <FacebookIcon  className="faceBookLoginMT"/>
+                <div className="faceBookLoginText robotoText">Continue with Facebook</div>
+              </div> */}
+
  export default connect()(FacebookWebLoginComponent);
+
+

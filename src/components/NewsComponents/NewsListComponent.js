@@ -63,13 +63,17 @@ const goToNewsPage = useCallback((item) => {
 
     dispatch(multiSave(page));
 
-    return history.push({pathname: '/news/' + item.id}), [history];
+    return history.push({pathname: '/' + item.url + '/' + item.id}), [history];
 
 });
 
   const finalList = list.map((item) => 
 
-        <div key={item.id} className="gridItem"  onClick={event => goToNewsPage(item)}>
+        <Link key={item.id} className="gridItem"  onClick={event => goToNewsPage(item)}
+          to={{
+            pathname: '/' + item.url + '/' + item.id
+          }}
+        >
           <div className="gridSubItem leftRadius"
           style = {{
                     backgroundPosition: "center",
@@ -82,7 +86,7 @@ const goToNewsPage = useCallback((item) => {
                 <div className="gridSubItemDoubleRowText gridSubItemDoubleRowTextEndAlign">{item.title}</div>
                 <div className="gridSubItemDoubleRowText gridSubItemDoubleRowTextStartAlign">{LocalizeComponent.b_posted} {item.postedTime} {LocalizeComponent.b_hours}</div>
           </div>
-        </div>
+        </Link>
 
   )
 
@@ -201,6 +205,8 @@ const LastCreatorsPostsComponent = (props) => {
         dispatch(setNewsSkeletonStatus(false));
 
         if(oldList.length > lastNews.length || oldList.length < lastNews.length){
+
+          lastNews = config.convertTitlesToURL(lastNews);
           dispatch(setNewsList([]));
           dispatch(setNewsList(lastNews));
         }

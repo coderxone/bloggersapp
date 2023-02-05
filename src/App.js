@@ -58,6 +58,7 @@ const NewsComponent = lazy(() => import('./components/NewsComponents/NewsCompone
 const NewsListComponent = lazy(() => import('./components/NewsComponents/NewsListComponent'));
 const ShowNewsComponent = lazy(() => import('./components/NewsComponents/ShowNewsComponent'));
 
+
 const App = () => {
 
   useEffect(() => {
@@ -116,8 +117,9 @@ const App = () => {
                       <Route path="/bloggerlist" back={true} component={BloggerListComponent}  />
                       <Route path="/create-news/:id" back={true} component={NewsComponent} exact={true} />
                       <Route path="/news/:id" back={true} component={ShowNewsComponent} exact={true} />
+                      <Route path="/*/:id" back={true} component={ShowNewsComponent} exact={true} />
                       <Route path="/latest-news"  back={true} component={NewsListComponent} />
-                      <Route path="/test"  back={true} component={LoaderComponent} exact={true} />
+                      <Route path="/test"  back={true} component={NewsListComponent} exact={true} />
                       <Route exact path="/" render={() => <Redirect to="/main" />} />
                     </Switch>
                   </LastLocationProvider>

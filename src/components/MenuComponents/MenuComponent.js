@@ -142,6 +142,10 @@ const ExampleComponent = (props) => {
                     <Link to={{pathname: "/userprofile"}}>{LocalizeComponent.user_11}</Link>
                   </div>
 
+                  <div className=" menuLeftMargin menuTopMargin">
+                    <Link to={{pathname: "/main"}}>{LocalizeComponent.home}</Link>
+                  </div>
+
               </div>
             )
           }
@@ -166,8 +170,14 @@ const ExampleComponent = (props) => {
                     }
                   </div>
 
+                  
+
                   <div className=" menuLeftMargin">
                     <Link to={{pathname: "/businessprofile"}}>{LocalizeComponent.user_11}</Link>
+                  </div>
+
+                  <div className=" menuLeftMargin menuTopMargin">
+                    <Link to={{pathname: "/main"}}>{LocalizeComponent.home}</Link>
                   </div>
 
               </div>
@@ -205,7 +215,7 @@ const ExampleComponent = (props) => {
                     <Link to={{pathname: "/main"}}>{LocalizeComponent.home}</Link>
                     <Link to={{pathname: "/about"}}>{LocalizeComponent.About_Connect}</Link>
                     <Link to={{pathname: "/why"}}>{LocalizeComponent.Why}</Link>
-                    <a target="_blank" href="mailto:info@echohub.io">{LocalizeComponent.contactUs}</a>
+                    <a target="_blank" href="mailto:2clickorg@gmail.com">{LocalizeComponent.contactUs}</a>
                       {
                         Capacitor.platform === 'web' && (
                              <MobileAppComponent status={mobileDialogStatus}/>
@@ -265,7 +275,7 @@ const ExampleComponent = (props) => {
             (
               <div>
                   <div className="menuLeftMargin">
-                    <a target="_blank" href="mailto:info@echohub.io">{LocalizeComponent.contactUs}</a>
+                    <a target="_blank" href="mailto:2clickorg@gmail.com">{LocalizeComponent.contactUs}</a>
                   </div>
               </div>
 

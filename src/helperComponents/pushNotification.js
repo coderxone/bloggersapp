@@ -1,16 +1,17 @@
-import firebase from 'firebase';
+// import firebase from 'firebase';
+import firebase from 'firebase/compat/app';
 import 'firebase/messaging';
 import config from '../config/config';
 
 
-var firebaseConfig = {
-  apiKey: "AIzaSyAUc1hzfw3s96B8LH_f1LBsE0jW4gCqJVU",
-  authDomain: "echohub.firebaseapp.com",
-  projectId: "echohub",
-  storageBucket: "echohub.appspot.com",
-  messagingSenderId: "992987530913",
-  appId: "1:992987530913:web:c69a82b2e841a44622d2e0",
-  measurementId: "G-871R9F8N2F"
+const firebaseConfig = {
+  apiKey: "AIzaSyB3gzojEsuJLDDobASHATDhnP7_gW4zuU8",
+  authDomain: "echohub-85ea5.firebaseapp.com",
+  projectId: "echohub-85ea5",
+  storageBucket: "echohub-85ea5.appspot.com",
+  messagingSenderId: "335772410045",
+  appId: "1:335772410045:web:1c1108d1c01b63a23cd7d4",
+  measurementId: "G-6XSB98RLQM"
 };
 
 

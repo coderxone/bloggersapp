@@ -1,14 +1,5 @@
 import React, { useRef,useEffect, useState,useCallback } from 'react';
 import * as THREE from 'three';
-import Stats from '../../../node_modules/three/examples/jsm/libs/stats.module.js';
-
-import { GUI } from '../../../node_modules/three/examples/jsm/libs/dat.gui.module.js';
-import { OrbitControls } from '../../../node_modules/three/examples/jsm/controls/OrbitControls.js';
-import { Line2 } from '../../../node_modules/three/examples/jsm/lines/Line2.js';
-import { LineMaterial } from '../../../node_modules/three/examples/jsm/lines/LineMaterial.js';
-import { LineGeometry } from '../../../node_modules/three/examples/jsm/lines/LineGeometry.js';
-import { GeometryUtils } from '../../../node_modules/three/examples/jsm/utils/GeometryUtils.js';
-import { Interaction } from 'three.interaction';
 import group2 from '../../images/central_images/Group2.png';
 import group3 from '../../images/central_images/Group3.png';
 import group4 from '../../images/central_images/Group4.png';
@@ -18,25 +9,16 @@ import man from '../../images/central_images/man.png';
 import twitter1 from '../../images/central_images/twitter1.png';
 import facebook1 from '../../images/central_images/facebook1.png';
 import tiktok1 from '../../images/central_images/tiktok1.png';
-import Emoji from '../../images/central_images/Emoji.png';
 import youtube1 from '../../images/central_images/youtube1.png';
 import Emoji_1 from '../../images/central_images/Emoji-1.png';
-import Emoji_6 from '../../images/central_images/Emoji-6.png';
 import instagram1 from '../../images/central_images/instagram1.png';
 import piechart2 from '../../images/central_images/pie-chart2.png';
 import Emoji4 from '../../images/central_images/Emoji-4.png';
 import growth2 from '../../images/central_images/growth2.png';
-
-import Observable from '../../services/Observable';
-
-
-
 import fontStylesD from '../../fonts/a_AvanteLt_Light.json';
-import { MeshLine, MeshLineMaterial, MeshLineRaycast } from 'three.meshline'
 import {
   useHistory,
 } from "react-router-dom";
-import LocalizeComponent from '../../localize/LocalizeComponent';
 
 
 

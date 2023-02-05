@@ -1,5 +1,4 @@
-import React, { useEffect,useState } from 'react'
-import config from '../config/config.js';
+import React, { useEffect } from 'react'
 import { Capacitor,Plugins } from '@capacitor/core';
 const { IOSAppTracking } = Plugins;
 
@@ -14,7 +13,6 @@ const IosRequestPermissionComponent = () => {
 
 
       //ios functions
-      var watchIdAndroidIos = null;
       if(Capacitor.platform === 'ios'){
 
         IOSAppTracking.getTrackingStatus().then((res) => {
@@ -41,10 +39,6 @@ const IosRequestPermissionComponent = () => {
 
 
 
-return (
-  <div>
-
-  </div>
-);
+return null;
 }
 export default IosRequestPermissionComponent;

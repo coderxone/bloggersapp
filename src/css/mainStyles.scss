@@ -204,29 +204,21 @@ body{
 .PushVideoStyles{
   width: 100%;
   z-index: 50;
-
-  // position: absolute;
-  // left: 0px;
-
 }
 
 .mainPush_rootModel1{
 
-  // position: absolute;
-  // left: 0px;
   overflow: hidden;
   width:100%;
   height: 405px;
   background-color: $pushNotificationBackground;
-  // bottom:4px;
-  // font-family: AppFont;
 
 }
 
 .mainPushModel1{
   overflow: hidden;
   width:100%;
-  height: 352px;//260px;
+  height: 352px;
 
 }
 
@@ -236,7 +228,7 @@ body{
 
 }
 
-.mainPushColumsOneM1{ //28//44//28 //352
+.mainPushColumsOneM1{
   width:100%;
   height: 28%;
 
@@ -253,7 +245,6 @@ body{
   font-size: 16px;
   color:black;
   font-family: AppFont;
-  // background-color: lightblue;
   max-height: 85px;
 
 }
@@ -488,7 +479,6 @@ body{
     border-radius: 15px;
     border:2px solid $BlueTextColor;
     margin-left:43%;
-    // background-color: blue;
   }
 }
 
@@ -570,7 +560,6 @@ body{
     border-radius: 15px;
     border:2px solid $BlueTextColor;
     margin-left:39%;
-    // background-color: blue;
   }
 
 }
@@ -1041,7 +1030,6 @@ body{
 .switchBox{
   width: 100%;
   height: 50px;
-   // background-color: yellow;
    margin-top:12px;
   overflow: hidden;
 }
@@ -1049,7 +1037,6 @@ body{
 .switchBoxIfl{
   width: 100%;
   height: 60px;
-   // background-color: yellow;
    margin-top:12px;
   overflow: hidden;
 }
@@ -1057,7 +1044,6 @@ body{
 .switchBoxTwo{
   width: 90%;
   height: 80px;
-   // background-color: yellow;
    margin-top:12px;
    margin-bottom:12px;
    margin-left:5px;
@@ -1071,7 +1057,6 @@ body{
   padding-top:7px;
   width:75%;
   height: 100%;
-  // background-color: purple;
   padding: 8px 8px 8px 32px;
   font-size: 16px;
   font-family: RobotoLight;
@@ -1086,7 +1071,6 @@ body{
   width:25%;
   height: 100%;
   overflow: hidden !important;
-  // background-color: green;
 }
 
 
@@ -1096,7 +1080,6 @@ body{
   padding-top:7px;
   width:75%;
   height: 100%;
-  // background-color: purple;
   font-family:$fontStyles;
   font-size: $font-size;
   color:$base-app-color;
@@ -1106,7 +1089,6 @@ body{
   float: left;
   width:25%;
   height: 100%;
-  // background-color: green;
 }
 
 .switchCheckbox{
@@ -1514,7 +1496,6 @@ ion-item {
   height: 55px;
   z-index: 2000 !important;
   background-color: rgba(0,132,255,0.41);
-  // background-color: rgba(4, 16, 47, 0.4);
   border-radius: 5px;
 }
 
@@ -1542,10 +1523,7 @@ ion-item {
 .MuiAutocomplete-root{
    border-color: $base-app-color !important;
 }
-// #combo-box-demo{
-//    border-color: $base-app-color !important;
-//
-// }
+
 
 .MuiFormControl-root{
   border-color: $base-app-color !important;
@@ -1559,7 +1537,6 @@ ion-item {
 
 .leftM{
   width:10% !important;
-  // background-color: red !important;
   padding:0px !important;
   margin:0px !important;
   margin-top:4px !important;
@@ -1567,7 +1544,6 @@ ion-item {
 }
 .centerM{
   width:80% !important;
-  // background-color: red !important;
   padding:0px !important;
   padding-left: 10px !important;
   margin:0px !important;
@@ -1578,7 +1554,6 @@ ion-item {
 .rightM{
   width:10% !important;
   text-align: right !important;
-  // background-color: red !important;
   padding:0px !important;
   margin:0px !important;
   margin-top:4px !important;
@@ -1609,7 +1584,6 @@ body {
   width:90%;
   padding-bottom: 45px;
   border:2px solid $base-app-color;
-  // border-radius: 5px;
 }
 
 .askBoxText{
@@ -1635,7 +1609,7 @@ body {
 
 
 .manageButtons{
-  margin-top:24%;
+  margin-top:5%;
   width: 100%;
   text-align: center;
 }
@@ -2061,7 +2035,7 @@ body {
 }
 
 .MuiPaper-root{
-  // background-color:transparent !important;
+
 }
 
 .firstLevelStepper{
@@ -2086,7 +2060,6 @@ body {
   margin-left: 0px;
   margin-right: 5px;
   border-radius: 7px;
-  // background:linear-gradient(to right, $base-app-color, #0083ff);
   margin-top:5px;
   overflow: hidden;
   border:2px solid $base-app-color;
@@ -2100,7 +2073,6 @@ body {
   margin-left: 0px;
   margin-right: 5px;
   border-radius: 7px;
-   // background:linear-gradient(to right, $base-app-color, #0083ff);
   margin-top:5px;
   overflow: hidden;
   font-family:AppFont !important;
@@ -2140,7 +2112,6 @@ body {
   height: 55px;
   z-index: 2000 !important;
   background-color: rgba(0,132,255,0.41);
-  // background-color: rgba(4, 16, 47, 0.4);
   border-radius: 5px;
 }
 
@@ -2158,13 +2129,11 @@ body {
 
   padding-top:2px;
   padding-bottom:2px;
-   // background-color: blue;
 }
 .MenuList{
   width:90%;
   height: 37px;
   margin-left:5%;
-   //background-color: red;
 }
 
 .LeftMenuList{
@@ -2186,7 +2155,6 @@ body {
 }
 
 .TitleDivider{
-  // margin-top:25px;
   background-color:$base-app-color !important;
   width:60%;
   height: 2px;
@@ -2194,7 +2162,6 @@ body {
   float: left;
 }
 .ListDivider{
-  // margin-top:25px;
   background-color:$base-app-color !important;
   width: 80%;
   height: 2px;
@@ -2203,7 +2170,6 @@ body {
 }
 
 .BlockDivider{
-  // margin-top:25px;
   margin-top:10px;
   margin-bottom:10px;
   background-color:$base-app-color !important;
@@ -2214,7 +2180,6 @@ body {
 }
 
 .BlockDividerTinLine{
-  // margin-top:25px;
   margin-bottom:2px;
   background-color:white;
   width: 91%;
@@ -2761,8 +2726,6 @@ body {
 .projectContainer{
 
   margin-bottom:150px;
-
-  // background:linear-gradient(to right, $newAppColor, $newAppColorTwo);
 }
 .opacityControl{
   overflow-y: hidden;
@@ -2787,6 +2750,11 @@ body {
 .smallFontSize{
   font-size:16px;
 }
+
+.projectLineHeight{
+  line-height: 1.8;
+}
+
 .smallXFontSize{
   font-size:18px;
 }
@@ -2881,4 +2849,3 @@ body {
 }
 
 
-//projectButtonCentral

@@ -104,7 +104,7 @@ const MyComponent = (props) => {
       }else{
         newContainerStyleOne.height = '45vh';
       }
-      console.log(window.innerHeight);//892
+      //console.log(window.innerHeight);//892
 
       SetContainerStyle(newContainerStyleOne);
     }

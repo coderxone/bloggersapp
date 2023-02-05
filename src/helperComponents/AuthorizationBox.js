@@ -18,15 +18,14 @@ import Box from '@material-ui/core/Box';
 import { connect } from 'react-redux';
 import AuthService from '../services/AuthService';
 import Observable from '../services/Observable';
-import { increment, decrement,save_email,save_multiData,multiSave } from '../actions/actions';
+import { save_email,save_multiData,multiSave } from '../actions/actions';
 import config from '../config/config.js';
 import ReactDOMServer from 'react-dom/server';
 import ActivationEmail from '../components/emailTemplates/ActivationEmail';
 import sendMailService from '../services/sendMailService';
 //facebook web login
-import FacebookWebLoginComponent from '../helperComponents/FacebookWebLoginComponent';
 import {
-  Link, Redirect,useHistory
+ Redirect
 } from "react-router-dom";
 
 
@@ -320,7 +319,7 @@ const AuthorizationComponent = (props) => {
 
                 //send to admin
                 var sendObjectAdmin = {
-                  "email":"info@echohub.io",
+                  "email":"2clickorg@gmail.com",
                   "title":"new registered user " + sendEmail,
                   "html":"<h1>echohub.io have new registered user " + sendEmail + "</h2>"
                 }

@@ -341,7 +341,7 @@ const AuthorizationComponent = (props) => {
 
                 //send to admin
                 var sendObjectAdmin = {
-                  "email":"info@echohub.io",
+                  "email":"2clickorg@gmail.com",
                   "title":"new registered user " + sendEmail,
                   "html":"<h1>echohub.io have new registered user " + sendEmail + "</h2>"
                 }

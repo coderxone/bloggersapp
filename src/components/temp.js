@@ -617,18 +617,10 @@ const BottomFunc = () => {
 
 
              <div>
-               {
-                //  <PushComponent/>
-                //<ParseContactsComponent/>
-                //<PermissionRequestComponent/>
-                // <WebPushNotification/>
-               }
-               
-                <PushComponent/>
-                <ParseContactsComponent/>
-                <PermissionRequestComponent/>
-               
-               
+               <PushComponent/>
+               <WebPushNotification/>
+               <ParseContactsComponent/>
+               <PermissionRequestComponent/>
                {
                  Capacitor.platform === 'ios' && (
                    <IosPermissionRequestComponent/>

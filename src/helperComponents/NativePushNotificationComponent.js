@@ -1,7 +1,6 @@
 import React, { useEffect,useState } from 'react'
-import { Capacitor,Plugins, PushNotification, PushNotificationToken, PushNotificationActionPerformed } from '@capacitor/core';
+import { Capacitor,Plugins } from '@capacitor/core';
 import {
-  useHistory,
   Redirect,
 } from "react-router-dom";
 

@@ -1,5 +1,4 @@
 import React, { useCallback,useEffect,useState,useMemo } from 'react';
-import MenuComponent from '../../components/MenuComponents/MenuComponent';
 import LocalizeComponent from '../../localize/LocalizeComponent';
 import Grid from '@material-ui/core/Grid';
 import config from '../../config/config';
@@ -186,7 +185,7 @@ const NewsComponent = (props) => {
   return (
 
     <div id="opacityControl">
-      <MenuComponent />
+      
 
       <Grid container className="projectContainer"  >
 

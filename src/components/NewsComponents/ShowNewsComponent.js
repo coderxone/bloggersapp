@@ -11,6 +11,7 @@ import AccessTimeIcon from '@material-ui/icons/AccessTime';
 import RemoveRedEyeIcon from '@material-ui/icons/RemoveRedEye';
 import NewsService from '../../services/NewsService';
 import Skeleton from '@mui/material/Skeleton';
+import {Helmet} from "react-helmet";
 
 const NewsComponent = (props) => {
 
@@ -97,6 +98,13 @@ const NewsComponent = (props) => {
   return (
 
     <div id="opacityControl">
+
+            <Helmet>
+                <meta charSet="utf-8" />
+                <title>{ title }</title>
+                <meta name="description" content={description} />
+            </Helmet>
+
       <MenuComponent />
 
       <Grid container className="projectContainer"  >
@@ -225,7 +233,7 @@ const NewsComponent = (props) => {
               
                     {
                       ready ? (
-                        <div className="GilroyRegularFont smallFontSize newsDescription">
+                        <div className="GilroyRegularFont smallFontSize newsDescription projectLineHeight">
                           {
                             description
                           }

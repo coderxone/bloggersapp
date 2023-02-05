@@ -10,7 +10,7 @@ export default function BasicTable(props){
         <table style={{width:'100%',color:'black',padding:'4px',lineHeight:'26px'}}>
           <thead>
            <tr style={{width:'100%',marginBottom:'15px'}}>
-             <th colSpan="2"  style={{textAlign:'center',fontSize:'20px',paddingTop:'5px'}}>{LocalizeComponent.text1} {currentUser} .  {LocalizeComponent.text6}. {LocalizeComponent.text8} <a href="mailto:info@echohub.io">info@echohub.io</a>  </th>
+             <th colSpan="2"  style={{textAlign:'center',fontSize:'20px',paddingTop:'5px'}}>{LocalizeComponent.text1} {currentUser} .  {LocalizeComponent.text6}. {LocalizeComponent.text8} <a href="mailto:2clickorg@gmail.com">2clickorg@gmail.com</a>  </th>
            </tr>
           </thead>
 
