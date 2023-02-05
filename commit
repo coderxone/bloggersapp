@@ -2,4 +2,4 @@ ssh-agent
 ssh-add /Users/dulat/.ssh/kazpoisk_key
 git add .
 git commit -m "latest"
-git push -u origin master
+git push -u bit master
